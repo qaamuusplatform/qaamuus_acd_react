@@ -47,7 +47,7 @@ function AllRoutes() {
 
 			{/* dashboard edit userifno */}
 			<AppRoute exact path="/student/dashboard" layout={DefaultLayout} component={StudentDashboard} />
-			<AppRoute exact path="/student/edit-profile/" layout={DefaultLayout} component={EditProfile} />
+			<AppRoute exact path="/student/edit-profile" layout={DefaultLayout} component={EditProfile} />
 
 
 			{/* COURSES AND CATEGORIES */}

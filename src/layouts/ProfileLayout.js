@@ -13,6 +13,7 @@ import { Container, Row, Col, Nav, Navbar } from 'react-bootstrap';
 // import media files
 import Avatar3 from 'assets/images/avatar/avatar-3.jpg';
 import ProfileCover from 'pages/student/ProfileCover';
+import { DashboardMenu } from 'routes/StudentDashboardMenu';
 
 const ProfileLayout = (props) => {
 	const location = useLocation();
@@ -74,7 +75,7 @@ const ProfileLayout = (props) => {
 										<Nav.Item className="navbar-header" as="li">
 											SUBSCRIPTION
 										</Nav.Item>
-										{/* {DashboardMenu.map((item, index) => (
+										{DashboardMenu.map((item, index) => (
 											<Nav.Item
 												as="li"
 												key={index}
@@ -87,7 +88,7 @@ const ProfileLayout = (props) => {
 													{item.title}
 												</Link>
 											</Nav.Item>
-										))} */}
+										))}
 										<Nav.Item className="navbar-header mt-4" as="li">
 											ACCOUNT SETTINGS
 										</Nav.Item>
