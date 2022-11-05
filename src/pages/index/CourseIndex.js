@@ -4,14 +4,47 @@ import { Fragment } from 'react';
 import { Col, Row, Container, Card } from 'react-bootstrap';
 
 import Slider from 'react-slick';
+
 // import custom components
 import HeroHeader from './HeroHeader';
 import FeaturesList from './FeaturesList';
 import allInternationalFriendData from 'data/AllInternationalFriends';
+import AllCoursesData from 'data/AllCoursesData';
+import CourseCard from 'components/cards/CourseCard';
+import WorldClassInstructors from './WorldClassInstructors';
 
 // import sub components
 
 const CourseIndex = () => {
+	const courseSliderSettings = {
+		infinite: true,
+		slidesToShow: 4,
+		slidesToScroll: 1,
+		responsive: [
+			{
+				breakpoint: 1024,
+				settings: {
+					slidesToShow: 4,
+					slidesToScroll: 1
+				}
+			},
+			{
+				breakpoint: 768,
+				settings: {
+					slidesToShow: 2,
+					slidesToScroll: 1,
+					initialSlide: 2
+				}
+			},
+			{
+				breakpoint: 540,
+				settings: {
+					slidesToShow: 1,
+					slidesToScroll: 1
+				}
+			}
+		]
+	};
 	const settings = {
 		dots: true,
 		speed: 500,
@@ -72,9 +105,6 @@ const CourseIndex = () => {
 							return (
 								<Card className="item px-md-1" key={index}>
 									<Card.Img variant="top" src={item.image} />
-									<Container>
-										<Card.Title>Card Title</Card.Title>
-									</Container>
 								</Card>
 							)
 
@@ -83,11 +113,24 @@ const CourseIndex = () => {
 					</Slider>
 					{/* <CourseSlider popular={true} /> */}
 
+					<h2 className="mb-0 mx-2">Popular Courses</h2>
 					<div className="position-relative">
 
+						<Slider {...courseSliderSettings} className="pb-sm-5 mb-5 slick-slider-wrapper">
+
+							{AllCoursesData.map((item, index) => (
+								<div className="item px-md-1" key={item.id}>
+									<CourseCard key={index} item={item} extraclass="mx-2" />
+								</div>
+							))}
+						</Slider>
 					</div>
+					<h2 className="mb-0 mx-2">Popular Courses</h2>
+
+					<WorldClassInstructors />
 				</Container>
 			</div>
+
 		</Fragment>
 	);
 };

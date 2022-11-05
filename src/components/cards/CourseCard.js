@@ -66,10 +66,10 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 							{' '}
 							<Ratings rating={item.rating} />
 						</span>
-						{/* <span className="text-warning me-1"> {item.rating.toFixed(1)}</span> */}
+						<span className="text-warning me-1"> {item.rating.toFixed(1)}</span>
 						<span className="fs-6 text-muted">
 							{' '}
-							{/* ({numberWithCommas(item.ratingby)}) */}
+							({numberWithCommas(item.ratingby)})
 						</span>
 					</div>
 					<div
@@ -165,11 +165,11 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 								<ListGroup.Item as="li" bsPrefix="list-inline-item">
 									<span className="text-warning">
 										{' '}
-										{/* <Ratings rating={item.rating} /> {item.rating.toFixed(1)} */}
+										<Ratings rating={item.rating} /> {item.rating.toFixed(1)}
 									</span>
 									<span className="fs-6 text-muted">
 										{' '}
-										{/* ({numberWithCommas(item.ratingby)}) */}
+										({numberWithCommas(item.ratingby)})
 									</span>
 								</ListGroup.Item>
 							</ListGroup>
@@ -230,11 +230,11 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 						<ListGroup.Item as="li" bsPrefix="list-inline-item">
 							<span className="text-warning">
 								{' '}
-								{/* <Ratings rating={item.rating} /> {item.rating.toFixed(1)} */}
+								<Ratings rating={item.rating} /> {item.rating.toFixed(1)}
 							</span>
 							<span className="fs-6 text-muted">
 								{' '}
-								{/* ({numberWithCommas(item.ratingby)}) */}
+								({numberWithCommas(item.ratingby)})
 							</span>
 						</ListGroup.Item>
 					</ListGroup>

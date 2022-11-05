@@ -6,7 +6,6 @@ import React, { Fragment } from 'react';
 // import FormSelect from 'components/elements/custom/FormSelect';
 import PageHeading from 'components/elements/common/heading/PageHeading';
 import GridListViewButton from 'components/elements/custom/GridListViewButton';
-import CourseGridView from './CourseGridView';
 
 export default function Courses() {
 
@@ -39,7 +38,7 @@ export default function Courses() {
 							<Col xl={9} lg={9} md={8} sm={12}>
 								<Tab.Content>
 									<Tab.Pane eventKey="grid" className="pb-4 px-0">
-										<CourseGridView />
+										{/* <CourseGridView /> */}
 									</Tab.Pane>
 									<Tab.Pane eventKey="list" className="pb-4 px-0 react-code">
 										{/* <CourseListView /> */}
