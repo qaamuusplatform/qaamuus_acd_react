@@ -6,6 +6,7 @@
     "@mdi/js": "^5.9.55",
     "@mdi/react": "^1.5.0",
     "@pathofdev/react-tag-input": "^1.0.7",
+    "@reduxjs/toolkit": "^1.9.0",
     "@testing-library/jest-dom": "^5.13.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
