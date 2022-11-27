@@ -1,14 +1,28 @@
 import http from "./httpService";
+import jwtDecode from "jwt-decode";
 
 const endPoint = "jwt-login/";
 
-export const login = async (data) => {
-  const response = await http.post(endPoint, {
-    username: data.username,
-    password: data.password,
+const token = "jwt";
+
+export const login = async (username, password) => {
+  const { data } = await http.post(endPoint, {
+    username,
+    password,
+    withCredentials: true,
   });
 
-  if (response.data) {
-    localStorage.setItem("jwtToken", response.data.jwt);
+  // if (data) {
+  //   document.cookie = `name=${data.jwt}; domain=qaamuus.academy;`;
+  // }
+};
+
+export const getCurrentUser = () => {
+  try {
+    const jwtToken = localStorage.getItem(token);
+
+    return jwtDecode(jwtToken);
+  } catch (error) {
+    return null;
   }
 };
