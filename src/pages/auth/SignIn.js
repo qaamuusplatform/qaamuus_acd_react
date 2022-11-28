@@ -1,7 +1,6 @@
 // import node module libraries
 import React, { useState } from "react";
-import { login } from "services/authService";
-
+import { login, getLoggedInUser } from "services/authService";
 import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { Col, Row, Card, Form, Button, Image } from "react-bootstrap";
@@ -11,13 +10,24 @@ import Logo from "assets/images/brand/logo/logo-icon.svg";
 // import Logo from "assets/images/brand/logo/logo-icon.svg";
 
 export default function SignIn() {
-  const [form, setForm] = useState({ username: "",  password: ""});
+  const [form, setForm] = useState({ username: "", password: "" });
 
   const doSubmit = async () => {
+    
     try {
-      await login(form.username, form.password);
-      console.log('loggneddd')
-    } catch (error) {}
+      // await login(form.username, form.password);
+      // var respdata = await fetch('https://qaamuusbackend.up.railway.app/api/jwt-login/', {
+      //   method: 'POST',
+      //   headers: { 'content-type': 'application/json' },
+      //   credentials: 'include',
+      //   body:JSON.stringify({ 'username': form.username, 'password': form.password })
+      // });
+      
+    console.log(await getLoggedInUser());
+
+      console.log('loggneddd');
+      // console.log(respdata);
+    } catch (error) { }
   };
 
   const handleChange = ({ target }) => {

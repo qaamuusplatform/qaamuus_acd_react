@@ -1,6 +1,7 @@
 // import node module libraries
 import { Fragment, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
+import http from "services/httpService"
 import {
   Col,
   Alert,
@@ -33,9 +34,9 @@ export default function SignUp() {
     console.log(userData.get("username"));
     if (userData.get("password") == userData.get("comfirmPassword")) {
       setFormError("");
-      await axiosRequest
+      await http
         .get(
-          "api/checkUserExistEmailAndUsername/" +
+          "/api/checkUserExistEmailAndUsername/" +
             userData.get("username") +
             "/" +
             userData.get("email") +
@@ -50,13 +51,13 @@ export default function SignUp() {
             setFormError("");
             setFormIsLoading(false);
             try {
-              await axiosRequest
+              await http
                 .post("/api/user-create/", userData)
                 .then(async (dataResp) => {
                   console.log(dataResp.data);
                   console.log(dataResp.data.data.id);
                   userData.append("user", parseInt(dataResp.data.data.id));
-                  await axiosRequest
+                  await http
                     .post("/api/userProfile-create/", userData)
                     .then((userProfileResp) => {
                       setFormIsLoading(false);

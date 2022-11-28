@@ -1,6 +1,6 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "https://qaamuusapiend.up.railway.app/api/";
+axios.defaults.baseURL = "https://qaamuusbackend.up.railway.app";
 axios.defaults.withCredentials = true;
 export default {
   get: axios.get,
