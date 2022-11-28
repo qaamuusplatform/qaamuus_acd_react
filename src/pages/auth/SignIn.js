@@ -11,14 +11,12 @@ import Logo from "assets/images/brand/logo/logo-icon.svg";
 // import Logo from "assets/images/brand/logo/logo-icon.svg";
 
 export default function SignIn() {
-  const [form, setForm] = useState({
-    username: "",
-    password: "",
-  });
+  const [form, setForm] = useState({ username: "",  password: ""});
 
   const doSubmit = async () => {
     try {
       await login(form.username, form.password);
+      console.log('loggneddd')
     } catch (error) {}
   };
 
