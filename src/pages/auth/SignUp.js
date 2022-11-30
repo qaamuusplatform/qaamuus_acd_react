@@ -12,6 +12,8 @@ import {
   Spinner,
   Image,
 } from "react-bootstrap";
+
+import ProfileBackground from 'assets/images/background/profile-bg.jpg';
 import axios from "axios";
 // import media files
 import Logo from "assets/images/brand/logo/logo-icon.svg";
@@ -37,10 +39,10 @@ export default function SignUp() {
       await http
         .get(
           "/api/checkUserExistEmailAndUsername/" +
-            userData.get("username") +
-            "/" +
-            userData.get("email") +
-            "/"
+          userData.get("username") +
+          "/" +
+          userData.get("email") +
+          "/"
         )
         .then(async (userResp) => {
           console.log(userResp);
@@ -52,18 +54,11 @@ export default function SignUp() {
             setFormIsLoading(false);
             try {
               await http
-                .post("/api/user-create/", userData)
-                .then(async (dataResp) => {
-                  console.log(dataResp.data);
-                  console.log(dataResp.data.data.id);
-                  userData.append("user", parseInt(dataResp.data.data.id));
-                  await http
-                    .post("/api/userProfile-create/", userData)
-                    .then((userProfileResp) => {
-                      setFormIsLoading(false);
-                      setUserRegistred(true);
-                      Redirect("/student/dashboard");
-                    });
+                .post("/api/userProfile-create/", userData)
+                .then((userProfileResp) => {
+                  setFormIsLoading(false);
+                  setUserRegistred(true);
+                  Redirect("/student/dashboard");
                 });
             } catch (error) {
               console.log(error);
@@ -82,6 +77,7 @@ export default function SignUp() {
       <Row className="align-items-center justify-content-center g-0 min-vh-100">
         <Col lg={8} md={8} className="py-8 py-xl-0">
           <Card>
+          <Card.Img variant="top" src={ProfileBackground} />
             <Card.Body className="p-6">
               <div>
                 {/* <Link to="/">
@@ -106,26 +102,7 @@ export default function SignUp() {
               {/* Form */}
               <Form onSubmit={userJoinHandleSubmit}>
                 <Row>
-                  <Col lg={3} md={3} className="mb-3">
-                    <Image
-                      className="mb-4"
-                      width="150px"
-                      alt=""
-                      src="https://www.commisceo-global.com/images/easyblog_articles/1783/jordanian-man.jpg"
-                    />
-                  </Col>
-                  <Col lg={9} md={9} className="mb-3">
-                    <Form.Group size="sm" controlId="formFile" className="mb-3">
-                      <Form.Label size="sm">User Image</Form.Label>
-                      <Form.Control
-                        required
-                        name="profileImage"
-                        size="sm"
-                        type="file"
-                        accept="image/*"
-                      />
-                    </Form.Group>
-                  </Col>
+                 
                   <Col lg={8} md={8} className="mb-3">
                     {/* User Name */}
                     <Form.Label>Full Name</Form.Label>

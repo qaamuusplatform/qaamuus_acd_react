@@ -14,7 +14,8 @@ import SignIn from 'pages/auth/SignIn';
 import SignUp from 'pages/auth/SignUp';
 import StudentDashboard from 'pages/student/Dashboard';
 import EditProfile from 'pages/student/account-settings/EditProfile';
-import Courses from 'pages/course/Courses';
+import Courses from 'pages/courses/Courses';
+import Events from 'pages/events/events';
 
 
 
@@ -46,12 +47,13 @@ function AllRoutes() {
 			<AppRoute exact path="/join/sign-up" layout={AuthLayout} component={SignUp} />
 
 			{/* dashboard edit userifno */}
-			<AppRoute exact path="/student/dashboard" layout={DefaultLayout} component={StudentDashboard} />
-			<AppRoute exact path="/student/edit-profile" layout={DefaultLayout} component={EditProfile} />
+			<AppRoute exact path="/student/dashboard/" layout={DefaultLayout} component={StudentDashboard} />
+			<AppRoute exact path="/student/edit-profile/" layout={DefaultLayout} component={EditProfile} />
 
 
 			{/* COURSES AND CATEGORIES */}
-			<AppRoute exact path="/courses" layout={DefaultLayout} component={Courses} />
+			<AppRoute exact path="/courses/" layout={DefaultLayout} component={Courses} />
+			<AppRoute exact path="/events/" layout={DefaultLayout} component={Events} />
 
 			
 			{/* LANDING PAGES ROUTERS - END */}

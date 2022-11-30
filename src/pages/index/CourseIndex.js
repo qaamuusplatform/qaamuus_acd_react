@@ -1,8 +1,10 @@
 // import node module libraries
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Fragment } from 'react';
 import { Col, Row, Container, Card } from 'react-bootstrap';
-
+import useSWR from 'swr';
+import http from 'services/httpService';
 import Slider from 'react-slick';
 
 // import custom components
@@ -12,10 +14,18 @@ import allInternationalFriendData from 'data/AllInternationalFriends';
 import AllCoursesData from 'data/AllCoursesData';
 import CourseCard from 'components/cards/CourseCard';
 import WorldClassInstructors from './WorldClassInstructors';
+import TestimonialsSlider from './TestimonialsSlider';
+import LogosTopHeading2 from 'components/clientlogos/LogosTopHeading2';
+import LogoList1 from 'data/LogoList1';
+import AboutUs from './AboutUs';
+import axios from 'axios';
 
 // import sub components
 
 const CourseIndex = () => {
+
+	// const {data,error} = useSWR('/api/ourInternationalFriends-list/',async (url)=>await axios(url).then(r=>r.data));
+	// console.log(data);
 	const courseSliderSettings = {
 		infinite: true,
 		slidesToShow: 4,
@@ -24,7 +34,7 @@ const CourseIndex = () => {
 			{
 				breakpoint: 1024,
 				settings: {
-					slidesToShow: 4,
+					slidesToShow: 2,
 					slidesToScroll: 1
 				}
 			},
@@ -83,6 +93,7 @@ const CourseIndex = () => {
 
 			{/*  Features list  */}
 			<FeaturesList />
+			<AboutUs/>
 
 			{/* <div className="pb-lg-3 pt-lg-3">
 				<Container>
@@ -112,8 +123,14 @@ const CourseIndex = () => {
 
 					</Slider>
 					{/* <CourseSlider popular={true} /> */}
+					<div className="d-flex justify-content-between">
+						<h2 className="mb-0 mx-2">Popular Courses</h2>
+						<Link to="/courses/" className="btn btn-primary">
+							See All Courses
+						</Link>
+					</div>
 
-					<h2 className="mb-0 mx-2">Popular Courses</h2>
+					<br></br>
 					<div className="position-relative">
 
 						<Slider {...courseSliderSettings} className="pb-sm-5 mb-5 slick-slider-wrapper">
@@ -124,10 +141,31 @@ const CourseIndex = () => {
 								</div>
 							))}
 						</Slider>
-					</div>
-					<h2 className="mb-0 mx-2">Popular Courses</h2>
 
-					<WorldClassInstructors />
+						<h2 className="mb-0 mx-2">HERO EVENTS</h2>
+
+
+
+						<WorldClassInstructors />
+					</div>
+
+
+					<br></br>
+					<br></br>
+					<h2 className="mb-0 mx-2">Fagaaraha Qaamuus</h2>
+					{/* <br></br> */}
+					<Row className="mb-8">
+						<Col md={12}>
+							{/*  Testimonial slider */}
+							<TestimonialsSlider />
+						</Col>
+					</Row>
+
+					<LogosTopHeading2
+						title="Loved by over 5 million users from companies like"
+						logos={LogoList1}
+						limit={0}
+					/>
 				</Container>
 			</div>
 
