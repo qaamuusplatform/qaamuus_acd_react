@@ -30,7 +30,7 @@ import ReviewsTab from './ReviewsTab';
 import DescriptionTab from './DescriptionTab';
 
 // import data files
-import { CourseIndex } from 'data/marketing/CourseIndexData';
+// import { CourseIndex } from 'data/marketing/CourseIndexData';
 const CourseSingle2 = () => {
 	return (
 		<Fragment>
