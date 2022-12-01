@@ -21,16 +21,16 @@ import { mdiAccountMultipleOutline } from "@mdi/js";
 // import LevelIcon from 'components/marketing/common/miscellaneous/LevelIcon';
 
 // import sub components tabs
-import Avatar1 from "../../assets/images/avatar/avatar-1.jpg";
-import Ratings from "../../components/elements/common/ratings/Ratings";
-import LevelIcon from "../../pages/student/miscellaneous/LevelIcon";
+import Avatar1 from "assets/images/avatar/avatar-1.jpg";
+import Ratings from "components/elements/common/ratings/Ratings";
+import LevelIcon from "pages/student/miscellaneous/LevelIcon";
 import FAQTab from "./FAQTab";
 import TranscriptTab from "./TranscriptTab";
 import ReviewsTab from "./ReviewsTab";
 import DescriptionTab from "./DescriptionTab";
 
 // import data files
-// import { CourseIndex } from "../../data/marketing/CourseIndexData";
+import { CourseIndex } from "../../data/CourseIndexData";
 const EventDetail = () => {
   return (
     <Fragment>

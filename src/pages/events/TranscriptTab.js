@@ -1,9 +1,10 @@
 // import node module libraries
+
+import { Transcripts } from "../../data/CourseIndexData";
 import { Fragment } from "react";
 import { Link } from "react-router-dom";
 
-// import data files
-import { Transcripts } from "data/marketing/CourseIndexData";
+// import data
 
 const TranscriptTab = () => {
   return (

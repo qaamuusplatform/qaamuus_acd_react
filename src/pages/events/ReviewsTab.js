@@ -1,13 +1,14 @@
 // import node module libraries
+
 import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { Col, Row, Image, ProgressBar, Form } from "react-bootstrap";
+import Ratings from "../../components/elements/common/ratings/Ratings";
+import { Reviews } from "../../data/CourseIndexData";
 
 // import custom components
-import Ratings from "components/marketing/common/ratings/Ratings";
 
 // import data files
-import { Reviews } from "data/marketing/CourseIndexData";
 
 const ReviewsTab = () => {
   return (

@@ -6,6 +6,7 @@ import "assets/scss/theme.scss";
 
 /* ----------------------------------- */
 /* IMPORTS FOR MARKETING PAGES - START */
+
 import CourseIndex from "pages/index/CourseIndex";
 import DefaultLayout from "./DefaultLayout";
 import AuthLayout from "./AuthLayout";
@@ -85,9 +86,6 @@ function AllRoutes() {
         layout={DefaultLayout}
         component={EventDetail}
       />
-
-      {/* LANDING PAGES ROUTERS - END */}
-      {/* --------------------------- */}
 
       {/* ADMIN PAGES ROUTERS - START */}
       {/* --------------------------- */}
