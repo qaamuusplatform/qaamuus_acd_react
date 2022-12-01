@@ -34,7 +34,7 @@ import ReviewsTab from './ReviewsTab';
 import DescriptionTab from './DescriptionTab';
 import { CourseIndex } from 'data/CourseIndexData';
 import ProfileBackground from 'assets/images/background/profile-bg.jpg';
-import GKAccordionProgress from 'components/cards/GKAccordionProgress';
+// import GKAccordionProgress from 'components/cards/GKAccordionProgress';
 import ModalVideo from 'react-modal-video';
 
 // import data files

@@ -1,5 +1,5 @@
 // import node module libraries
-import { Fragment, useEffect } from 'react';
+import { Fragment, useEffect,useContext } from 'react';
 import { Col, Row, Nav, Tab, Card, Container } from 'react-bootstrap';
 
 // import custom components
@@ -8,9 +8,11 @@ import ProfileCover from './ProfileCover';
 
 // import media files
 import Avatar3 from 'assets/images/avatar/avatar-3.jpg';
+import { CurrentUserContext } from 'services/currentUserContext';
 
 // import data files
 const StudentDashboard = () => {
+	const { theUser, setTheUser } = useContext(CurrentUserContext);
     const dashboardData = {
         avatar: Avatar3,
         name: 'Stella Flores',
@@ -31,7 +33,7 @@ const StudentDashboard = () => {
             <div className="pt-5 pb-5">
                 <Container>
                     {/* User info */}
-                    <ProfileCover dashboardData={dashboardData} />
+                    <ProfileCover dashboardData={theUser} />
 
                     {/* Content */}
                     <Row className="mt-0 mt-md-4">

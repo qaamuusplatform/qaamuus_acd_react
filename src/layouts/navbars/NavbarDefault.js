@@ -1,5 +1,5 @@
 // import node module libraries
-import { Fragment, useState } from 'react';
+import { Fragment, useState,useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import {
@@ -33,6 +33,8 @@ import Avatar1 from 'assets/images/avatar/avatar-1.jpg';
 import NavbarDefaultRoutes from 'routes/NavbarDefault';
 import NotificationList from 'data/Notification';
 import NavDropdownMain from 'layouts/navbars/NavDropdownMain';
+import baseUrl from 'services/baseUrl';
+import { CurrentUserContext } from 'services/currentUserContext';
 
 const NavbarDefault = ({ headerstyle, login }) => {
 	const isDesktop = useMediaQuery({
@@ -43,6 +45,7 @@ const NavbarDefault = ({ headerstyle, login }) => {
 	});
 
 	const [expandedMenu, setExpandedMenu] = useState(false);
+	const { theUser, setTheUser } = useContext(CurrentUserContext);
 
 	const QuickMenu = () => {
 		return (
@@ -142,7 +145,7 @@ const NavbarDefault = ({ headerstyle, login }) => {
 						id="dropdownUser"
 					>
 						<div className="avatar avatar-md avatar-indicators avatar-online">
-							<Image alt="avatar" src={Avatar1} className="rounded-circle" />
+							<Image alt="avatar" src={baseUrl.baseUrl+theUser.profileImage} className="rounded-circle" />
 						</div>
 					</Dropdown.Toggle>
 					<Dropdown.Menu
@@ -156,24 +159,24 @@ const NavbarDefault = ({ headerstyle, login }) => {
 								<div className="avatar avatar-md avatar-indicators avatar-online">
 									<Image
 										alt="avatar"
-										src={Avatar1}
+										src={baseUrl.baseUrl+theUser.profileImage}
 										className="rounded-circle"
 									/>
 								</div>
 								<div className="ms-3 lh-1">
-									<h5 className="mb-1">Annette Black</h5>
-									<p className="mb-0 text-muted">annette@geeksui.com</p>
+									<h5 className="mb-1">{theUser.fullName}</h5>
+									<p className="mb-0 text-muted">{theUser.email}</p>
 								</div>
 							</div>
 						</Dropdown.Item>
 						<Dropdown.Divider />
-						<Dropdown.Item eventKey="2">
-							<i className="fe fe-user me-2"></i> Profile
+						<Dropdown.Item as={Link} to="/student/dashboard/" eventKey="2">
+							<i className="fe fe-user me-2"></i> Dashboard
 						</Dropdown.Item>
 						<Dropdown.Item eventKey="3">
 							<i className="fe fe-star me-2"></i> Subscription
 						</Dropdown.Item>
-						<Dropdown.Item>
+						<Dropdown.Item as={Link} to="/student/edit-profile/" >
 							<i className="fe fe-settings me-2"></i> Settings
 						</Dropdown.Item>
 						<Dropdown.Divider />
