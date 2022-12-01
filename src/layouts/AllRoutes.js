@@ -16,6 +16,7 @@ import StudentDashboard from 'pages/student/Dashboard';
 import EditProfile from 'pages/student/account-settings/EditProfile';
 import Courses from 'pages/courses/Courses';
 import Events from 'pages/events/events';
+import CourseSingle2 from 'pages/events/eventDetail';
 
 
 
@@ -54,6 +55,7 @@ function AllRoutes() {
 			{/* COURSES AND CATEGORIES */}
 			<AppRoute exact path="/courses/" layout={DefaultLayout} component={Courses} />
 			<AppRoute exact path="/events/" layout={DefaultLayout} component={Events} />
+			<AppRoute exact path="/event/detail/" layout={DefaultLayout} component={CourseSingle2} />
 
 			
 			{/* LANDING PAGES ROUTERS - END */}

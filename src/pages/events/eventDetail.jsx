@@ -28,9 +28,11 @@ import FAQTab from './FAQTab';
 import TranscriptTab from './TranscriptTab';
 import ReviewsTab from './ReviewsTab';
 import DescriptionTab from './DescriptionTab';
+import { CourseIndex } from 'data/CourseIndexData';
+import GKAccordionProgress from 'components/cards/GKAccordionProgress';
 
 // import data files
-// import { CourseIndex } from 'data/marketing/CourseIndexData';
+// import { CourseIndex } from 'data/marketing/CourseIndexData';np
 const CourseSingle2 = () => {
 	return (
 		<Fragment>
@@ -150,11 +152,11 @@ const CourseSingle2 = () => {
 								</Card>
 							</Tab.Container>
 						</Col>
-						{/* <Col xl={4} lg={12} md={12} sm={12}>
+						<Col xl={4} lg={12} md={12} sm={12}>
 							<Card>
 								<GKAccordionProgress accordionItems={CourseIndex} />
 							</Card>
-						</Col> */}
+						</Col>
 					</Row>
 				</Container>
 			</div>

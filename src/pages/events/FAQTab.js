@@ -1,6 +1,6 @@
 // import node module libraries
+import { CourseFAQs } from 'data/CourseIndexData';
 import { Fragment } from 'react';
-import { CourseFAQs } from 'data/marketing/CourseIndexData';
 
 const FAQTab = () => {
 	return (
