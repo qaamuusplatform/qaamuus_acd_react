@@ -12,21 +12,16 @@ import { CurrentUserContext } from "services/currentUserContext";
 import { useState, useEffect } from "react";
 import { getLoggedInUser } from "services/authService";
 function App() {
-  const [user, setUser] = useState([]);
+  const [theUser, setTheUser] = useState(getLoggedInUser());
+  // const qInit = async () => {
+  // 	 data = await getLoggedInUser();
+  // 	console.log(data);
+  // 	setTheUser(data);
+  // };
+  // useEffect(() => {
+  // 	qInit();
+  // }, []);
 
-  const getCurrentUser = async () => {
-    const { data } = await getLoggedInUser();
-    console.log(data);
-    setUser(data);
-  };
-
-  console.log(user);
-
-  useEffect(() => {
-    getCurrentUser();
-  }, []);
-
-  //   console.log(user);
   return (
     <Router>
       <CurrentUserContext.Provider value={{ user, setUser }}>
