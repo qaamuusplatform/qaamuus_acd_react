@@ -1,7 +1,6 @@
 // import node module libraries
 import { Row, Col, Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 // import custom components
 
@@ -80,11 +79,5 @@ const ProfileCover = ({ dashboardData, isDashboard }) => {
 		</Row>
 	);
 };
-ProfileCover.defaultProps = {
-	isDashboard: false
-};
 
-ProfileCover.propTypes = {
-	isDashboard: PropTypes.bool
-};
 export default ProfileCover;

@@ -180,7 +180,7 @@ const NavbarDefault = ({ headerstyle, login }) => {
 							<i className="fe fe-settings me-2"></i> Settings
 						</Dropdown.Item>
 						<Dropdown.Divider />
-						<Dropdown.Item className="mb-3">
+						<Dropdown.Item  className="mb-3">
 							<i className="fe fe-power me-2"></i> Sign Out
 						</Dropdown.Item>
 					</Dropdown.Menu>

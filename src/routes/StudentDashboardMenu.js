@@ -1,19 +1,19 @@
 export const DashboardMenu = [
 	{
 		id: 1,
-		title: 'My Subscriptions',
-		link: '/marketing/student/student-subscriptions/',
-		icon: 'home'
+		title: 'Edit Profile',
+		link: '/student/edit-profile/',
+		icon: 'edit'
 	},
 	{
 		id: 2,
-		title: 'Billing Info',
-		link: '/marketing/student/student-billing-info/',
+		title: 'Koorasyadada',
+		link: '/student/enrolled-courses/',
 		icon: 'book'
 	},
 	{
 		id: 3,
-		title: 'Payment',
+		title: 'Lacag Bixinta',
 		link: '/marketing/student/student-payment/',
 		icon: 'star'
 	},
@@ -28,46 +28,35 @@ export const DashboardMenu = [
 export const AccountSettingsMenu = [
 	{
 		id: 1,
-		title: 'Edit Profile',
-		link: '/marketing/student/student-edit-profile/',
+		title: 'Doodda Casharka',
+		link: '/student/discussion topics/',
 		icon: 'settings'
 	},
 	{
 		id: 2,
-		title: 'Security',
+		title: 'Jawaab celin',
 		link: '/marketing/student/student-security/',
 		icon: 'user'
 	},
 	{
-		id: 3,
-		title: 'Social Profiles',
-		link: '/marketing/student/student-social-profiles/',
-		icon: 'refresh-cw'
-	},
-	{
 		id: 4,
-		title: 'Notifications',
-		link: '/marketing/student/student-notifications/',
+		title: 'Ogeysiisyada',
+		link: '/student/n-notification/',
 		icon: 'bell'
 	},
-	{
-		id: 5,
-		title: 'Profile Privacy',
-		link: '/marketing/student/student-profile-privacy/',
-		icon: 'lock'
-	},
+	// {
+	// 	id: 5,
+	// 	title: 'Profile Privacy',
+	// 	link: '/marketing/student/student-profile-privacy/',
+	// 	icon: 'lock'
+	// },
 	{
 		id: 6,
 		title: 'Delete Profile',
-		link: '/marketing/student/student-delete-profile/',
+		link: '/student/delete-profile/',
 		icon: 'trash'
 	},
-	{
-		id: 6,
-		title: 'Linked Accounts',
-		link: '/marketing/student/student-linked-accounts/',
-		icon: 'user'
-	},
+	
 	{
 		id: 6,
 		title: 'Sign Out',
