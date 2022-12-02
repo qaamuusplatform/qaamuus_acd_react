@@ -13,14 +13,14 @@ import { useState,useEffect } from 'react';
 import { getLoggedInUser } from 'services/authService';
 function App() {
 	const [theUser, setTheUser] = useState(getLoggedInUser());
-	// const getCurrentUser = async () => {
-	// 	const respData = await getLoggedInUser();
-	// 	console.log(respData);
-	// 	setTheUser(respData);
+	// const qInit = async () => {
+	// 	 data = await getLoggedInUser();
+	// 	console.log(data);
+	// 	setTheUser(data);
 	// };
 	// useEffect(() => {
-	// 	getCurrentUser();
-	// }, null);
+	// 	qInit();
+	// }, []);
 	return (
 		<Router>
 			<CurrentUserContext.Provider value={{ theUser, setTheUser }} >
