@@ -15,10 +15,12 @@ const getData = async () => {
     username: "252615129181",
     password: "8085",
   });
+  console.log('jellooo')
 };
 
 export default function SignIn() {
   useEffect(() => {
+    console.log('itsitsits')
     getData();
   }, []);
   return <Fragment>
