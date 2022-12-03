@@ -23,25 +23,24 @@ export default function SignUp() {
   const [formIsLoading, setFormIsLoading] = useState(false);
   const [formError, setFormError] = useState("");
   const [userRegistred, setUserRegistred] = useState(false);
-  let userNameIsExist =true;
+  const [formComp, setFormComp]=useState(false);
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
   };
-  const handleChange = async ({ target }) => {
+  const handleChange = async ({ target })  => {
     const { value, name } = target;
     if (value.length > 6) {
-      userNameIsExist=await (await http.get("/api/checkingUserExist/" + value + '/')).data.isExist
-      console.log(userNameIsExist);
-      if (!userNameIsExist) {
-        target.style.border = "2px solid #2ECC71";
+      let userNameIsExist= await (await http.get("/api/checkingUserExist/"+value+'/')).data.isExist;
+      if(!userNameIsExist){
+        target.style.border = "1.5px solid green";
         // target.style="box-shadow: 1px 1px 1px 1px green;"
-      } else {
-        target.style.border = "1px solid #E74C3C";
+      }else{
+        target.style.border = "1px solid red";
         // target.style="box-shadow: 1px 1px 1px 1px red;"
       }
     } else {
       // set error
-      target.style.border = "1px solid #E74C3C";
+      target.style.border = "1px solid red";
     }
 
   };
@@ -51,17 +50,16 @@ export default function SignUp() {
     setUserRegistred(false);
     e.preventDefault();
     const userData = new FormData(e.target);
+    console.log(userData.get("email"));
+    console.log(userData.get("username"));
     if (userData.get("password") == userData.get("comfirmPassword")) {
-      console.log(userData.entries);
-      
-      setFormIsLoading(false);
-      setUserRegistred(true);
-      // http.post("/api/userProfile-create/", userData)
-      //   .then((userProfileResp) => {
-      //     console.log(userProfileResp.data);
-      //     // Redirect("/student/dashboard");
-      //   });
-      setFormError("");
+      await http .post("/api/userProfile-create/", userData)
+                .then((userProfileResp) => {
+                  setFormIsLoading(false);
+                  setUserRegistred(true);
+                  Redirect("/student/dashboard");
+                });
+      // setFormError("");
       // await http
       //   .get(
       //     "/api/checkUserExistEmailAndUsername/" +
@@ -149,11 +147,14 @@ export default function SignUp() {
                       id="username"
                       size="sm"
                       onChange={handleChange}
+                      // onChange={(text) => { console.log(text.value) }}
                       name="username"
+                      // aria-errormessage="miodsa"
+                      error="dasdsa"
                       placeholder="Username auth"
                       required
                     />
-                    {/* <Form.Label id="usernameIsValid" >Email </Form.Label> */}
+                    {/* <Form.Label id="usernameValid" >Email </Form.Label> */}
                   </Col>
                   <Col lg={12} md={12} className="mb-3">
                     {/* email */}
@@ -215,10 +216,9 @@ export default function SignUp() {
                   </Button>
                 ) : (
                   <Button variant="primary" type="submit" size="sm">
-                    Diiwaangali
+                    SING UP
                   </Button>
                 )}
-                
               </Form>
               <hr className="my-4" />
               <div className="mt-4 text-center">

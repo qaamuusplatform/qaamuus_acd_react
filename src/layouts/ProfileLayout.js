@@ -31,7 +31,7 @@ const ProfileLayout = (props) => {
 		name: 'Stella Flores',
 		username: '@stellaflores',
 		linkname: 'Go to Dashboard ',
-		link: '/student/dashboard',
+		link: '/user/dashboard',
 		verified: true,
 		outlinebutton: true,
 		level: ''

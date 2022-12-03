@@ -17,6 +17,9 @@ import EditProfile from "pages/student/account-settings/EditProfile";
 import Courses from "pages/courses/Courses";
 import Events from "pages/events/events";
 import EventDetail from "pages/events/eventDetail";
+import EnrolledCourses from "pages/student/account-settings/EnrolledCourses";
+import Notifications from "pages/student/account-settings/Notifications";
+import DeleteProfile from "pages/student/account-settings/DeleteProfile";
 // import DeleteProfile from "pages/student/account-settings/Deleteprofile";
 
 /* IMPORTS FOR MARKETING PAGES - END */
@@ -43,12 +46,14 @@ function AllRoutes() {
 			{/* authentication joining forgetting  */}
 			<AppRoute exact path="/auth/login" layout={AuthLayout} component={SignIn}
 			/>
-			<AppRoute exact path="/join/sign-up" layout={AuthLayout} component={SignUp} />
+			<AppRoute exact path="/join/register/" layout={AuthLayout} component={SignUp} />
 
 			{/* dashboard edit userifno */}
-			<AppRoute exact path="/student/dashboard/" layout={DefaultLayout} component={StudentDashboard} />
-			<AppRoute exact path="/student/edit-profile/" layout={DefaultLayout} component={EditProfile} />
-			{/* <AppRoute exact path="/student/delete-profile/" layout={DefaultLayout} component={DeleteProfile} /> */}
+			<AppRoute exact path="/user/dashboard/" layout={DefaultLayout} component={StudentDashboard} />
+			<AppRoute exact path="/user/edit-profile/" layout={DefaultLayout} component={EditProfile} />
+			<AppRoute exact path="/user/enrolled-courses/" layout={DefaultLayout} component={EnrolledCourses} />
+			<AppRoute exact path="/user/notifications/" layout={DefaultLayout} component={Notifications} />
+			<AppRoute exact path="/user/delete-account/" layout={DefaultLayout} component={DeleteProfile} />
 
 			{/* COURSES AND CATEGORIES */}
 			<AppRoute exact path="/courses/" layout={DefaultLayout} component={Courses} />

@@ -9,11 +9,12 @@ import ProfileCover from './ProfileCover';
 // import media files
 import Avatar3 from 'assets/images/avatar/avatar-3.jpg';
 import { CurrentUserContext } from 'services/currentUserContext';
-import { getUserEnrolmentsData } from 'services/userInrolledData';
+import { getUserEnrolmentsData } from 'services/userProfileInfo';
 import { useState } from 'react';
 import AllCoursesData from 'data/AllCoursesData';
 import Slider from 'react-slick';
 import CourseCard from 'components/cards/CourseCard';
+import BlogCard from 'components/cards/BlogCard';
 
 // import data files
 const StudentDashboard = () => {
@@ -22,7 +23,7 @@ const StudentDashboard = () => {
 
     const qInit = async () => {
         const { data } = await getUserEnrolmentsData('theUser');
-        // console.log(data);
+        console.log(data);
         setUserEnrolmentsData(data);
     }
     const dashboardData = {
@@ -30,7 +31,7 @@ const StudentDashboard = () => {
         name: 'Stella Flores',
         username: '@stellaflores',
         linkname: 'Account Setting',
-        link: '/student/edit-profile/',
+        link: '/user/edit-profile/',
         verified: false,
         outlinebutton: false,
         level: 'Beginner'
@@ -117,24 +118,37 @@ const StudentDashboard = () => {
                                                     <Tab.Pane eventKey="courses" className="pb-4 p-4 ps-0 pe-0" >
                                                         {/* learning courses started */}
                                                         <Row>
-															{AllCoursesData.filter(function (datasource) {
-																return datasource;
-															}).slice(0, 8)
-																.map((item, index) => (
-																	<Col lg={3} md={6} sm={12} key={index}>
-																		<CourseCard item={item} showprogressbar />
-																	</Col>
-																))}
-														</Row>
+                                                            {AllCoursesData.filter(function (datasource) {
+                                                                return datasource;
+                                                            }).slice(0, 8)
+                                                                .map((item, index) => (
+                                                                    <Col lg={3} md={6} sm={12} key={index}>
+                                                                        <CourseCard item={item} showprogressbar />
+                                                                    </Col>
+                                                                ))}
+                                                        </Row>
                                                         {/* end of learning courses */}
                                                     </Tab.Pane>
                                                     <Tab.Pane
                                                         eventKey="events"
                                                         className="pb-4 p-4 ps-0 pe-0"
                                                     >
-                                                        {/* learning courses started */}
-
-                                                        {/* end of learning courses */}
+                                                        {/* learning events started */}
+                                                       
+                                                        {userEnrolmentsData.bookedEvents &&
+                                                            userEnrolmentsData.bookedEvents.map((theEvent, index) => (
+                                                                <Col
+                                                                    xl={4}
+                                                                    lg={4}
+                                                                    md={6}
+                                                                    sm={12}
+                                                                    key={index}
+                                                                    className="d-flex"
+                                                                >
+                                                                    <BlogCard event={theEvent} />
+                                                                </Col>
+                                                            ))}
+                                                        {/* end of learning events */}
                                                     </Tab.Pane>
                                                     <Tab.Pane
                                                         eventKey="bookmarked"
