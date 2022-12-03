@@ -103,7 +103,7 @@ export default function SignUp() {
     }
   }
   return (
-    <Fragment>
+    <Fragment >
       <br />
       <Row className="align-items-center justify-content-center g-0 min-vh-100">
         <Col lg={10} md={12} className="py-8 py-xl-0">
