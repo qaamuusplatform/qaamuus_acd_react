@@ -17,32 +17,34 @@ const WorldClassInstructors = () => {
 	const isLaptop = useMediaQuery({ minWidth: 1024, maxWidth: 1445 });
 
 	return (
-		<div className="py-8 py-lg-16 bg-light-gradient-top bg-white">
-				
-				<Row>
-					{InstructorsList.map((item, index) => (
-						<Col
-							key={index}
-							xl={3}
-							lg={4}
-							md={6}
-							sm={12}
-							className={`${
-								isLaptop && index === 3 ? 'd-lg-none d-xl-block' : ''
+
+		// <div className="py-8 py-lg-16 bg-light-gradient-top bg-white"></div>
+		<div className="">
+			<h2 className="mb-0 mx-2">Popular Courses</h2>
+			<br></br>
+			<Row>
+				{InstructorsList.map((item, index) => (
+					<Col
+						key={index}
+						xl={3}
+						lg={4}
+						md={6}
+						sm={12}
+						className={`${isLaptop && index === 3 ? 'd-lg-none d-xl-block' : ''
 							}`}
-						>
-							<InstructorCard item={item} />
-						</Col>
-					))}
-				</Row>
-				<Row>
-					<Col md={12} className="mt-3 text-center">
-						<Link to="#" className="btn btn-primary">
-							See All Instructors
-						</Link>
+					>
+						<InstructorCard item={item} />
 					</Col>
-				</Row>
+				))}
+			</Row>
+			<div className="d-flex justify-content-between">
+				<h2 className="mb-0 mx-2"> </h2>
+				<Link to="/courses/" className="btn btn-secondary">
+				See All Instructors
+				</Link>
+			</div>
 			
+
 		</div>
 	);
 };

@@ -13,9 +13,13 @@ import { Container, Row, Col, Nav, Navbar } from 'react-bootstrap';
 // import media files
 import Avatar3 from 'assets/images/avatar/avatar-3.jpg';
 import ProfileCover from 'pages/student/ProfileCover';
-import { DashboardMenu } from 'routes/StudentDashboardMenu';
-
+import { AccountSettingsMenu, DashboardMenu } from 'routes/StudentDashboardMenu';
+import { useContext } from 'react';
+import { CurrentUserContext } from 'services/currentUserContext';
 const ProfileLayout = (props) => {
+	
+	const { theUser, setTheUser } = useContext(CurrentUserContext);
+
 	const location = useLocation();
 
 	useEffect(() => {
@@ -27,7 +31,7 @@ const ProfileLayout = (props) => {
 		name: 'Stella Flores',
 		username: '@stellaflores',
 		linkname: 'Go to Dashboard ',
-		link: '/student/dashboard',
+		link: '/user/dashboard',
 		verified: true,
 		outlinebutton: true,
 		level: ''
@@ -38,7 +42,7 @@ const ProfileLayout = (props) => {
 			<div className="pt-5 pb-5">
 				<Container>
 					{/* User info */}
-					<ProfileCover dashboardData={dashboardData} />
+					<ProfileCover dashboardData={theUser} isDashboard={false} />
 
 					{/* Content */}
 					<Row className="mt-0 mt-md-4">
@@ -92,7 +96,7 @@ const ProfileLayout = (props) => {
 										<Nav.Item className="navbar-header mt-4" as="li">
 											ACCOUNT SETTINGS
 										</Nav.Item>
-										{/* {AccountSettingsMenu.map((item, index) => (
+										{AccountSettingsMenu.map((item, index) => (
 											<Nav.Item
 												as="li"
 												key={index}
@@ -105,7 +109,7 @@ const ProfileLayout = (props) => {
 													{item.title}
 												</Link>
 											</Nav.Item>
-										))} */}
+										))}
 									</Nav>
 								</Navbar.Collapse>
 							</Navbar>

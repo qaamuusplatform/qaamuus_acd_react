@@ -8,8 +8,9 @@ import { Link } from 'react-router-dom';
 import CheckedMark from 'assets/images/svg/checked-mark.svg';
 import ProfileBackground from 'assets/images/background/profile-bg.jpg';
 import LevelIconWithTooltip from './miscellaneous/LevelIconWithTooltip';
+import baseUrl from 'services/baseUrl';
 
-const ProfileCover = ({ dashboardData }) => {
+const ProfileCover = ({ dashboardData, isDashboard }) => {
 	return (
 		<Row className="align-items-center">
 			<Col xl={12} lg={12} md={12} sm={12}>
@@ -28,7 +29,7 @@ const ProfileCover = ({ dashboardData }) => {
 					<div className="d-flex align-items-center">
 						<div className="me-2 position-relative d-flex justify-content-end align-items-end mt-n5">
 							<Image
-								src={dashboardData.avatar}
+								src={baseUrl.baseUrl + dashboardData.profileImage}
 								className="avatar-xl rounded-circle border border-4 border-white position-relative"
 								alt=""
 							/>
@@ -49,21 +50,29 @@ const ProfileCover = ({ dashboardData }) => {
 						</div>
 						<div className="lh-1">
 							<h2 className="mb-0">
-								{dashboardData.name}{' '}
+								{dashboardData.fullName}{' '}
 								<LevelIconWithTooltip level={dashboardData.level} />{' '}
 							</h2>
-							<p className="mb-0 d-block">{dashboardData.username}</p>
+							<p className="mb-0 d-block">{dashboardData.number}</p>
 						</div>
 					</div>
 					<div>
-						<Link
-							to={dashboardData.link}
-							className={`btn btn${
-								dashboardData.outlinebutton ? '-outline' : ''
-							}-primary btn-sm d-none d-md-block`}
+						{isDashboard ? (<Link
+							to={'/user/edit-profile/'}
+							className={`btn btn${'dashboardData.outlinebutton' ? '-outline' : ''
+								}-primary btn-sm d-none d-md-block`}
 						>
-							{dashboardData.linkname}
-						</Link>
+							Account Setting
+						</Link>) : (
+							<Link
+								to={'/user/dashboard/'}
+								className={`btn btn${'dashboardData.outlinebutton' ? '-outline' : ''
+									}-primary btn-sm d-none d-md-block`}
+							>
+							  Q	Dashboard
+							</Link>
+						)}
+
 					</div>
 				</div>
 			</Col>

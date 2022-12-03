@@ -1,26 +1,26 @@
 export const DashboardMenu = [
 	{
 		id: 1,
-		title: 'My Subscriptions',
-		link: '/marketing/student/student-subscriptions/',
-		icon: 'home'
+		title: 'Edit Profile',
+		link: '/user/edit-profile/',
+		icon: 'edit'
 	},
 	{
 		id: 2,
-		title: 'Billing Info',
-		link: '/marketing/student/student-billing-info/',
+		title: 'Koorasyadada',
+		link: '/user/enrolled-courses/',
 		icon: 'book'
 	},
 	{
 		id: 3,
-		title: 'Payment',
-		link: '/marketing/student/student-payment/',
+		title: 'Lacag Bixinta',
+		link: '/marketing/user/student-payment/',
 		icon: 'star'
 	},
 	{
 		id: 4,
 		title: 'Invoice',
-		link: '/marketing/student/student-invoice/',
+		link: '/marketing/user/student-invoice/',
 		icon: 'pie-chart'
 	}
 ];
@@ -28,46 +28,35 @@ export const DashboardMenu = [
 export const AccountSettingsMenu = [
 	{
 		id: 1,
-		title: 'Edit Profile',
-		link: '/marketing/student/student-edit-profile/',
+		title: 'Doodda Casharka',
+		link: '/user/discussion topics/',
 		icon: 'settings'
 	},
 	{
 		id: 2,
-		title: 'Security',
-		link: '/marketing/student/student-security/',
+		title: 'Jawaab celin',
+		link: '/marketing/user/student-security/',
 		icon: 'user'
-	},
-	{
-		id: 3,
-		title: 'Social Profiles',
-		link: '/marketing/student/student-social-profiles/',
-		icon: 'refresh-cw'
 	},
 	{
 		id: 4,
-		title: 'Notifications',
-		link: '/marketing/student/student-notifications/',
+		title: 'Ogeysiisyada',
+		link: '/user/notifications/',
 		icon: 'bell'
 	},
-	{
-		id: 5,
-		title: 'Profile Privacy',
-		link: '/marketing/student/student-profile-privacy/',
-		icon: 'lock'
-	},
+	// {
+	// 	id: 5,
+	// 	title: 'Profile Privacy',
+	// 	link: '/marketing/user/student-profile-privacy/',
+	// 	icon: 'lock'
+	// },
 	{
 		id: 6,
-		title: 'Delete Profile',
-		link: '/marketing/student/student-delete-profile/',
+		title: 'Delete Account',
+		link: '/user/delete-account/',
 		icon: 'trash'
 	},
-	{
-		id: 6,
-		title: 'Linked Accounts',
-		link: '/marketing/student/student-linked-accounts/',
-		icon: 'user'
-	},
+	
 	{
 		id: 6,
 		title: 'Sign Out',
