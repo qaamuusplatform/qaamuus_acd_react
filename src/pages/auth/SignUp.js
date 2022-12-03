@@ -14,10 +14,6 @@ import {
 } from "react-bootstrap";
 
 import ProfileBackground from 'assets/images/background/profile-bg.jpg';
-import axios from "axios";
-// import media files
-import Logo from "assets/images/brand/logo/logo-icon.svg";
-import { boolean } from "yup";
 export default function SignUp() {
   const [passwordShown, setPasswordShown] = useState(false);
   const [formIsLoading, setFormIsLoading] = useState(false);
@@ -110,7 +106,7 @@ export default function SignUp() {
     <Fragment>
       <br />
       <Row className="align-items-center justify-content-center g-0 min-vh-100">
-        <Col lg={8} md={8} className="py-8 py-xl-0">
+        <Col lg={10} md={12} className="py-8 py-xl-0">
           <Card>
             <Card.Img variant="top" src={ProfileBackground} />
             <Card.Body className="p-6">
