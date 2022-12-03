@@ -19,8 +19,8 @@ export const DashboardMenu = [
 	},
 	{
 		id: 4,
-		title: 'Invoice',
-		link: '/marketing/user/student-invoice/',
+		title: 'Auth Security',
+		link: '/user/auth-security/',
 		icon: 'pie-chart'
 	}
 ];

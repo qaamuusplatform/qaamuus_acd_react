@@ -20,6 +20,7 @@ import EventDetail from "pages/events/eventDetail";
 import EnrolledCourses from "pages/student/account-settings/EnrolledCourses";
 import Notifications from "pages/student/account-settings/Notifications";
 import DeleteProfile from "pages/student/account-settings/DeleteProfile";
+import AuthSecurity from "pages/student/account-settings/AuthSecurity";
 // import DeleteProfile from "pages/student/account-settings/Deleteprofile";
 
 /* IMPORTS FOR MARKETING PAGES - END */
@@ -54,6 +55,7 @@ function AllRoutes() {
 			<AppRoute exact path="/user/enrolled-courses/" layout={DefaultLayout} component={EnrolledCourses} />
 			<AppRoute exact path="/user/notifications/" layout={DefaultLayout} component={Notifications} />
 			<AppRoute exact path="/user/delete-account/" layout={DefaultLayout} component={DeleteProfile} />
+			<AppRoute exact path="/user/auth-security/" layout={DefaultLayout} component={AuthSecurity} />
 
 			{/* COURSES AND CATEGORIES */}
 			<AppRoute exact path="/courses/" layout={DefaultLayout} component={Courses} />

@@ -23,14 +23,14 @@ export default function SignUp() {
   const [formIsLoading, setFormIsLoading] = useState(false);
   const [formError, setFormError] = useState("");
   const [userRegistred, setUserRegistred] = useState(false);
-  let userNameIsExist =true;
+  let userNameIsExist = true;
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
   };
   const handleChange = async ({ target }) => {
     const { value, name } = target;
     if (value.length > 6) {
-      userNameIsExist=await (await http.get("/api/checkingUserExist/" + value + '/')).data.isExist
+      userNameIsExist = await (await http.get("/api/checkingUserExist/" + value + '/')).data.isExist
       console.log(userNameIsExist);
       if (!userNameIsExist) {
         target.style.border = "2px solid #2ECC71";
@@ -52,16 +52,26 @@ export default function SignUp() {
     e.preventDefault();
     const userData = new FormData(e.target);
     if (userData.get("password") == userData.get("comfirmPassword")) {
-      console.log(userData.entries);
-      
-      setFormIsLoading(false);
-      setUserRegistred(true);
-      // http.post("/api/userProfile-create/", userData)
-      //   .then((userProfileResp) => {
-      //     console.log(userProfileResp.data);
-      //     // Redirect("/student/dashboard");
-      //   });
-      setFormError("");
+      if (userNameIsExist) {
+
+        setFormError("");
+      } else {
+        var object = {};
+        userData.forEach(function (value, key) {
+          object[key] = value;
+        });
+        var json = JSON.stringify(object);
+
+
+        await http.post("/api/userProfile-create/", json, { headers: { 'Content-Type': 'application/json' } })
+          .then((userProfileResp) => {
+            console.log(userProfileResp.data);
+            setFormIsLoading(false);
+            setUserRegistred(true);
+            setFormError("");
+            Redirect("/user/dashboard");
+          });
+      }
       // await http
       //   .get(
       //     "/api/checkUserExistEmailAndUsername/" +
@@ -218,7 +228,7 @@ export default function SignUp() {
                     Diiwaangali
                   </Button>
                 )}
-                
+
               </Form>
               <hr className="my-4" />
               <div className="mt-4 text-center">

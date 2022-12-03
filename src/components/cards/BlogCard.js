@@ -61,13 +61,13 @@ const BlogCard = ({ event }) => {
           </Col>
           <Col className="col lh-1">
             <h5 className="mb-1">{event.persenter.fullName}</h5>
-            <p className="fs-6 mb-0">{event.persenter.email}</p>
+            <p className="fs-6 mb-0">{event.persenter.userTitle}</p>
           </Col>
-          <Col className="col-auto">
+          {/* <Col className="col-auto">
             <p className="fs-6 mb-0">
               {moment(event.dateTimeStarting).format("MMMM Do YYYY")}{" "}
             </p>
-          </Col>
+          </Col> */}
         </Row>
       </Card.Body>
     </Card>

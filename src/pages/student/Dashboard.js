@@ -134,21 +134,22 @@ const StudentDashboard = () => {
                                                         className="pb-4 p-4 ps-0 pe-0"
                                                     >
                                                         {/* learning events started */}
-                                                       
+                                                        <Row>
                                                         {userEnrolmentsData.bookedEvents &&
-                                                            userEnrolmentsData.bookedEvents.map((theEvent, index) => (
+                                                            userEnrolmentsData.bookedEvents.map((theBookedEvent, index) => (
                                                                 <Col
-                                                                    xl={4}
+                                                                    xl={3}
                                                                     lg={4}
                                                                     md={6}
                                                                     sm={12}
                                                                     key={index}
                                                                     className="d-flex"
                                                                 >
-                                                                    <BlogCard event={theEvent} />
+                                                                    <BlogCard event={theBookedEvent.theEvent} />
                                                                 </Col>
                                                             ))}
                                                         {/* end of learning events */}
+                                                        </Row>
                                                     </Tab.Pane>
                                                     <Tab.Pane
                                                         eventKey="bookmarked"
