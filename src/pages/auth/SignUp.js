@@ -9,7 +9,7 @@ import {
   Card,
   Form,
   Button,
-  Spinner,
+  Spinner,InputGroup,
   Image,
 } from "react-bootstrap";
 
@@ -23,25 +23,24 @@ export default function SignUp() {
   const [formIsLoading, setFormIsLoading] = useState(false);
   const [formError, setFormError] = useState("");
   const [userRegistred, setUserRegistred] = useState(false);
-  let userNameIsExist = true;
+  const [userNameIsExist, setUserNameIsExist] = useState(false);
+  const [usernameValid, setUsernameValid] = useState('Usernamka ugu yaraan 6');
+  let emailExist = true;
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
   };
   const handleChange = async ({ target }) => {
     const { value, name } = target;
     if (value.length > 6) {
-      userNameIsExist = await (await http.get("/api/checkingUserExist/" + value + '/')).data.isExist
-      console.log(userNameIsExist);
-      if (!userNameIsExist) {
-        target.style.border = "2px solid #2ECC71";
-        // target.style="box-shadow: 1px 1px 1px 1px green;"
-      } else {
-        target.style.border = "1px solid #E74C3C";
-        // target.style="box-shadow: 1px 1px 1px 1px red;"
+      setUserNameIsExist(await (await http.get("/api/checkingUserExist/" + value + '/')).data.isExist)
+      if(userNameIsExist){
+        setUsernameValid('Usernamkan wa la qabsaday');
       }
+     
     } else {
-      // set error
-      target.style.border = "1px solid #E74C3C";
+      console.log(userNameIsExist);
+      setUsernameValid('Usernamka ugu yaraan 6');
+      setUserNameIsExist(true);
     }
 
   };
@@ -136,7 +135,7 @@ export default function SignUp() {
               </div>
 
               {/* Form */}
-              <Form onSubmit={userJoinHandleSubmit}>
+              <Form onSubmit={userJoinHandleSubmit} controlId="validationFormik01">
                 <Row>
 
                   <Col lg={8} md={8} className="mb-3">
@@ -153,16 +152,23 @@ export default function SignUp() {
                   </Col>
                   <Col lg={4} md={4} className="mb-3">
                     {/* User Name */}
-                    <Form.Label>Username</Form.Label>
-                    <Form.Control
-                      type="text"
-                      id="username"
-                      size="sm"
-                      onChange={handleChange}
-                      name="username"
-                      placeholder="Username auth"
-                      required
-                    />
+                      <Form.Label>Username</Form.Label>
+                    <InputGroup hasValidation>
+                      <Form.Control
+                        type="text"
+                        id="username"
+                        size="sm"
+                        onChange={handleChange}
+                        name="username"
+                        isInvalid={userNameIsExist == true ? true : false}
+                        isValid={userNameIsExist == true ? false : true}
+                        placeholder="Username auth"
+                        required
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {usernameValid}
+                      </Form.Control.Feedback>
+                    </InputGroup>
                     {/* <Form.Label id="usernameIsValid" >Email </Form.Label> */}
                   </Col>
                   <Col lg={12} md={12} className="mb-3">

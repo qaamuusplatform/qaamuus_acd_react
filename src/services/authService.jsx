@@ -2,7 +2,6 @@ import http from "./httpService";
 
 const endPoint = "/api/jwt-login/";
 import useSWR from "swr";
-const token = "jwt";
 import axios from "axios";
 export const login = async (username, password) => {
   const { data } = await http.post(endPoint, { username, password });
