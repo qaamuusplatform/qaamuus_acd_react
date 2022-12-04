@@ -137,6 +137,7 @@ const NavbarDefault = ({ headerstyle, login }) => {
           </Dropdown.Menu>
         </Dropdown>
 
+<<<<<<< HEAD
         <Dropdown as={Nav.Item}>
           <Dropdown.Toggle
             as={Nav.Link}
@@ -218,6 +219,83 @@ const NavbarDefault = ({ headerstyle, login }) => {
             <span className="icon-bar middle-bar"></span>
             <span className="icon-bar bottom-bar"></span>
           </Navbar.Toggle>
+=======
+				<Dropdown as={Nav.Item}>
+					<Dropdown.Toggle
+						as={Nav.Link}
+						bsPrefix="dt"
+						className="rounded-circle border-bottom-0"
+						id="dropdownUser"
+					>
+						<div className="avatar avatar-md avatar-indicators avatar-online">
+							<Image alt="avatar" src={baseUrl.baseUrl+theUser.profileImage} className="rounded-circle" />
+						</div>
+					</Dropdown.Toggle>
+					<Dropdown.Menu
+						show={isDesktop ? true : false}
+						className="dashboard-dropdown dropdown-menu-end mt-4 py-0"
+						aria-labelledby="dropdownUser"
+						align="end"
+					>
+						<Dropdown.Item className="mt-3">
+							<div className="d-flex">
+								<div className="avatar avatar-md avatar-indicators avatar-online">
+									<Image
+										alt="avatar"
+										src={baseUrl.baseUrl+theUser.profileImage}
+										className="rounded-circle"
+									/>
+								</div>
+								<div className="ms-3 lh-1">
+									<h5 className="mb-1">{theUser.fullName}</h5>
+									<p className="mb-0 text-muted">{theUser.email}</p>
+								</div>
+							</div>
+						</Dropdown.Item>
+						<Dropdown.Divider />
+						<Dropdown.Item as={Link} to="/user/dashboard/" eventKey="2">
+							<i className="fe fe-user me-2"></i> Dashboard
+						</Dropdown.Item>
+						<Dropdown.Item eventKey="3">
+							<i className="fe fe-star me-2"></i> Subscription
+						</Dropdown.Item>
+						<Dropdown.Item as={Link} to="/user/edit-profile/" >
+							<i className="fe fe-settings me-2"></i> Settings
+						</Dropdown.Item>
+						<Dropdown.Divider />
+						<Dropdown.Item  className="mb-3">
+							<i className="fe fe-power me-2"></i> Sign Out
+						</Dropdown.Item>
+					</Dropdown.Menu>
+				</Dropdown>
+			</Fragment>
+		);
+	};
+	return (
+		<Fragment>
+			<Navbar
+				onToggle={(collapsed) => setExpandedMenu(collapsed)}
+				expanded={expandedMenu}
+				expand="lg"
+				className={`${login ? 'bg-white' : ''} navbar p-2 ${headerstyle === 'dark' ? 'navbar-dark bg-dark' : 'navbar-default py-2'
+					}`}
+			>
+				<Container fluid className="px-0 ps-2">
+					<Navbar.Brand as={Link} to="/">
+						<Image src={Logo} alt="" />
+					</Navbar.Brand>
+					<div
+						className={`navbar-nav navbar-right-wrap ms-auto d-lg-none nav-top-wrap ${login ? (isDesktop || isLaptop ? 'd-none' : 'd-flex') : 'd-none'
+							}`}
+					>
+						<QuickMenu />
+					</div>
+					<Navbar.Toggle aria-controls="basic-navbar-nav">
+						<span className="icon-bar top-bar mt-0"></span>
+						<span className="icon-bar middle-bar"></span>
+						<span className="icon-bar bottom-bar"></span>
+					</Navbar.Toggle>
+>>>>>>> 7cd25a354d1203c4d4f7ded101402332beaa5c09
 
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav>

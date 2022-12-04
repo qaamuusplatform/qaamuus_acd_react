@@ -17,6 +17,10 @@ import EditProfile from "pages/student/account-settings/EditProfile";
 import Courses from "pages/courses/Courses";
 import Events from "pages/events/events";
 import EventDetail from "pages/events/eventDetail";
+import EnrolledCourses from "pages/student/account-settings/EnrolledCourses";
+import Notifications from "pages/student/account-settings/Notifications";
+import DeleteProfile from "pages/student/account-settings/DeleteProfile";
+import AuthSecurity from "pages/student/account-settings/AuthSecurity";
 // import DeleteProfile from "pages/student/account-settings/Deleteprofile";
 
 /* IMPORTS FOR MARKETING PAGES - END */

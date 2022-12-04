@@ -58,14 +58,14 @@ const ProfileCover = ({ dashboardData, isDashboard }) => {
 					</div>
 					<div>
 						{isDashboard ? (<Link
-							to={'/student/edit-profile/'}
+							to={'/user/edit-profile/'}
 							className={`btn btn${'dashboardData.outlinebutton' ? '-outline' : ''
 								}-primary btn-sm d-none d-md-block`}
 						>
 							Account Setting
 						</Link>) : (
 							<Link
-								to={'/student/dashboard/'}
+								to={'/user/dashboard/'}
 								className={`btn btn${'dashboardData.outlinebutton' ? '-outline' : ''
 									}-primary btn-sm d-none d-md-block`}
 							>

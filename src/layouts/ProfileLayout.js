@@ -31,7 +31,7 @@ const ProfileLayout = (props) => {
 		name: 'Stella Flores',
 		username: '@stellaflores',
 		linkname: 'Go to Dashboard ',
-		link: '/student/dashboard',
+		link: '/user/dashboard',
 		verified: true,
 		outlinebutton: true,
 		level: ''
@@ -77,7 +77,7 @@ const ProfileLayout = (props) => {
 								<Navbar.Collapse id="basic-navbar-nav">
 									<Nav className="me-auto flex-column" as="ul" activeKey="0">
 										<Nav.Item className="navbar-header" as="li">
-											SUBSCRIPTION
+											ACCOUNT SETTINGS
 										</Nav.Item>
 										{DashboardMenu.map((item, index) => (
 											<Nav.Item
@@ -94,7 +94,7 @@ const ProfileLayout = (props) => {
 											</Nav.Item>
 										))}
 										<Nav.Item className="navbar-header mt-4" as="li">
-											ACCOUNT SETTINGS
+											SUBSCRIPTION
 										</Nav.Item>
 										{AccountSettingsMenu.map((item, index) => (
 											<Nav.Item

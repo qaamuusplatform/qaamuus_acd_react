@@ -11,7 +11,7 @@ import Avatar3 from 'assets/images/avatar/avatar-3.jpg';
 
 // import profile layout wrapper
 import ProfileLayout from 'layouts/ProfileLayout';
-import { useContext,useState } from 'react';
+import { useContext, useState } from 'react';
 import { CurrentUserContext } from 'services/currentUserContext';
 import baseUrl from 'services/baseUrl';
 
@@ -44,7 +44,7 @@ const EditProfile = (props) => {
 					<div className="d-lg-flex align-items-center justify-content-between">
 						<div className="d-flex align-items-center mb-4 mb-lg-0">
 							<Image
-								src={baseUrl.baseUrl+theUser.profileImage}
+								src={baseUrl.baseUrl + theUser.profileImage}
 								id="img-uploaded"
 								className="avatar-xl rounded-circle"
 								alt=""
@@ -73,44 +73,45 @@ const EditProfile = (props) => {
 						<Form>
 							<Row>
 								{/* First name */}
-								<Col md={7} sm={12} className="mb-3">
+								<Col md={6} sm={12} className="mb-3">
 									<Form.Group className="mb-3" controlId="formFirstName">
-										<Form.Label>First Name</Form.Label>
+										<Form.Label>Magaca Shaqsiga</Form.Label>
 										<Form.Control
 											type="text"
 											placeholder="First Name"
 											required
+											name="fullName"
 											value={theUser.fullName}
 										/>
 									</Form.Group>
 								</Col>
 
 								{/* Last name */}
-								<Col md={5} sm={12} className="mb-3">
-									<Form.Group className="mb-3" controlId="formLastName">
-										<Form.Label>Last Name</Form.Label>
-										<Form.Control
-											type="text"
-											placeholder="Last Name"
-											required
-											value={theUser.user.username}
-										/>
+								<Col md={6} sm={12} className="mb-3">
+									<Form.Group className="mb-3" controlId="formPhone">
+										<Form.Label>Email</Form.Label>
+										<Form.Control type="email" name="email" disabled placeholder="Emailkaga" required value={theUser.email} />
 									</Form.Group>
 								</Col>
+								
 
 								{/* Phone */}
-								<Col md={6} sm={12} className="mb-3">
+								<Col md={8} sm={8} className="mb-3">
 									<Form.Group className="mb-3" controlId="formPhone">
 										<Form.Label>Number</Form.Label>
 										<Form.Control type="number" placeholder="Phone" required value={theUser.number} />
 									</Form.Group>
 								</Col>
-								<Col md={6} sm={12} className="mb-3">
+								<Col md={4} sm={4} className="mb-3">
 									<Form.Group className="mb-3" controlId="formPhone">
-										<Form.Label>Email</Form.Label>
-										<Form.Control type="email" placeholder="Emailkaga" required value={theUser.email} />
+										<Form.Label> </Form.Label><br></br>
+										<Button variant="primary" type="submit">
+											HUBI NUMBERKA
+										</Button>
 									</Form.Group>
+
 								</Col>
+								
 
 								{/* Birthday */}
 								<Col md={6} sm={12} className="mb-3">
@@ -134,7 +135,7 @@ const EditProfile = (props) => {
 											placeholder="Magaalada Aad Joogto"
 											required
 											value={theUser.city}
-											
+
 										/>
 									</Form.Group>
 								</Col>

@@ -9,34 +9,38 @@ import {
   Card,
   Form,
   Button,
-  Spinner,InputGroup,
+  Spinner,
   Image,
 } from "react-bootstrap";
 
 import ProfileBackground from 'assets/images/background/profile-bg.jpg';
+import axios from "axios";
+// import media files
+import Logo from "assets/images/brand/logo/logo-icon.svg";
+import { boolean } from "yup";
 export default function SignUp() {
   const [passwordShown, setPasswordShown] = useState(false);
   const [formIsLoading, setFormIsLoading] = useState(false);
   const [formError, setFormError] = useState("");
   const [userRegistred, setUserRegistred] = useState(false);
-  const [userNameIsExist, setUserNameIsExist] = useState(false);
-  const [usernameValid, setUsernameValid] = useState('Usernamka ugu yaraan 6');
-  let emailExist = true;
+  const [formComp, setFormComp]=useState(false);
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
   };
-  const handleChange = async ({ target }) => {
+  const handleChange = async ({ target })  => {
     const { value, name } = target;
     if (value.length > 6) {
-      setUserNameIsExist(await (await http.get("/api/checkingUserExist/" + value + '/')).data.isExist)
-      if(userNameIsExist){
-        setUsernameValid('Usernamkan wa la qabsaday');
+      let userNameIsExist= await (await http.get("/api/checkingUserExist/"+value+'/')).data.isExist;
+      if(!userNameIsExist){
+        target.style.border = "1.5px solid green";
+        // target.style="box-shadow: 1px 1px 1px 1px green;"
+      }else{
+        target.style.border = "1px solid red";
+        // target.style="box-shadow: 1px 1px 1px 1px red;"
       }
-     
     } else {
-      console.log(userNameIsExist);
-      setUsernameValid('Usernamka ugu yaraan 6');
-      setUserNameIsExist(true);
+      // set error
+      target.style.border = "1px solid red";
     }
 
   };
@@ -46,26 +50,16 @@ export default function SignUp() {
     setUserRegistred(false);
     e.preventDefault();
     const userData = new FormData(e.target);
+    console.log(userData.get("email"));
+    console.log(userData.get("username"));
     if (userData.get("password") == userData.get("comfirmPassword")) {
-      if (userNameIsExist) {
-        setFormError("Usernamekan Horay Ayuu u jiray");
-      } else {
-        var object = {};
-        userData.forEach(function (value, key) {
-          object[key] = value;
-        });
-        var json = JSON.stringify(object);
-
-
-        await http.post("/api/userProfile-create/", json, { headers: { 'Content-Type': 'application/json' } })
-          .then((userProfileResp) => {
-            console.log(userProfileResp.data);
-            setFormIsLoading(false);
-            setUserRegistred(true);
-            setFormError("");
-            return Redirect("/user/dashboard");
-          });
-      }
+      await http .post("/api/userProfile-create/", userData)
+                .then((userProfileResp) => {
+                  setFormIsLoading(false);
+                  setUserRegistred(true);
+                  Redirect("/student/dashboard");
+                });
+      // setFormError("");
       // await http
       //   .get(
       //     "/api/checkUserExistEmailAndUsername/" +
@@ -102,10 +96,10 @@ export default function SignUp() {
     }
   }
   return (
-    <Fragment >
+    <Fragment>
       <br />
       <Row className="align-items-center justify-content-center g-0 min-vh-100">
-        <Col lg={10} md={12} className="py-8 py-xl-0">
+        <Col lg={8} md={8} className="py-8 py-xl-0">
           <Card>
             <Card.Img variant="top" src={ProfileBackground} />
             <Card.Body className="p-6">
@@ -130,7 +124,7 @@ export default function SignUp() {
               </div>
 
               {/* Form */}
-              <Form onSubmit={userJoinHandleSubmit} controlId="validationFormik01">
+              <Form onSubmit={userJoinHandleSubmit}>
                 <Row>
 
                   <Col lg={8} md={8} className="mb-3">
@@ -147,24 +141,20 @@ export default function SignUp() {
                   </Col>
                   <Col lg={4} md={4} className="mb-3">
                     {/* User Name */}
-                      <Form.Label>Username</Form.Label>
-                    <InputGroup hasValidation>
-                      <Form.Control
-                        type="text"
-                        id="username"
-                        size="sm"
-                        onChange={handleChange}
-                        name="username"
-                        isInvalid={userNameIsExist == true ? true : false}
-                        isValid={userNameIsExist == true ? false : true}
-                        placeholder="Username auth"
-                        required
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {usernameValid}
-                      </Form.Control.Feedback>
-                    </InputGroup>
-                    {/* <Form.Label id="usernameIsValid" >Email </Form.Label> */}
+                    <Form.Label>Username</Form.Label>
+                    <Form.Control
+                      type="text"
+                      id="username"
+                      size="sm"
+                      onChange={handleChange}
+                      // onChange={(text) => { console.log(text.value) }}
+                      name="username"
+                      // aria-errormessage="miodsa"
+                      error="dasdsa"
+                      placeholder="Username auth"
+                      required
+                    />
+                    {/* <Form.Label id="usernameValid" >Email </Form.Label> */}
                   </Col>
                   <Col lg={12} md={12} className="mb-3">
                     {/* email */}
@@ -226,10 +216,9 @@ export default function SignUp() {
                   </Button>
                 ) : (
                   <Button variant="primary" type="submit" size="sm">
-                    Diiwaangali
+                    SING UP
                   </Button>
                 )}
-
               </Form>
               <hr className="my-4" />
               <div className="mt-4 text-center">
