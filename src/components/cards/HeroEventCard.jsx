@@ -22,14 +22,14 @@ const BlogCardFullWidth = ({ event }) => {
     }
   };
 
-  console.log(baseUrl);
+  // console.log(baseUrl);
 
   return (
     <Card className="mb-4 shadow-lg">
       <Row className="g-0">
         {/*  Image */}
         <Link
-          to={`/marketing/blog/article-single/${event.id}`}
+          to={`/events/${event.id}`}
           className="col-lg-8 col-md-12 col-12 bg-cover img-left-rounded"
           style={{
             background: `url(${baseUrl.baseUrl + event.coverImage})`,
@@ -48,7 +48,7 @@ const BlogCardFullWidth = ({ event }) => {
           {/*  Card body */}
           <Card.Body>
             <Link
-              to={`/marketing/blog/article-single/${event.id}`}
+              to={`/events/${event.id}`}
               className={`fs-5 mb-3 fw-semi-bold d-block text-${CategoryColors(
                 event.eventType
               )}`}
@@ -56,10 +56,7 @@ const BlogCardFullWidth = ({ event }) => {
               {event.eventType}
             </Link>
             <h1 className="mb-2 mb-lg-4">
-              <Link
-                to={`/marketing/blog/article-single/${event.id}`}
-                className="text-inherit"
-              >
+              <Link to={`/events/${event.id}`} className="text-inherit">
                 {event.title}
               </Link>
             </h1>

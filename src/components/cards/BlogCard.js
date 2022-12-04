@@ -24,7 +24,7 @@ const BlogCard = ({ event }) => {
 
   return (
     <Card className="mb-4 shadow-lg">
-      <Link to={`/marketing/blog/article-single/${event.id}`}>
+      <Link to={`/events/${event.id}`}>
         <Card.Img
           variant="top"
           src={baseUrl.baseUrl + event.coverImage}
@@ -34,7 +34,7 @@ const BlogCard = ({ event }) => {
       {/* Card body  */}
       <Card.Body>
         <Link
-          to="#"
+          to={`events/${event.id}`}
           className={`fs-5 fw-semi-bold d-block mb-3 text-${CategoryColors(
             event.eventType
           )}`}
@@ -42,10 +42,7 @@ const BlogCard = ({ event }) => {
           {event.eventType}
         </Link>
         <h3>
-          <Link
-            to={`/marketing/blog/article-single/${event.id}`}
-            className="text-inherit"
-          >
+          <Link to={`/events/${event.id}`} className="text-inherit">
             {event.title}
           </Link>
         </h3>
