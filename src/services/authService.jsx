@@ -23,3 +23,11 @@ export const getLoggedInUser =() => {
     return null;
   }
 };
+
+export const updateUserInfo= async (body,theUserId)=>{
+  try {
+    userInfo=  await http.post("/api/userProfile-update/"+theUserId+"/", body, { headers: { 'Content-Type': 'application/json' } })
+  } catch (error) {
+    return null;
+  }
+};

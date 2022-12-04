@@ -48,8 +48,7 @@ export default function SignUp() {
     const userData = new FormData(e.target);
     if (userData.get("password") == userData.get("comfirmPassword")) {
       if (userNameIsExist) {
-
-        setFormError("");
+        setFormError("Usernamekan Horay Ayuu u jiray");
       } else {
         var object = {};
         userData.forEach(function (value, key) {
@@ -64,7 +63,7 @@ export default function SignUp() {
             setFormIsLoading(false);
             setUserRegistred(true);
             setFormError("");
-            Redirect("/user/dashboard");
+            return Redirect("/user/dashboard");
           });
       }
       // await http
