@@ -17,7 +17,7 @@ export default function Events() {
     setEvents(data);
   };
 
-  console.log(events);
+  // console.log(events);
 
   useEffect(() => {
     allEvents();

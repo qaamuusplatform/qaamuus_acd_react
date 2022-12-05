@@ -5,3 +5,7 @@ const apiEndpoint = "api/qaEvent-list/";
 export const getEvents = () => {
   return http.get(apiEndpoint);
 };
+
+export const getEvent = (id) => {
+  return http.get(`api/qaEvent-detail/${id}/`);
+};

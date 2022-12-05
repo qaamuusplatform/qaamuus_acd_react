@@ -75,28 +75,25 @@ const EditProfile = (props) => {
 								{/* First name */}
 								<Col md={6} sm={12} className="mb-3">
 									<Form.Group className="mb-3" controlId="formFirstName">
-										<Form.Label>First Name</Form.Label>
+										<Form.Label>Magaca Shaqsiga</Form.Label>
 										<Form.Control
 											type="text"
 											placeholder="First Name"
 											required
-											value={theUser.user.first_name}
+											name="fullName"
+											value={theUser.fullName}
 										/>
 									</Form.Group>
 								</Col>
 
 								{/* Last name */}
 								<Col md={6} sm={12} className="mb-3">
-									<Form.Group className="mb-3" controlId="formLastName">
-										<Form.Label>Last Name</Form.Label>
-										<Form.Control
-											type="text"
-											placeholder="Last Name"
-											required
-											value={theUser.user.last_name}
-										/>
+									<Form.Group className="mb-3" controlId="formPhone">
+										<Form.Label>Email</Form.Label>
+										<Form.Control type="email" name="email" disabled placeholder="Emailkaga" required value={theUser.email} />
 									</Form.Group>
 								</Col>
+								
 
 								{/* Phone */}
 								<Col md={8} sm={8} className="mb-3">
@@ -114,12 +111,7 @@ const EditProfile = (props) => {
 									</Form.Group>
 
 								</Col>
-								<Col md={6} sm={12} className="mb-3">
-									<Form.Group className="mb-3" controlId="formPhone">
-										<Form.Label>Email</Form.Label>
-										<Form.Control type="email" disabled placeholder="Emailkaga" required value={theUser.email} />
-									</Form.Group>
-								</Col>
+								
 
 								{/* Birthday */}
 								<Col md={6} sm={12} className="mb-3">
