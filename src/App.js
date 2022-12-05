@@ -24,8 +24,6 @@ function App() {
 	return (
 		<Router>
 			<CurrentUserContext.Provider value={{ theUser, setTheUser }} >
-
-
 				<div className="App">
 					<ScrollToTop />
 					<AllRoutes />
