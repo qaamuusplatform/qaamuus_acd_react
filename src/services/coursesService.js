@@ -2,9 +2,11 @@ import http from "./httpService";
 
 
 
-export const getAllCourses = ()=> {
-    return http.get('api/qaCourse-list/');
+export const getAllCourses = async (url)=> {
+    var data =  await http.get(url);
+    return data.data;
 }
-export const getCoursesDetail = (id)=> {
-    return http.get(`api/qaCourse-detail/${id}`);
+export const getCoursesDetail = async (url)=> {
+    var data =  await http.get(url);
+    return data.data;
 }

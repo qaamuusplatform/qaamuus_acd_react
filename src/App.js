@@ -11,6 +11,7 @@ import "simplebar/dist/simplebar.min.css";
 import "tippy.js/animations/scale.css";
 import { CurrentUserContext } from "services/currentUserContext";
 import { getLoggedInUser } from "services/authService";
+import { Toaster } from "react-hot-toast";
 function App() {
   const [currentUser, setCurrentUser] = useState("");
 
@@ -30,6 +31,7 @@ function App() {
         <div className="App">
           <ScrollToTop />
           <AllRoutes />
+		  <Toaster />
         </div>
       </CurrentUserContext.Provider>
     </Router>

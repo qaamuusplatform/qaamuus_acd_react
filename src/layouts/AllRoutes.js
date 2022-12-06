@@ -22,6 +22,8 @@ import Notifications from "pages/student/account-settings/Notifications";
 import DeleteProfile from "pages/student/account-settings/DeleteProfile";
 import AuthSecurity from "pages/student/account-settings/AuthSecurity";
 import CourseDetail from "pages/courses/detail/courseDetail";
+import Error404 from "pages/errorPages/Error404";
+import ComingSoon from "pages/errorPages/ComingSoon";
 // import DeleteProfile from "pages/student/account-settings/Deleteprofile";
 
 /* IMPORTS FOR MARKETING PAGES - END */
@@ -77,8 +79,12 @@ function AllRoutes() {
 			{/* COURSES AND CATEGORIES */}
 			<AppRoute exact path="/courses/" layout={DefaultLayout} component={Courses} />
 			<AppRoute exact path="/courses/:id" layout={DefaultLayout} component={CourseDetail} />
+			<AppRoute exact path="/courses/:id/watch" layout={DefaultLayout} component={<h1>Watch Course</h1>} />
+			<AppRoute exact path="/events/" layout={DefaultLayout} component={Events} />
 			<AppRoute exact path="/events/" layout={DefaultLayout} component={Events} />
 			<AppRoute exact path="/events/:id" layout={DefaultLayout} component={EventDetail} />
+			<AppRoute exact path="/404" layout={DefaultLayout} component={Error404} />
+			<AppRoute exact path="/coming-soon" layout={DefaultLayout} component={ComingSoon} />
       {/* COURSES AND CATEGORIES */}
       {/* <AppRoute
         exact
@@ -106,7 +112,7 @@ function AllRoutes() {
       {/* ------------------------- */}
 
       {/*Redirect*/}
-      <Redirect to="/marketing/specialty/404-error/" />
+      <Redirect to="/404" />
     </Switch>
   );
 }
