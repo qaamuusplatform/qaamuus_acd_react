@@ -31,7 +31,7 @@ function App() {
         <div className="App">
           <ScrollToTop />
           <AllRoutes />
-		  <Toaster />
+          <Toaster />
         </div>
       </CurrentUserContext.Provider>
     </Router>

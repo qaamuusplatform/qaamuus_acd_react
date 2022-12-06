@@ -17,7 +17,7 @@ import useSWR from 'swr';
 import http from 'services/httpService';
 
 const EnrolledCourses = (props) => {
-	const { theUser, setTheUser } = useContext(CurrentUserContext);
+	const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 	const account = props.location.pathname.substring(21, 11);
 
 	const { data, error } = useSWR('/api/userEnrollments-detail/14/', async (url) => await http.get(url).then(r => r.data.enrolledCourses));
@@ -32,7 +32,7 @@ const EnrolledCourses = (props) => {
 
 				</Card.Header>
 				<Card.Body className="p-0">
-					{data==null?(<Container></Container>):(<CoursesTable courses_data={data} />)}
+					{/* {data==null?(<Container></Container>):(<CoursesTable courses_data={data} />)} */}
 					{/*  */}
 
 				</Card.Body>

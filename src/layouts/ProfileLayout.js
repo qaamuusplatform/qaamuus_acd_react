@@ -18,7 +18,7 @@ import { useContext } from 'react';
 import { CurrentUserContext } from 'services/currentUserContext';
 const ProfileLayout = (props) => {
 	
-	const { theUser, setTheUser } = useContext(CurrentUserContext);
+	const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 
 	const location = useLocation();
 
@@ -42,7 +42,7 @@ const ProfileLayout = (props) => {
 			<div className="pt-5 pb-5">
 				<Container>
 					{/* User info */}
-					<ProfileCover dashboardData={theUser} isDashboard={false} />
+					<ProfileCover dashboardData={currentUser} isDashboard={false} />
 
 					{/* Content */}
 					<Row className="mt-0 mt-md-4">

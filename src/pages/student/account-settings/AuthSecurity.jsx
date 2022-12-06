@@ -15,7 +15,7 @@ import { CurrentUserContext } from 'services/currentUserContext';
 import baseUrl from 'services/baseUrl';
 
 const AuthSecurity = (props) => {
-	const { theUser, setTheUser } = useContext(CurrentUserContext);
+	const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 	const account = props.location.pathname.substring(21, 11);
 	const [password, setPassword] = useState('');
 	const [confirmpassword, setConfirmPassword] = useState('');
@@ -41,7 +41,7 @@ const AuthSecurity = (props) => {
 								<h4 className="mb-0">Email Address</h4>
 								<p>
 									Usernamekaga hadda waa{' '}
-									<span className="text-success">{theUser.email}</span>
+									<span className="text-success">{currentUser.email}</span>
 								</p>
 								<Form.Group>
 									<Form.Label htmlFor="email">Emailka Cusub</Form.Label>
@@ -53,7 +53,7 @@ const AuthSecurity = (props) => {
 								<h4 className="mb-0">Usernameka</h4>
 								<p>
 									Usernamekaga hadda waa{' '}
-									<span className="text-success">{theUser.user.username}</span>
+									<span className="text-success">{currentUser.user.username}</span>
 								</p>
 								<Form.Group>
 									<Form.Label htmlFor="text">Usernamkea Cusub</Form.Label>

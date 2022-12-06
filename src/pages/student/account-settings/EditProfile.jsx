@@ -16,7 +16,7 @@ import { CurrentUserContext } from 'services/currentUserContext';
 import baseUrl from 'services/baseUrl';
 
 const EditProfile = (props) => {
-	const { theUser, setTheUser } = useContext(CurrentUserContext);
+	const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 	const account = props.location.pathname.substring(21, 11);
 	const statelist = [
 		{ value: '1', label: 'Gujarat' },
@@ -44,15 +44,15 @@ const EditProfile = (props) => {
 					<div className="d-lg-flex align-items-center justify-content-between">
 						<div className="d-flex align-items-center mb-4 mb-lg-0">
 							<Image
-								src={baseUrl.baseUrl + theUser.profileImage}
+								src={baseUrl.baseUrl + currentUser.profileImage}
 								id="img-uploaded"
 								className="avatar-xl rounded-circle"
 								alt=""
 							/>
 							<div className="ms-3">
-								<h4 className="mb-0">{theUser.fullName}</h4>
+								<h4 className="mb-0">{currentUser.fullName}</h4>
 								<p className="mb-0">
-									{theUser.userTitle}
+									{currentUser.userTitle}
 								</p>
 							</div>
 						</div>
@@ -81,7 +81,7 @@ const EditProfile = (props) => {
 											placeholder="First Name"
 											required
 											name="fullName"
-											value={theUser.fullName}
+											value={currentUser.fullName}
 										/>
 									</Form.Group>
 								</Col>
@@ -90,7 +90,7 @@ const EditProfile = (props) => {
 								<Col md={6} sm={12} className="mb-3">
 									<Form.Group className="mb-3" controlId="formPhone">
 										<Form.Label>Email</Form.Label>
-										<Form.Control type="email" name="email" disabled placeholder="Emailkaga" required value={theUser.email} />
+										<Form.Control type="email" name="email" disabled placeholder="Emailkaga" required value={currentUser.email} />
 									</Form.Group>
 								</Col>
 								
@@ -99,7 +99,7 @@ const EditProfile = (props) => {
 								<Col md={8} sm={8} className="mb-3">
 									<Form.Group className="mb-3" controlId="formPhone">
 										<Form.Label>Number</Form.Label>
-										<Form.Control type="number" placeholder="Phone" required value={theUser.number} />
+										<Form.Control type="number" placeholder="Phone" required value={currentUser.number} />
 									</Form.Group>
 								</Col>
 								<Col md={4} sm={4} className="mb-3">
@@ -134,7 +134,7 @@ const EditProfile = (props) => {
 											type="text"
 											placeholder="Magaalada Aad Joogto"
 											required
-											value={theUser.city}
+											value={currentUser.city}
 
 										/>
 									</Form.Group>

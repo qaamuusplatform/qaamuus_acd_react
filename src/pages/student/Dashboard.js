@@ -18,7 +18,7 @@ import BlogCard from 'components/cards/BlogCard';
 
 // import data files
 const StudentDashboard = () => {
-    const { theUser, setTheUser } = useContext(CurrentUserContext);
+    const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
     const [userEnrolmentsData, setUserEnrolmentsData] = useState([]);
 
     const qInit = async () => {
@@ -75,7 +75,7 @@ const StudentDashboard = () => {
             <div className="pt-5 pb-5">
                 <Container>
                     {/* User info */}
-                    <ProfileCover dashboardData={theUser} isDashboard={true} />
+                    <ProfileCover dashboardData={currentUser} isDashboard={true} />
 
                     {/* Content */}
                     <Row className="mt-0 mt-md-4">
@@ -123,7 +123,7 @@ const StudentDashboard = () => {
                                                             }).slice(0, 8)
                                                                 .map((item, index) => (
                                                                     <Col lg={3} md={6} sm={12} key={index}>
-                                                                        <CourseCard item={item} showprogressbar />
+                                                                        {/* <CourseCard item={item} showprogressbar /> */}
                                                                     </Col>
                                                                 ))}
                                                         </Row>

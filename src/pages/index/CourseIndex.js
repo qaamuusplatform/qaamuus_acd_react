@@ -123,14 +123,14 @@ const CourseIndex = () => {
 
 					</Slider>
 					{/* <CourseSlider popular={true} /> */}
-					<div className="d-flex justify-content-between">
+					{/* <div className="d-flex justify-content-between">
 						<h2 className="mb-0 mx-2">Popular Courses</h2>
 						<Link to="/courses/" className="btn btn-primary">
 							See All Courses
 						</Link>
 					</div>
 
-					<br></br>
+					<br></br> */}
 					<div className="position-relative">
 
 						<Slider {...courseSliderSettings} className="pb-sm-5 mb-5 slick-slider-wrapper">
@@ -142,7 +142,7 @@ const CourseIndex = () => {
 							))}
 						</Slider>
 
-						<h2 className="mb-0 mx-2">HERO EVENTS</h2>
+						{/* <h2 className="mb-0 mx-2">HERO EVENTS</h2> */}
 
 
 
