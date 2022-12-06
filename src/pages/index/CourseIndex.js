@@ -137,7 +137,7 @@ const CourseIndex = () => {
 
 							{AllCoursesData.map((item, index) => (
 								<div className="item px-md-1" key={item.id}>
-									<CourseCard key={index} item={item} extraclass="mx-2" />
+									{/* <CourseCard key={index} item={item} extraclass="mx-2" /> */}
 								</div>
 							))}
 						</Slider>

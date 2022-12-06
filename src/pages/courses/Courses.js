@@ -3,11 +3,12 @@ import { Col, Row, Container, Tab } from "react-bootstrap";
 import React, { Fragment, useEffect, useState } from "react";
 
 // import custom components
-// import FormSelect from 'components/elements/custom/FormSelect';
+import FormSelect from 'components/elements/custom/FormSelect';
 import PageHeading from "components/elements/common/heading/PageHeading";
 import GridListViewButton from "components/elements/custom/GridListViewButton";
 import { getAllCourses } from "services/coursesService";
 import CourseCard from "components/cards/CourseCard";
+import { ShimmerPostItem } from "react-shimmer-effects";
 
 export default function Courses() {
   const [courseError, setCourseError] = useState(null);
@@ -48,7 +49,7 @@ export default function Courses() {
                     <div className="me-2">
                       <GridListViewButton keyGrid="grid" keyList="list" />
                     </div>
-                    {/* <FormSelect options={sortByOptions} placeholder="Sort by" /> */}
+                    <FormSelect options={[]} placeholder="Sort by" />
                   </Col>
                 </Row>
               </Col>
@@ -56,12 +57,15 @@ export default function Courses() {
                 {/* <FilterOptions /> */}
               </Col>
               {/* Tab content */}
-              <Col xl={9} lg={9} md={8} sm={12}>
+              {/* <Col xl={9} lg={9} md={8} sm={12}> */}
+              <Col  sm={12}>
                 <Tab.Content>
                   <Tab.Pane eventKey="grid" className="pb-4 px-0">
                     {/* <CourseGridView /> */}
 <Row>
-  
+{coursesList.length == 0? [1,2,3].map((idx)=><Col lg={4} md={6} sm={12} key={idx}>
+<ShimmerPostItem card title text cta />
+                      </Col>) :null}
                     {coursesList.map((course, idx) => (
                       <Col lg={4} md={6} sm={12} key={idx}>
                       <CourseCard

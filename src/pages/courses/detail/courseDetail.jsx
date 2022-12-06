@@ -38,6 +38,7 @@ import DescriptionTab from "./DescriptionTab";
 import ReviewsTab from "./ReviewsTab";
 import TranscriptTab from "./TranscriptTab";
 import FAQTab from "./FAQTab";
+import { youTubeIdFromLink } from "helper/utils";
 
 
 const CourseDetail = () => {
@@ -76,7 +77,7 @@ const CourseDetail = () => {
                 className="rounded-3 position-relative w-100 d-block overflow-hidden p-0"
                 style={{ height: "600px" }}
               >
-                <GKYouTube videoId={courseInfo.prevVideo} />
+                <GKYouTube videoId={courseInfo.prevVideo ? youTubeIdFromLink(courseInfo.prevVideo):''} />
               </div>
             </Col>
           </Row>

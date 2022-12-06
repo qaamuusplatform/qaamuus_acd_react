@@ -125,6 +125,11 @@ export const getDateValue = (date) => {
 	return today;
 };
 
+
+
+export const youTubeIdFromLink = (url) => url.match(/(?:https?:\/\/)?(?:www\.|m\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\/?\?v=|\/embed\/|\/)([^\s&\?\/\#]+)/)[1];
+
+
 const utils = [
 	numberWithCommas,
 	getFileExtension,
