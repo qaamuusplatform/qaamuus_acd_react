@@ -17,7 +17,7 @@ const DefaultLayout = (props) => {
 
   return (
     <Fragment>
-      {Object.keys(currentUser).length === 0 ? (<NavbarDefault /> ) : (<NavbarDefault login />)}
+      { Object.keys(currentUser).length === 0 ? (<NavbarDefault /> ) : (<NavbarDefault login />)}
       {/* <NavbarDefault login /> */}
       
       {/* <NavbarDefault  /> */}

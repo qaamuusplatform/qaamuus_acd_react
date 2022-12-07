@@ -29,8 +29,8 @@ function App() {
     const { data } = await getLoggedInUser();
     if(data){
       // console.log("data ready",data)
-      // setCurrentUser(data);
-      setCurrentUser({});
+      setCurrentUser(data);
+      // setCurrentUser({});
    }else{
  
    }
