@@ -12,6 +12,7 @@ export const login = async (username, password) => {
 
 export const getLoggedInUser = () => {
   try {
+    // return {}
     return http.get("api/userProfile-detail/14/");
   } catch (error) {
     return null;

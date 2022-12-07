@@ -146,7 +146,7 @@ const NavbarDefault = ({ headerstyle, login }) => {
             <div className="avatar avatar-md avatar-indicators avatar-online">
               <Image
                 alt="avatar"
-                src={baseUrl.baseUrl + currentUser.profileImage}
+                src={ baseUrl.baseUrl + currentUser.profileImage}
                 className="rounded-circle"
               />
             </div>
