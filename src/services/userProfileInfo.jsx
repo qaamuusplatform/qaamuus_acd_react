@@ -14,6 +14,10 @@ export const getUserEnrolmentsData = async (theUser) => {
         return null;
     }
 };
+export const getTheUserEnrolmentsData = async (url)=> {
+    var data =  await http.get(url);
+    return data.data;
+}
 
 export const getTheUserNotifications =  (theUser) => {
     try {

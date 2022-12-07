@@ -14,6 +14,7 @@ import _const from 'services/baseUrl';
 import GlobalFilter from 'components/elements/advance-table/GlobalFilter';
 import Pagination from 'components/elements/advance-table/Pagination';
 import DotBadge from 'components/elements/bootstrap/DotBadge';
+import { END_POINT } from 'helper/constants';
 
 const CoursesTable = ({ courses_data }) => {
 	console.log(courses_data);
@@ -48,7 +49,7 @@ const CoursesTable = ({ courses_data }) => {
 							<div className="d-lg-flex align-items-center">
 								<div>
 									<Image
-										src={'https://qaamuusbackend.up.railway.app/media/images/courseImages/images.jpg'}
+										src={END_POINT+row.original.prevImage}
 										alt=""
 										className="img-4by3-lg rounded"
 									/>

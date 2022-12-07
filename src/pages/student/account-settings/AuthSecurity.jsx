@@ -40,12 +40,12 @@ const AuthSecurity = (props) => {
 							<Col lg={6} md={12} sm={12} className="mb-3">
 								<h4 className="mb-0">Email Address</h4>
 								<p>
-									Usernamekaga hadda waa{' '}
+									Emailka hadda waa{' '}
 									<span className="text-success">{currentUser.email}</span>
 								</p>
 								<Form.Group>
 									<Form.Label htmlFor="email">Emailka Cusub</Form.Label>
-									<Form.Control type="email" id="email" required />
+									<Form.Control type="email" id="email"  required />
 								</Form.Group>
 
 							</Col>
@@ -56,7 +56,7 @@ const AuthSecurity = (props) => {
 									<span className="text-success">{currentUser.user.username}</span>
 								</p>
 								<Form.Group>
-									<Form.Label htmlFor="text">Usernamkea Cusub</Form.Label>
+									<Form.Label htmlFor="text">Usernamka Cusub</Form.Label>
 									<Form.Control type="text" id="text" required />
 								</Form.Group>
 
@@ -86,6 +86,7 @@ const AuthSecurity = (props) => {
 										<Form.Control
 											type="password"
 											id="currentpassword"
+											placeholder="********"
 											value={currentpassword}
 											onChange={(e) => setCurrentPassword(e.target.value)}
 											required
@@ -100,6 +101,7 @@ const AuthSecurity = (props) => {
 										<Form.Control
 											type="password"
 											id="newpassword"
+											placeholder="********"
 											value={password}
 											onChange={(e) => setPassword(e.target.value)}
 											required
@@ -117,13 +119,14 @@ const AuthSecurity = (props) => {
 										<Form.Control
 											type="password"
 											id="confirmpassword"
+											placeholder="********"
 											value={confirmpassword}
 											onChange={(e) => setConfirmPassword(e.target.value)}
 											required
 										/>
 									</Form.Group>
 									{/* Button */}
-									<Button type="submit" className="btn btn-primary">
+									<Button type="submit" className="text-right btn btn-primary">
 										Save Password
 									</Button>
 									<div className="col-6"></div>
