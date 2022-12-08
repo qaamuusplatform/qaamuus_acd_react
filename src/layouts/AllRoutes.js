@@ -24,6 +24,7 @@ import AuthSecurity from "pages/student/account-settings/AuthSecurity";
 import CourseDetail from "pages/courses/detail/courseDetail";
 import Error404 from "pages/errorPages/Error404";
 import ComingSoon from "pages/errorPages/ComingSoon";
+import InstructorDetail from "pages/instructor/InstructorDetail";
 // import DeleteProfile from "pages/student/account-settings/Deleteprofile";
 
 /* IMPORTS FOR MARKETING PAGES - END */
@@ -57,6 +58,10 @@ function AllRoutes() {
       <AppRoute exact path="/user/delete-profile/" layout={DefaultLayout} component={DeleteProfile} />
       <AppRoute exact path="/user/enrolled-courses/" layout={DefaultLayout} component={EnrolledCourses} />
       <AppRoute exact path="/user/auth-security/" layout={DefaultLayout} component={AuthSecurity} />
+      <AppRoute exact path="/user/delete-account/" layout={DefaultLayout} component={DeleteProfile} />
+
+      
+      <AppRoute exact path="/instructor-detail/:instructorId" layout={DefaultLayout} component={InstructorDetail} />
 
 
 			{/* COURSES AND CATEGORIES */}

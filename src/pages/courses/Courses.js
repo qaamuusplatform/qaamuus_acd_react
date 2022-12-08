@@ -10,6 +10,7 @@ import { getAllCourses } from "services/coursesService";
 import CourseCard from "components/cards/CourseCard";
 import { ShimmerPostItem } from "react-shimmer-effects";
 import useSWR from "swr";
+import { toast } from "react-hot-toast";
 
 export default function Courses() {
   const { data:coursesList, error } = useSWR(`api/qaCourse-list/`,getAllCourses);
@@ -17,7 +18,6 @@ export default function Courses() {
   if (error) {
     toast.error(error);
   }
-
 
   
 
@@ -54,7 +54,7 @@ export default function Courses() {
                 <Tab.Content>
                   <Tab.Pane eventKey="grid" className="pb-4 px-0">
                     {/* <CourseGridView /> */}
-                    <Row>
+                    {/* <Row>
                       {!coursesList && !error
                         ? [1, 2, 3, 4].map((idx) => (
                             <Col lg={3} md={4} sm={12} key={idx}>
@@ -71,7 +71,7 @@ export default function Courses() {
                           />
                         </Col>
                       ))}
-                    </Row>
+                    </Row> */}
                   </Tab.Pane>
                   <Tab.Pane eventKey="list" className="pb-4 px-0 react-code">
                     {/* <CourseListView /> */}

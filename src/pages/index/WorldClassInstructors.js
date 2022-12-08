@@ -20,7 +20,7 @@ const WorldClassInstructors = () => {
 
 		// <div className="py-8 py-lg-16 bg-light-gradient-top bg-white"></div>
 		<div className="">
-			<h2 className="mb-0 mx-2">Popular Courses</h2>
+			{/* <h2 className="mb-0 mx-2">Popular Courses</h2> */}
 			<br></br>
 			<Row>
 				{InstructorsList.map((item, index) => (
