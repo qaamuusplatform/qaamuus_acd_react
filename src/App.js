@@ -12,26 +12,47 @@ import "tippy.js/animations/scale.css";
 import { CurrentUserContext } from "services/currentUserContext";
 import { getLoggedInUser } from "services/authService";
 import { Toaster } from "react-hot-toast";
+import { getCoursesDetail } from "services/coursesService";
+import useSWR,{mutate} from "swr";
 function App() {
-  const [currentUser, setCurrentUser] = useState("");
+  const [currentUser, setCurrentUser] = useState({});
 
+//   const { data:datadetal } = useSWR(
+//     `/api/userProfile-detail/14/`,
+//     getCoursesDetail
+//   );
+// const handlepost=()=>{
+//   mutate(`/api/userProfile-detail/14/`, getCoursesDetail)
+// }
+ 
   const getCurrentUser = async () => {
     const { data } = await getLoggedInUser();
-
-    setCurrentUser(data);
+    if(data){
+      // console.log("data ready",data)
+      setCurrentUser(data);
+      // setCurrentUser({});
+   }else{
+ 
+   }
+  
   };
+
+ 
+
+
 
   useEffect(() => {
     getCurrentUser();
+   
   }, []);
 
   return (
     <Router>
-      <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
+      <CurrentUserContext.Provider value={{currentUser, setCurrentUser}}>
         <div className="App">
           <ScrollToTop />
           <AllRoutes />
-		  <Toaster />
+          <Toaster />
         </div>
       </CurrentUserContext.Provider>
     </Router>

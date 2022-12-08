@@ -1,7 +1,7 @@
 // import node module libraries
 import { Link } from 'react-router-dom';
 import { Col, Row, Image } from 'react-bootstrap';
-
+ 
 // import media files
 import Logo from 'assets/images/brand/logo/logo.svg';
 
@@ -16,6 +16,6 @@ const NavbarBrandOnly = () => {
 				</div>
 			</Col>
 		</Row>
-	);
+	);0
 };
 export default NavbarBrandOnly;

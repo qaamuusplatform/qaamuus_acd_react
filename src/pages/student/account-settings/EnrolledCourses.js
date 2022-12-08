@@ -1,7 +1,7 @@
 // import node module libraries
 import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { Col, Row, Tab, Card,Container, Nav } from 'react-bootstrap';
+import { Col, Row, Tab, Card, Container, Nav } from 'react-bootstrap';
 
 // import profile layout wrapper
 import ProfileLayout from 'layouts/ProfileLayout';
@@ -15,14 +15,15 @@ import {
 import CoursesTable from './CoursesTable';
 import useSWR from 'swr';
 import http from 'services/httpService';
+import { ShimmerContentBlock } from 'react-shimmer-effects';
 
 const EnrolledCourses = (props) => {
-	const { theUser, setTheUser } = useContext(CurrentUserContext);
+	const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 	const account = props.location.pathname.substring(21, 11);
 
 	const { data, error } = useSWR('/api/userEnrollments-detail/14/', async (url) => await http.get(url).then(r => r.data.enrolledCourses));
-	console.log(data);
-	console.log(allcourses);
+	// console.log(data);
+	// console.log(allcourses);
 	return (
 		<ProfileLayout>
 			{account === 'instructor'}
@@ -32,7 +33,15 @@ const EnrolledCourses = (props) => {
 
 				</Card.Header>
 				<Card.Body className="p-0">
-					{data==null?(<Container></Container>):(<CoursesTable courses_data={data} />)}
+
+					{data == null ? (
+						<ShimmerContentBlock
+							title
+							text
+							cta
+							thumbnailWidth={370}
+							thumbnailHeight={370}
+						/>) : (<CoursesTable courses_data={data} />)}
 					{/*  */}
 
 				</Card.Body>

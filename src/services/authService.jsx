@@ -12,6 +12,7 @@ export const login = async (username, password) => {
 
 export const getLoggedInUser = () => {
   try {
+    // return {}
     return http.get("api/userProfile-detail/14/");
   } catch (error) {
     return null;
@@ -20,11 +21,8 @@ export const getLoggedInUser = () => {
 
 export const updateUserInfo = async (body, theUserId) => {
   try {
-    userInfo = await http.post(
-      "/api/userProfile-update/" + theUserId + "/",
-      body,
-      { headers: { "Content-Type": "application/json" } }
-    );
+    userInfo = await http.post(`/api/userProfile-update/${theUserId}`,body,);
+    return userInfo;
   } catch (error) {
     return null;
   }

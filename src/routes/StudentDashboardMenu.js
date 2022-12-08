@@ -1,16 +1,17 @@
 export const DashboardMenu = [
 	{
-		id: 1,
-		title: 'Edit Profile',
-		link: '/user/edit-profile/',
-		icon: 'edit'
-	},
-	{
 		id: 2,
 		title: 'Koorasyadada',
 		link: '/user/enrolled-courses/',
 		icon: 'book'
 	},
+	{
+		id: 1,
+		title: 'Edit Profile',
+		link: '/user/edit-profile/',
+		icon: 'edit'
+	},
+	
 	{
 		id: 3,
 		title: 'Lacag Bixinta',

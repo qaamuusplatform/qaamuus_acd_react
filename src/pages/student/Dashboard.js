@@ -9,37 +9,36 @@ import ProfileCover from './ProfileCover';
 // import media files
 import Avatar3 from 'assets/images/avatar/avatar-3.jpg';
 import { CurrentUserContext } from 'services/currentUserContext';
-import { getUserEnrolmentsData } from 'services/userProfileInfo';
+import { getTheUserEnrolmentsData, getUserEnrolmentsData } from 'services/userProfileInfo';
 import { useState } from 'react';
 import AllCoursesData from 'data/AllCoursesData';
 import Slider from 'react-slick';
-import CourseCard from 'components/cards/CourseCard';
+import InrolledCourseCard from 'components/cards/InrolledCourseCard';
 import BlogCard from 'components/cards/BlogCard';
+import useSWR from 'swr';
+import { ShimmerPostItem } from 'react-shimmer-effects';
 
 // import data files
 const StudentDashboard = () => {
-    const { theUser, setTheUser } = useContext(CurrentUserContext);
-    const [userEnrolmentsData, setUserEnrolmentsData] = useState([]);
+    const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+    const { data: userEnrolmentsData, error } = useSWR(`/api/userEnrollments-detail/14/`, getTheUserEnrolmentsData);
 
-    const qInit = async () => {
-        const { data } = await getUserEnrolmentsData('theUser');
-        console.log(data);
-        setUserEnrolmentsData(data);
-    }
-    const dashboardData = {
-        avatar: Avatar3,
-        name: 'Stella Flores',
-        username: '@stellaflores',
-        linkname: 'Account Setting',
-        link: '/user/edit-profile/',
-        verified: false,
-        outlinebutton: false,
-        level: 'Beginner'
-    };
+
+    console.log(userEnrolmentsData);
+    // const dashboardData = {
+    //     avatar: Avatar3,
+    //     name: 'Stella Flores',
+    //     username: '@stellaflores',
+    //     linkname: 'Account Setting',
+    //     link: '/user/edit-profile/',
+    //     verified: false,
+    //     outlinebutton: false,
+    //     level: 'Beginner'
+    // };
 
     useEffect(() => {
         document.body.style.backgroundColor = '#f5f4f8';
-        qInit();
+
     }, []);
     const courseSliderSettings = {
         infinite: true,
@@ -75,7 +74,7 @@ const StudentDashboard = () => {
             <div className="pt-5 pb-5">
                 <Container>
                     {/* User info */}
-                    <ProfileCover dashboardData={theUser} isDashboard={true} />
+                    <ProfileCover dashboardData={currentUser} isDashboard={true} />
 
                     {/* Content */}
                     <Row className="mt-0 mt-md-4">
@@ -118,14 +117,28 @@ const StudentDashboard = () => {
                                                     <Tab.Pane eventKey="courses" className="pb-4 p-4 ps-0 pe-0" >
                                                         {/* learning courses started */}
                                                         <Row>
-                                                            {AllCoursesData.filter(function (datasource) {
-                                                                return datasource;
-                                                            }).slice(0, 8)
-                                                                .map((item, index) => (
-                                                                    <Col lg={3} md={6} sm={12} key={index}>
-                                                                        <CourseCard item={item} showprogressbar />
+                                                            {!userEnrolmentsData && !error
+                                                                ? [1, 2, 3, 4, 6, 7, 8].map((idx) => (
+                                                                    <Col lg={3} md={4} sm={12} key={idx}>
+                                                                        <ShimmerPostItem card title text cta />
                                                                     </Col>
-                                                                ))}
+                                                                ))
+                                                                : null}
+                                                            {userEnrolmentsData ? (
+                                                                userEnrolmentsData.enrolledCourses?.map((course, idx) => (
+                                                                    <Col lg={3} md={4} sm={12} key={idx}>
+                                                                        <InrolledCourseCard
+                                                                            item={course}
+                                                                            showprogressbar
+                                                                        />
+                                                                    </Col>
+                                                                ))
+                                                            ) : null
+
+                                                            }
+
+
+
                                                         </Row>
                                                         {/* end of learning courses */}
                                                     </Tab.Pane>
@@ -135,7 +148,7 @@ const StudentDashboard = () => {
                                                     >
                                                         {/* learning events started */}
                                                         <Row>
-                                                        {userEnrolmentsData.bookedEvents &&
+                                                            {/* {userEnrolmentsData.bookedEvents &&
                                                             userEnrolmentsData.bookedEvents.map((theBookedEvent, index) => (
                                                                 <Col
                                                                     xl={3}
@@ -147,8 +160,8 @@ const StudentDashboard = () => {
                                                                 >
                                                                     <BlogCard event={theBookedEvent.theEvent} />
                                                                 </Col>
-                                                            ))}
-                                                        {/* end of learning events */}
+                                                            ))} */}
+                                                            {/* end of learning events */}
                                                         </Row>
                                                     </Tab.Pane>
                                                     <Tab.Pane

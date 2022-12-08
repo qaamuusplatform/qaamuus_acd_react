@@ -12,10 +12,7 @@ import { ShimmerPostItem } from "react-shimmer-effects";
 import useSWR from "swr";
 
 export default function Courses() {
-  const { data:coursesList, error } = useSWR(
-    `api/qaCourse-list/`,
-    getAllCourses
-  );
+  const { data:coursesList, error } = useSWR(`api/qaCourse-list/`,getAllCourses);
 
   if (error) {
     toast.error(error);
@@ -60,13 +57,13 @@ export default function Courses() {
                     <Row>
                       {!coursesList && !error
                         ? [1, 2, 3, 4].map((idx) => (
-                            <Col lg={3} md={3} sm={12} key={idx}>
+                            <Col lg={3} md={4} sm={12} key={idx}>
                               <ShimmerPostItem card title text cta />
                             </Col>
                           ))
                         : null}
                       {coursesList?.map((course, idx) => (
-                        <Col lg={3} md={3} sm={12} key={idx}>
+                        <Col lg={3} md={4} sm={12} key={idx}>
                           <CourseCard
                             item={course}
                             showprogressbar={true}
@@ -81,7 +78,7 @@ export default function Courses() {
                     {coursesList?.map((course, idx) => (
                       <CourseCard
                         item={course}
-                        showprogressbar={true}
+                        showprogressbar
                         viewby="list"
                         key={idx}
                       />

@@ -63,7 +63,6 @@ const CourseDetail = ({match}) => {
   }
 
   const isUserAlreadyEnrolled = ()=> currentUser && data?.inrolledUsers?.find(user=>user.id==currentUser.id)
- 
 
   return (
     <Fragment>

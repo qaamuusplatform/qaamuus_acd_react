@@ -146,7 +146,7 @@ const NavbarDefault = ({ headerstyle, login }) => {
             <div className="avatar avatar-md avatar-indicators avatar-online">
               <Image
                 alt="avatar"
-                src={baseUrl.baseUrl + currentUser.profileImage}
+                src={ baseUrl.baseUrl + currentUser.profileImage}
                 className="rounded-circle"
               />
             </div>
@@ -173,13 +173,13 @@ const NavbarDefault = ({ headerstyle, login }) => {
               </div>
             </Dropdown.Item>
             <Dropdown.Divider />
-            <Dropdown.Item as={Link} to="/student/dashboard/" eventKey="2">
+            <Dropdown.Item as={Link} to="/user/dashboard/" eventKey="2">
               <i className="fe fe-user me-2"></i> Dashboard
             </Dropdown.Item>
             <Dropdown.Item eventKey="3">
               <i className="fe fe-star me-2"></i> Subscription
             </Dropdown.Item>
-            <Dropdown.Item as={Link} to="/student/edit-profile/">
+            <Dropdown.Item as={Link} to="/user/edit-profile/">
               <i className="fe fe-settings me-2"></i> Settings
             </Dropdown.Item>
             <Dropdown.Divider />

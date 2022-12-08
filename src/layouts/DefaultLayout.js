@@ -9,16 +9,17 @@ import NavbarDefault from "./navbars/NavbarDefault";
 
 const DefaultLayout = (props) => {
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+ 
   useEffect(() => {
     document.body.style.backgroundColor = "#f5f4f8";
-    // console.log(currentUser);
+
   });
 
   return (
     <Fragment>
-      {currentUser == null ? <NavbarDefault /> : <NavbarDefault login />}
+      { Object.keys(currentUser).length === 0 ? (<NavbarDefault /> ) : (<NavbarDefault login />)}
       {/* <NavbarDefault login /> */}
-
+      
       {/* <NavbarDefault  /> */}
       {props.children}
       <FooterWithLinks />

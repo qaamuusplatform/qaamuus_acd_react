@@ -48,33 +48,16 @@ function AllRoutes() {
       <AppRoute exact path="/" layout={DefaultLayout} component={CourseIndex} />
 
       {/* authentication joining forgetting  */}
-      <AppRoute
-        exact
-        path="/auth/login"
-        layout={AuthLayout}
-        component={SignIn}
-      />
-      <AppRoute
-        exact
-        path="/join/sign-up"
-        layout={AuthLayout}
-        component={SignUp}
-      />
+      <AppRoute exact path="/auth/login" layout={AuthLayout} component={SignIn} />
+      <AppRoute exact path="/join/sign-up" layout={AuthLayout} component={SignUp} />
 
       {/* dashboard edit userifno */}
-      <AppRoute
-        exact
-        path="/student/dashboard/"
-        layout={DefaultLayout}
-        component={StudentDashboard}
-      />
-      <AppRoute
-        exact
-        path="/student/edit-profile/"
-        layout={DefaultLayout}
-        component={EditProfile}
-      />
-      {/* <AppRoute exact path="/student/delete-profile/" layout={DefaultLayout} component={DeleteProfile} /> */}
+      <AppRoute exact path="/user/dashboard/" layout={DefaultLayout} component={StudentDashboard} />
+      <AppRoute exact path="/user/edit-profile/" layout={DefaultLayout} component={EditProfile} />
+      <AppRoute exact path="/user/delete-profile/" layout={DefaultLayout} component={DeleteProfile} />
+      <AppRoute exact path="/user/enrolled-courses/" layout={DefaultLayout} component={EnrolledCourses} />
+      <AppRoute exact path="/user/auth-security/" layout={DefaultLayout} component={AuthSecurity} />
+
 
 			{/* COURSES AND CATEGORIES */}
 			<AppRoute exact path="/courses/" layout={DefaultLayout} component={Courses} />
