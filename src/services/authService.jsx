@@ -21,11 +21,8 @@ export const getLoggedInUser = () => {
 
 export const updateUserInfo = async (body, theUserId) => {
   try {
-    userInfo = await http.post(
-      "/api/userProfile-update/" + theUserId + "/",
-      body,
-      { headers: { "Content-Type": "application/json" } }
-    );
+    userInfo = await http.post(`/api/userProfile-update/${theUserId}`,body,);
+    return userInfo;
   } catch (error) {
     return null;
   }
