@@ -51,7 +51,10 @@ const CourseDetail = ({match}) => {
   const [YouTubeURL] = useState("JRzWRZahOVU");
  const {currentUser} = useContext(CurrentUserContext)
   const { id } = useParams();
-  const { data, error } = useSWR(`/api/qaCourse-detail/${id}`,getCoursesDetail);
+  const { data, error } = useSWR(
+    `/api/qaCourse-detail-slug/${id}`,
+    getCoursesDetail
+  );
   if (error) {
     toast.error(error);
   }
