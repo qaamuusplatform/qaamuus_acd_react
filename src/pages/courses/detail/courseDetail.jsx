@@ -52,7 +52,7 @@ const CourseDetail = ({match}) => {
  const {currentUser} = useContext(CurrentUserContext)
   const { id } = useParams();
   const { data, error } = useSWR(
-    `/api/qaCourse-detail/${id}`,
+    `/api/qaCourse-detail-slug/${id}`,
     getCoursesDetail
   );
   if (error) {
