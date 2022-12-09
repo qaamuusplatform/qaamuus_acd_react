@@ -11,48 +11,43 @@ import "simplebar/dist/simplebar.min.css";
 import "tippy.js/animations/scale.css";
 import { CurrentUserContext } from "services/currentUserContext";
 import { getLoggedInUser } from "services/authService";
-import { Toaster } from "react-hot-toast";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import { getCoursesDetail } from "services/coursesService";
-import useSWR,{mutate} from "swr";
+import useSWR, { mutate } from "swr";
 function App() {
   const [currentUser, setCurrentUser] = useState({});
 
-//   const { data:datadetal } = useSWR(
-//     `/api/userProfile-detail/14/`,
-//     getCoursesDetail
-//   );
-// const handlepost=()=>{
-//   mutate(`/api/userProfile-detail/14/`, getCoursesDetail)
-// }
- 
+  //   const { data:datadetal } = useSWR(
+  //     `/api/userProfile-detail/14/`,
+  //     getCoursesDetail
+  //   );
+  // const handlepost=()=>{
+  //   mutate(`/api/userProfile-detail/14/`, getCoursesDetail)
+  // }
+
   const getCurrentUser = async () => {
     const { data } = await getLoggedInUser();
-    if(data){
+    if (data) {
       // console.log("data ready",data)
       setCurrentUser(data);
       // setCurrentUser({});
-   }else{
- 
-   }
-  
+    } else {
+    }
   };
-
- 
-
-
 
   useEffect(() => {
     getCurrentUser();
-   
   }, []);
 
   return (
     <Router>
-      <CurrentUserContext.Provider value={{currentUser, setCurrentUser}}>
+      <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
         <div className="App">
           <ScrollToTop />
           <AllRoutes />
-          <Toaster />
+          <ToastContainer />
         </div>
       </CurrentUserContext.Provider>
     </Router>

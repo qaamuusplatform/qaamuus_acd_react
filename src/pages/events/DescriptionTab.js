@@ -1,13 +1,14 @@
 // import node module libraries
 import { Fragment } from "react";
 import { Col, Row, ListGroup } from "react-bootstrap";
+import parse from "html-react-parser";
 
 const DescriptionTab = ({ event }) => {
   return (
     <Fragment>
       <div className="mb-4">
         <h3 className="mb-2">Event Descriptions</h3>
-        <p>{event.desc}</p>
+        <p>{parse(event.desc ?? "")}</p>
         <p>
           Next, you’ll explore the basics of the language, giving plenty of
           examples. Lastly, you’ll put your JavaScript knowledge to work and

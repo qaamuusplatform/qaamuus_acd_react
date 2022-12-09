@@ -8,20 +8,16 @@ import React, { Fragment, useState, useEffect } from "react";
 import BlogCard from "components/cards/BlogCard";
 import BlogArticlesList from "data/blogArticlesData";
 import BlogCardFullWidth from "components/cards/HeroEventCard";
+import { ShimmerPostItem } from "react-shimmer-effects";
 import { getEvents } from "services/evantService";
+import useSWR from "swr";
+import { toast } from "react-toastify";
 export default function Events() {
-  const [events, setEvents] = useState([]);
+  const { data: events, error } = useSWR("api/qaEvent-list/", getEvents);
 
-  const allEvents = async () => {
-    const { data } = await getEvents();
-    setEvents(data);
-  };
-
-  // console.log(events);
-
-  useEffect(() => {
-    allEvents();
-  }, []);
+  if (error) {
+    toast.error(error);
+  }
 
   return (
     <Fragment>
@@ -97,33 +93,46 @@ export default function Events() {
 
         <Container>
           <Row>
+            {!events && !error
+              ? [1].map((indx) => {
+                  <Col xl={12} lg={12} md={12} sm={12} key={indx}>
+                    <ShimmerPostItem card title text cta />
+                  </Col>;
+                })
+              : null}
             {/* Show first article in full width */}
-            {events &&
-              events
-                .filter((event) => event.heroEvent === true)
-                .map((event, index) => (
-                  <Col xl={12} lg={12} md={12} sm={12} key={index}>
-                    <BlogCardFullWidth event={event} />
-                  </Col>
-                ))}
+            {events
+              ?.filter((event) => event.heroEvent === true)
+              .map((event, index) => (
+                <Col xl={12} lg={12} md={12} sm={12} key={index}>
+                  <BlogCardFullWidth event={event} />
+                </Col>
+              ))}
 
             {/* Show remaining articles in 3 column width  */}
 
-            {events &&
-              events
-                .filter((event) => event.heroEvent === false)
-                .map((event, index) => (
-                  <Col
-                    xl={4}
-                    lg={4}
-                    md={6}
-                    sm={12}
-                    key={index}
-                    className="d-flex"
-                  >
-                    <BlogCard event={event} />
-                  </Col>
-                ))}
+            {!events && !error
+              ? [1, 2, 3, 4].map((indx) => {
+                  <Col xl={4} lg={4} md={6} sm={12} key={indx}>
+                    <ShimmerPostItem card title text cta />
+                  </Col>;
+                })
+              : null}
+
+            {events
+              ?.filter((event) => event.heroEvent === false)
+              .map((event, index) => (
+                <Col
+                  xl={4}
+                  lg={4}
+                  md={6}
+                  sm={12}
+                  key={index}
+                  className="d-flex"
+                >
+                  <BlogCard event={event} />
+                </Col>
+              ))}
           </Row>
         </Container>
       </div>

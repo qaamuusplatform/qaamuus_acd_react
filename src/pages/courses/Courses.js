@@ -10,16 +10,18 @@ import { getAllCourses } from "services/coursesService";
 import CourseCard from "components/cards/CourseCard";
 import { ShimmerPostItem } from "react-shimmer-effects";
 import useSWR from "swr";
-import { toast } from "react-hot-toast";
+
+import { toast } from "react-toastify";
 
 export default function Courses() {
-  const { data:coursesList, error } = useSWR(`api/qaCourse-list/`,getAllCourses);
+  const { data: coursesList, error } = useSWR(
+    `api/qaCourse-list/`,
+    getAllCourses
+  );
 
   if (error) {
     toast.error(error);
   }
-
-  
 
   return (
     <Fragment>

@@ -1,6 +1,6 @@
 // import node module libraries
 
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 
 import {
@@ -39,35 +39,33 @@ import ProfileBackground from "assets/images/background/profile-bg.jpg";
 import GKAccordionProgress from "components/cards/GKAccordionProgress";
 import ModalVideo from "react-modal-video";
 import { getEvent } from "services/evantService";
+import { CurrentUserContext } from "services/currentUserContext";
 
-import baseUrl from "../../config.json";
 // import data files
 // import { CourseIndex } from 'data/marketing/CourseIndexData';np
+import { END_POINT } from "./../../helper/constants";
+import useSWR from "swr";
+import { toast } from "react-hot-toast";
+import Timer from "./Timer";
+
 const EventDetail = () => {
   const [isOpen, setOpen] = useState(false);
   const [YouTubeURL] = useState("JRzWRZahOVU");
-  const [event, setEvent] = useState({});
 
-  const params = useParams();
+  const { currentUser } = useContext(CurrentUserContext);
 
-  const getEventData = async (id) => {
-    try {
-      const { data } = await getEvent(id);
+  const { slug } = useParams();
 
-      setEvent(data);
-    } catch (error) {
-      return error;
-    }
-  };
-  console.log(event);
+  const { data: event, error } = useSWR(
+    `api/qaEvent-detail-slug/${slug}/`,
+    getEvent
+  );
 
-  useEffect(() => {
-    getEventData(params.id);
-  }, [params.id]);
+  if (error) toast.error(error);
 
   return (
     <Fragment>
-      {event.id && (
+      {event && (
         <div className="py-lg-5 py-5">
           <Container>
             {/*  Video section  */}
@@ -123,13 +121,14 @@ const EventDetail = () => {
                         </span>
                         <span className="ms-4 d-none d-md-block">
                           <Icon path={mdiAccountMultipleOutline} size={0.7} />{" "}
-                          <span>Enrolled</span>
+                          <span>{event.enrolledStudents.length}</span>
                         </span>
                       </div>
-                      <div className="d-flex justify-content-between">
+                      <Timer date={event.dateTimeStarting} />
+                      {/* <div className="d-flex justify-content-between">
                         <div className="d-flex align-items-center">
                           <Image
-                            src={baseUrl.baseUrl + event.persenter.profileImage}
+                            src={`${END_POINT}` + event.persenter.profileImage}
                             className="rounded-circle avatar-md"
                             alt=""
                           />
@@ -143,23 +142,21 @@ const EventDetail = () => {
                             Follow
                           </Link>
                         </div>
-                      </div>
+                      </div> */}
                     </Card.Body>
                     {/*  Nav tabs  */}
                     <Nav className="nav-lt-tab">
-                      {["Description", "Reviews", "Transcript", "FAQ"].map(
-                        (item, index) => (
-                          <Nav.Item key={index}>
-                            <Nav.Link
-                              href={`#${item.toLowerCase()}`}
-                              eventKey={item.toLowerCase()}
-                              className="mb-sm-3 mb-md-0"
-                            >
-                              {item}
-                            </Nav.Link>
-                          </Nav.Item>
-                        )
-                      )}
+                      {["Description", "Reviews"].map((item, index) => (
+                        <Nav.Item key={index}>
+                          <Nav.Link
+                            href={`#${item.toLowerCase()}`}
+                            eventKey={item.toLowerCase()}
+                            className="mb-sm-3 mb-md-0"
+                          >
+                            {item}
+                          </Nav.Link>
+                        </Nav.Item>
+                      ))}
                     </Nav>
                   </Card>
                   {/*  Card  */}
@@ -174,14 +171,6 @@ const EventDetail = () => {
                         <Tab.Pane eventKey="reviews" className="pb-4 p-4">
                           {/* Reviews Tab */}
                           <ReviewsTab />
-                        </Tab.Pane>
-                        <Tab.Pane eventKey="transcript" className="pb-4 p-4">
-                          {/* Transcript Tab */}
-                          <TranscriptTab />
-                        </Tab.Pane>
-                        <Tab.Pane eventKey="faq" className="pb-4 p-4">
-                          {/* FAQ Tab */}
-                          <FAQTab />
                         </Tab.Pane>
                       </Tab.Content>
                     </Card.Body>
@@ -228,15 +217,21 @@ const EventDetail = () => {
                       <del className="fs-4 text-muted">$750</del>
                     </div>
                     <div className="d-grid">
-                      <Link to="#" className="btn btn-primary mb-2  ">
-                        Start Free Month
-                      </Link>
-                      <Link
-                        to="/marketing/pages/pricing/"
-                        className="btn btn-outline-primary"
-                      >
-                        Get Full Access
-                      </Link>
+                      {currentUser ? (
+                        <Link
+                          to="/marketing/pages/pricing/"
+                          className="btn btn-primary"
+                        >
+                          Enroll now
+                        </Link>
+                      ) : (
+                        <Link
+                          to="/auth/login"
+                          className="btn btn-outline-primary"
+                        >
+                          Login to Enroll
+                        </Link>
+                      )}
                     </div>
                   </Card.Body>
                 </Card>
