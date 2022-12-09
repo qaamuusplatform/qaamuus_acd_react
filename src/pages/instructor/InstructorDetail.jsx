@@ -18,8 +18,7 @@ import 'tippy.js/animations/scale.css';
 // import custom components
 
 // import profile layout wrapper
-import ProfileCoverFull from 'components/marketing/common/headers/ProfileCoverFull';
-import InstructorData from 'data/InstructorData';
+import ProfileCoverFull from './ProfileCoverFull';
 
 import AboutTab from './AboutTab';
 import { httpFetcher } from 'services/coursesService';
@@ -32,13 +31,13 @@ const InstructorDetail = () => {
     const { instructorId } = useParams();
     // The forwardRef is important!!
     // Dropdown needs access to the DOM node in order to position the Menu
-    const { data: instructorInfo, error } = useSWR(`/api/userProfile-detail/${instructorId}`, httpFetcher);
-    const { data: instructorCourses, error: instructorCoursesError } = useSWR(`/api/qaCourse-list/`, httpFetcher);
+    const { data: instructorInfo, error } = useSWR(`/api/userProfile-detail/${instructorId}/`, httpFetcher);
+    // const { data: instructorCourses, error: instructorCoursesError } = useSWR(`/api/qaCourse-list/`, httpFetcher);
     console.log(instructorInfo)
-    if (error && instructorCoursesError) {
+    if (error) {
         toast.error(error);
     }
-    if (!instructorInfo && !error && !instructorCoursesError) {
+    if (!instructorInfo && !error) {
         return (
             <Fragment>
                 <Card className="p-lg-2 pt-2 pt-lg-0 rounded-0 border-0">

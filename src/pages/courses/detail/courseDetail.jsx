@@ -20,8 +20,8 @@ import Tippy from "@tippyjs/react";
 import "tippy.js/animations/scale.css";
 
 // import custom components
-import GKAccordionDefault from "components/marketing/common/accordions/GKAccordionDefault";
-import Ratings from "components/marketing/common/ratings/Ratings";
+import GKAccordionDefault from "components/accordions/GKAccordionDefault";
+import Ratings from "components/elements/common/ratings/Ratings";
 
 // import sub components tabs
 import ReviewsTab from "./ReviewsTab";
