@@ -301,37 +301,7 @@ const EventDetail = () => {
                   </Card.Body>
                 </Card>
                 {/* Card */}
-                <Card className="mb-4">
-                  {/* Card header */}
-                  <Card.Header>
-                    <h4 className="mb-0">What’s included</h4>
-                  </Card.Header>
-                  {/* Card Body */}
-                  <Card.Body className="p-0">
-                    <ListGroup variant="flush">
-                      <ListGroup.Item>
-                        <i className="fe fe-play-circle align-middle me-2 text-primary"></i>
-                        12 hours video
-                      </ListGroup.Item>
-                      <ListGroup.Item>
-                        <i className="fe fe-award me-2 align-middle text-success"></i>
-                        Certificate
-                      </ListGroup.Item>
-                      <ListGroup.Item>
-                        <i className="fe fe-calendar align-middle me-2 text-info"></i>
-                        12 Article
-                      </ListGroup.Item>
-                      <ListGroup.Item>
-                        <i className="fe fe-video align-middle me-2 text-secondary"></i>
-                        Watch Offline
-                      </ListGroup.Item>
-                      <ListGroup.Item className="bg-transparent">
-                        <i className="fe fe-clock align-middle me-2 text-warning"></i>
-                        Lifetime access
-                      </ListGroup.Item>
-                    </ListGroup>
-                  </Card.Body>
-                </Card>
+              
                 {/* Card */}
                 <Card>
                   {/* Card body */}

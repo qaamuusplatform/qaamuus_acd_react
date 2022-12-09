@@ -64,7 +64,7 @@ function Timer({ date }) {
 export default Timer;
 
 const TimerStyle = styled.div`
-  width: 30rem;
+  width: 28rem;
   display: flex;
   justify-content: space-between;
 

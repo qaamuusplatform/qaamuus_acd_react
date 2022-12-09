@@ -25,6 +25,7 @@ import { httpFetcher } from 'services/coursesService';
 import useSWR from 'swr';
 import { ShimmerPostDetails,  ShimmerThumbnail } from 'react-shimmer-effects';
 import CoursesTab from './CoursesTab';
+import EventsTap from './EventsTab';
 // Import required data
 
 const InstructorDetail = () => {
@@ -82,7 +83,7 @@ const InstructorDetail = () => {
 
                                 {/*  Nav tabs  */}
                                 <Nav className="nav-lt-tab ms-0">
-                                    {['About', 'Courses', 'Author'].map((item, index) => (
+                                    {['About', 'Courses', 'Events'].map((item, index) => (
                                         <Nav.Item
                                             key={index}
                                             className={`${index === 0 ? 'ms-0 ' : ''}`}
@@ -116,14 +117,12 @@ const InstructorDetail = () => {
                                         {/* Beginner Courses */}
                                         <CoursesTab instructorInfo={instructorInfo}  />
                                         
-                                        {/* <AboutTab aboutUs={instructorInfo} /> */}
-
-                                        {/* End of Courses */}
                                     </Tab.Pane>
 
                                     <Tab.Pane eventKey="author" className="pb-4 px-0">
                                         {/* Author */}
                                         {/* <AuthorTab /> */}
+                                        <EventsTap instructorInfo={instructorInfo}  />
 
                                         {/* End of Author */}
                                     </Tab.Pane>
