@@ -1,11 +1,11 @@
 import http from "./httpService";
 
-const apiEndpoint = "api/qaEvent-list/";
-
-export const getEvents = () => {
-  return http.get(apiEndpoint);
+export const getEvents = async (url) => {
+  const data = await http.get(url);
+  return data.data;
 };
 
-export const getEvent = (id) => {
-  return http.get(`api/qaEvent-detail/${id}/`);
+export const getEvent = async (url) => {
+  const data = await http.get(url);
+  return data.data;
 };

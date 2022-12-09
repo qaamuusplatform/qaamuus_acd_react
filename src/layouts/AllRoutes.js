@@ -24,6 +24,7 @@ import AuthSecurity from "pages/student/account-settings/AuthSecurity";
 import CourseDetail from "pages/courses/detail/courseDetail";
 import Error404 from "pages/errorPages/Error404";
 import ComingSoon from "pages/errorPages/ComingSoon";
+import Timer from "pages/events/Timer";
 // import DeleteProfile from "pages/student/account-settings/Deleteprofile";
 
 /* IMPORTS FOR MARKETING PAGES - END */
@@ -48,26 +49,96 @@ function AllRoutes() {
       <AppRoute exact path="/" layout={DefaultLayout} component={CourseIndex} />
 
       {/* authentication joining forgetting  */}
-      <AppRoute exact path="/auth/login" layout={AuthLayout} component={SignIn} />
-      <AppRoute exact path="/join/sign-up" layout={AuthLayout} component={SignUp} />
+      <AppRoute
+        exact
+        path="/auth/login"
+        layout={AuthLayout}
+        component={SignIn}
+      />
+      <AppRoute
+        exact
+        path="/join/sign-up"
+        layout={AuthLayout}
+        component={SignUp}
+      />
 
       {/* dashboard edit userifno */}
-      <AppRoute exact path="/user/dashboard/" layout={DefaultLayout} component={StudentDashboard} />
-      <AppRoute exact path="/user/edit-profile/" layout={DefaultLayout} component={EditProfile} />
-      <AppRoute exact path="/user/delete-profile/" layout={DefaultLayout} component={DeleteProfile} />
-      <AppRoute exact path="/user/enrolled-courses/" layout={DefaultLayout} component={EnrolledCourses} />
-      <AppRoute exact path="/user/auth-security/" layout={DefaultLayout} component={AuthSecurity} />
+      <AppRoute
+        exact
+        path="/user/dashboard/"
+        layout={DefaultLayout}
+        component={StudentDashboard}
+      />
+      <AppRoute
+        exact
+        path="/user/edit-profile/"
+        layout={DefaultLayout}
+        component={EditProfile}
+      />
+      <AppRoute
+        exact
+        path="/user/delete-profile/"
+        layout={DefaultLayout}
+        component={DeleteProfile}
+      />
+      <AppRoute
+        exact
+        path="/user/enrolled-courses/"
+        layout={DefaultLayout}
+        component={EnrolledCourses}
+      />
+      <AppRoute
+        exact
+        path="/user/auth-security/"
+        layout={DefaultLayout}
+        component={AuthSecurity}
+      />
 
-
-			{/* COURSES AND CATEGORIES */}
-			<AppRoute exact path="/courses/" layout={DefaultLayout} component={Courses} />
-			<AppRoute exact path="/courses/:id" layout={DefaultLayout} component={CourseDetail} />
-			<AppRoute exact path="/courses/:id/watch" layout={DefaultLayout} component={<h1>Watch Course</h1>} />
-			<AppRoute exact path="/events/" layout={DefaultLayout} component={Events} />
-			<AppRoute exact path="/events/" layout={DefaultLayout} component={Events} />
-			<AppRoute exact path="/events/:id" layout={DefaultLayout} component={EventDetail} />
-			<AppRoute exact path="/404" layout={DefaultLayout} component={Error404} />
-			<AppRoute exact path="/coming-soon" layout={DefaultLayout} component={ComingSoon} />
+      {/* COURSES AND CATEGORIES */}
+      <AppRoute
+        exact
+        path="/courses/"
+        layout={DefaultLayout}
+        component={Courses}
+      />
+      <AppRoute
+        exact
+        path="/courses/:id"
+        layout={DefaultLayout}
+        component={CourseDetail}
+      />
+      <AppRoute
+        exact
+        path="/courses/:id/watch"
+        layout={DefaultLayout}
+        component={<h1>Watch Course</h1>}
+      />
+      <AppRoute
+        exact
+        path="/events/"
+        layout={DefaultLayout}
+        component={Events}
+      />
+      <AppRoute
+        exact
+        path="/events/"
+        layout={DefaultLayout}
+        component={Events}
+      />
+      <AppRoute
+        exact
+        path="/events/:slug"
+        layout={DefaultLayout}
+        component={EventDetail}
+      />
+      <AppRoute exact path="/404" layout={DefaultLayout} component={Error404} />
+      <AppRoute
+        exact
+        path="/coming-soon"
+        layout={DefaultLayout}
+        component={ComingSoon}
+      />
+      <AppRoute exact path="/timer" layout={DefaultLayout} component={Timer} />
       {/* COURSES AND CATEGORIES */}
       {/* <AppRoute
         exact
