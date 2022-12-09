@@ -16,7 +16,7 @@ import StudentDashboard from "pages/student/Dashboard";
 import EditProfile from "pages/student/account-settings/EditProfile";
 import Courses from "pages/courses/Courses";
 import Events from "pages/events/events";
-import EventDetail from "pages/events/eventDetail";
+import EventDetail from "pages/events/EventDetail";
 import EnrolledCourses from "pages/student/account-settings/EnrolledCourses";
 import Notifications from "pages/student/account-settings/Notifications";
 import DeleteProfile from "pages/student/account-settings/DeleteProfile";
@@ -96,29 +96,14 @@ function AllRoutes() {
         layout={DefaultLayout}
         component={AuthSecurity}
       />
-      <AppRoute
-        exact
-        path="/user/delete-account/"
-        layout={DefaultLayout}
-        component={DeleteProfile}
-      />
+      <AppRoute exact path="/user/delete-account/" layout={DefaultLayout} component={DeleteProfile} />
 
       
       <AppRoute exact path="/instructor/:instructorUsername" layout={DefaultLayout} component={InstructorDetail} />
-      <AppRoute
-        exact
-        path="/instructor-detail/:instructorId"
-        layout={DefaultLayout}
-        component={InstructorDetail}
-      />
+      {/* <AppRoute exact path="/instructor-detail/:instructorId" layout={DefaultLayout} component={InstructorDetail} /> */}
 
       {/* COURSES AND CATEGORIES */}
-      <AppRoute
-        exact
-        path="/courses/"
-        layout={DefaultLayout}
-        component={Courses}
-      />
+      <AppRoute exact path="/courses/" layout={DefaultLayout} component={Courses} />
       <AppRoute
         exact
         path="/courses/:id"
@@ -131,31 +116,13 @@ function AllRoutes() {
         layout={DefaultLayout}
         component={<h1>Watch Course</h1>}
       />
-      <AppRoute
-        exact
-        path="/events/"
-        layout={DefaultLayout}
-        component={Events}
-      />
-      <AppRoute
-        exact
-        path="/events/"
-        layout={DefaultLayout}
-        component={Events}
-      />
-      <AppRoute
-        exact
-        path="/events/:slug"
-        layout={DefaultLayout}
-        component={EventDetail}
-      />
+      <AppRoute exact path="/events/" layout={DefaultLayout} component={Events} />
+      <AppRoute exact path="/events/" layout={DefaultLayout} component={Events} />
+      <AppRoute exact path="/events/:slug" layout={DefaultLayout}  component={EventDetail} />
+      {/* <AppRoute exact path="/event-waiting/:slug" layout={DefaultLayout}  component={EventWatingScreen} /> */}
+
       <AppRoute exact path="/404" layout={DefaultLayout} component={Error404} />
-      <AppRoute
-        exact
-        path="/coming-soon"
-        layout={DefaultLayout}
-        component={ComingSoon}
-      />
+      <AppRoute exact path="/coming-soon" layout={DefaultLayout} component={ComingSoon} />  
 
       {/* COURSES AND CATEGORIES */}
       {/* <AppRoute
