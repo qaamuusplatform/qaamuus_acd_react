@@ -21,6 +21,7 @@ const ProfileLayout = (props) => {
 	const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 
 	const location = useLocation();
+	
 
 	useEffect(() => {
 		document.body.style.backgroundColor = '#f5f4f8';

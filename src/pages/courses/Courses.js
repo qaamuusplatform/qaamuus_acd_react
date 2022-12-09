@@ -56,7 +56,7 @@ export default function Courses() {
                 <Tab.Content>
                   <Tab.Pane eventKey="grid" className="pb-4 px-0">
                     {/* <CourseGridView /> */}
-                    <Row>
+                    {/* <Row>
                       {!coursesList && !error
                         ? [1, 2, 3, 4].map((idx) => (
                             <Col lg={3} md={4} sm={12} key={idx}>
@@ -73,14 +73,14 @@ export default function Courses() {
                           />
                         </Col>
                       ))}
-                    </Row>
+                    </Row> */}
                   </Tab.Pane>
                   <Tab.Pane eventKey="list" className="pb-4 px-0 react-code">
                     {/* <CourseListView /> */}
                     {coursesList?.map((course, idx) => (
                       <CourseCard
                         item={course}
-                        showprogressbar={true}
+                        showprogressbar
                         viewby="list"
                         key={idx}
                       />

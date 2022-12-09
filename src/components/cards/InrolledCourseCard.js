@@ -24,14 +24,14 @@ import Ratings from 'components/elements/common/ratings/Ratings';
 import { numberWithCommas } from 'helper/utils';
 import { END_POINT } from 'helper/constants';
 
-const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
+const InrolledCourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 	/** Used in Course Index, Course Category, Course Filter Page, Student Dashboard etc...  */
 	const GridView = () => {
 		return (
 			<Card className={`mb-4 card-hover ${extraclass}`}>
-				<Link to={`/courses/${item.slug}`}>
+				<Link to={`/courses/${item.theCourse.id}`}>
 					<Image
-						src={`${END_POINT}${item.coverImage}`}
+						src={`${END_POINT}${item.theCourse.coverImage}`}
 						alt=""
 						className="card-img-top rounded-top-md course-grid-cover-image"
 					/>
@@ -39,25 +39,25 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 				{/* Card body  */}
 				<Card.Body>
 					<h3 className="h4 mb-2 text-truncate-line-2 ">
-						<Link to={`/courses/${item.slug}`} className="text-inherit">
-							{item.title}
+						<Link to={`/courses/${item.theCourse.id}`} className="text-inherit">
+							{item.theCourse.title}
 						</Link>
 					</h3>
 					<ListGroup as="ul" bsPrefix="list-inline" className="mb-3">
 						<ListGroup.Item as="li" bsPrefix="list-inline-item">
 							<i className="far fa-clock me-1"></i>
-							{item.houres}hrs
+							{item.theCourse.houres}hrs
 						</ListGroup.Item>
 						<ListGroup.Item as="li" bsPrefix="list-inline-item">
-							<LevelIcon level={item.level} />
-							{item.level}
+							<LevelIcon level={item.theCourse.level} />
+							{item.theCourse.level}
 						</ListGroup.Item>
 					</ListGroup>
 					<div
 						className={`lh-1 d-flex align-items-center ${
-							item.itsFree ||
-							item.regularPrice === undefined ||
-							item.saledPrice <= 0 
+							item.theCourse.itsFree ||
+							item.theCourse.regularPrice === undefined ||
+							item.theCourse.saledPrice <= 0 
 								? 'mb-5'
 								: ''
 						}`}
@@ -74,9 +74,9 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 					</div>
 					<div
 						className={`lh-1 mt-3 ${
-							item.itsFree ||
-							item.regularPrice === undefined ||
-							item.saledPrice <= 0
+							item.theCourse.itsFree ||
+							item.theCourse.regularPrice === undefined ||
+							item.theCourse.saledPrice <= 0
 								? 'd-none'
 								: ''
 						}`}
@@ -84,7 +84,7 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 						<span className="text-dark fw-bold">
 							${item.saledPrice}
 						</span>{' '}
-						<del className="fs-6 text-muted">${item.regularPrice}</del>
+						<del className="fs-6 text-muted">${item.theCourse.regularPrice}</del>
 					</div>
 				</Card.Body>
 				{/* Card Footer */}
@@ -92,13 +92,13 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 					<Row className="align-items-center g-0">
 						<Col className="col-auto">
 							<Image
-								src={`${END_POINT}${item.instructor?.profileImage}`}
+								src={`${END_POINT}${item.theCourse.instructor?.profileImage}`}
 								className="rounded-circle avatar-xs"
 								alt=""
 							/>
 						</Col>
 						<Col className="col ms-2">
-							<span>{item.instructor.fullName}</span>
+							<span>{item.theCourse.instructor.fullName}</span>
 						</Col>
 						<Col className="col-auto">
 							<Tippy content="Add to Bookmarks" animation={'scale'}>
@@ -128,17 +128,17 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 			<Card className="mb-4 card-hover">
 				<Row className="g-0">
 					<Link
-						to={`/courses/${item.slug}`}
+						to={`/courses/${item.theCourse.id}`}
 						className="bg-cover img-left-rounded col-12 col-md-12 col-xl-3 col-lg-3 "
 						style={{
-							background: `url(${END_POINT}${item.coverImage})`,
+							background: `url(${END_POINT}${item.theCourse.coverImage})`,
 							backgroundRepeat: 'no-repeat',
 							backgroundSize: 'cover',
 							backgroundPosition: 'top center'
 						}}
 					>
 						<Image
-							src={`${END_POINT}${item.coverImage}`}
+							src={`${END_POINT}${item.theCourse.coverImage}`}
 							alt="..."
 							className="img-fluid d-lg-none invisible"
 						/>
@@ -147,19 +147,19 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 						{/* <!-- Card body --> */}
 						<Card.Body>
 							<h3 className="mb-2 text-truncate-line-2 ">
-								<Link to={`/courses/${item.slug}`} className="text-inherit">
-									{item.title}
+								<Link to={`/courses/${item.theCourse.id}`} className="text-inherit">
+									{item.theCourse.title}
 								</Link>
 							</h3>
 							{/* <!-- List inline --> */}
 							<ListGroup as="ul" bsPrefix="list-inline" className="mb-5">
 								<ListGroup.Item as="li" bsPrefix="list-inline-item">
 									<i className="far fa-clock me-1"></i>
-									{item.houres}hrs
+									{item.theCourse.houres}hrs
 								</ListGroup.Item>
 								<ListGroup.Item as="li" bsPrefix="list-inline-item">
-									<LevelIcon level={item.level} />
-									{item.level}
+									<LevelIcon level={item.theCourse.level} />
+									{item.theCourse.level}
 								</ListGroup.Item>
 								<ListGroup.Item as="li" bsPrefix="list-inline-item">
 									<span className="text-warning">
@@ -176,13 +176,13 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 							<Row className="align-items-center g-0">
 								<Col className="col-auto">
 									<Image
-										src={`${END_POINT}${item.instructor.profileImage}`}
+										src={`${END_POINT}${item.theCourse.instructor.profileImage}`}
 										className="rounded-circle avatar-xs"
 										alt=""
 									/>
 								</Col>
 								<Col className="col ms-2">
-									<span>{item.instructor.fullName}</span>
+									<span>{item.theCourse.instructor.fullName}</span>
 								</Col>
 								<Col className="col-auto">
 									<Tippy content="Add to Bookmarks" animation={'scale'}>
@@ -204,11 +204,11 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 		return (
 			<div className="d-lg-flex align-items-center">
 				<div>
-					<Image src={item.image} alt="" className="rounded img-4by3-lg" />
+					<Image src={item.theCourse.image} alt="" className="rounded img-4by3-lg" />
 				</div>
 				<div className="ms-lg-3 mt-2 mt-lg-0">
 					<h4 className="text-primary-hover">
-						{item.title}{' '}
+						{item.theCourse.title}{' '}
 						<Badge bg="light-success" className="text-success">
 							New
 						</Badge>
@@ -220,20 +220,20 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 					>
 						<ListGroup.Item as="li" bsPrefix="list-inline-item">
 							<i className="far fa-clock me-1"></i>
-							{item.duration}
+							{item.theCourse.duration}
 						</ListGroup.Item>
 						<ListGroup.Item as="li" bsPrefix="list-inline-item">
-							<LevelIcon level={item.level} />
-							{item.level}
+							<LevelIcon level={item.theCourse.level} />
+							{item.theCourse.level}
 						</ListGroup.Item>
 						<ListGroup.Item as="li" bsPrefix="list-inline-item">
 							<span className="text-warning">
 								{' '}
-								<Ratings rating={item.rating} /> {item.rating.toFixed(1)}
+								<Ratings rating={item.theCourse.rating} /> {item.theCourse.rating.toFixed(1)}
 							</span>
 							<span className="fs-6 text-muted">
 								{' '}
-								({numberWithCommas(item.ratingby)})
+								({numberWithCommas(item.theCourse.ratingby)})
 							</span>
 						</ListGroup.Item>
 					</ListGroup>
@@ -256,7 +256,7 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 };
 
 // Specifies the default values for props
-CourseCard.defaultProps = {
+InrolledCourseCard.defaultProps = {
 	free: false,
 	viewby: 'grid',
 	showprogressbar: false,
@@ -264,7 +264,7 @@ CourseCard.defaultProps = {
 };
 
 // Typechecking With PropTypes
-CourseCard.propTypes = {
+InrolledCourseCard.propTypes = {
 	item: PropTypes.object.isRequired,
 	free: PropTypes.bool,
 	viewby: PropTypes.string,
@@ -272,4 +272,4 @@ CourseCard.propTypes = {
 	extraclass: PropTypes.string
 };
 
-export default CourseCard;
+export default InrolledCourseCard;

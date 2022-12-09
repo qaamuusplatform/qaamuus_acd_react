@@ -20,8 +20,8 @@ import Tippy from "@tippyjs/react";
 import "tippy.js/animations/scale.css";
 
 // import custom components
-import GKAccordionDefault from "components/marketing/common/accordions/GKAccordionDefault";
-import Ratings from "components/marketing/common/ratings/Ratings";
+import GKAccordionDefault from "components/accordions/GKAccordionDefault";
+import Ratings from "components/elements/common/ratings/Ratings";
 
 // import sub components tabs
 import ReviewsTab from "./ReviewsTab";
@@ -51,7 +51,10 @@ const CourseDetail = ({match}) => {
   const [YouTubeURL] = useState("JRzWRZahOVU");
  const {currentUser} = useContext(CurrentUserContext)
   const { id } = useParams();
-  const { data, error } = useSWR(`/api/qaCourse-detail/${id}`,getCoursesDetail);
+  const { data, error } = useSWR(
+    `/api/qaCourse-detail-slug/${id}`,
+    getCoursesDetail
+  );
   if (error) {
     toast.error(error);
   }

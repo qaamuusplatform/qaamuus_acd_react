@@ -14,9 +14,17 @@ import ProfileLayout from 'layouts/ProfileLayout';
 import { useContext, useState } from 'react';
 import { CurrentUserContext } from 'services/currentUserContext';
 import baseUrl from 'services/baseUrl';
+import { updateUserInfo } from 'services/authService';
 
 const EditProfile = (props) => {
 	const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+	async function userUpdateHandleSubmit(e) {
+		e.preventDefault();
+		const userData = new FormData(e.target);
+		updateUserInfo(userData,currentUser.id).then((e)=>{
+			console.log(e);
+		})
+	}
 	const account = props.location.pathname.substring(21, 11);
 	const statelist = [
 		{ value: '1', label: 'Gujarat' },
@@ -70,7 +78,7 @@ const EditProfile = (props) => {
 						<h4 className="mb-0">Personal Details</h4>
 						<p className="mb-4">Edit your personal information and address.</p>
 						{/* Form */}
-						<Form>
+						<Form onSubmit={userUpdateHandleSubmit} >
 							<Row>
 								{/* First name */}
 								<Col md={6} sm={12} className="mb-3">
@@ -90,7 +98,7 @@ const EditProfile = (props) => {
 								<Col md={6} sm={12} className="mb-3">
 									<Form.Group className="mb-3" controlId="formPhone">
 										<Form.Label>Email</Form.Label>
-										<Form.Control type="email" name="email" disabled placeholder="Emailkaga" required value={currentUser.email} />
+										<Form.Control type="email" disabled placeholder="Emailkaga" required value={currentUser.email} />
 									</Form.Group>
 								</Col>
 								
@@ -134,6 +142,7 @@ const EditProfile = (props) => {
 											type="text"
 											placeholder="Magaalada Aad Joogto"
 											required
+											name="city"
 											value={currentUser.city}
 
 										/>

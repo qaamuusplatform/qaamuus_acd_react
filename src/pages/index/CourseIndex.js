@@ -2,29 +2,29 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Fragment } from 'react';
-import { Col, Row, Container, Card } from 'react-bootstrap';
+import { Col, Row, Container, Card, Image } from 'react-bootstrap';
 import useSWR from 'swr';
-import http from 'services/httpService';
 import Slider from 'react-slick';
 
 // import custom components
 import HeroHeader from './HeroHeader';
 import FeaturesList from './FeaturesList';
 import allInternationalFriendData from 'data/AllInternationalFriends';
-import AllCoursesData from 'data/AllCoursesData';
 import CourseCard from 'components/cards/CourseCard';
 import WorldClassInstructors from './WorldClassInstructors';
 import TestimonialsSlider from './TestimonialsSlider';
 import LogosTopHeading2 from 'components/clientlogos/LogosTopHeading2';
 import LogoList1 from 'data/LogoList1';
 import AboutUs from './AboutUs';
-import axios from 'axios';
+import { httpFetcher } from 'services/coursesService';
+import { ShimmerPostItem } from 'react-shimmer-effects';
+import AppIntegrationData from 'data/AppIntegrationData';
 
 // import sub components
 
 const CourseIndex = () => {
 
-	// const {data,error} = useSWR('/api/ourInternationalFriends-list/',async (url)=>await axios(url).then(r=>r.data));
+	const { data: popularCourses, error } = useSWR(`api/qaCourse-list/`, httpFetcher);
 	// console.log(data);
 	const courseSliderSettings = {
 		infinite: true,
@@ -93,7 +93,7 @@ const CourseIndex = () => {
 
 			{/*  Features list  */}
 			<FeaturesList />
-			<AboutUs/>
+			<AboutUs />
 
 			{/* <div className="pb-lg-3 pt-lg-3">
 				<Container>
@@ -110,18 +110,7 @@ const CourseIndex = () => {
 			<div className="pb-lg-8 pt-lg-3 py-6">
 				<Container>
 					{/* <h2 className="mb-0 mx-2">Most Popular</h2> */}
-					<br />
-					<Slider {...settings} className="pb-sm-5 mb-5 slick-slider-wrapper">
-						{allInternationalFriendData.map((item, index) => {
-							return (
-								<Card className="item px-md-1" key={index}>
-									<Card.Img variant="top" src={item.image} />
-								</Card>
-							)
 
-						})}
-
-					</Slider>
 					{/* <CourseSlider popular={true} /> */}
 					{/* <div className="d-flex justify-content-between">
 						<h2 className="mb-0 mx-2">Popular Courses</h2>
@@ -132,15 +121,44 @@ const CourseIndex = () => {
 
 					<br></br> */}
 					<div className="position-relative">
+						<Row>
+							{!popularCourses && !error
+								? [1, 2, 3, 4].map((idx) => (
+									<Col lg={3} md={4} sm={12} key={idx}>
+										<ShimmerPostItem card title text cta />
+									</Col>
+								))
+								: null}
+							{popularCourses?.map((course, idx) => (
+								<Col lg={3} md={4} sm={12} key={idx}>
+									<CourseCard
+										item={course}
+										showprogressbar={true}
+										viewby="grid"
+									/>
+								</Col>
+							))}
+						</Row>
 
-						<Slider {...courseSliderSettings} className="pb-sm-5 mb-5 slick-slider-wrapper">
-
-							{AllCoursesData.map((item, index) => (
-								<div className="item px-md-1" key={item.id}>
-									{/* <CourseCard key={index} item={item} extraclass="mx-2" /> */}
+						{/* <Slider {...courseSliderSettings} className="pb-sm-5 mb-5 slick-slider-wrapper">
+							{popularCourses && !error
+								? [1, 2, 3, 4, 5, 6, 7, 8].map((idx) => (
+									<div className="item px-md-1" key={idx}>
+										<ShimmerPostItem card title text cta />
+									</div>
+								))
+								: null}
+							{popularCourses?.map((course, idx) => (
+								<div className="item px-md-1" key={idx}>
+									<CourseCard
+										item={course}
+										showprogressbar
+										key={idx}
+									/>
 								</div>
 							))}
-						</Slider>
+
+						</Slider> */}
 
 						{/* <h2 className="mb-0 mx-2">HERO EVENTS</h2> */}
 
@@ -152,7 +170,7 @@ const CourseIndex = () => {
 
 					<br></br>
 					<br></br>
-					<h2 className="mb-0 mx-2">Fagaaraha Qaamuus</h2>
+					{/* <h2 className="mb-0 mx-2">Fagaaraha Qaamuus</h2> */}
 					{/* <br></br> */}
 					<Row className="mb-8">
 						<Col md={12}>
@@ -160,7 +178,24 @@ const CourseIndex = () => {
 							<TestimonialsSlider />
 						</Col>
 					</Row>
+					<br />
+					<Slider {...settings} className="pb-sm-5 mb-5 slick-slider-wrapper">
+						{AppIntegrationData.map((item, index) => {
+							return (
+								<div className="item px-md-1" key={index}>
+									<Card className="card-bordered border-gray-800 bg-black h-100">
+										{/* card body  */}
+										<Card.Body>
+											<Image src={item.applogo} alt="" className="icon-lg mb-3" />
+											<h3 className="text-white">{item.appname}</h3>
+											<p className="mb-0 text-white-50">{item.content}</p>
+										</Card.Body>
+									</Card>
+								</div>
+							);
+						})}
 
+					</Slider>
 					<LogosTopHeading2
 						title="Loved by over 5 million users from companies like"
 						logos={LogoList1}

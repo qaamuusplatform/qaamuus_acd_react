@@ -15,8 +15,6 @@ import { toast } from "react-toastify";
 export default function Events() {
   const { data: events, error } = useSWR("api/qaEvent-list/", getEvents);
 
-  console.log(events);
-
   if (error) {
     toast.error(error);
   }

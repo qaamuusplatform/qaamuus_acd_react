@@ -16,13 +16,14 @@ import {
 	mdiLinkVariant,
 	mdiInstagram
 } from '@mdi/js';
+import { END_POINT } from 'helper/constants';
 
 const ProfileCoverFull = ({ dashboardData }) => {
 	return (
 		<Fragment>
 			{/* Bg */}
 			<div
-				className="py-20"
+				className="py-10"
 				style={{
 					background: `url(${ProfileBackground})`,
 					backgroundRepeat: 'no-repeat',
@@ -38,7 +39,7 @@ const ProfileCoverFull = ({ dashboardData }) => {
 							<div className="d-flex align-items-center">
 								<div className="position-relative mt-n9">
 									<Image
-										src={dashboardData.avatar}
+										src={END_POINT+ dashboardData.profileImage}
 										alt=""
 										className="rounded-circle avatar-xxl border-white border border-4 position-relative"
 									/>
@@ -58,15 +59,15 @@ const ProfileCoverFull = ({ dashboardData }) => {
 								</div>
 								<div className="ms-3">
 									<div className="d-flex align-items-center">
-										<h3 className="mb-0 fw-bold me-2">{dashboardData.name}</h3>
+										<h3 className="mb-0 fw-bold me-2">{dashboardData.fullName}</h3>
 										<Badge
 											bg="secondary"
 											className="bg-light-primary text-primary"
 										>
-											{dashboardData.badge}
+											{dashboardData.userTitle}
 										</Badge>
 									</div>
-									<span className="fs-6">{dashboardData.skills}</span>
+									<span className="fs-6">{dashboardData.userTitle}</span>
 								</div>
 							</div>
 						</Col>

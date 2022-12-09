@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Col, Row, Image, ProgressBar, Form } from 'react-bootstrap';
 
 // import custom components
-import Ratings from 'components/marketing/common/ratings/Ratings';
+import Ratings from 'components/elements/common/ratings/Ratings';
 import { Reviews } from 'data/CourseIndexData';
 
 // import data files

@@ -53,7 +53,7 @@ const ProfileCover = ({ dashboardData, isDashboard }) => {
 								{dashboardData.fullName}{' '}
 								<LevelIconWithTooltip level={dashboardData.level} />{' '}
 							</h2>
-							<p className="mb-0 d-block">{dashboardData.number}</p>
+							<p className="mb-0 d-block">{dashboardData.userTitle}</p>
 						</div>
 					</div>
 					<div>
