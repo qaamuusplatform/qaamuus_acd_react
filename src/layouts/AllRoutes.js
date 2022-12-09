@@ -61,7 +61,7 @@ function AllRoutes() {
       <AppRoute exact path="/user/delete-account/" layout={DefaultLayout} component={DeleteProfile} />
 
       
-      <AppRoute exact path="/instructor-detail/:instructorId" layout={DefaultLayout} component={InstructorDetail} />
+      <AppRoute exact path="/instructor/:instructorUsername" layout={DefaultLayout} component={InstructorDetail} />
 
 
 			{/* COURSES AND CATEGORIES */}

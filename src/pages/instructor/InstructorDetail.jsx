@@ -28,11 +28,10 @@ import CoursesTab from './CoursesTab';
 // Import required data
 
 const InstructorDetail = () => {
-    const { instructorId } = useParams();
+    const { instructorUsername } = useParams();
     // The forwardRef is important!!
     // Dropdown needs access to the DOM node in order to position the Menu
-    const { data: instructorInfo, error } = useSWR(`/api/userProfile-detail/${instructorId}/`, httpFetcher);
-    // const { data: instructorCourses, error: instructorCoursesError } = useSWR(`/api/qaCourse-list/`, httpFetcher);
+    const { data: instructorInfo, error } = useSWR(`/api/userProfile-detail-username/${instructorUsername}/`, httpFetcher);
     console.log(instructorInfo)
     if (error) {
         toast.error(error);
@@ -109,13 +108,15 @@ const InstructorDetail = () => {
                                 <Tab.Content>
                                     <Tab.Pane eventKey="about" className="pb-4 px-0">
                                         {/* About */}
-                                        <AboutTab aboutUs={instructorInfo} />
+                                        <AboutTab instructorInfo={instructorInfo} />
 
                                         {/* End of About */}
                                     </Tab.Pane>
                                     <Tab.Pane eventKey="courses" className="pb-4 px-0">
                                         {/* Beginner Courses */}
-                                        {/* <CoursesTab /> */}
+                                        <CoursesTab instructorInfo={instructorInfo}  />
+                                        
+                                        {/* <AboutTab aboutUs={instructorInfo} /> */}
 
                                         {/* End of Courses */}
                                     </Tab.Pane>

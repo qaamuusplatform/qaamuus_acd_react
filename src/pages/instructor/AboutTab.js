@@ -2,8 +2,8 @@
 import { Col, Row, Card, Image } from 'react-bootstrap';
 
 // import media files
-const AboutTab = ({ aboutUs }) => {
-	console.log(aboutUs)
+const AboutTab = ({ instructorInfo }) => {
+	console.log(instructorInfo)
 	return (
 		<Row>
 			<Col lg={12} md={12} sm={12}>
@@ -13,7 +13,7 @@ const AboutTab = ({ aboutUs }) => {
 						<h3 className="mb-0">About Path</h3>
 					</Card.Header>
 					<Card.Body>
-						{aboutUs?.aboutMe}
+						{instructorInfo?.aboutMe}
 						{/* Blockquote */}
 						{/* <blockquote className="blockquote-left ">
 							<p className="mb-4 font-italic ms-4">
