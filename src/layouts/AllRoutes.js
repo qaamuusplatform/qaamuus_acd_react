@@ -28,6 +28,8 @@ import Timer from "pages/events/Timer";
 
 // import DeleteProfile from "pages/student/account-settings/Deleteprofile";
 import InstructorDetail from "./../pages/instructor/InstructorDetail";
+import Members from "pages/instructor/InstructorsList";
+import EventDetail from "pages/events/eventDetail";
 
 /* IMPORTS FOR MARKETING PAGES - END */
 /* --------------------------------- */
