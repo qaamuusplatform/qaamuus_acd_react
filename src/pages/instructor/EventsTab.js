@@ -9,7 +9,7 @@ import useSWR from 'swr';
 // import custom components
 // import data files
 
-const CoursesTab = ({ instructorInfo }) => {
+const EventsTap = ({ instructorInfo }) => {
 	
     const { data: instructorCourses, error } = useSWR(`/api/qaCourse-list/`, httpFetcher);
 	if(!instructorCourses && !error){
@@ -59,4 +59,4 @@ const CoursesTab = ({ instructorInfo }) => {
 		</Fragment>
 	);
 };
-export default CoursesTab;
+export default EventsTap;

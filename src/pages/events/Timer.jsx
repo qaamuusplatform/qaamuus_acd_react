@@ -64,13 +64,13 @@ function Timer({ date }) {
 export default Timer;
 
 const TimerStyle = styled.div`
-  width: 25rem;
+  width: 28rem;
   display: flex;
   justify-content: space-between;
 
   div {
     background-color: #21acc3;
-    width: 4rem;
+    width: 5rem;
     height: 4rem;
     margin: 1rem;
     display: flex;
@@ -78,10 +78,11 @@ const TimerStyle = styled.div`
     align-items: center;
     justify-content: center;
     color: #ffffff;
-    border-radius: 0.4rem;
+    border-radius: 0.2rem;
 
     p {
-      font-size: 1.4rem;
+      font-size: 1.6rem;
+      font-weight:bold;
     }
 
     h6 {
