@@ -32,11 +32,12 @@ const GKAccordionDefault = ({ accordionItems, itemClass }) => {
 					data-bs-toggle="collapse"
 					aria-controls="courseTwo"
 				>
-					<div className="me-auto">{children.title}</div>
+					<div className="me-auto">{children.compoName}</div>
 					<span className="chevron-arrow ms-4">
 						<i className="fe fe-chevron-down fs-4"></i>
 					</span>
 				</Link>
+			<p className='mb-0 text-muted fs-6 mt-1 fw-normal'>{children.lessonsCount} Video</p>
 			</Fragment>
 		);
 	};
@@ -46,27 +47,7 @@ const GKAccordionDefault = ({ accordionItems, itemClass }) => {
 			<Accordion defaultActiveKey={accordionItems[0].id}>
 				<ListGroup as="ul" variant="flush">
 					{accordionItems.map((item, index) => {
-						if (item.topics.length === 0) {
-							return (
-								<ListGroup.Item
-									key={index}
-									as="li"
-									className={`${itemClass ? itemClass : ''}`}
-								>
-									<ContextAwareToggle eventKey={item.id}>
-										{item}
-									</ContextAwareToggle>
-									<Accordion.Collapse eventKey={item.id}>
-										<ListGroup variant="flush">
-											<ListGroup.Item className="border-0 fs-5 px-0 py-4">
-												{item.summary}
-											</ListGroup.Item>
-										</ListGroup>
-									</Accordion.Collapse>
-								</ListGroup.Item>
-							);
-						} else {
-							return (
+						return (
 								<ListGroup.Item
 									key={index}
 									as="li"
@@ -77,11 +58,11 @@ const GKAccordionDefault = ({ accordionItems, itemClass }) => {
 									</ContextAwareToggle>
 									<Accordion.Collapse eventKey={item.id} className="test">
 										<ListGroup className="py-4" as="ul">
-											{item.topics.map((subitem, subindex) => (
+											{item.theCompoLessons.map((subitem, subindex) => (
 												<ListGroup.Item
 													key={subindex}
 													as="li"
-													disabled={subitem.locked}
+													disabled={true}
 													className="px-0 py-1 border-0"
 												>
 													<Link
@@ -90,20 +71,16 @@ const GKAccordionDefault = ({ accordionItems, itemClass }) => {
 													>
 														<div className="text-truncate ">
 															<span
-																className={`icon-shape bg-light text-${
-																	subitem.locked ? 'muted' : 'primary'
-																} icon-sm rounded-circle me-2`}
+																className={`icon-shape bg-light text-muted icon-sm rounded-circle me-2`}
 															>
-																{subitem.locked ? (
+																
 																	<i className="fe fe-lock fs-4"></i>
-																) : (
-																	<Icon path={mdiPlay} size={0.8} />
-																)}{' '}
+
 															</span>
-															<span className="fs-5">{subitem.topic}</span>
+															<span className="fs-5">{subitem.title}</span>
 														</div>
 														<div className="text-truncate">
-															<span>{subitem.duratoin}</span>
+															<span>{subitem.duration}</span>
 														</div>
 													</Link>
 												</ListGroup.Item>
@@ -112,8 +89,9 @@ const GKAccordionDefault = ({ accordionItems, itemClass }) => {
 									</Accordion.Collapse>
 								</ListGroup.Item>
 							);
-						}
-					})}
+											})}
+					
+					
 				</ListGroup>
 			</Accordion>
 		</Fragment>

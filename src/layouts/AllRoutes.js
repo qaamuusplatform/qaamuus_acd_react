@@ -29,6 +29,7 @@ import Timer from "pages/events/Timer";
 
 // import DeleteProfile from "pages/student/account-settings/Deleteprofile";
 import InstructorDetail from "./../pages/instructor/InstructorDetail";
+import Checkout from "pages/checkout/checkout";
 
 /* IMPORTS FOR MARKETING PAGES - END */
 /* --------------------------------- */
@@ -128,6 +129,12 @@ function AllRoutes() {
         path="/courses/:id/watch"
         layout={DefaultLayout}
         component={<h1>Watch Course</h1>}
+      />
+      <AppRoute
+        exact
+        path="/checkout/course/:courseid"
+        layout={DefaultLayout}
+        component={Checkout}
       />
       <AppRoute
         exact

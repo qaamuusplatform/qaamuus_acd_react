@@ -149,9 +149,9 @@ const CourseDetail = ({match}) => {
                     {[
                       "Contents",
                       "Description",
-                      "Reviews",
-                      "Transcript",
-                      "FAQ",
+                      // "Reviews",
+                      // "Transcript",
+                      // "FAQ",
                     ].map((item, index) => (
                       <Nav.Item key={index}>
                         <Nav.Link
@@ -169,7 +169,7 @@ const CourseDetail = ({match}) => {
                       <Tab.Pane eventKey="contents" className="pb-4 pt-3 px-4">
                         {/* Course Index Accordion */}
                         <GKAccordionDefault
-                          accordionItems={CourseIndex}
+                          accordionItems={data.theComponents}
                           itemClass="px-0"
                         />
                       </Tab.Pane>
@@ -179,15 +179,15 @@ const CourseDetail = ({match}) => {
                       </Tab.Pane>
                       <Tab.Pane eventKey="reviews" className="pb-4 p-4">
                         {/* Reviews */}
-                        <ReviewsTab />
+                        {/* <ReviewsTab /> */}
                       </Tab.Pane>
                       <Tab.Pane eventKey="transcript" className="pb-4 p-4">
                         {/* Transcript */}
-                        <TranscriptTab />
+                        {/* <TranscriptTab /> */}
                       </Tab.Pane>
                       <Tab.Pane eventKey="faq" className="pb-4 p-4">
                         {/* FAQ */}
-                        <FAQTab />
+                        {/* <FAQTab /> */}
                       </Tab.Pane>
                     </Tab.Content>
                   </Card.Body>
@@ -248,7 +248,7 @@ const CourseDetail = ({match}) => {
                     </Link>
                       :
                       <Link
-                      to={'#'}
+                      to={`/checkout/course/${data.id}`}
                       className={`btn btn-outline-primary`}
                     >
                      Enroll Now
@@ -260,7 +260,7 @@ const CourseDetail = ({match}) => {
                 </Card.Body>
               </Card>
               {/* Card */}
-              <Card className="mb-4">
+              <Card className="mb-4 d-none">
                 {/* Card header */}
                 <Card.Header>
                   <h4 className="mb-0">What’s included</h4>
