@@ -16,7 +16,6 @@ import StudentDashboard from "pages/student/Dashboard";
 import EditProfile from "pages/student/account-settings/EditProfile";
 import Courses from "pages/courses/Courses";
 import Events from "pages/events/events";
-import EventDetail from "pages/events/EventDetail";
 import EnrolledCourses from "pages/student/account-settings/EnrolledCourses";
 import Notifications from "pages/student/account-settings/Notifications";
 import DeleteProfile from "pages/student/account-settings/DeleteProfile";
@@ -29,7 +28,6 @@ import Timer from "pages/events/Timer";
 
 // import DeleteProfile from "pages/student/account-settings/Deleteprofile";
 import InstructorDetail from "./../pages/instructor/InstructorDetail";
-import Members from "pages/instructor/InstructorsList";
 
 /* IMPORTS FOR MARKETING PAGES - END */
 /* --------------------------------- */
@@ -104,7 +102,7 @@ function AllRoutes() {
         component={<h1>Watch Course</h1>}
       />
       <AppRoute exact path="/events/" layout={DefaultLayout} component={Events} />
-      {/* <AppRoute exact path="/events/" layout={DefaultLayout} component={Events} /> */}
+      <AppRoute exact path="/events/" layout={DefaultLayout} component={Events} />
       <AppRoute exact path="/events/:slug" layout={DefaultLayout}  component={EventDetail} />
       {/* <AppRoute exact path="/event-waiting/:slug" layout={DefaultLayout}  component={EventWatingScreen} /> */}
 
