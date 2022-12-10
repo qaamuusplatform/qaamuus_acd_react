@@ -26,6 +26,7 @@ import ComingSoon from "pages/errorPages/ComingSoon";
 
 // import DeleteProfile from "pages/student/account-settings/Deleteprofile";
 import InstructorDetail from "./../pages/instructor/InstructorDetail";
+import Members from "pages/instructor/InstructorsList";
 import EventDetail from "pages/events/eventDetail";
 
 /* IMPORTS FOR MARKETING PAGES - END */
@@ -103,7 +104,13 @@ function AllRoutes() {
 
       <AppRoute
         exact
-        path="/instructor/:instructorUsername"
+        path="/members/"
+        layout={DefaultLayout}
+        component={Members}
+      />
+      <AppRoute
+        exact
+        path="/instructor/:instructorUsername/"
         layout={DefaultLayout}
         component={InstructorDetail}
       />

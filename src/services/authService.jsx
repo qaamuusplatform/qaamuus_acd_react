@@ -13,7 +13,7 @@ export const login = async (username, password) => {
 export const getLoggedInUser = () => {
   try {
     // return {}
-    return http.get("api/userProfile-detail/14/");
+    return http.get("api/userProfile-detail/1/");
   } catch (error) {
     return null;
   }
