@@ -18,6 +18,7 @@ import { getCoursesDetail } from "services/coursesService";
 import useSWR, { mutate } from "swr";
 function App() {
   const [currentUser, setCurrentUser] = useState({});
+  const [avatorIsLoading,setAvatorIsLoading]=useState(true);
 
   //   const { data:datadetal } = useSWR(
   //     `/api/userProfile-detail/14/`,
@@ -32,8 +33,10 @@ function App() {
     if (data) {
       // console.log("data ready",data)
       setCurrentUser(data);
+      setAvatorIsLoading(false);
       // setCurrentUser({});
     } else {
+      setAvatorIsLoading(false);
     }
   };
 

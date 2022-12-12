@@ -29,7 +29,8 @@ import Timer from "pages/events/Timer";
 // import DeleteProfile from "pages/student/account-settings/Deleteprofile";
 import InstructorDetail from "./../pages/instructor/InstructorDetail";
 import Members from "pages/instructor/InstructorsList";
-import EventDetail from "pages/events/eventDetail";
+import EventDetail from "pages/events/EventDetail";
+import Checkout from "pages/checkout/checkout";
 
 /* IMPORTS FOR MARKETING PAGES - END */
 /* --------------------------------- */
@@ -65,7 +66,12 @@ function AllRoutes() {
         layout={AuthLayout}
         component={SignUp}
       />
-
+      <AppRoute
+        exact
+        path="/checkout/course/:courseid"
+        layout={DefaultLayout}
+        component={Checkout}
+      />
       {/* dashboard edit userifno */}
       <AppRoute
         exact
@@ -85,31 +91,85 @@ function AllRoutes() {
         layout={DefaultLayout}
         component={DeleteProfile}
       />
-      <AppRoute exact path="/user/enrolled-courses/" layout={DefaultLayout} component={EnrolledCourses} />
-      <AppRoute exact path="/user/auth-security/" layout={DefaultLayout} component={AuthSecurity} />
-      <AppRoute exact path="/user/delete-account/" layout={DefaultLayout} component={DeleteProfile} />
+      <AppRoute
+        exact
+        path="/user/enrolled-courses/"
+        layout={DefaultLayout}
+        component={EnrolledCourses}
+      />
+      <AppRoute
+        exact
+        path="/user/auth-security/"
+        layout={DefaultLayout}
+        component={AuthSecurity}
+      />
+      <AppRoute
+        exact
+        path="/user/delete-account/"
+        layout={DefaultLayout}
+        component={DeleteProfile}
+      />
 
-      
-      <AppRoute exact path="/members/" layout={DefaultLayout} component={Members} />
-      <AppRoute exact path="/instructor/:instructorUsername/" layout={DefaultLayout} component={InstructorDetail} />
+      <AppRoute
+        exact
+        path="/members/"
+        layout={DefaultLayout}
+        component={Members}
+      />
+      <AppRoute
+        exact
+        path="/instructor/:instructorUsername/"
+        layout={DefaultLayout}
+        component={InstructorDetail}
+      />
       {/* <AppRoute exact path="/instructor-detail/:instructorId" layout={DefaultLayout} component={InstructorDetail} /> */}
 
       {/* COURSES AND CATEGORIES */}
-      <AppRoute exact path="/courses/" layout={DefaultLayout} component={Courses} />
-      <AppRoute exact path="/courses/:id" layout={DefaultLayout} component={CourseDetail} />
+      <AppRoute
+        exact
+        path="/courses/"
+        layout={DefaultLayout}
+        component={Courses}
+      />
+      <AppRoute
+        exact
+        path="/courses/:id"
+        layout={DefaultLayout}
+        component={CourseDetail}
+      />
       <AppRoute
         exact
         path="/courses/:id/watch"
         layout={DefaultLayout}
         component={<h1>Watch Course</h1>}
       />
-      <AppRoute exact path="/events/" layout={DefaultLayout} component={Events} />
-      <AppRoute exact path="/events/" layout={DefaultLayout} component={Events} />
-      <AppRoute exact path="/events/:slug" layout={DefaultLayout}  component={EventDetail} />
+      <AppRoute
+        exact
+        path="/events/"
+        layout={DefaultLayout}
+        component={Events}
+      />
+      <AppRoute
+        exact
+        path="/events/"
+        layout={DefaultLayout}
+        component={Events}
+      />
+      <AppRoute
+        exact
+        path="/events/:slug"
+        layout={DefaultLayout}
+        component={EventDetail}
+      />
       {/* <AppRoute exact path="/event-waiting/:slug" layout={DefaultLayout}  component={EventWatingScreen} /> */}
 
       <AppRoute exact path="/404" layout={DefaultLayout} component={Error404} />
-      <AppRoute exact path="/coming-soon" layout={DefaultLayout} component={ComingSoon} />  
+      <AppRoute
+        exact
+        path="/coming-soon"
+        layout={DefaultLayout}
+        component={ComingSoon}
+      />
 
       {/* COURSES AND CATEGORIES */}
       {/* <AppRoute
