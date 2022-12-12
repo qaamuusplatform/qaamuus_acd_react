@@ -24,8 +24,6 @@ import CourseDetail from "pages/courses/detail/courseDetail";
 import Error404 from "pages/errorPages/Error404";
 import ComingSoon from "pages/errorPages/ComingSoon";
 
-import Timer from "pages/events/Timer";
-
 // import DeleteProfile from "pages/student/account-settings/Deleteprofile";
 import InstructorDetail from "./../pages/instructor/InstructorDetail";
 import Members from "pages/instructor/InstructorsList";
