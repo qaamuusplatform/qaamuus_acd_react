@@ -4,6 +4,9 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 // import layouts
 
+// ** Import core SCSS styles
+import "assets/scss/theme.scss";
+
 import AllRoutes from "layouts/AllRoutes";
 import ScrollToTop from "layouts/ScrollToTop";
 // import required stylesheet

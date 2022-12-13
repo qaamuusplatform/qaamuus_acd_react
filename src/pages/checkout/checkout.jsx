@@ -1,6 +1,6 @@
 // import node module libraries
 import React, { Fragment, useContext, useState } from 'react';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
 import InputMask from 'react-input-mask';
 import {
     Col,
@@ -12,25 +12,50 @@ import {
     ListGroup,
     Badge,
     OverlayTrigger,
-    Tooltip
+    Tooltip,
+    Image
 } from 'react-bootstrap';
 import PageHeading from 'components/elements/common/heading/PageHeading';
 import FormSelect from 'components/elements/custom/FormSelect';
 import { useRef } from 'react';
 import { CurrentUserContext } from 'services/currentUserContext';
-import { processPaymentService } from 'services/coursesService';
+import { CheckCuppon, getCoursesDetail, processPaymentService } from 'services/coursesService';
 import { toast } from 'react-toastify';
+import useSWR from 'swr';
+import { ShimmerCategoryItem } from 'react-shimmer-effects';
+import { END_POINT } from 'helper/constants';
+import Tippy from '@tippyjs/react';
+import Ratings from 'components/elements/common/ratings/Ratings';
+import LevelIcon from 'pages/student/miscellaneous/LevelIcon';
 
 // import custom components
-
+function useQuery() {
+    const { search } = useLocation();
+    return new URLSearchParams(search);
+    return React.useMemo(() => new URLSearchParams(search), [search]);
+  }
+  
 const Checkout = () => {
+    const { courseid } = useParams();
+   const query = useQuery();
+    const { data, error } = useSWR(
+        `/api/qaCourse-detail-slug/${courseid}`,
+        getCoursesDetail
+      );
     const [status, setStatus] = useState(1); // 0: no show, 1: show yes, 2: show no.
     const FormRef = useRef(null);
     const phoneNumberRef = useRef(null);
-    const paypalemailRef = useRef(null);
+    const paypalemailRef = useRef(null); 
+    const cupponRef = useRef(null); 
+    const referalCodeRef = useRef(query.get("ref")); 
 
+    const [cuppon, setcuppon] = useState({
+        code:'',
+        price:0
+    });
+console.log(query)
     const {currentUser} = useContext(CurrentUserContext)
-    const { courseid } = useParams();
+    
     const history = useHistory();
 
     const radioHandler = (status) => {
@@ -254,13 +279,14 @@ const Checkout = () => {
             var body = {
                 "number":phoneNumberRef?.current?.value ?? '',
                 "userId": currentUser.id??'',
-                "money": "2",
-                "courseId": courseid,
+                "money": (data?.saledPrice - cuppon.price)??0,
+                "courseId": data.id,
                 "months": "1",
+                "refCode":referalCodeRef?.current.value,
+                "cupponCode":cuppon.code,
                 "type":(status==1?'waafi':status==2?'credit-card':'paypal')
             };
 
-            console.log(body)
 
             const response = await processPaymentService(body);
 
@@ -285,6 +311,45 @@ toast.error('Payment Error');
             FormRef.current.requestSubmit();
         }
     }
+
+    const handleCuponcode = async (e)=>{
+        e.preventDefault();
+        
+        try {
+            if (cuppon.code == cupponRef?.current?.value) {
+                toast.info('Cuppon Already Applied');
+                return;
+            }
+            const response = await CheckCuppon(cupponRef?.current?.value??'');
+            if (response.isCouponCode && response.exists) {
+if (!response.isExpired) {
+    toast.success('Cuppon Applied');
+                    setcuppon({
+                        code:cupponRef?.current?.value,
+                        price:response.discountPrice
+                    })
+} else {
+    if(cuppon.code) removeCuppon();
+    toast.error('Cuppon Code Expired');
+}
+            }else{
+                if(cuppon.code) removeCuppon();
+                toast.error('Cuppon Code does not Exist');
+            }
+        } catch (error) {
+            if(cuppon.code) removeCuppon();
+            console.log("Error",error)
+            toast.error(error);
+        }
+    }
+    const removeCuppon = ()=>{
+        setcuppon({
+            code:'',
+            price:0
+        });
+        cupponRef.current.value=''
+    }
+
     return (
         <Fragment>
             {/* Page header */}
@@ -293,6 +358,67 @@ toast.error('Payment Error');
             {/*  Content */}
             <div className="py-6">
                 <Container>
+{
+    (data && !error) && <Card className="mb-4 card-hover">
+    <Row className="g-0">
+        <Link
+            to={`/courses/${data.slug}`}
+            className="bg-cover img-left-rounded col-12 col-md-12 col-xl-3 col-lg-3 "
+            style={{
+                background: `url(${END_POINT}${data.coverImage})`,
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'cover',
+                backgroundPosition: 'top center'
+            }}
+        >
+            <Image
+                src={`${END_POINT}${data.coverImage}`}
+                alt="..."
+                className="img-fluid d-lg-none invisible"
+            />
+        </Link>
+        <Col lg={9} md={12} sm={12}>
+            {/* <!-- Card body --> */}
+            <Card.Body>
+                <h3 className="mb-2 text-truncate-line-2 ">
+                    <Link to={`/courses/${data.slug}`} className="text-inherit">
+                        {data.title}
+                    </Link>
+                </h3>
+                {/* <!-- List inline --> */}
+                <ListGroup as="ul" bsPrefix="list-inline" className="">
+                    <ListGroup.Item as="li" bsPrefix="list-inline-item">
+                        <i className="fa fa-dollar-sign me-1"></i>
+                        {data.saledPrice}
+                    </ListGroup.Item>
+                   
+                </ListGroup>
+                {/* <!-- Row --> */}
+                <Row className="align-items-center g-0">
+                    <Col className="col-auto">
+                        <Image
+                            src={`${END_POINT}${data.instructor.profileImage}`}
+                            className="rounded-circle avatar-xs"
+                            alt=""
+                        />
+                    </Col>
+                    <Col className="col ms-2">
+                        <span>{data.instructor.fullName}</span>
+                    </Col>
+                    <Col className="col-auto">
+                        <Tippy content="Add to Bookmarks" animation={'scale'}>
+                            <Link to="#" className="text-muted bookmark">
+                                <i className="fe fe-bookmark"></i>
+                            </Link>
+                        </Tippy>
+                    </Col>
+                </Row>
+            </Card.Body>
+        </Col>
+    </Row>
+</Card>
+}
+
                     <Row>
                         <Col xl={8} lg={8} md={12} sm={12}>
 
@@ -340,26 +466,26 @@ toast.error('Payment Error');
                             {/*  Card */}
                             <Card className="border-0 mb-3">
                                 <Card.Body>
-                                    <div className="d-flex justify-content-between">
-                                        <p>Original Price:</p>
-                                        <p>$20</p>
+                                    <div className="d-flex justify-content-between fs-4 mb-3">
+                                        <p className='mb-0'>Original Price</p>
+                                        <p className='mb-0 fw-bolder'>${data?.saledPrice}</p>
                                     </div>
 
-                                    <div className="d-flex justify-content-between">
-                                        <p>Discounts:</p>
-                                        <p>$-20</p>
+                                    <div className="d-flex justify-content-between fs-4 mb-3">
+                                        <p className='mb-0'>Discount</p>
+                                        <p className='mb-0 fw-bolder'>${cuppon?.price ?? 0}</p>
                                     </div>
 
                                     <hr />
 
-                                    <div className="d-flex justify-content-between">
+                                    <div className="d-flex justify-content-between fs-4">
                                         <p>Total</p>
-                                        <p>$0</p>
+                                        <p className='fw-bolder'>${data?.saledPrice - cuppon.price}</p>
                                     </div>
 
 
-                                    <h3 className="mb-2 mt-5">Cuppon/Referal Codes</h3>
-                                    <Form>
+                                    <h3 className="mb-2 mt-5">Cuppon Code</h3>
+                                    <Form onSubmit={handleCuponcode}>
                                         <Form.Group
                                             className="input-group"
                                             controlId="discountcodes"
@@ -368,13 +494,24 @@ toast.error('Payment Error');
                                                 type="text"
                                                 placeholder="Enter your code"
                                                 required
+                                                ref={cupponRef}
                                             />
-                                            <Button variant="secondary" id="couponCode">
+                                            <Button variant="success" type='submit'>
                                                 Apply
                                             </Button>
                                         </Form.Group>
+                                        {cuppon.code && <Badge bg='success' className='mt-2'>{cuppon.code} <i className="fa fa-times text-white ml-3" onClick={()=>removeCuppon()}></i></Badge>}
                                     </Form>
-                                    <Button variant="success" className='mt-4 btn-block' onClick={processPayment}>Process Payment</Button>
+                                    <Form.Control
+                                                type="text"
+                                                className='mt-4'
+                                                placeholder="Referal code"
+                                                
+                                                ref={referalCodeRef}
+                                            />
+                                    <Button variant="success" className='mt-4 btn-block'
+                                    disabled={!data}
+                                    onClick={processPayment}>Process Payment</Button>
                                 </Card.Body>
                             </Card>
                             {/*  Card */}
