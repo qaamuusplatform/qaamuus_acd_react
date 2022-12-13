@@ -32,8 +32,7 @@ function Timer({ date }) {
   const { days, hours, minutes, seconds } = calculateTimeLeft(timer);
 
   if (
-    parseInt(days) + parseInt(hours) + parseInt(minutes) + parseInt(seconds) <=
-    0
+    parseInt(days) + parseInt(hours) + parseInt(minutes) + parseInt(seconds) <= 0
   )
     return <p></p>;
   return (

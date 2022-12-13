@@ -22,12 +22,13 @@ import CourseDetail from "pages/courses/detail/courseDetail";
 import Error404 from "pages/errorPages/Error404";
 import ComingSoon from "pages/errorPages/ComingSoon";
 
-import Timer from "pages/events/Timer";
-
 // import DeleteProfile from "pages/student/account-settings/Deleteprofile";
 import InstructorDetail from "./../pages/instructor/InstructorDetail";
-import Checkout from "pages/checkout/checkout";
+import Members from "pages/instructor/InstructorsList";
 import EventDetail from "pages/events/eventDetail";
+import Checkout from "pages/checkout/checkout";
+import EventWatchLive from "pages/events/eventWatch/EventWatchLive";
+import LiveLayout from "./LiveLayout";
 
 /* IMPORTS FOR MARKETING PAGES - END */
 /* --------------------------------- */
@@ -95,14 +96,43 @@ function AllRoutes() {
         layout={DefaultLayout}
         component={AuthSecurity}
       />
-      <AppRoute exact path="/user/delete-account/" layout={DefaultLayout} component={DeleteProfile} />
+      <AppRoute
+        exact
+        path="/user/delete-account/"
+        layout={DefaultLayout}
+        component={DeleteProfile}
+      />
 
-      
-      <AppRoute exact path="/instructor/:instructorUsername" layout={DefaultLayout} component={InstructorDetail} />
+
+      <AppRoute exact path="/members/" layout={DefaultLayout} component={Members} />
+      <AppRoute exact path="/instructor/:instructorUsername/" layout={DefaultLayout} component={InstructorDetail} />
+      <AppRoute
+        exact
+        path="/checkout/course/:courseid"
+        layout={DefaultLayout}
+        component={Checkout}
+        />
+      <AppRoute
+        exact
+        path="/members/"
+        layout={DefaultLayout}
+        component={Members}
+      />
+      <AppRoute
+        exact
+        path="/instructor/:instructorUsername/"
+        layout={DefaultLayout}
+        component={InstructorDetail}
+      />
       {/* <AppRoute exact path="/instructor-detail/:instructorId" layout={DefaultLayout} component={InstructorDetail} /> */}
 
       {/* COURSES AND CATEGORIES */}
-      <AppRoute exact path="/courses/" layout={DefaultLayout} component={Courses} />
+      <AppRoute
+        exact
+        path="/courses/"
+        layout={DefaultLayout}
+        component={Courses}
+      />
       <AppRoute
         exact
         path="/courses/:id"
@@ -115,12 +145,14 @@ function AllRoutes() {
         layout={DefaultLayout}
         component={<h1>Watch Course</h1>}
       />
-      <AppRoute
-        exact
-        path="/checkout/course/:courseid"
-        layout={DefaultLayout}
-        component={Checkout}
-      />
+      <AppRoute exact path="/events/" layout={DefaultLayout} component={Events} />
+      <AppRoute exact path="/events/" layout={DefaultLayout} component={Events} />
+      <AppRoute exact path="/events/:slug" layout={DefaultLayout} component={EventDetail} />
+      <AppRoute exact path="/event/watch-live/:slug" layout={LiveLayout} component={EventWatchLive} />
+      {/* <AppRoute exact path="/event-waiting/:slug" layout={DefaultLayout}  component={EventWatingScreen} /> */}
+
+      <AppRoute exact path="/404" layout={DefaultLayout} component={Error404} />
+      <AppRoute exact path="/coming-soon" layout={DefaultLayout} component={ComingSoon} />
       <AppRoute
         exact
         path="/events/"
@@ -139,8 +171,15 @@ function AllRoutes() {
         layout={DefaultLayout}
         component={EventDetail}
       />
+      {/* <AppRoute exact path="/event-waiting/:slug" layout={DefaultLayout}  component={EventWatingScreen} /> */}
+
       <AppRoute exact path="/404" layout={DefaultLayout} component={Error404} />
-      <AppRoute exact path="/coming-soon" layout={DefaultLayout} component={ComingSoon} />  
+      <AppRoute
+        exact
+        path="/coming-soon"
+        layout={DefaultLayout}
+        component={ComingSoon}
+      />
 
       {/* COURSES AND CATEGORIES */}
       {/* <AppRoute
