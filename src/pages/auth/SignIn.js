@@ -18,10 +18,9 @@ export default function SignIn() {
 
     try {
 
-      await http.post("/api/jwt-login/",{ withCredentials: true }, JSON.stringify({ 'username': form.username, 'password': form.password }), { headers: { 'Content-Type': 'application/json' } })
+      await http.post("/api/jwt-login/", JSON.stringify({ 'username': form.username, 'password': form.password }), { headers: { 'Content-Type': 'application/json' } })
         .then((userLoggedResp) => {
           console.log(userLoggedResp.data);
-        
         });
       // var respdata = await fetch('https://qaamuusbackend.up.railway.app/api/jwt-user/', {
         

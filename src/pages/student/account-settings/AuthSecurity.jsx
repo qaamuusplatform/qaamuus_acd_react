@@ -16,14 +16,34 @@ import baseUrl from 'services/baseUrl';
 import { ShimmerPostDetails, ShimmerThumbnail } from 'react-shimmer-effects';
 import { toast } from 'react-toastify';
 import { updateUserInfo } from 'services/authService';
+import http from 'services/httpService';
 
 const AuthSecurity = (props) => {
 	const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 	const account = props.location.pathname.substring(21, 11);
 	const [passwordShown, setPasswordShown] = useState(false);
+	const [userNameIsExist, setUserNameIsExist] = useState(false);
 	const [password, setPassword] = useState('');
+	const [usernameValid, setUsernameValid] = useState('Usernamka ugu yaraan 6');
 	const [confirmpassword, setConfirmPassword] = useState('');
 	const [currentpassword, setCurrentPassword] = useState('');
+
+	const handleUsernameChange = async ({ target }) => {
+		const { value, name } = target;
+		if (value.length > 6) {
+		  setUserNameIsExist(await (await http.get("/api/checkingUserExist/" + value + '/')).data.isExist)
+		  if(userNameIsExist){
+			setUsernameValid('Usernamkan wa la qabsaday');
+		  }
+		 
+		} else {
+		  setUsernameValid('Usernamka ugu yaraan 6');
+		  setUserNameIsExist(true);
+		}
+	
+	  };
+
+
 	const togglePassword = () => {
 		setPasswordShown(!passwordShown);
 	}
@@ -89,7 +109,14 @@ const AuthSecurity = (props) => {
 								</p>
 								<Form.Group>
 									<Form.Label htmlFor="text">Usernamka Cusub</Form.Label>
-									<Form.Control type="text" id="text" required />
+									<Form.Control type="text" 
+									id="username"
+									onChange={handleUsernameChange}
+									name="username"
+									isInvalid={userNameIsExist == true ? true : false}
+									isValid={userNameIsExist == true ? false : true}
+									placeholder="Username auth"
+									required />
 								</Form.Group>
 
 							</Col>

@@ -294,7 +294,33 @@ const NavbarDefault = ({ headerstyle, isLoading, login }) => {
             {/* Right side quick / shortcut menu  */}
 
             <Nav className="navbar-nav navbar-right-wrap ms-auto d-flex nav-top-wrap">
-              {isLoading ?(<ShimmerCircularImage size={40} />):(
+              {isLoading ?(
+              <Fragment>
+              <Dropdown
+                as={Nav.Item}
+                className={`${isDesktop || isLaptop ? "mt-2 me-0" : "mt-2 me-2"}`}
+              >
+                <Dropdown.Toggle
+                  as={Nav.Link}
+                  bsPrefix="dt"
+                  className="text-dark icon-notifications me-lg-1  btn btn-light btn-icon rounded-circle indicator indicator-primary text-muted"
+                  id="dropdownNotification"
+                >
+                  {/* <i className="fe fe-bell"></i> */}
+                </Dropdown.Toggle>
+                <Dropdown.Toggle
+                  as={Nav.Link}
+                  bsPrefix="dt"
+                  className="text-dark icon-notifications me-lg-1  btn btn-light btn-icon rounded-circle indicator indicator-primary text-muted"
+                  id="dropdownNotification"
+                >
+                  {/* <i className="fe fe-bell"></i> */}
+                </Dropdown.Toggle>
+                
+              </Dropdown>
+              
+            </Fragment>
+              ):(
                 <span
                 className={`ms-auto mt-3 mt-lg-0  ${login ? "d-none" : ""}`}
               >

@@ -1,12 +1,15 @@
 import React, { useState, useContext } from "react";
 import { Col, Row, Form, Button } from "react-bootstrap";
+import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
 
 import Joi from "joi";
 import { CurrentUserContext } from "services/currentUserContext";
 
 import { pay } from "services/paymentService";
+import { toast } from "react-toastify";
 
 function Waafi({ handleClose, event }) {
+  const history = useHistory();
   const [input, setInput] = useState({
     number: "",
     userId: "",
@@ -56,11 +59,13 @@ function Waafi({ handleClose, event }) {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
+
       const { error } = validate();
       if (error) return setError(error.details[0].message);
 
       const { data } = await pay("/api/inrollEventToUser/waafi/", input);
-      console.log(data);
+      toast.success(data.message)
+      history.push("/user/dashboard/");
     } catch (error) {
       console.log(error);
     }

@@ -50,6 +50,8 @@ import { toast } from "react-hot-toast";
 import Timer from "./Timer";
 import PaymentModel from "pages/payment/model";
 import { useEffect } from "react";
+import { ShimmerPostDetails } from "react-shimmer-effects";
+import { httpFetcher } from "services/coursesService";
 
 const EventDetail = () => {
   // const [isOpen, setOpen] = useState(false);
@@ -59,29 +61,34 @@ const EventDetail = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [YouTubeURL] = useState("JRzWRZahOVU");
-  const [access, setAccess] = useState();
-
+  const [access, setAccess] = useState(true);
+  const userAccessInfo ={}
   const { currentUser } = useContext(CurrentUserContext);
 
   const { slug } = useParams();
 
-  const { data: event, error } = useSWR(
-    `api/qaEvent-detail-slug/${slug}/`,
-    getEvent
-  );
+  const { data: event, error } = useSWR(`api/qaEvent-detail-slug/${slug}/`, httpFetcher);
+  if (!event && !error) {
+    return <Fragment>
+      <div className=" pt-8 pb-8">
+        <Container>
+          <ShimmerPostDetails card cta variant="EDITOR" />
+        </Container>
+      </div>
+    </Fragment>;
+  }
 
-  console.log(event);
+  // useEffect(() => {
+  //   const student =
+  //     event &&
+  //     event.enrolledStudents.filter(
+  //       (student) => student.email === currentUser.email
+  //     );
 
-  useEffect(() => {
-    const student =
-      event &&
-      event.enrolledStudents.filter(
-        (student) => student.email === currentUser.email
-      );
+  //   if (student && student.length !== 0) setAccess(student[0]);
+  //   if (error) toast.error(error);
+  // }, []);
 
-    if (student && student.length !== 0) setAccess(student[0]);
-    if (error) toast.error(error);
-  }, []);
 
   return (
     <Fragment>
@@ -229,9 +236,8 @@ const EventDetail = () => {
                       {Object.keys(currentUser).length === 0 ? (
                         <Nav className="navbar-nav navbar-right-wrap ms-auto d-flex nav-top-wrap">
                           <span
-                            className={`ms-auto mt-3 mt-lg-0  ${
-                              false ? "d-none" : ""
-                            }`}
+                            className={`ms-auto mt-3 mt-lg-0  ${false ? "d-none" : ""
+                              }`}
                           >
                             <Nav.Link
                               as={Link}
@@ -256,8 +262,9 @@ const EventDetail = () => {
                         </span> */}
                         </Nav>
                       ) : access && access ? (
+                        
                         <Button
-                          variant="primary"
+                          variant="warning"
                           onClick={handleShow}
                           className="mt-3"
                         >

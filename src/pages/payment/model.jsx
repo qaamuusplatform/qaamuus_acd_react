@@ -74,10 +74,10 @@ function PaymentModel({ show, handleClose, event }) {
           </Col>
         </Row>
 
-        <span>
+        {/* <span>
           <strong>Note:</strong> that you can later remove your card at the
           account setting page.
-        </span>
+        </span> */}
       </Modal.Body>
     </Modal>
   );
