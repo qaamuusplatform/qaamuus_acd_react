@@ -35,8 +35,9 @@ import NotificationList from "data/Notification";
 import NavDropdownMain from "layouts/navbars/NavDropdownMain";
 import baseUrl from "services/baseUrl";
 import { CurrentUserContext } from "services/currentUserContext";
+import { ShimmerCircularImage } from "react-shimmer-effects";
 
-const NavbarDefault = ({ headerstyle, login }) => {
+const NavbarDefault = ({ headerstyle, isLoading, login }) => {
   const isDesktop = useMediaQuery({
     query: "(min-width: 1224px)",
   });
@@ -293,7 +294,8 @@ const NavbarDefault = ({ headerstyle, login }) => {
             {/* Right side quick / shortcut menu  */}
 
             <Nav className="navbar-nav navbar-right-wrap ms-auto d-flex nav-top-wrap">
-              <span
+              {isLoading ?(<ShimmerCircularImage size={40} />):(
+                <span
                 className={`ms-auto mt-3 mt-lg-0  ${login ? "d-none" : ""}`}
               >
                 <Nav.Link
@@ -313,6 +315,8 @@ const NavbarDefault = ({ headerstyle, login }) => {
                   Sign Up
                 </Nav.Link>
               </span>
+              )}
+              
 
               <span
                 className={`${
@@ -323,7 +327,9 @@ const NavbarDefault = ({ headerstyle, login }) => {
                     : "d-none"
                 }`}
               >
+                {isLoading ?(null):(
                 <QuickMenu />
+                )}
               </span>
             </Nav>
             {/* end of right side quick / shortcut menu  */}
@@ -337,12 +343,14 @@ const NavbarDefault = ({ headerstyle, login }) => {
 // Specifies the default values for props
 NavbarDefault.defaultProps = {
   headerstyle: "navbar-default",
+  isLoading:false,
   login: false,
 };
 
 // Typechecking With PropTypes
 NavbarDefault.propTypes = {
   headerstyle: PropTypes.string,
+  isLoading:PropTypes.bool,
   login: PropTypes.bool,
 };
 

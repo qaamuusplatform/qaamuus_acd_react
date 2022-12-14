@@ -29,6 +29,7 @@ import EventDetail from "pages/events/eventDetail";
 import Checkout from "pages/checkout/checkout";
 import EventWatchLive from "pages/events/eventWatch/EventWatchLive";
 import LiveLayout from "./LiveLayout";
+import ReferralData from "pages/student/account-settings/ReferralData";
 
 /* IMPORTS FOR MARKETING PAGES - END */
 /* --------------------------------- */
@@ -89,6 +90,12 @@ function AllRoutes() {
         path="/user/enrolled-courses/"
         layout={DefaultLayout}
         component={EnrolledCourses}
+      />
+      <AppRoute
+        exact
+        path="/user/referral-data/"
+        layout={DefaultLayout}
+        component={ReferralData}
       />
       <AppRoute
         exact

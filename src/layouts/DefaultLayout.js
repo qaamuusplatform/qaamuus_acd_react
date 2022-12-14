@@ -8,8 +8,8 @@ import FooterWithLinks from "./footers/FooterWithLinks";
 import NavbarDefault from "./navbars/NavbarDefault";
 
 const DefaultLayout = (props) => {
-  const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
- 
+  const { currentUser, setCurrentUser,userIsLoading } = useContext(CurrentUserContext);
+  console.log(userIsLoading)
   useEffect(() => {
     document.body.style.backgroundColor = "#f5f4f8";
 
@@ -17,7 +17,8 @@ const DefaultLayout = (props) => {
 
   return (
     <Fragment>
-      { Object.keys(currentUser).length === 0 ? (<NavbarDefault /> ) : (<NavbarDefault login />)}
+        {userIsLoading?(<NavbarDefault isLoading />):Object.keys(currentUser).length === 0 ? (<NavbarDefault /> ) : (<NavbarDefault login />)}
+  
       {/* <NavbarDefault login /> */}
       
       {/* <NavbarDefault  /> */}

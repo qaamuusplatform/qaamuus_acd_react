@@ -22,7 +22,7 @@ import useSWR, { mutate } from "swr";
 import { boolean } from "yup";
 function App() {
   const [currentUser, setCurrentUser] = useState({});
-  var userIsLoading = true;
+  var [userIsLoading,setUserIsLoading] = useState(true);
 
   //   const { data:datadetal } = useSWR(
   //     `/api/userProfile-detail/14/`,
@@ -37,7 +37,7 @@ function App() {
     if (data) {
       // console.log("data ready",data)
       setCurrentUser(data);
-      userIsLoading = false;
+      setUserIsLoading(false)
 
       // setCurrentUser({});
     } else {

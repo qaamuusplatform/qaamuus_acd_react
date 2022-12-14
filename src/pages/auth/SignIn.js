@@ -5,6 +5,8 @@ import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { Col, Row, Card, Form, Button, Image } from "react-bootstrap";
 import Logo from "assets/images/brand/logo/logo-icon.svg";
+import http from "services/httpService";
+
 
 // import media files
 // import Logo from "assets/images/brand/logo/logo-icon.svg";
@@ -13,21 +15,25 @@ export default function SignIn() {
   const [form, setForm] = useState({ username: "", password: "" });
 
   const doSubmit = async () => {
-    
-    try {
-      // await login(form.username, form.password);
-      // var respdata = await fetch('https://qaamuusbackend.up.railway.app/api/jwt-login/', {
-      //   method: 'POST',
-      //   headers: { 'content-type': 'application/json' },
-      //   credentials: 'include',
-      //   body:JSON.stringify({ 'username': form.username, 'password': form.password })
-      // });
-      
-    console.log(await getLoggedInUser());
 
-      console.log('loggneddd');
+    try {
+
+      await http.post("/api/jwt-login/",{ withCredentials: true }, JSON.stringify({ 'username': form.username, 'password': form.password }), { headers: { 'Content-Type': 'application/json' } })
+        .then((userLoggedResp) => {
+          console.log(userLoggedResp.data);
+        
+        });
+      // var respdata = await fetch('https://qaamuusbackend.up.railway.app/api/jwt-user/', {
+        
+      // });
+
+
+
+      // console.log(await getLoggedInUser());
       // console.log(respdata);
-    } catch (error) { }
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   const handleChange = ({ target }) => {
