@@ -14,7 +14,7 @@ import { useState } from 'react';
 import AllCoursesData from 'data/AllCoursesData';
 import Slider from 'react-slick';
 import InrolledCourseCard from 'components/cards/InrolledCourseCard';
-import BlogCard from 'components/cards/BlogCard';
+import EventCard from 'components/cards/EventCard';
 import useSWR from 'swr';
 import { ShimmerPostItem } from 'react-shimmer-effects';
 
@@ -118,7 +118,7 @@ const StudentDashboard = () => {
                                                         {/* learning courses started */}
                                                         <Row>
                                                             {!userEnrolmentsData && !error
-                                                                ? [1, 2, 3, 4, 6, 7, 8].map((idx) => (
+                                                                ? [1, 2, 3, 4, 6].map((idx) => (
                                                                     <Col lg={3} md={4} sm={12} key={idx}>
                                                                         <ShimmerPostItem card title text cta />
                                                                     </Col>
@@ -148,19 +148,36 @@ const StudentDashboard = () => {
                                                     >
                                                         {/* learning events started */}
                                                         <Row>
+                                                            {!userEnrolmentsData && !error
+                                                                ? [1, 2, 3].map((idx) => (
+                                                                    <Col lg={4} md={4} sm={12} key={idx}>
+                                                                        <ShimmerPostItem card title cta />
+                                                                    </Col>
+                                                                ))
+                                                                : null}
+
+                                                            {userEnrolmentsData ? (
+                                                                userEnrolmentsData.bookedEvents?.map((theBookedEvent, idx) => (
+                                                                    <Col lg={4} md={4} sm={12} key={idx}>
+                                                                        <EventCard event={theBookedEvent.theEvent} />
+                                                                    </Col>
+                                                                ))
+                                                            ) : null
+
+                                                            }
                                                             {/* {userEnrolmentsData.bookedEvents &&
-                                                            userEnrolmentsData.bookedEvents.map((theBookedEvent, index) => (
-                                                                <Col
-                                                                    xl={3}
-                                                                    lg={4}
-                                                                    md={6}
-                                                                    sm={12}
-                                                                    key={index}
-                                                                    className="d-flex"
-                                                                >
-                                                                    <BlogCard event={theBookedEvent.theEvent} />
-                                                                </Col>
-                                                            ))} */}
+                                                                userEnrolmentsData.bookedEvents.map((theBookedEvent, index) => (
+                                                                    <Col
+                                                                        xl={3}
+                                                                        lg={4}
+                                                                        md={6}
+                                                                        sm={12}
+                                                                        key={index}
+                                                                        className="d-flex"
+                                                                    >
+                                                                        <EventCard event={theBookedEvent.theEvent} />
+                                                                    </Col>
+                                                                ))} */}
                                                             {/* end of learning events */}
                                                         </Row>
                                                     </Tab.Pane>

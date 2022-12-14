@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import baseUrl from "../../config.json";
 import { END_POINT } from "helper/constants";
 
-const BlogCard = ({ event }) => {
+const EventCard = ({ event }) => {
   const CategoryColors = (category) => {
     switch (category) {
       case "Courses":
@@ -72,8 +72,8 @@ const BlogCard = ({ event }) => {
 };
 
 // Typechecking With PropTypes
-BlogCard.propTypes = {
+EventCard.propTypes = {
   event: PropTypes.object.isRequired,
 };
 
-export default BlogCard;
+export default EventCard;

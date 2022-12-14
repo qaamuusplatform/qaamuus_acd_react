@@ -282,7 +282,7 @@ console.log(query)
                 "money": (data?.saledPrice - cuppon.price)??0,
                 "courseId": data.id,
                 "months": "1",
-                "refCode":referalCodeRef?.current.value,
+                "referralCode":referalCodeRef?.current.value,
                 "cupponCode":cuppon.code,
                 "type":(status==1?'waafi':status==2?'credit-card':'paypal')
             };

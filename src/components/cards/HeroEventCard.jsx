@@ -8,7 +8,7 @@ import { END_POINT } from "helper/constants";
 
 import moment from "moment/moment";
 
-const BlogCardFullWidth = ({ event }) => {
+const EventCardFullWidth = ({ event }) => {
   const CategoryColors = (category) => {
     switch (category) {
       case "Courses":
@@ -91,8 +91,8 @@ const BlogCardFullWidth = ({ event }) => {
 };
 
 // Typechecking With PropTypes
-BlogCardFullWidth.propTypes = {
+EventCardFullWidth.propTypes = {
   event: PropTypes.object.isRequired,
 };
 
-export default BlogCardFullWidth;
+export default EventCardFullWidth;

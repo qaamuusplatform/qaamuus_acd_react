@@ -5,10 +5,10 @@ import React, { Fragment, useState, useEffect } from "react";
 
 // import custom components
 // import FormSelect from 'components/elements/custom/FormSelect';
-import BlogCard from "components/cards/BlogCard";
+import EventCard from "components/cards/EventCard";
 import BlogArticlesList from "data/blogArticlesData";
-import BlogCardFullWidth from "components/cards/HeroEventCard";
-import { ShimmerPostItem } from "react-shimmer-effects";
+import EventCardFullWidth from "components/cards/HeroEventCard";
+import { ShimmerContentBlock, ShimmerPostItem } from "react-shimmer-effects";
 import { getEvents } from "services/evantService";
 import useSWR from "swr";
 import { toast } from "react-toastify";
@@ -25,19 +25,20 @@ export default function Events() {
       <div className="pt-9 pb-9 bg-white ">
         <Container>
           <Row>
+            <div className="text-left">
+              <h3 className="display-4 fw-bold">Qaamuus Events</h3>
+              <p className="lead">
+                Our features, journey, tips and us being us. Lorem ipsum dolor
+                sit amet, accumsan in, tempor dictum neque.
+              </p>
+            </div>
             <Col
               lg={{ span: 10, offset: 1 }}
               xl={{ span: 8, offset: 2 }}
               md={12}
               sm={12}
             >
-              <div className="text-center mb-5">
-                <h1 className=" display-2 fw-bold">Qaamuus Events</h1>
-                <p className="lead">
-                  Our features, journey, tips and us being us. Lorem ipsum dolor
-                  sit amet, accumsan in, tempor dictum neque.
-                </p>
-              </div>
+
               {/* Form */}
               {/* <Form className="row px-md-20">
 								<Form.Group
@@ -94,43 +95,42 @@ export default function Events() {
         <Container>
           <Row>
             {!events && !error
-              ? [1].map((indx) => {
-                  <Col xl={12} lg={12} md={12} sm={12} key={indx}>
-                    <ShimmerPostItem card title text cta />
-                  </Col>;
-                })
+              ? [1].map((idx) => (
+                <div>
+                <ShimmerContentBlock title text cta thumbnailWidth={500} thumbnailHeight={500} />
+                  <br></br>
+                </div>
+              ))
               : null}
+
             {/* Show first article in full width */}
             {events
               ?.filter((event) => event.heroEvent === true)
               .map((event, index) => (
                 <Col xl={12} lg={12} md={12} sm={12} key={index}>
-                  <BlogCardFullWidth event={event} />
+                  <EventCardFullWidth event={event} />
                 </Col>
               ))}
 
             {/* Show remaining articles in 3 column width  */}
 
             {!events && !error
-              ? [1, 2, 3, 4].map((indx) => {
-                  <Col xl={4} lg={4} md={6} sm={12} key={indx}>
-                    <ShimmerPostItem card title text cta />
-                  </Col>;
-                })
+              ? [1, 2, 3].map((idx) => (
+
+                <Col xl={4} lg={4} md={6} sm={12} key={idx} className="d-flex" >
+                  <ShimmerPostItem card title cta />
+                </Col>
+
+
+
+              ))
               : null}
 
             {events
               ?.filter((event) => event.heroEvent === false)
               .map((event, index) => (
-                <Col
-                  xl={4}
-                  lg={4}
-                  md={6}
-                  sm={12}
-                  key={index}
-                  className="d-flex"
-                >
-                  <BlogCard event={event} />
+                <Col xl={4} lg={4} md={6} sm={12} key={index} className="d-flex" >
+                  <EventCard event={event} />
                 </Col>
               ))}
           </Row>

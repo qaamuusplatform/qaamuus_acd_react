@@ -45,6 +45,7 @@ import { END_POINT } from "helper/constants";
 import { CurrentUserContext } from "services/currentUserContext";
 import { useContext } from "react";
 import * as Icon from "react-feather";
+import { ShimmerPostDetails } from "react-shimmer-effects";
 
 const CourseDetail = ({ match }) => {
   const [isOpen, setOpen] = useState(false);
@@ -59,7 +60,13 @@ const CourseDetail = ({ match }) => {
     toast.error(error);
   }
   if (!data && !error) {
-    return <h3>Loading...</h3>;
+    return <Fragment>
+      <div className=" pt-8 pb-8">
+        <Container>
+          <ShimmerPostDetails card cta variant="EDITOR" />
+        </Container>
+      </div>
+    </Fragment>;
   }
 
   const isUserAlreadyEnrolled = () =>

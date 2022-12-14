@@ -41,9 +41,10 @@ export default function Courses() {
                   </Col>
                   <Col md={6} lg={4} xl={3} className="d-inline-flex">
                     <div className="me-2">
-                      <GridListViewButton keyGrid="grid" keyList="list" />
+                      {/* <GridListViewButton keyGrid="grid" keyList="list" /> */}
                     </div>
-                    <FormSelect options={[]} placeholder="Sort by" />
+                      <GridListViewButton keyGrid="grid" keyList="list" />
+                    {/* <FormSelect options={[]} placeholder="Sort by" /> */}
                   </Col>
                 </Row>
               </Col>
