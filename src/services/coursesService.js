@@ -22,3 +22,8 @@ export const processPaymentService =async (body)=>{
     var data =  await http.post(`/api/inrollCourseToUser/${body.type}/`,body);
     return data.data;
 }
+
+export const CheckCuppon = async (cuppon)=> {
+    var data =  await http.get(`/api/couponCode-check/${cuppon}/`);
+    return data.data;
+}

@@ -1,8 +1,6 @@
 // ** Import from react dom
 import { Route, Switch, Redirect } from "react-router-dom";
 
-// ** Import core SCSS styles
-import "assets/scss/theme.scss";
 
 /* ----------------------------------- */
 /* IMPORTS FOR MARKETING PAGES - START */

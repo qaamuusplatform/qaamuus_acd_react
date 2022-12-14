@@ -245,22 +245,23 @@ const CourseDetail = ({ match }) => {
                     {/* <Link to="#" className="btn btn-primary mb-2  ">
                       Start Free Month
                     </Link> */}
-                    {isUserAlreadyEnrolled() ? (
+                    {
+                      //   isUserAlreadyEnrolled()?
+                      //   <Link
+                      //   to={`${match.url}/watch`}
+                      //   className={`btn btn-primary`}
+                      // >
+                      // <Icon.Youtube className="text-white me-2" />
+                      // Continue Watching
+                      // </Link>
+                      //   :
                       <Link
-                        to={`${match.url}/watch`}
-                        className={`btn btn-primary`}
-                      >
-                        <Icon.Youtube className="text-white me-2" />
-                        Continue Watching
-                      </Link>
-                    ) : (
-                      <Link
-                        to={`/checkout/course/${data.id}`}
+                        to={`/checkout/course/${data.slug}`}
                         className={`btn btn-outline-primary`}
                       >
                         Enroll Now
                       </Link>
-                    )}
+                    }
                   </div>
                 </Card.Body>
               </Card>
