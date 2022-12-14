@@ -16,8 +16,10 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { getCoursesDetail } from "services/coursesService";
 import useSWR, { mutate } from "swr";
+import { boolean } from "yup";
 function App() {
   const [currentUser, setCurrentUser] = useState({});
+  var userIsLoading = true;
 
   //   const { data:datadetal } = useSWR(
   //     `/api/userProfile-detail/14/`,
@@ -32,6 +34,8 @@ function App() {
     if (data) {
       // console.log("data ready",data)
       setCurrentUser(data);
+      userIsLoading = false;
+
       // setCurrentUser({});
     } else {
     }
@@ -43,7 +47,9 @@ function App() {
 
   return (
     <Router>
-      <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
+      <CurrentUserContext.Provider
+        value={{ currentUser, setCurrentUser, userIsLoading }}
+      >
         <div className="App">
           <ScrollToTop />
           <AllRoutes />

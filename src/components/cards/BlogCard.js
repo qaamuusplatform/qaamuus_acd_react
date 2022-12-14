@@ -4,7 +4,7 @@ import { Card, Row, Col, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import baseUrl from "../../config.json";
-import moment from "moment/moment";
+import { END_POINT } from "helper/constants";
 
 const BlogCard = ({ event }) => {
   const CategoryColors = (category) => {
@@ -27,7 +27,7 @@ const BlogCard = ({ event }) => {
       <Link to={`/events/${event.slug}`}>
         <Card.Img
           variant="top"
-          src={baseUrl.baseUrl + event.coverImage}
+          src={END_POINT + event.coverImage}
           className="rounded-top-md img-fluid"
         />
       </Link>
@@ -51,7 +51,7 @@ const BlogCard = ({ event }) => {
         <Row className="align-items-center g-0 mt-4">
           <Col className="col-auto">
             <Image
-              src={baseUrl.baseUrl + event.persenter.profileImage}
+              src={END_POINT + event.persenter.profileImage}
               alt=""
               className="rounded-circle avatar-sm me-2"
             />

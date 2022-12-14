@@ -4,6 +4,8 @@ import { Card, Row, Col, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import baseUrl from "../../config.json";
+import { END_POINT } from "helper/constants";
+
 import moment from "moment/moment";
 
 const BlogCardFullWidth = ({ event }) => {
@@ -32,7 +34,7 @@ const BlogCardFullWidth = ({ event }) => {
           to={`/events/${event.slug}`}
           className="col-lg-8 col-md-12 col-12 bg-cover img-left-rounded"
           style={{
-            background: `url(${baseUrl.baseUrl + event.coverImage})`,
+            background: `url(${END_POINT + event.coverImage})`,
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             backgroundPosition: "top center",
@@ -40,7 +42,7 @@ const BlogCardFullWidth = ({ event }) => {
         >
           <Card.Img
             variant="left"
-            src={baseUrl.baseUrl + event.image}
+            src={END_POINT + event.image}
             className="img-fluid d-lg-none invisible"
           />
         </Link>
@@ -66,7 +68,7 @@ const BlogCardFullWidth = ({ event }) => {
               <Col className="col-auto">
                 {/*  Img  */}
                 <Image
-                  src={baseUrl.baseUrl + event.persenter.profileImage}
+                  src={END_POINT + event.persenter.profileImage}
                   alt=""
                   className="rounded-circle avatar-sm me-2"
                 />

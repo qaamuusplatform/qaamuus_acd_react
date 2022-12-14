@@ -44,12 +44,12 @@ import { youTubeIdFromLink } from "helper/utils";
 import { END_POINT } from "helper/constants";
 import { CurrentUserContext } from "services/currentUserContext";
 import { useContext } from "react";
-import * as Icon from 'react-feather';
+import * as Icon from "react-feather";
 
-const CourseDetail = ({match}) => {
+const CourseDetail = ({ match }) => {
   const [isOpen, setOpen] = useState(false);
   const [YouTubeURL] = useState("JRzWRZahOVU");
- const {currentUser} = useContext(CurrentUserContext)
+  const { currentUser } = useContext(CurrentUserContext);
   const { id } = useParams();
   const { data, error } = useSWR(
     `/api/qaCourse-detail-slug/${id}`,
@@ -59,10 +59,12 @@ const CourseDetail = ({match}) => {
     toast.error(error);
   }
   if (!data && !error) {
-    return <h3>Loading...</h3>
+    return <h3>Loading...</h3>;
   }
 
-  const isUserAlreadyEnrolled = ()=> currentUser && data?.inrolledUsers?.find(user=>user.id==currentUser.id)
+  const isUserAlreadyEnrolled = () =>
+    currentUser &&
+    data?.inrolledUsers?.find((user) => user.id == currentUser.id);
 
   return (
     <Fragment>
@@ -75,9 +77,7 @@ const CourseDetail = ({match}) => {
                 <h1 className="text-white display-4 fw-semi-bold">
                   {data.title}
                 </h1>
-                <p className="text-white mb-6 lead">
-                {data.simDesc}
-                </p>
+                <p className="text-white mb-6 lead">{data.simDesc}</p>
                 <div className="d-flex align-items-center">
                   <Tippy content="Add to Bookmarks" animation={"scale"}>
                     <Link
@@ -89,7 +89,8 @@ const CourseDetail = ({match}) => {
                     </Link>
                   </Tippy>
                   <span className="text-white ms-3">
-                    <i className="fe fe-user text-white-50"></i> {data.inrolledUsers.length} Enrolled{" "}
+                    <i className="fe fe-user text-white-50"></i>{" "}
+                    {data.inrolledUsers.length} Enrolled{" "}
                   </span>
                   <span className="ms-4">
                     <span className="text-warning">
@@ -175,7 +176,10 @@ const CourseDetail = ({match}) => {
                       </Tab.Pane>
                       <Tab.Pane eventKey="description" className="pb-4 p-4">
                         {/* Description */}
-                        <DescriptionTab description={data.fullDesc} learn={data.youLearn} />
+                        <DescriptionTab
+                          description={data.fullDesc}
+                          learn={data.youLearn}
+                        />
                       </Tab.Pane>
                       <Tab.Pane eventKey="reviews" className="pb-4 p-4">
                         {/* Reviews */}
@@ -221,7 +225,9 @@ const CourseDetail = ({match}) => {
                   channel="youtube"
                   autoplay
                   isOpen={isOpen}
-                  videoId={data.prevVideo? youTubeIdFromLink(data.prevVideo):''}
+                  videoId={
+                    data.prevVideo ? youTubeIdFromLink(data.prevVideo) : ""
+                  }
                   onClose={() => setOpen(false)}
                 />
                 {/* end of video popup */}
@@ -230,32 +236,31 @@ const CourseDetail = ({match}) => {
                 <Card.Body>
                   {/* Price single page */}
                   <div className="mb-3">
-                    <span className="text-dark fw-bold h2 me-2">${data.saledPrice}</span>
+                    <span className="text-dark fw-bold h2 me-2">
+                      ${data.saledPrice}
+                    </span>
                     <del className="fs-4 text-muted">${data.regularPrice}</del>
                   </div>
                   <div className="d-grid">
                     {/* <Link to="#" className="btn btn-primary mb-2  ">
                       Start Free Month
                     </Link> */}
-                    {
-                      isUserAlreadyEnrolled()?
+                    {isUserAlreadyEnrolled() ? (
                       <Link
-                      to={`${match.url}/watch`}
-                      className={`btn btn-primary`}
-                    >
-                    <Icon.Youtube className="text-white me-2" />
-                    Continue Watching
-                    </Link>
-                      :
+                        to={`${match.url}/watch`}
+                        className={`btn btn-primary`}
+                      >
+                        <Icon.Youtube className="text-white me-2" />
+                        Continue Watching
+                      </Link>
+                    ) : (
                       <Link
-                      to={`/checkout/course/${data.id}`}
-                      className={`btn btn-outline-primary`}
-                    >
-                     Enroll Now
-                    </Link>
-
-                    }
-                   
+                        to={`/checkout/course/${data.id}`}
+                        className={`btn btn-outline-primary`}
+                      >
+                        Enroll Now
+                      </Link>
+                    )}
                   </div>
                 </Card.Body>
               </Card>
@@ -347,8 +352,7 @@ const CourseDetail = ({match}) => {
                       </div>
                     </Col>
                   </Row> */}
-                  <p>{data.instructor.aboutMe}
-                  </p>
+                  <p>{data.instructor.aboutMe}</p>
                   <Link
                     to={`/instructor/${data.instructor.id}/`}
                     className="btn btn-outline-white btn-sm"
