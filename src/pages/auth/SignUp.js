@@ -77,7 +77,6 @@ export default function SignUp() {
       registerUserFun();
     }else{
       console.log('eeee')
-
     }
   }
   async function userJoinHandleSubmit(e) {
