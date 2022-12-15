@@ -1,5 +1,5 @@
 // import node module libraries
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { Card} from 'react-bootstrap';
 
 // import custom components

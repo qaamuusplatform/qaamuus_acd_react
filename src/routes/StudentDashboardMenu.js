@@ -14,8 +14,8 @@ export const DashboardMenu = [
 	
 	{
 		id: 3,
-		title: 'Lacag Bixinta',
-		link: '/marketing/user/student-payment/',
+		title: 'Referral  Data',
+		link: '/user/referral-data/',
 		icon: 'star'
 	},
 	{

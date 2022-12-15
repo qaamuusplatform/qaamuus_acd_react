@@ -36,7 +36,7 @@ function Dahab({ handleClose }) {
     <Form className="mb-4" onSubmit={handleSubmit}>
       <Row>
         {/* Card number */}
-        <Col md={8} sm={12} className="mb-3">
+        <Col md={12} sm={12} className="mb-3">
           <Form.Group>
             <Form.Label>Phone Number</Form.Label>
             <input

@@ -1,6 +1,6 @@
 // import node module libraries
 import { withRouter } from 'react-router-dom';
-import { Card, Form, Row, Col, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Card, Form, Row, Col, Button, OverlayTrigger, Tooltip, Container } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';
 
 // import custom components
@@ -10,17 +10,54 @@ import { Link, useLocation } from 'react-router-dom';
 
 // import profile layout wrapper
 import ProfileLayout from 'layouts/ProfileLayout';
-import { useContext, useState } from 'react';
+import { Fragment, useContext, useState } from 'react';
 import { CurrentUserContext } from 'services/currentUserContext';
 import baseUrl from 'services/baseUrl';
+import { ShimmerPostDetails, ShimmerThumbnail } from 'react-shimmer-effects';
+import { toast } from 'react-toastify';
+import { updateUserInfo } from 'services/authService';
+import http from 'services/httpService';
 
 const AuthSecurity = (props) => {
 	const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 	const account = props.location.pathname.substring(21, 11);
+	const [passwordShown, setPasswordShown] = useState(false);
 	const [password, setPassword] = useState('');
 	const [confirmpassword, setConfirmPassword] = useState('');
 	const [currentpassword, setCurrentPassword] = useState('');
 
+	
+
+
+	const togglePassword = () => {
+		setPasswordShown(!passwordShown);
+	}
+	async function userUpdateHandleSubmit(e) {
+		e.preventDefault();
+		const userData = new FormData(e.target);
+		if (password == confirmpassword) {
+			updateUserInfo(userData, currentUser.id).then((e) => {
+				toast.success("Waad Ku guulaysatay Xog badallida")
+			  });
+			
+		}
+
+		// updateUserInfo(userData, currentUser.id).then((e) => {
+		//   toast.success("Waad Ku guulaysatay Xog badallida")
+		// });
+	}
+	if (Object.keys(currentUser).length == 0) {
+		return <Fragment>
+		  <Card className="p-lg-2 pt-2 pt-lg-0 rounded-0 border-0">
+			<Container>
+			  <br />
+			  <ShimmerThumbnail height={100} rounded />
+			  <ShimmerPostDetails card cta variant="EDITOR" />
+			  <br></br>
+			</Container>
+		  </Card>
+		</Fragment>;
+	  }
 	return (
 		<ProfileLayout>
 			{/* {account === 'instructor'} */}
@@ -35,7 +72,7 @@ const AuthSecurity = (props) => {
 				</Card.Header>
 				<Card.Body>
 
-					<Form>
+					<Form >
 						<Row>
 							<Col lg={6} md={12} sm={12} className="mb-3">
 								<h4 className="mb-0">Email Address</h4>
@@ -45,7 +82,7 @@ const AuthSecurity = (props) => {
 								</p>
 								<Form.Group>
 									<Form.Label htmlFor="email">Emailka Cusub</Form.Label>
-									<Form.Control type="email" id="email"  required />
+									<Form.Control type="email" id="email" required />
 								</Form.Group>
 
 							</Col>
@@ -57,7 +94,14 @@ const AuthSecurity = (props) => {
 								</p>
 								<Form.Group>
 									<Form.Label htmlFor="text">Usernamka Cusub</Form.Label>
-									<Form.Control type="text" id="text" required />
+									<Form.Control type="text" 
+									id="username"
+									// onChange={handleUsernameChange}
+									// name="username"
+									// isInvalid={userNameIsExist == true ? true : false}
+									// isValid={userNameIsExist == true ? false : true}
+									placeholder="Username auth"
+									required />
 								</Form.Group>
 
 							</Col>
@@ -74,7 +118,7 @@ const AuthSecurity = (props) => {
 							please expect that email after submitting.
 						</p>
 						{/* Form */}
-						<Form>
+						<Form onSubmit={userUpdateHandleSubmit}>
 							<Row>
 								<Col lg={12} md={12} sm={12}>
 									{/* Current password */}
@@ -84,7 +128,7 @@ const AuthSecurity = (props) => {
 											Passwordkii Hore
 										</Form.Label>
 										<Form.Control
-											type="password"
+											type={passwordShown ? "text" : "password"}
 											id="currentpassword"
 											placeholder="********"
 											value={currentpassword}
@@ -93,13 +137,13 @@ const AuthSecurity = (props) => {
 										/>
 									</Form.Group>
 								</Col>
-								
+
 								<Col lg={6} md={12} sm={12}>
 									{/* New password */}
 									<Form.Group className="mb-3">
 										<Form.Label htmlFor="newpassword">Passwordka Cusub</Form.Label>
 										<Form.Control
-											type="password"
+											type={passwordShown ? "text" : "password"}
 											id="newpassword"
 											placeholder="********"
 											value={password}
@@ -108,16 +152,16 @@ const AuthSecurity = (props) => {
 										/>
 									</Form.Group>
 								</Col>
-								
+
 								<Col lg={6} md={12} sm={12}>
-									
+
 									{/* Confirm new password */}
 									<Form.Group className="mb-3">
 										<Form.Label htmlFor="confirmpassword">
 											Hubi Passwordka Cusub
 										</Form.Label>
 										<Form.Control
-											type="password"
+											type={passwordShown ? "text" : "password"}
 											id="confirmpassword"
 											placeholder="********"
 											value={confirmpassword}
@@ -125,12 +169,23 @@ const AuthSecurity = (props) => {
 											required
 										/>
 									</Form.Group>
+
 									{/* Button */}
-									<Button type="submit" className="text-right btn btn-primary">
-										Save Password
-									</Button>
-									<div className="col-6"></div>
+
 								</Col>
+								<Col lg={12} md={12} className="mb-3">
+									{/* Checkbox */}
+									<Form.Check type="checkbox" id="check-api-checkbox">
+										<Form.Check.Input
+											type="checkbox"
+											onClick={togglePassword}
+										/>
+										<Form.Check.Label>SHOW PASSWORD</Form.Check.Label>
+									</Form.Check>
+								</Col>
+								<Button type="submit" className="text-right btn btn-primary">
+									Save Password
+								</Button>
 								<Col lg={12} md={12} sm={12} className="mt-4">
 									<p className="mb-0">
 										Can't remember your current password?{' '}

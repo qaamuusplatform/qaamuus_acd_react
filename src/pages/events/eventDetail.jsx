@@ -49,26 +49,46 @@ import useSWR from "swr";
 import { toast } from "react-hot-toast";
 import Timer from "./Timer";
 import PaymentModel from "pages/payment/model";
+import { useEffect } from "react";
+import { ShimmerPostDetails } from "react-shimmer-effects";
+import { httpFetcher } from "services/coursesService";
 
 const EventDetail = () => {
-  const [isOpen, setOpen] = useState(false);
+  // const [isOpen, setOpen] = useState(false);
 
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [YouTubeURL] = useState("JRzWRZahOVU");
-
+  const [access, setAccess] = useState(true);
+  const userAccessInfo ={}
   const { currentUser } = useContext(CurrentUserContext);
 
   const { slug } = useParams();
 
-  const { data: event, error } = useSWR(
-    `api/qaEvent-detail-slug/${slug}/`,
-    getEvent
-  );
+  const { data: event, error } = useSWR(`api/qaEvent-detail-slug/${slug}/`, httpFetcher);
+  if (!event && !error) {
+    return <Fragment>
+      <div className=" pt-8 pb-8">
+        <Container>
+          <ShimmerPostDetails card cta variant="EDITOR" />
+        </Container>
+      </div>
+    </Fragment>;
+  }
 
-  if (error) toast.error(error);
+  // useEffect(() => {
+  //   const student =
+  //     event &&
+  //     event.enrolledStudents.filter(
+  //       (student) => student.email === currentUser.email
+  //     );
+
+  //   if (student && student.length !== 0) setAccess(student[0]);
+  //   if (error) toast.error(error);
+  // }, []);
+
 
   return (
     <Fragment>
@@ -216,9 +236,8 @@ const EventDetail = () => {
                       {Object.keys(currentUser).length === 0 ? (
                         <Nav className="navbar-nav navbar-right-wrap ms-auto d-flex nav-top-wrap">
                           <span
-                            className={`ms-auto mt-3 mt-lg-0  ${
-                              false ? "d-none" : ""
-                            }`}
+                            className={`ms-auto mt-3 mt-lg-0  ${false ? "d-none" : ""
+                              }`}
                           >
                             <Nav.Link
                               as={Link}
@@ -242,6 +261,15 @@ const EventDetail = () => {
                           <QuickMenu />
                         </span> */}
                         </Nav>
+                      ) : false ? (
+                        
+                        <Button
+                          variant="warning"
+                          onClick={handleShow}
+                          className="mt-3"
+                        >
+                          Access Event
+                        </Button>
                       ) : (
                         <Button
                           variant="primary"
@@ -263,7 +291,7 @@ const EventDetail = () => {
                     <div className="d-flex align-items-center">
                       <div className="position-relative">
                         <Image
-                          src={Avatar1}
+                          src={END_POINT + event.persenter.profileImage}
                           alt=""
                           className="rounded-circle avatar-xl"
                         />
@@ -283,7 +311,7 @@ const EventDetail = () => {
                         </Link>
                       </div>
                       <div className="ms-4">
-                        <h4 className="mb-0">Jenny Wilson</h4>
+                        <h4 className="mb-0">{event.persenter.fullName}</h4>
                         <p className="mb-1 fs-6">
                           Front-end Developer, Designer
                         </p>
@@ -314,13 +342,9 @@ const EventDetail = () => {
                         </div>
                       </Col>
                     </Row>
-                    <p>
-                      I am an Innovation designer focussing on UX/UI based in
-                      Berlin. As a creative resident at Figma explored the city
-                      of the future and how new technologies.
-                    </p>
+                    <p>{event.persenter.aboutMe}</p>
                     <Link
-                      to="/marketing/instructor/instructor-edit-profile/"
+                      to={`/instructor/${event.persenter.id}`}
                       className="btn btn-outline-white btn-sm"
                     >
                       View Details
@@ -332,7 +356,8 @@ const EventDetail = () => {
           </Container>
         </div>
       )}
-      <PaymentModel show={show} handleClose={handleClose} />
+
+      <PaymentModel show={show} handleClose={handleClose} event={event} />
     </Fragment>
   );
 };

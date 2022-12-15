@@ -1,8 +1,6 @@
 // ** Import from react dom
 import { Route, Switch, Redirect } from "react-router-dom";
 
-// ** Import core SCSS styles
-import "assets/scss/theme.scss";
 
 /* ----------------------------------- */
 /* IMPORTS FOR MARKETING PAGES - START */
@@ -29,6 +27,10 @@ import InstructorDetail from "./../pages/instructor/InstructorDetail";
 import Members from "pages/instructor/InstructorsList";
 import Checkout from "pages/checkout/checkout";
 import EventDetail from "pages/events/eventDetail";
+import Checkout from "pages/checkout/checkout";
+import EventWatchLive from "pages/events/eventWatch/EventWatchLive";
+import LiveLayout from "./LiveLayout";
+import ReferralData from "pages/student/account-settings/ReferralData";
 
 /* IMPORTS FOR MARKETING PAGES - END */
 /* --------------------------------- */
@@ -97,6 +99,12 @@ function AllRoutes() {
       />
       <AppRoute
         exact
+        path="/user/referral-data/"
+        layout={DefaultLayout}
+        component={ReferralData}
+      />
+      <AppRoute
+        exact
         path="/user/auth-security/"
         layout={DefaultLayout}
         component={AuthSecurity}
@@ -108,6 +116,15 @@ function AllRoutes() {
         component={DeleteProfile}
       />
 
+
+      <AppRoute exact path="/members/" layout={DefaultLayout} component={Members} />
+      <AppRoute exact path="/instructor/:instructorUsername/" layout={DefaultLayout} component={InstructorDetail} />
+      <AppRoute
+        exact
+        path="/checkout/course/:courseid"
+        layout={DefaultLayout}
+        component={Checkout}
+        />
       <AppRoute
         exact
         path="/members/"
@@ -141,6 +158,14 @@ function AllRoutes() {
         layout={DefaultLayout}
         component={<h1>Watch Course</h1>}
       />
+      <AppRoute exact path="/events/" layout={DefaultLayout} component={Events} />
+      <AppRoute exact path="/events/" layout={DefaultLayout} component={Events} />
+      <AppRoute exact path="/events/:slug" layout={DefaultLayout} component={EventDetail} />
+      <AppRoute exact path="/event/watch-live/:slug" layout={LiveLayout} component={EventWatchLive} />
+      {/* <AppRoute exact path="/event-waiting/:slug" layout={DefaultLayout}  component={EventWatingScreen} /> */}
+
+      <AppRoute exact path="/404" layout={DefaultLayout} component={Error404} />
+      <AppRoute exact path="/coming-soon" layout={DefaultLayout} component={ComingSoon} />
       <AppRoute
         exact
         path="/events/"
