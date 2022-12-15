@@ -261,7 +261,7 @@ const EventDetail = () => {
                           <QuickMenu />
                         </span> */}
                         </Nav>
-                      ) : access && access ? (
+                      ) : false ? (
                         
                         <Button
                           variant="warning"

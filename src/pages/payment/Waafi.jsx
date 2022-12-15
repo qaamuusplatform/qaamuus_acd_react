@@ -53,6 +53,7 @@ function Waafi({ handleClose, event }) {
     }
     // if (number.length < 9) return setError("number length is not valid");
     const error = schema.validate({ number: input.number });
+    console.log(error)
     return error;
   };
 
