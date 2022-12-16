@@ -17,40 +17,22 @@ import { getLoggedInUser } from "services/authService";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { getCoursesDetail } from "services/coursesService";
-import useSWR, { mutate } from "swr";
-import { boolean } from "yup";
 function App() {
   const [currentUser, setCurrentUser] = useState({});
-<<<<<<< HEAD
-  const [avatorIsLoading,setAvatorIsLoading]=useState(true);
-=======
-  var [userIsLoading,setUserIsLoading] = useState(true);
->>>>>>> 6cc0149b8ae3ed20df1e0aa28cc278ee5a39bbb3
-
-  //   const { data:datadetal } = useSWR(
-  //     `/api/userProfile-detail/14/`,
-  //     getCoursesDetail
-  //   );
-  // const handlepost=()=>{
-  //   mutate(`/api/userProfile-detail/14/`, getCoursesDetail)
-  // }
+  var [userIsLoading, setUserIsLoading] = useState(true);
 
   const getCurrentUser = async () => {
     const { data } = await getLoggedInUser();
+
     if (data) {
       // console.log("data ready",data)
       setCurrentUser(data);
-<<<<<<< HEAD
-      setAvatorIsLoading(false);
-=======
-      setUserIsLoading(false)
-
->>>>>>> 6cc0149b8ae3ed20df1e0aa28cc278ee5a39bbb3
+      setUserIsLoading(false);
       // setCurrentUser({});
     } else {
-      setAvatorIsLoading(false);
+      setCurrentUser({});
     }
+    setUserIsLoading(false);
   };
 
   useEffect(() => {

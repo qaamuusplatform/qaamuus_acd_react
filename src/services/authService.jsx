@@ -1,4 +1,4 @@
-import http from "./httpService";
+import http, { httpAxiosWithToken } from "./httpService";
 
 const endPoint = "/api/jwt-login/";
 import useSWR from "swr";
@@ -10,18 +10,52 @@ export const login = async (username, password) => {
   console.log(data);
 };
 
-export const getLoggedInUser = () => {
+export const getLoggedInUser = async () => {
   try {
-    // return {}
-    return http.get("api/userProfile-detail/14/");
+    // respData=http.get("api/jwtAuthToken-user/")
+    // console.log('the true',respData)
+    let respData = {};
+    try {
+      respData = await httpAxiosWithToken.get("api/jwtAuthToken-user/");
+      if (respData) {
+        return respData;
+      } else {
+        return {}
+      }
+    } catch (error) {
+      return {}
+    }
   } catch (error) {
-    return null;
+    return {};
   }
 };
 
+
+export const getAllUsernamesAnsEmails = async()=>{
+  const allUsernamesAndEmails=[]
+
+  try{
+    const { data } = await http.get('api/user-list/');
+    let emails=[]
+    let usernames=[]
+    for(var userInfo of data){
+      emails.push(userInfo.email)
+      usernames.push(userInfo.username)
+    }
+    allUsernamesAndEmails.push({"emails":emails,"usernames":usernames})
+    // allUsernamesAndEmails=data.username
+  }catch(error){
+  
+  }
+  return allUsernamesAndEmails;
+}
+
 export const updateUserInfo = async (body, theUserId) => {
   try {
-    const {data}= await http.post(`/api/userProfile-update/${theUserId}/`,body);
+    const { data } = await http.post(
+      `api/userProfile-update/${theUserId}/`,
+      body
+    );
     return data;
   } catch (error) {
     return null;

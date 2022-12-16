@@ -27,7 +27,6 @@ import InstructorDetail from "./../pages/instructor/InstructorDetail";
 import Members from "pages/instructor/InstructorsList";
 import Checkout from "pages/checkout/checkout";
 import EventDetail from "pages/events/eventDetail";
-import Checkout from "pages/checkout/checkout";
 import EventWatchLive from "pages/events/eventWatch/EventWatchLive";
 import LiveLayout from "./LiveLayout";
 import ReferralData from "pages/student/account-settings/ReferralData";

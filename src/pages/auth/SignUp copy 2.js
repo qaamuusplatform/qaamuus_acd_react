@@ -1,8 +1,8 @@
 // import node module libraries
 import { Fragment, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import "appStyle.css";
-import http from "services/httpService";
+import { AvForm, AvField } from 'availity-reactstrap-validation';
+import { Link, Redirect } from "react-router-dom";
+import http from "services/httpService"
 import {
   Col,
   Alert,
@@ -10,114 +10,112 @@ import {
   Card,
   Form,
   Button,
-  Spinner,
-  InputGroup,
+  Spinner, InputGroup,
   Image,
   Modal,
 } from "react-bootstrap";
 
-import ProfileBackground from "assets/images/background/profile-bg.jpg";
+import ProfileBackground from 'assets/images/background/profile-bg.jpg';
 import { toast } from "react-toastify";
-import { useFormik } from "formik";
-import * as yub from "yup";
-import { getAllUsernamesAnsEmails } from "services/authService";
 export default function SignUp() {
-  const history = useHistory();
-  const existUsernames = [
-    "asdasdas",
-    "dasdasdas",
-    "maxamedj",
-    "maxamed",
-    "axamed",
-  ];
+  const [show, setShow] = useState(false);
+  const handleClose = () => { setShow(false); setFormIsLoading(false); };
+  const handleShow = () => setShow(true);
 
-  const [modalShow, setModalShow] = useState(false);
-  const handleClose = () => {
-    setModalShow(false);
-    setFormIsLoading(false);
-  };
-  const handleShow = () => setModalShow(true);
-
-  const [emailVerified, setEmailVerified] = useState(false);
-
-  const onSubmit = () => {
-    setFormIsLoading(true);
-    // http.get(`api/sendActivationEmailCode/${registringUserForm.values.email}/`).then((resp) => {
-    //     setActivationCode(resp.data.sendedCode)
-    //   })
-
-    http
-      .post("/api/userProfile-create/", JSON.stringify(registringUserForm.values), {
-        headers: { "Content-Type": "application/json" },
-      })
-      .then((userProfileResp) => {
-        console.log(userProfileResp.data);
-        setFormIsLoading(false);
-        registringUserForm.resetForm()
-        toast.success("Waad ku guulaysatay iska diiwaangalinta academiyadda qaamuus")
-        history.push('/auth/login/')
-      });
-    // if(emailVerified){
-
-    // }else{
-    //   setModalShow(true)
-    // }
-  };
-  const registringUserForm = useFormik({
-    initialValues: {
-      email: "",
-      username: "",
-      password: "",
-      comfirmPassword: "",
-      fullName: "",
-      activationCode: "",
-    },
-    validationSchema: yub.object().shape({
-      email: yub
-        .string()
-        .email("Soo Gali Email Gira")
-        .required("Soo Gali Email"),
-      password: yub.string().min(4).required(),
-      username: yub
-        .string()
-        .min(4)
-        .required()
-        .test(
-          "uniqueUsername",
-          "usernamekan horay ayuu u jiray",
-          function (_theUsername) {
-            if (existUsernames.includes(_theUsername)) {
-
-              return false;
-            } else {
-              return true;
-            }
-          }
-        ),
-      fullName: yub.string().min(5).required("Magaca Oo Saddexan"),
-      comfirmPassword: yub
-        .string()
-        .oneOf([yub.ref("password"), null], "Labada Password  isma lahan"),
-    }),
-    onSubmit,
-  });
-
+  
+  const [sendedCodeActive, setSendedCodeActive] = useState(false);
+  const [activationCode, setActivationCode] = useState(0);
   const [passwordShown, setPasswordShown] = useState(false);
   const [formIsLoading, setFormIsLoading] = useState(false);
-
+  const [regsitringUserData, setRegsitringUserData] = useState({
+    "email": "",
+    "username": "",
+    "password": "",
+    "fullName": ""
+  })
+  const [userNameIsExist, setUserNameIsExist] = useState(false);
+  const [emailIsExist, setEmailIsExist] = useState(false);
+  const [emailVerified, setEmailVerified] = useState(false);
+  const [usernameValid, setUsernameValid] = useState('Usernamka ugu yaraan 6');
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
   };
 
-  async function emailVerifieSubmit(e) {
+  const handleChange = async ({ target }) => {
+    const { value, name } = target;
+    if (name == 'username') {
+      if (value.length > 6) {
+        setUserNameIsExist(await (await http.get("/api/checkingUserExist/" + value + '/')).data.isExist)
+        if (userNameIsExist) {
+          setUsernameValid('Usernamkan wa la qabsaday');
+        } else {
+          setRegsitringUserData(prev => ({ ...prev, [name]: value }))
+        }
+      } else {
+        setUsernameValid('Usernamka ugu yaraan 6');
+        setUserNameIsExist(true);
+      }
+    } else if (name == 'email') {
+      setEmailIsExist(await (await http.get("/api/checkingEmailExist/" + value + '/')).data.isExist)
+      if (!setEmailIsExist) {
+        setRegsitringUserData(prev => ({ ...prev, [name]: value }))
+      }
+      setRegsitringUserData(prev => ({ ...prev, [name]: value }))
+    }
+    else {
+      setRegsitringUserData(prev => ({ ...prev, [name]: value }))
+    }
+  };
+
+
+
+  async function userActivateHandleSubmit(e) {
+    e.preventDefault();
+    if((parseInt(e.target.elements.activateCode.value)-(regsitringUserData.email.length)) == parseInt(activationCode)){
+      setEmailVerified(true)
+      setSendedCodeActive(false)
+      setShow(false)
+      registerUserFun();
+    }else{
+      console.log('eeee')
+    }
+  }
+  async function userJoinHandleSubmit(e) {
+    setFormIsLoading(true);
     // setUserRegistred(false);
     e.preventDefault();
-  }
+    registerUserFun();
 
+    
+
+  }
+  async function registerUserFun() {
+    setFormIsLoading(true);
+    if (regsitringUserData.username != null && regsitringUserData.email != null) {
+      if (emailVerified) {
+        await http.post("/api/userProfile-create/", regsitringUserData, { headers: { 'Content-Type': 'application/json' } })
+          .then((userProfileResp) => {
+            console.log(userProfileResp)
+            setFormIsLoading(false);
+            // setUserRegistred(true);
+            // return Redirect("/user/dashboard");
+          });
+
+      } else {
+        http.get(`api/sendActivationEmailCode/${regsitringUserData.email}/`).then((resp) => {
+          setActivationCode(resp.data.sendedCode)
+        })
+        setShow(true)
+      }
+    } else {
+      toast.error("Fadlan iska hubi emailka ama usernameka")
+      setFormIsLoading(false);
+    }
+  }
   return (
-    <Fragment>
-      <Modal show={modalShow} onHide={handleClose} centered>
-        <Form onSubmit={emailVerifieSubmit}>
+    <Fragment >
+      <Modal show={show} onHide={handleClose} centered>
+        <Form  onSubmit={userActivateHandleSubmit}>
           <Modal.Header closeButton>
             <Modal.Title>Hubinta Emailka</Modal.Title>
           </Modal.Header>
@@ -125,25 +123,20 @@ export default function SignUp() {
             <Col lg={12} md={12} sm={12} className="mb-3">
               <h4 className="mb-0">Email Address</h4>
               <p>
-                Fariin ayaa laguugu diray emailkan{" "}
-                <span className="text-success">
-                  {registringUserForm.values.email}
-                </span>
+                Fariin ayaa laguugu diray emailkan {' '}
+                <span className="text-success">{regsitringUserData.email}</span>
               </p>
               <Form.Group>
                 <Form.Label htmlFor="email">Codeka Hubinta</Form.Label>
-                <Form.Control
-                  placeholder="21 12 12"
-                  type="number"
-                  id="activateCode"
-                  value={registringUserForm.values.activationCode}
-                  onChange={registringUserForm.handleChange}
-                  onBlur={registringUserForm.handleBlur}
-                  // isInvalid={sendedCodeActive == true ? true : false}
-                  // isValid={sendedCodeActive == true ? false : true}
-                  required
-                />
+                <Form.Control 
+                placeholder="21 12 12" 
+                type="number" 
+                id="activateCode" 
+                isInvalid={sendedCodeActive == true ? true : false}
+                isValid={sendedCodeActive == true ? false : true}
+                required />
               </Form.Group>
+
             </Col>
           </Modal.Body>
           <Modal.Footer>
@@ -162,24 +155,23 @@ export default function SignUp() {
           <Card>
             <Card.Img variant="top" src={ProfileBackground} />
             <Card.Body className="p-6">
+
+
               {/* Form */}
-              <Form
-                onSubmit={registringUserForm.handleSubmit}
-                controlId="validationFormik01"
-              >
+              <Form onSubmit={userJoinHandleSubmit} controlId="validationFormik01">
                 <Row>
+
                   <Col lg={8} md={8} className="mb-3">
                     {/* User Name */}
                     <Form.Label>Full Name</Form.Label>
                     <Form.Control
                       type="text"
                       id="fullName"
-                      value={registringUserForm.values.fullName}
-                      onChange={registringUserForm.handleChange}
-                      onBlur={registringUserForm.handleBlur}
+                      onChange={handleChange}
                       size="sm"
                       name="fullName"
                       placeholder="Full Name"
+                      required
                     />
                   </Col>
                   <Col lg={4} md={4} className="mb-3">
@@ -190,27 +182,15 @@ export default function SignUp() {
                         type="text"
                         id="username"
                         size="sm"
-                        value={registringUserForm.values.username}
-                        onChange={registringUserForm.handleChange}
-                        onBlur={registringUserForm.handleBlur}
-                        isInvalid={
-                          registringUserForm.errors.username &&
-                          registringUserForm.touched.username
-                            ? true
-                            : false
-                        }
-                        isValid={
-                          registringUserForm.errors.username &&
-                          registringUserForm.touched.username
-                            ? false
-                            : true
-                        }
+                        onChange={handleChange}
                         name="username"
+                        isInvalid={userNameIsExist == true ? true : false}
+                        isValid={userNameIsExist == true ? false : true}
                         placeholder="Username auth"
                         required
                       />
                       <Form.Control.Feedback type="invalid">
-                        {registringUserForm.errors.username}
+                        {usernameValid}
                       </Form.Control.Feedback>
                     </InputGroup>
                     {/* <Form.Label id="usernameIsValid" >Email </Form.Label> */}
@@ -222,23 +202,19 @@ export default function SignUp() {
                       <Form.Control
                         type="email"
                         name="email"
-                        value={registringUserForm.values.email}
-                        onChange={registringUserForm.handleChange}
-                        onBlur={registringUserForm.handleBlur}
+                        onChange={handleChange}
+                        isInvalid={emailIsExist == true ? true : false}
+                        isValid={emailIsExist == true ? false : true}
                         id="email"
-                        isInvalid={
-                          registringUserForm.errors.email &&
-                          registringUserForm.touched.email
-                            ? true
-                            : false
-                        }
                         size="sm"
                         placeholder="Email address here"
+                        required
                       />
                       <Form.Control.Feedback type="invalid">
-                        {registringUserForm.errors.email}
+                        {emailIsExist ? ("Emailkan horay ayuu u jiray") : ("")}
                       </Form.Control.Feedback>
                     </InputGroup>
+
                   </Col>
                   {/* <Col lg={3} md={3} className="mb-3">
                     <Form.Label style={{ "color": "white" }} className="sm-none" >Email </Form.Label>
@@ -250,48 +226,25 @@ export default function SignUp() {
                     <Form.Label>Password </Form.Label>
                     <Form.Control
                       type={passwordShown ? "text" : "password"}
-                      value={registringUserForm.values.password}
-                      onChange={registringUserForm.handleChange}
-                      onBlur={registringUserForm.handleBlur}
-                      isInvalid={
-                        registringUserForm.errors.password &&
-                        registringUserForm.touched.password
-                          ? true
-                          : false
-                      }
                       id="password"
                       name="password"
+                      onChange={handleChange}
                       size="sm"
                       placeholder="**************"
                       required
                     />
-                    <Form.Control.Feedback type="invalid">
-                      {registringUserForm.errors.password}
-                    </Form.Control.Feedback>
                   </Col>
                   <Col lg={6} md={6} className="mb-3">
                     {/* Password */}
                     <Form.Label>Comfirm password </Form.Label>
                     <Form.Control
                       type={passwordShown ? "text" : "password"}
-                      value={registringUserForm.values.comfirmPassword}
-                      onChange={registringUserForm.handleChange}
-                      onBlur={registringUserForm.handleBlur}
-                      isInvalid={
-                        registringUserForm.errors.comfirmPassword &&
-                        registringUserForm.touched.comfirmPassword
-                          ? true
-                          : false
-                      }
                       name="comfirmPassword"
                       id="password"
                       size="sm"
                       placeholder="**************"
                       required
                     />
-                    <Form.Control.Feedback type="invalid">
-                      {registringUserForm.errors.comfirmPassword}
-                    </Form.Control.Feedback>
                   </Col>
                   <Col lg={12} md={12} className="mb-3">
                     {/* Checkbox */}
@@ -305,7 +258,7 @@ export default function SignUp() {
                   </Col>
                 </Row>
                 {formIsLoading ? (
-                  <Button variant="primary" size="md" disabled>
+                  <Button variant="primary" size="sm" disabled>
                     <Spinner
                       as="span"
                       animation="border"
@@ -316,11 +269,9 @@ export default function SignUp() {
                     &nbsp; Loading...
                   </Button>
                 ) : (
-                  <Button variant="primary" type="submit" size="md">
-                    {" "}
-                    Diiwaangali{" "}
-                  </Button>
+                  <Button variant="primary" type="submit" size="md"> Diiwaangali </Button>
                 )}
+
               </Form>
               <hr className="my-4" />
               <div className="mt-4 text-center">
