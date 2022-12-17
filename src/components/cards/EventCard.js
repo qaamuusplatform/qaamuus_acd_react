@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import baseUrl from "../../config.json";
 import { END_POINT } from "helper/constants";
+import moment from "moment";
 
 const EventCard = ({ event }) => {
   const CategoryColors = (category) => {
@@ -33,14 +34,14 @@ const EventCard = ({ event }) => {
       </Link>
       {/* Card body  */}
       <Card.Body>
-        <Link
-          to={`events/${event.slug}`}
-          className={`fs-5 fw-semi-bold d-block mb-3 text-${CategoryColors(
-            event.eventType
-          )}`}
-        >
-          {event.eventType}
-        </Link>
+        <div className="d-flex justify-content-between p-2 align-items-center mb-2  border border-primary rounded">
+          <p className="mb-0 fw-bold">
+            {moment(event.dateTimeStarting).format("MMMM Do YYYY")}
+          </p>
+          <p className="mb-0 fw-bold">
+            {moment(event.dateTimeStarting).format("h:mm:ss a")}
+          </p>
+        </div>
         <h3>
           <Link to={`/events/${event.slug}`} className="text-inherit">
             {event.title}

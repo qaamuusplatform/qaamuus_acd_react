@@ -51,7 +51,6 @@ import Timer from "./Timer";
 import PaymentModel from "pages/payment/model";
 import { useEffect } from "react";
 import { ShimmerPostDetails } from "react-shimmer-effects";
-import { httpFetcher } from "services/coursesService";
 
 const EventDetail = () => {
   // const [isOpen, setOpen] = useState(false);
@@ -62,48 +61,58 @@ const EventDetail = () => {
   const handleShow = () => setShow(true);
   const [YouTubeURL] = useState("JRzWRZahOVU");
   const [access, setAccess] = useState(true);
-  const userAccessInfo ={}
-  const { currentUser } = useContext(CurrentUserContext);
+  const userAccessInfo = {};
+  const { currentUser, userIsLoading } = useContext(CurrentUserContext);
 
   const { slug } = useParams();
 
-  const { data: event, error } = useSWR(`api/qaEvent-detail-slug/${slug}/`, httpFetcher);
-  if (!event && !error) {
-    return <Fragment>
-      <div className=" pt-8 pb-8">
-        <Container>
-          <ShimmerPostDetails card cta variant="EDITOR" />
-        </Container>
-      </div>
-    </Fragment>;
+  // if (userIsLoading) return <p>loading</p>;
+  const { data: eventEnrolmentDetail, error } = useSWR(
+    `api/checkThisUserInrolledEvent-slug/${currentUser.id}/${slug}/`,
+    getEvent
+  );
+
+  // console.log(eventEnrolmentDetail);
+  // const { theEvent } = inrollmentDetail && inrollmentDetail;
+
+  if (userIsLoading) {
+    return (
+      <Fragment>
+        <div className=" pt-8 pb-8">
+          <Container>
+            <ShimmerPostDetails card cta variant="EDITOR" />
+          </Container>
+        </div>
+      </Fragment>
+    );
+  } else {
+    if (!eventEnrolmentDetail && !error) {
+      return (
+        <Fragment>
+          <div className=" pt-8 pb-8">
+            <Container>
+              <ShimmerPostDetails card cta variant="EDITOR" />
+            </Container>
+          </div>
+        </Fragment>
+      );
+    }
   }
 
-  // useEffect(() => {
-  //   const student =
-  //     event &&
-  //     event.enrolledStudents.filter(
-  //       (student) => student.email === currentUser.email
-  //     );
-
-  //   if (student && student.length !== 0) setAccess(student[0]);
-  //   if (error) toast.error(error);
-  // }, []);
-
-
-  return (
+  return userIsLoading ? null : (
     <Fragment>
-      {event && (
+      {eventEnrolmentDetail.theEvent && (
         <div className="py-lg-5 py-5">
           <Container>
             {/*  Video section  */}
             <Card className="mb-5 bg-dark">
               {/* <Card.Img variant="top" src={ProfileBackground} /> */}
               <Card.Body>
-                <Timer date={event.dateTimeStarting} />
+                <Timer date={eventEnrolmentDetail.theEvent.dateTimeStarting} />
               </Card.Body>
             </Card>
             {/* <Row>
-            {/*  Content  */}
+    {/*  Content  */}
             <br></br>
             <Row>
               <Col xl={8} lg={12} md={12} sm={12} className="mb-4 mb-xl-0">
@@ -113,7 +122,9 @@ const EventDetail = () => {
                     {/*  Card body  */}
                     <Card.Body>
                       <div className="d-flex justify-content-between align-items-center">
-                        <h1 className="fw-semi-bold mb-2">{event.title}</h1>
+                        <h1 className="fw-semi-bold mb-2">
+                          {eventEnrolmentDetail.theEvent.title}
+                        </h1>
                         <OverlayTrigger
                           key="top"
                           placement="top"
@@ -140,27 +151,52 @@ const EventDetail = () => {
                         </span>
                         <span className="ms-4 d-none d-md-block">
                           <Icon path={mdiAccountMultipleOutline} size={0.7} />{" "}
-                          <span>{event.enrolledStudents.length}</span>
+                          <span>
+                            {
+                              eventEnrolmentDetail.theEvent.enrolledStudents
+                                .length
+                            }
+                          </span>
                         </span>
                       </div>
                       {/* <div className="d-flex justify-content-between">
-                        <div className="d-flex align-items-center">
-                          <Image
-                            src={`${END_POINT}` + event.persenter.profileImage}
-                            className="rounded-circle avatar-md"
-                            alt=""
-                          />
-                          <div className="ms-2 lh-1">
-                            <h4 className="mb-1">{event.persenter.fullName}</h4>
-                            <p className="fs-6 mb-0">{event.persenter.email}</p>
-                          </div>
-                        </div>
-                        <div>
-                          <Link to="#" className="btn btn-outline-white btn-sm">
-                            Follow
-                          </Link>
-                        </div>
-                      </div> */}
+                <div className="d-flex align-items-center">
+                  <Image
+                    src={`${END_POINT}` + eventEnrolmentDetail.theEvent.persenter.profileImage}
+                    className="rounded-circle avatar-md"
+                    alt=""
+                  />
+                  <div className="ms-2 lh-1">
+                    <h4 className="mb-1">{eventEnrolmentDetail.theEvent.persenter.fullName}</h4>
+                    <p className="fs-6 mb-0">{eventEnrolmentDetail.theEvent.persenter.email}</p>
+                  </div>
+                </div>
+                <div>
+                  <Link to="#" className="btn btn-outline-white btn-sm">
+                    Follow
+                  </Link>
+                </div>
+              </div> */}
+                      <div
+                        style={{
+                          position: "relative",
+                          paddingTop: "57.05229793977813%",
+                        }}
+                      >
+                        <iframe
+                          src={eventEnrolmentDetail.theEvent.prevVideo}
+                          loading="lazy"
+                          style={{
+                            border: "none",
+                            position: "absolute",
+                            top: 0,
+                            height: "100%",
+                            width: "100%",
+                          }}
+                          allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+                          allowFullScreen="true"
+                        />
+                      </div>
                     </Card.Body>
                     {/*  Nav tabs  */}
                     <Nav className="nav-lt-tab">
@@ -184,7 +220,9 @@ const EventDetail = () => {
                       <Tab.Content>
                         <Tab.Pane eventKey="description" className="pb-4 p-4">
                           {/* Description Tab */}
-                          <DescriptionTab event={event} />
+                          <DescriptionTab
+                            event={eventEnrolmentDetail.theEvent}
+                          />
                         </Tab.Pane>
                         <Tab.Pane eventKey="reviews" className="pb-4 p-4">
                           {/* Reviews Tab */}
@@ -219,13 +257,13 @@ const EventDetail = () => {
                           Certificate
                         </ListGroup.Item>
                         {/* <ListGroup.Item>
-                        <i className="fe fe-calendar align-middle me-2 text-info"></i>
-                        12 Article
-                      </ListGroup.Item>
-                      <ListGroup.Item>
-                        <i className="fe fe-video align-middle me-2 text-secondary"></i>
-                        Watch Offline
-                      </ListGroup.Item> */}
+                <i className="fe fe-calendar align-middle me-2 text-info"></i>
+                12 Article
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <i className="fe fe-video align-middle me-2 text-secondary"></i>
+                Watch Offline
+              </ListGroup.Item> */}
                         <ListGroup.Item className="bg-transparent">
                           <i className="fe fe-clock align-middle me-2 text-warning"></i>
                           Lifetime access
@@ -236,8 +274,9 @@ const EventDetail = () => {
                       {Object.keys(currentUser).length === 0 ? (
                         <Nav className="navbar-nav navbar-right-wrap ms-auto d-flex nav-top-wrap">
                           <span
-                            className={`ms-auto mt-3 mt-lg-0  ${false ? "d-none" : ""
-                              }`}
+                            className={`ms-auto mt-3 mt-lg-0  ${
+                              false ? "d-none" : ""
+                            }`}
                           >
                             <Nav.Link
                               as={Link}
@@ -250,19 +289,18 @@ const EventDetail = () => {
                           </span>
 
                           {/* <span
-                          className={`${
-                            login
-                              ? isDesktop || isLaptop
-                                ? "d-flex"
-                                : "d-none"
-                              : "d-none"
-                          }`}
-                        >
-                          <QuickMenu />
-                        </span> */}
+                  className={`${
+                    login
+                      ? isDesktop || isLaptop
+                        ? "d-flex"
+                        : "d-none"
+                      : "d-none"
+                  }`}
+                >
+                  <QuickMenu />
+                </span> */}
                         </Nav>
-                      ) : false ? (
-                        
+                      ) : eventEnrolmentDetail.exists ? (
                         <Button
                           variant="warning"
                           onClick={handleShow}
@@ -271,13 +309,15 @@ const EventDetail = () => {
                           Access Event
                         </Button>
                       ) : (
-                        <Button
-                          variant="primary"
-                          onClick={handleShow}
-                          className="mt-3"
-                        >
-                          Enroll now
-                        </Button>
+                        <Link to={`/checkout/event/${slug}`}>
+                          <Button
+                            variant="primary"
+                            onClick={handleShow}
+                            className="mt-3"
+                          >
+                            Enroll now
+                          </Button>
+                        </Link>
                       )}
                     </div>
                   </Card.Body>
@@ -291,7 +331,10 @@ const EventDetail = () => {
                     <div className="d-flex align-items-center">
                       <div className="position-relative">
                         <Image
-                          src={END_POINT + event.persenter.profileImage}
+                          src={
+                            END_POINT +
+                            eventEnrolmentDetail.theEvent.persenter.profileImage
+                          }
                           alt=""
                           className="rounded-circle avatar-xl"
                         />
@@ -311,7 +354,9 @@ const EventDetail = () => {
                         </Link>
                       </div>
                       <div className="ms-4">
-                        <h4 className="mb-0">{event.persenter.fullName}</h4>
+                        <h4 className="mb-0">
+                          {eventEnrolmentDetail.theEvent.persenter.fullName}
+                        </h4>
                         <p className="mb-1 fs-6">
                           Front-end Developer, Designer
                         </p>
@@ -342,9 +387,9 @@ const EventDetail = () => {
                         </div>
                       </Col>
                     </Row>
-                    <p>{event.persenter.aboutMe}</p>
+                    <p>{eventEnrolmentDetail.theEvent.persenter.aboutMe}</p>
                     <Link
-                      to={`/instructor/${event.persenter.id}`}
+                      to={`/instructor/${eventEnrolmentDetail.theEvent.persenter.id}`}
                       className="btn btn-outline-white btn-sm"
                     >
                       View Details
@@ -356,8 +401,6 @@ const EventDetail = () => {
           </Container>
         </div>
       )}
-
-      <PaymentModel show={show} handleClose={handleClose} event={event} />
     </Fragment>
   );
 };

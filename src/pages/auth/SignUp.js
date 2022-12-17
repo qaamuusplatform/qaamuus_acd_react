@@ -47,15 +47,21 @@ export default function SignUp() {
     //   })
 
     http
-      .post("/api/userProfile-create/", JSON.stringify(registringUserForm.values), {
-        headers: { "Content-Type": "application/json" },
-      })
+      .post(
+        "/api/userProfile-create/",
+        JSON.stringify(registringUserForm.values),
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      )
       .then((userProfileResp) => {
         console.log(userProfileResp.data);
         setFormIsLoading(false);
-        registringUserForm.resetForm()
-        toast.success("Waad ku guulaysatay iska diiwaangalinta academiyadda qaamuus")
-        history.push('/auth/login/')
+        registringUserForm.resetForm();
+        toast.success(
+          "Waad ku guulaysatay iska diiwaangalinta academiyadda qaamuus"
+        );
+        history.replace("/auth/login/");
       });
     // if(emailVerified){
 
@@ -87,7 +93,6 @@ export default function SignUp() {
           "usernamekan horay ayuu u jiray",
           function (_theUsername) {
             if (existUsernames.includes(_theUsername)) {
-
               return false;
             } else {
               return true;

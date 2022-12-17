@@ -49,14 +49,15 @@ const EventCardFullWidth = ({ event }) => {
         <Col lg={4} md={12} sm={12}>
           {/*  Card body */}
           <Card.Body>
-            <Link
-              to={`/events/${event.slug}`}
-              className={`fs-5 mb-3 fw-semi-bold d-block text-${CategoryColors(
-                event.eventType
-              )}`}
-            >
-              {event.eventType}
-            </Link>
+            <div className="d-flex justify-content-between p-2 align-items-center mb-2  border border-primary rounded">
+              <p className="mb-0 fw-bold">
+                {moment(event.dateTimeStarting).format("MMMM Do YYYY")}
+              </p>
+              <p className="mb-0 fw-bold">
+                {moment(event.dateTimeStarting).format("h:mm:ss a")}
+              </p>
+            </div>
+
             <h1 className="mb-2 mb-lg-4">
               <Link to={`/events/${event.slug}`} className="text-inherit">
                 {event.title}

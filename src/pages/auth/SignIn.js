@@ -2,8 +2,17 @@
 import React, { useState } from "react";
 import { login, getLoggedInUser } from "services/authService";
 import { Fragment } from "react";
-import { Link ,useHistory} from "react-router-dom";
-import { Col, Row, Card, Form, Button, Image, Spinner, InputGroup } from "react-bootstrap";
+import { Link, useHistory } from "react-router-dom";
+import {
+  Col,
+  Row,
+  Card,
+  Form,
+  Button,
+  Image,
+  Spinner,
+  InputGroup,
+} from "react-bootstrap";
 import Logo from "assets/images/brand/logo/logo-icon.svg";
 import http from "services/httpService";
 import { toast } from "react-toastify";
@@ -44,12 +53,12 @@ export default function SignIn() {
             localStorage.setItem("access", userLoggedResp.data.access);
             toast.success("si guul leh ayaad u soo gashay");
             setFormIsLoading(false);
-            // history.push("/user/dashboard/")
+            history.replace("/user/dashboard/");
           }
         });
     } catch (error) {
-      console.log('redsd')
-      console.log(error)
+      console.log("redsd");
+      console.log(error);
       toast.error(error.response.data.detail);
       setFormError(true);
       setFormIsLoading(false);
@@ -93,19 +102,26 @@ export default function SignIn() {
                   </Col>
                   <Col lg={12} md={12} className="mb-3">
                     <Form.Label>Password </Form.Label>
-                    <InputGroup className="mb-3">                      
-                    {/* Password */}
-                    <Form.Control
-                      type={passwordShown ? "text" : "password"}
-                      id="password"
-                      value={form.password}
-                      name="password"
-                      isInvalid={formError ? true : false}
-                      onChange={handleChange}
-                      placeholder="*****"
-                      required
-                    />
-                      <InputGroup.Text><i onClick={togglePassword} className={passwordShown ? 'fas fa-eye-slash' : 'fas fa-eye'}></i></InputGroup.Text>
+                    <InputGroup className="mb-3">
+                      {/* Password */}
+                      <Form.Control
+                        type={passwordShown ? "text" : "password"}
+                        id="password"
+                        value={form.password}
+                        name="password"
+                        isInvalid={formError ? true : false}
+                        onChange={handleChange}
+                        placeholder="*****"
+                        required
+                      />
+                      <InputGroup.Text>
+                        <i
+                          onClick={togglePassword}
+                          className={
+                            passwordShown ? "fas fa-eye-slash" : "fas fa-eye"
+                          }
+                        ></i>
+                      </InputGroup.Text>
                     </InputGroup>
                   </Col>
                   <Col lg={12} md={12} className="mb-3">

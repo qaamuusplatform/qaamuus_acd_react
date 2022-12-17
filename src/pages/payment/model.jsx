@@ -15,9 +15,6 @@ import {
   Nav,
 } from "react-bootstrap";
 import styled from "styled-components";
-import Waafi from "./Waafi";
-import Dahab from "./Dahab";
-import Paypal from "./Paypal";
 
 function PaymentModel({ show, handleClose, event }) {
   return (
@@ -51,10 +48,14 @@ function PaymentModel({ show, handleClose, event }) {
                   </Nav>
                 </Card.Header>
                 <Card.Body className="p-0">
-                  <Tab.Content>
+                  {/* <Tab.Content>
                     <Tab.Pane eventKey="waafi" className="pb-4 p-4 ps-0 pe-0">
                       <Row>
-                        <Waafi handleClose={handleClose} event={event} />
+                        <Waafi
+                          show={show}
+                          handleClose={handleClose}
+                          event={event}
+                        />
                       </Row>
                     </Tab.Pane>
                     <Tab.Pane eventKey="dahab" className="pb-4 p-4 ps-0 pe-0">
@@ -67,7 +68,7 @@ function PaymentModel({ show, handleClose, event }) {
                         <Paypal handleClose={handleClose} event={event} />
                       </Row>
                     </Tab.Pane>
-                  </Tab.Content>
+                  </Tab.Content> */}
                 </Card.Body>
               </Card>
             </Tab.Container>

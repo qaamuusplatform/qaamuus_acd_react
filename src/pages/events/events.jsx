@@ -6,7 +6,6 @@ import React, { Fragment, useState, useEffect } from "react";
 // import custom components
 // import FormSelect from 'components/elements/custom/FormSelect';
 import EventCard from "components/cards/EventCard";
-import BlogArticlesList from "data/blogArticlesData";
 import EventCardFullWidth from "components/cards/HeroEventCard";
 import { ShimmerContentBlock, ShimmerPostItem } from "react-shimmer-effects";
 import { getEvents } from "services/evantService";
@@ -38,7 +37,6 @@ export default function Events() {
               md={12}
               sm={12}
             >
-
               {/* Form */}
               {/* <Form className="row px-md-20">
 								<Form.Group
@@ -96,11 +94,17 @@ export default function Events() {
           <Row>
             {!events && !error
               ? [1].map((idx) => (
-                <div>
-                <ShimmerContentBlock title text cta thumbnailWidth={500} thumbnailHeight={500} />
-                  <br></br>
-                </div>
-              ))
+                  <div>
+                    <ShimmerContentBlock
+                      title
+                      text
+                      cta
+                      thumbnailWidth={500}
+                      thumbnailHeight={500}
+                    />
+                    <br></br>
+                  </div>
+                ))
               : null}
 
             {/* Show first article in full width */}
@@ -116,20 +120,30 @@ export default function Events() {
 
             {!events && !error
               ? [1, 2, 3].map((idx) => (
-
-                <Col xl={4} lg={4} md={6} sm={12} key={idx} className="d-flex" >
-                  <ShimmerPostItem card title cta />
-                </Col>
-
-
-
-              ))
+                  <Col
+                    xl={4}
+                    lg={4}
+                    md={6}
+                    sm={12}
+                    key={idx}
+                    className="d-flex"
+                  >
+                    <ShimmerPostItem card title cta />
+                  </Col>
+                ))
               : null}
 
             {events
               ?.filter((event) => event.heroEvent === false)
               .map((event, index) => (
-                <Col xl={4} lg={4} md={6} sm={12} key={index} className="d-flex" >
+                <Col
+                  xl={4}
+                  lg={4}
+                  md={6}
+                  sm={12}
+                  key={index}
+                  className="d-flex"
+                >
                   <EventCard event={event} />
                 </Col>
               ))}
