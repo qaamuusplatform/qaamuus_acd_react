@@ -1,6 +1,8 @@
 // ** Import from react dom
 import { Route, Switch, Redirect } from "react-router-dom";
 
+import { localUser } from "../services/authService";
+
 /* ----------------------------------- */
 /* IMPORTS FOR MARKETING PAGES - START */
 
@@ -30,6 +32,7 @@ import EventWatchLive from "pages/events/eventWatch/EventWatchLive";
 import LiveLayout from "./LiveLayout";
 import ReferralData from "pages/student/account-settings/ReferralData";
 import EventCheckout from "./../pages/checkout/EventCheckout";
+import { CurrentUserContext } from "services/currentUserContext";
 
 /* IMPORTS FOR MARKETING PAGES - END */
 /* --------------------------------- */
@@ -44,6 +47,23 @@ const AppRoute = ({ component: Component, layout: Layout, ...rest }) => (
     )}
   ></Route>
 );
+
+const ProtectedRoute = ({ component: Component, layout: Layout, ...rest }) => {
+  return (
+    <Route
+      {...rest}
+      render={(props) => {
+        if (localUser() === null) return <Redirect to={"/auth/login"} />;
+
+        return (
+          <Layout>
+            <Component {...props}></Component>
+          </Layout>
+        );
+      }}
+    ></Route>
+  );
+};
 
 function AllRoutes() {
   return (
@@ -65,12 +85,7 @@ function AllRoutes() {
         layout={AuthLayout}
         component={SignUp}
       />
-      <AppRoute
-        exact
-        path="/checkout/course/:courseid"
-        layout={DefaultLayout}
-        component={Checkout}
-      />
+
       {/* dashboard edit userifno */}
       <AppRoute
         exact
@@ -78,7 +93,7 @@ function AllRoutes() {
         layout={DefaultLayout}
         component={StudentDashboard}
       />
-      <AppRoute
+      <ProtectedRoute
         exact
         path="/user/edit-profile/"
         layout={DefaultLayout}
@@ -90,13 +105,13 @@ function AllRoutes() {
         layout={DefaultLayout}
         component={Notifications}
       />
-      <AppRoute
+      <ProtectedRoute
         exact
         path="/user/delete-profile/"
         layout={DefaultLayout}
         component={DeleteProfile}
       />
-      <AppRoute
+      <ProtectedRoute
         exact
         path="/user/enrolled-courses/"
         layout={DefaultLayout}
@@ -108,13 +123,13 @@ function AllRoutes() {
         layout={DefaultLayout}
         component={ReferralData}
       />
-      <AppRoute
+      <ProtectedRoute
         exact
         path="/user/auth-security/"
         layout={DefaultLayout}
         component={AuthSecurity}
       />
-      <AppRoute
+      <ProtectedRoute
         exact
         path="/user/delete-account/"
         layout={DefaultLayout}
@@ -145,12 +160,7 @@ function AllRoutes() {
         layout={DefaultLayout}
         component={Members}
       />
-      <AppRoute
-        exact
-        path="/instructor/:instructorUsername/"
-        layout={DefaultLayout}
-        component={InstructorDetail}
-      />
+
       {/* <AppRoute exact path="/instructor-detail/:instructorId" layout={DefaultLayout} component={InstructorDetail} /> */}
 
       {/* COURSES AND CATEGORIES */}
@@ -178,12 +188,7 @@ function AllRoutes() {
         layout={DefaultLayout}
         component={Events}
       />
-      <AppRoute
-        exact
-        path="/events/"
-        layout={DefaultLayout}
-        component={Events}
-      />
+
       <AppRoute
         exact
         path="/events/:slug"
@@ -191,6 +196,12 @@ function AllRoutes() {
         component={EventDetail}
       />
       <AppRoute
+        exact
+        path="/checkout/event/:slug"
+        layout={DefaultLayout}
+        component={EventCheckout}
+      />
+      <ProtectedRoute
         exact
         path="/event/watch-live/:slug"
         layout={LiveLayout}
@@ -205,65 +216,10 @@ function AllRoutes() {
         layout={DefaultLayout}
         component={ComingSoon}
       />
-      <AppRoute
-        exact
-        path="/events/"
-        layout={DefaultLayout}
-        component={Events}
-      />
-      <AppRoute
-        exact
-        path="/events/"
-        layout={DefaultLayout}
-        component={Events}
-      />
-      <AppRoute
-        exact
-        path="/events/:slug"
-        layout={DefaultLayout}
-        component={EventDetail}
-      />
-      <AppRoute
-        exact
-        path="/checkout/event/:slug"
-        layout={DefaultLayout}
-        component={EventCheckout}
-      />
+
       {/* <AppRoute exact path="/event-waiting/:slug" layout={DefaultLayout}  component={EventWatingScreen} /> */}
 
       <AppRoute exact path="/404" layout={DefaultLayout} component={Error404} />
-      <AppRoute
-        exact
-        path="/coming-soon"
-        layout={DefaultLayout}
-        component={ComingSoon}
-      />
-
-      {/* COURSES AND CATEGORIES */}
-      {/* <AppRoute
-        exact
-        path="/courses/"
-        layout={DefaultLayout}
-        component={Courses}
-      />
-      <AppRoute
-        exact
-        path="/events/"
-        layout={DefaultLayout}
-        component={Events}
-      />
-      <AppRoute
-        exact
-        path="/events/:id"
-        layout={DefaultLayout}
-        component={EventDetail}
-      /> */}
-
-      {/* ADMIN PAGES ROUTERS - START */}
-      {/* --------------------------- */}
-
-      {/* ADMIN PAGES ROUTERS - END */}
-      {/* ------------------------- */}
 
       {/*Redirect*/}
       <Redirect to="/404" />

@@ -20,35 +20,32 @@ export const getLoggedInUser = async () => {
       if (respData) {
         return respData;
       } else {
-        return {}
+        return {};
       }
     } catch (error) {
-      return {}
+      return {};
     }
   } catch (error) {
     return {};
   }
 };
 
+export const getAllUsernamesAnsEmails = async () => {
+  const allUsernamesAndEmails = [];
 
-export const getAllUsernamesAnsEmails = async()=>{
-  const allUsernamesAndEmails=[]
-
-  try{
-    const { data } = await http.get('api/user-list/');
-    let emails=[]
-    let usernames=[]
-    for(var userInfo of data){
-      emails.push(userInfo.email)
-      usernames.push(userInfo.username)
+  try {
+    const { data } = await http.get("api/user-list/");
+    let emails = [];
+    let usernames = [];
+    for (var userInfo of data) {
+      emails.push(userInfo.email);
+      usernames.push(userInfo.username);
     }
-    allUsernamesAndEmails.push({"emails":emails,"usernames":usernames})
+    allUsernamesAndEmails.push({ emails: emails, usernames: usernames });
     // allUsernamesAndEmails=data.username
-  }catch(error){
-  
-  }
+  } catch (error) {}
   return allUsernamesAndEmails;
-}
+};
 
 export const updateUserInfo = async (body, theUserId) => {
   try {
@@ -60,4 +57,8 @@ export const updateUserInfo = async (body, theUserId) => {
   } catch (error) {
     return null;
   }
+};
+
+export const localUser = () => {
+  return localStorage.getItem("access");
 };
