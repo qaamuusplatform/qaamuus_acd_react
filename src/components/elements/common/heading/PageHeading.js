@@ -3,7 +3,7 @@ import { Col, Row, Container } from "react-bootstrap";
 
 const PageHeading = ({ pagetitle }) => {
   return (
-    <div className="bg-warning py-4 py-lg-6">
+    <div className="bg-primary py-4 py-lg-6">
       <Container>
         <Row className="align-items-center">
           <Col xl={12} lg={12} md={12} sm={12}>

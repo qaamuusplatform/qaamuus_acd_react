@@ -44,7 +44,7 @@ import useSWR from "swr";
 import Timer from "./Timer";
 import { ShimmerPostDetails } from "react-shimmer-effects";
 import { qaamuusPayments } from "data/qaamuusPayments";
-import { WaafiPayment } from "./eventPaymentsComponents";
+import { DahabPayment, WaafiPayment } from "./eventPaymentsComponents";
 
 const EventDetail = () => {
   // const [isOpen, setOpen] = useState(false);
@@ -145,6 +145,7 @@ const EventDetail = () => {
               <Tab.Pane eventKey="visaCard" className="pb-1 p-1">
                 {/* Description Tab */}
                 {/* {thePayment.content} */}
+                <DahabPayment theEventDetail={{'number':0,'userId':`${currentUser.id}`,'evtId':`${eventEnrolmentDetail.theEvent.id}`,'money':`0.01`,'type':'waafi'} } />
               </Tab.Pane>
               <Tab.Pane eventKey="waafiPayment" className="pb-1 p-1">
                 {/* Description Tab */}
