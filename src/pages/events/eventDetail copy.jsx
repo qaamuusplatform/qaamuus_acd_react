@@ -17,9 +17,9 @@ import {
   Tab,
   OverlayTrigger,
   Tooltip,
-  Tabs,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import InputMask from "react-input-mask";
 // import MDI icons
 import Icon from "@mdi/react";
 import { mdiAccountMultipleOutline } from "@mdi/js";
@@ -28,9 +28,14 @@ import { mdiAccountMultipleOutline } from "@mdi/js";
 // import LevelIcon from 'components/marketing/common/miscellaneous/LevelIcon';
 
 import CheckedMark from "assets/images/svg/checked-mark.svg";
+import CourseJavascript from "assets/images/course/course-javascript.jpg";
+import Avatar1 from "assets/images/avatar/avatar-1.jpg";
+
 // import sub components tabs
 import Ratings from "components/elements/common/ratings/Ratings";
 import LevelIcon from "pages/student/miscellaneous/LevelIcon";
+import FAQTab from "./FAQTab";
+import TranscriptTab from "./TranscriptTab";
 import ReviewsTab from "./ReviewsTab";
 import DescriptionTab from "./DescriptionTab";
 
@@ -41,16 +46,21 @@ import { CurrentUserContext } from "services/currentUserContext";
 // import { CourseIndex } from 'data/marketing/CourseIndexData';np
 import { END_POINT } from "../../helper/constants";
 import useSWR from "swr";
+import { toast } from "react-hot-toast";
 import Timer from "./Timer";
+import PaymentModel from "pages/payment/model";
+import { useEffect } from "react";
 import { ShimmerPostDetails } from "react-shimmer-effects";
-import { qaamuusPayments } from "data/qaamuusPayments";
-import { WaafiPayment } from "./eventPaymentsComponents";
 
 const EventDetail = () => {
   // const [isOpen, setOpen] = useState(false);
-  const [lgShow, setLgShow] = useState(false);
 
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const [YouTubeURL] = useState("JRzWRZahOVU");
+  const [access, setAccess] = useState(true);
   const userAccessInfo = {};
   const { currentUser, userIsLoading } = useContext(CurrentUserContext);
 
@@ -91,69 +101,6 @@ const EventDetail = () => {
 
   return userIsLoading ? null : (
     <Fragment>
-      <Modal
-        size="lg"
-        show={lgShow}
-        data-backdrop="static"
-        backdrop="static"
-        // shouldCloseOnOverlayClick={false}
-        onHide={(event) => {
-          setLgShow(false);
-          console.log(event);
-        }}
-        aria-labelledby="example-modal-sizes-title-lg"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="example-modal-sizes-title-lg">
-            <strong>QAAMUUS</strong> PAYMENTS
-          </Modal.Title>
-        </Modal.Header>
-
-        <Modal.Body>
-          <Tab.Container
-            fill
-            variant="pills"
-            defaultActiveKey="waafiP"
-            id="uncontrolled-tab-example"
-          >
-            <Nav className="d-flex justify-content-between nav-lt-tab">
-              {qaamuusPayments.map((thePayment, index) => (
-                <Nav.Item className="d-flex" key={index}>
-                  <Nav.Link
-                    eventKey={thePayment.key}
-                    className="mb-sm-3 mb-md-0"
-                  >
-                    <div className="d-flex">
-                      <Image src={thePayment.image} alt="" className="me-3" />
-                      <div>
-                        <h5 className="mb-0">{thePayment.name}</h5>
-                        <p className="mb-0 fs-6">{thePayment.desc}</p>
-                      </div>
-                    </div>
-                  </Nav.Link>
-                </Nav.Item>
-              ))}
-            </Nav>
-            <Tab.Content>
-              {/* {qaamuusPayments.map((thePayment, index) => (
-              
-            ))} */}
-              <Tab.Pane eventKey="waafiP" className="pb-1 p-1">
-                {/* Description Tab */}
-                <WaafiPayment theEventDetail={{'number':0,'userId':`${currentUser.id}`,'evtId':`${eventEnrolmentDetail.theEvent.id}`,'money':`0.01`,'type':'waafi'} } />
-              </Tab.Pane>
-              <Tab.Pane eventKey="visaCard" className="pb-1 p-1">
-                {/* Description Tab */}
-                {/* {thePayment.content} */}
-              </Tab.Pane>
-              <Tab.Pane eventKey="waafiPayment" className="pb-1 p-1">
-                {/* Description Tab */}
-                {/* {thePayment.content} */}
-              </Tab.Pane>
-            </Tab.Content>
-          </Tab.Container>
-        </Modal.Body>
-      </Modal>
       {eventEnrolmentDetail.theEvent && (
         <div className="py-lg-5 py-5">
           <Container>
@@ -247,7 +194,7 @@ const EventDetail = () => {
                             width: "100%",
                           }}
                           allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-                          allowFullScreen={true}
+                          allowFullScreen="true"
                         />
                       </div>
                     </Card.Body>
@@ -353,22 +300,24 @@ const EventDetail = () => {
                   <QuickMenu />
                 </span> */}
                         </Nav>
-                      ) : false ? (
+                      ) : eventEnrolmentDetail.exists ? (
                         <Button
                           variant="warning"
-                          // onClick={handleShow}
+                          onClick={handleShow}
                           className="mt-3"
                         >
                           Access Event
                         </Button>
                       ) : (
-                        <Button
-                          variant="primary"
-                          onClick={() => setLgShow(true)}
-                          className="mt-3"
-                        >
-                          Enroll now
-                        </Button>
+                        <Link to={`/checkout/event/${slug}`}>
+                          <Button
+                            variant="primary"
+                            onClick={handleShow}
+                            className="mt-3"
+                          >
+                            Enroll now
+                          </Button>
+                        </Link>
                       )}
                     </div>
                   </Card.Body>

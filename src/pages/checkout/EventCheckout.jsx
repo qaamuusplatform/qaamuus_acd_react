@@ -51,8 +51,10 @@ const EventCheckout = () => {
   };
 
   const onSubmit = async () => {
+    e.preventDefault()
     try {
       console.log("hello");
+    
       // const response = await processPayment(input);
       // if (response && response.status) {
       //   console.log(response);
@@ -76,19 +78,17 @@ const EventCheckout = () => {
       type: status == 1 ? "waafi" : status == 2 ? "somtel" : "paypal",
     },
     validationSchema: yub.object().shape({
-      number: yub.number().required("Soo Gali Email"),
+      number: yub.number().required("Soo Gali Magac"),
     }),
     onSubmit,
   });
 
-  console.log(payForm.values);
-  console.log(currentUser.id);
-
+  console.log(payForm);
   const PayPalMethod = () => {
     return (
       <Fragment>
         {/*  Paypal */}
-        <Form id="internetpayment" onSubmit={onSubmit}>
+        <Form id="internetpayment" onSubmit={payForm.handleSubmit}>
           <div className="mb-3 mt-4 ">
             <Form.Group controlId="paypalemail">
               <Form.Label>PayPal</Form.Label>
@@ -127,11 +127,12 @@ const EventCheckout = () => {
           <div className="mb-3 mt-4 ">
             <Form.Group>
               <Form.Label>Phone Number</Form.Label>
-              <input
+              <Form.Control
                 type="text"
+                id="number"
+                name="number"
                 placeholder="xxx-xxx-xxx"
                 value={payForm.values.number}
-                name={"number"}
                 onChange={payForm.handleChange}
                 onBlur={payForm.handleBlur}
                 className="form-control bg-white px-4 py-2.1"
@@ -140,7 +141,7 @@ const EventCheckout = () => {
               <span className="text-danger">{error}</span>
             </Form.Group>
           </div>
-          <Button variant="primary">Waafi Checkout</Button>
+          <Button variant="primary" type="submit">Waafi Checkout</Button>
         </Form>
       </Fragment>
     );
@@ -149,7 +150,7 @@ const EventCheckout = () => {
     return (
       <Fragment>
         {/*  Paypal */}
-        <Form id="internetpayment" onSubmit={onSubmit}>
+        {/* <Form id="internetpayment" onSubmit={payForm.onSubmit}>
           <div className="mb-3 mt-4 ">
             <Form.Group>
               <Form.Label>Phone Number</Form.Label>
@@ -166,7 +167,7 @@ const EventCheckout = () => {
             </Form.Group>
           </div>
           <Button variant="primary">Waafi Checkout</Button>
-        </Form>
+        </Form> */}
       </Fragment>
     );
   };
