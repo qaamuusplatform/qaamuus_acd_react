@@ -1,12 +1,13 @@
 import React, { useState, useContext } from "react";
 import { Col, Row, Form, Button } from "react-bootstrap";
-import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
+import { Link, useHistory, useLocation, useParams } from "react-router-dom";
 
 import Joi from "joi";
 import { CurrentUserContext } from "services/currentUserContext";
 
 import { pay } from "services/paymentService";
 import { toast } from "react-toastify";
+import VerifyModel from "./verifyModel";
 
 function Waafi({ handleClose, event }) {
   const history = useHistory();
@@ -39,6 +40,8 @@ function Waafi({ handleClose, event }) {
     number: Joi.number().integer().required(),
   });
 
+  console.log(input);
+
   const validate = () => {
     const { number } = input;
 
@@ -63,9 +66,9 @@ function Waafi({ handleClose, event }) {
       const { error } = validate();
       if (error) return setError(error.details[0].message);
 
-      const { data } = await pay("/api/inrollEventToUser/waafi/", input);
-      toast.success(data.message)
-      history.push("/user/dashboard/");
+      // const { data } = await pay("/api/inrollEventToUser/waafi/", input);
+      // toast.success(data.message);
+      // history.push("/user/dashboard/");
     } catch (error) {
       console.log(error);
     }

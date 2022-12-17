@@ -32,7 +32,8 @@ function Timer({ date }) {
   const { days, hours, minutes, seconds } = calculateTimeLeft(timer);
 
   if (
-    parseInt(days) + parseInt(hours) + parseInt(minutes) + parseInt(seconds) <= 0
+    parseInt(days) + parseInt(hours) + parseInt(minutes) + parseInt(seconds) <=
+    0
   )
     return <p></p>;
   return (
@@ -67,6 +68,10 @@ const TimerStyle = styled.div`
   display: flex;
   justify-content: space-between;
 
+  @media (max-width: 650px) {
+    width: 18rem;
+  }
+
   div {
     background-color: #21acc3;
     width: 5rem;
@@ -78,14 +83,27 @@ const TimerStyle = styled.div`
     justify-content: center;
     color: #ffffff;
     border-radius: 0.2rem;
+    @media (max-width: 650px) {
+      padding: 0.3rem 0.4rem;
+      width: 4rem;
+      height: 3rem;
+      margin: 0.5rem;
+    }
 
     p {
       font-size: 1.6rem;
-      font-weight:bold;
+      font-weight: bold;
+      @media (max-width: 650px) {
+        font-size: 1rem;
+        font-weight: normal;
+      }
     }
 
     h6 {
       color: #fdd22f;
+      @media (max-width: 650px) {
+        font-size: 0.7rem;
+      }
     }
 
     p,

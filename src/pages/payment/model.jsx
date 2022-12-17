@@ -54,7 +54,11 @@ function PaymentModel({ show, handleClose, event }) {
                   <Tab.Content>
                     <Tab.Pane eventKey="waafi" className="pb-4 p-4 ps-0 pe-0">
                       <Row>
-                        <Waafi handleClose={handleClose} event={event} />
+                        <Waafi
+                          show={show}
+                          handleClose={handleClose}
+                          event={event}
+                        />
                       </Row>
                     </Tab.Pane>
                     <Tab.Pane eventKey="dahab" className="pb-4 p-4 ps-0 pe-0">
