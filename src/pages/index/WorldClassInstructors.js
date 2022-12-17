@@ -7,9 +7,12 @@ import { useMediaQuery } from 'react-responsive';
 // import sub components
 import InstructorCard from 'components/cards/InstructorCard';
 // import data files
-import { InstructorsList } from 'data/allInstructorsData';
+import useSWR from 'swr';
+import { httpFetcher } from 'services/coursesService';
 
 const WorldClassInstructors = () => {
+	
+	const { data: instructorsData, error } = useSWR('/api/userProfile-list/', httpFetcher);
 	const title = 'Classes Taught by Industry Expert';
 	const subtitle = 'World-class Instructors';
 	const description = `Geeks teachers are icons, experts, and industry rock stars excited to share their experience, wisdom, and trusted tools with you.`;
@@ -23,7 +26,7 @@ const WorldClassInstructors = () => {
 			{/* <h2 className="mb-0 mx-2">Popular Courses</h2> */}
 			<br></br>
 			<Row>
-				{InstructorsList.map((item, index) => (
+				{(instructorsData || []).filter((theUser) => theUser.userType.id === 2).map((theInstructor, index) => (
 					<Col
 						key={index}
 						xl={3}
@@ -33,7 +36,7 @@ const WorldClassInstructors = () => {
 						className={`${isLaptop && index === 3 ? 'd-lg-none d-xl-block' : ''
 							}`}
 					>
-						<InstructorCard item={item} />
+						<InstructorCard item={theInstructor} />
 					</Col>
 				))}
 			</Row>

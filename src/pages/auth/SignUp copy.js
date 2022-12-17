@@ -118,9 +118,9 @@ export default function SignUp() {
       setRegsitringUserData(Object.fromEntries(userData.entries()))
       console.log(regsitringUserData)
       // if (regsitringUserData.email) {
-      //   http.get(`api/sendActivationEmailCode/${regsitringUserData.email}/`).then((resp) => {
-      //     setActivationCode(resp.data.sendedCode)
-      //   })
+        //   http.get(`api/sendActivationEmailCode/${regsitringUserData.email}/`).then((resp) => {
+        //     setActivationCode(resp.data.sendedCode)
+        //   })
       // }
       
       setShow(true);

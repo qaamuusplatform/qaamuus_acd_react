@@ -86,6 +86,12 @@ function AllRoutes() {
       />
       <AppRoute
         exact
+        path="/user/notifications/"
+        layout={DefaultLayout}
+        component={Notifications}
+      />
+      <AppRoute
+        exact
         path="/user/delete-profile/"
         layout={DefaultLayout}
         component={DeleteProfile}

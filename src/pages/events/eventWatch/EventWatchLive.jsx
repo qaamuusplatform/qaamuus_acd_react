@@ -95,7 +95,7 @@ const EventWatchLive = () => {
                         actionButton: {
                             // optional action button
                             label: "QAAMUUS ACADEMY", // action button label
-                            href: "https://videosdk.live/", // action button href
+                            href: "https://qaamuus.netlfy.app/", // action button href
                         },
                     },
 
@@ -183,7 +183,7 @@ const EventWatchLive = () => {
                         actionButton: {
                             // optional action button
                             label: "QAAMUUS ACADEMY", // action button label
-                            href: "https://videosdk.live/", // action button href
+                            href: "https://qaamuus.netlfy.app/", // action button href
                         },
                     },
 
@@ -195,7 +195,9 @@ const EventWatchLive = () => {
                     */
                 };
             }
-            if (enrolledEventDetail.theEvent.persenter.id == 2) {
+            if (currentUser.id == enrolledEventDetail.theEvent.persenter.id) {
+                console.log(currentUser.id)
+                console.log('estt',enrolledEventDetail.theEvent.persenter.id)
                 meetingConfig = hostConfig()
                 meeting.init(meetingConfig);
             } else {
@@ -203,7 +205,7 @@ const EventWatchLive = () => {
                 meeting.init(meetingConfig);
             }
         }
-    }, [enrolledEventDetail]);
+    }, [enrolledEventDetail,currentUser]);
 
     return (
         <div>

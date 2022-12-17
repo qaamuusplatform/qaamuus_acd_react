@@ -10,6 +10,7 @@ import { mdiStar } from '@mdi/js';
 
 // Import required utility file
 import { numberWithCommas } from 'helper/utils';
+import { END_POINT } from 'helper/constants';
 
 const GKInstructorCard = ({ item }) => {
 	return (
@@ -17,35 +18,36 @@ const GKInstructorCard = ({ item }) => {
 			{/* img */}
 			<Card.Img
 				variant="top"
-				src={item.image}
+				src={END_POINT+item.profileImage}
 				className="rounded-top-md img-fluid"
 			/>
 			{/* card body */}
 			<Card.Body>
 				<h3 className="mb-0 fw-semi-bold">
 					{' '}
-					<Link to={item.link} className="text-inherit">
-						{item.name}
+					<Link to={`instructor/${item.username}/`} className="text-inherit">
+						{item.fullName}
 					</Link>
 				</h3>
-				<p className="mb-3">{item.designation}</p>
+				<p className="mb-3">{item.userTitle}</p>
 				<div className="lh-1  d-flex justify-content-between">
 					<div>
 						<span className="fs-6 text-warning">
-							<Icon path={mdiStar} size={0.5} /> <span>{item.rating}</span>
+							{/* <Icon path={mdiStar} size={0.5} /> <span>{item.rating}</span> */}
+							<Icon path={mdiStar} size={0.5} /> <span>4</span> 
 						</span>
 					</div>
 					<div>
 						<span className="fs-6 text-muted">
 							<span className="text-dark">
-								{numberWithCommas(item.students)}
+								{/* {numberWithCommas(item.students)} */}12
 							</span>{' '}
 							Students
 						</span>
 					</div>
 					<div>
 						<span className="fs-6 text-muted">
-							<span className="text-dark">{item.courses}</span> Course
+							<span className="text-dark">{item.id}</span> Course
 						</span>
 					</div>
 				</div>

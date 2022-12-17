@@ -118,7 +118,7 @@ const StudentDashboard = () => {
                                                         {/* learning courses started */}
                                                         <Row>
                                                             {!userEnrolmentsData && !error
-                                                                ? [1, 2, 3, 4, 6].map((idx) => (
+                                                                ? [1, 2, 3, 4].map((idx) => (
                                                                     <Col lg={3} md={4} sm={12} key={idx}>
                                                                         <ShimmerPostItem card title text cta />
                                                                     </Col>
