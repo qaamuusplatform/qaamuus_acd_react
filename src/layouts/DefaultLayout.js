@@ -9,7 +9,6 @@ import NavbarDefault from "./navbars/NavbarDefault";
 
 const DefaultLayout = (props) => {
   const { currentUser, setCurrentUser,userIsLoading } = useContext(CurrentUserContext);
-  console.log(userIsLoading)
   useEffect(() => {
     document.body.style.backgroundColor = "#f5f4f8";
 

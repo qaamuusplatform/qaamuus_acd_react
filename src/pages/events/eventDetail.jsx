@@ -401,12 +401,6 @@ const EventDetail = () => {
           </Container>
         </div>
       )}
-
-      <PaymentModel
-        show={show}
-        handleClose={handleClose}
-        event={eventEnrolmentDetail.theEvent}
-      />
     </Fragment>
   );
 };

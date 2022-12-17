@@ -24,8 +24,8 @@ import ComingSoon from "pages/errorPages/ComingSoon";
 // import DeleteProfile from "pages/student/account-settings/Deleteprofile";
 import InstructorDetail from "./../pages/instructor/InstructorDetail";
 import Members from "pages/instructor/InstructorsList";
-import EventDetail from "pages/events/eventDetail";
 import Checkout from "pages/checkout/checkout";
+import EventDetail from "pages/events/eventDetail";
 import EventWatchLive from "pages/events/eventWatch/EventWatchLive";
 import LiveLayout from "./LiveLayout";
 import ReferralData from "pages/student/account-settings/ReferralData";
@@ -65,7 +65,12 @@ function AllRoutes() {
         layout={AuthLayout}
         component={SignUp}
       />
-
+      <AppRoute
+        exact
+        path="/checkout/course/:courseid"
+        layout={DefaultLayout}
+        component={Checkout}
+      />
       {/* dashboard edit userifno */}
       <AppRoute
         exact

@@ -1,0 +1,9 @@
+.input-error{
+    border-radius: #fc8181;
+}
+
+.error{
+    color: #fc8181;
+    font-size: smaller;
+    text-transform: lowercase;
+}

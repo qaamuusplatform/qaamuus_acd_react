@@ -33,29 +33,29 @@ function useQuery() {
     const { search } = useLocation();
     return new URLSearchParams(search);
     return React.useMemo(() => new URLSearchParams(search), [search]);
-  }
-  
+}
+
 const Checkout = () => {
     const { courseid } = useParams();
-   const query = useQuery();
+    const query = useQuery();
     const { data, error } = useSWR(
         `/api/qaCourse-detail-slug/${courseid}`,
         getCoursesDetail
-      );
+    );
     const [status, setStatus] = useState(1); // 0: no show, 1: show yes, 2: show no.
     const FormRef = useRef(null);
     const phoneNumberRef = useRef(null);
-    const paypalemailRef = useRef(null); 
-    const cupponRef = useRef(null); 
-    const referalCodeRef = useRef(query.get("ref")); 
+    const paypalemailRef = useRef(null);
+    const cupponRef = useRef(null);
+    const referalCodeRef = useRef(query.get("ref"));
 
     const [cuppon, setcuppon] = useState({
-        code:'',
-        price:0
+        code: '',
+        price: 0
     });
-console.log(query)
-    const {currentUser} = useContext(CurrentUserContext)
-    
+    console.log(query)
+    const { currentUser } = useContext(CurrentUserContext)
+
     const history = useHistory();
 
     const radioHandler = (status) => {
@@ -272,19 +272,19 @@ console.log(query)
     };
 
 
-    const handleSubmit = async(e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-          
+
             var body = {
-                "number":phoneNumberRef?.current?.value ?? '',
-                "userId": currentUser.id??'',
-                "money": (data?.saledPrice - cuppon.price)??0,
+                "number": phoneNumberRef?.current?.value ?? '',
+                "userId": currentUser.id ?? '',
+                "money": (data?.saledPrice - cuppon.price) ?? 0,
                 "courseId": data.id,
                 "months": "1",
-                "referralCode":referalCodeRef?.current.value,
-                "cupponCode":cuppon.code,
-                "type":(status==1?'waafi':status==2?'credit-card':'paypal')
+                "referralCode": referalCodeRef?.current.value,
+                "cupponCode": cuppon.code,
+                "type": (status == 1 ? 'waafi' : status == 2 ? 'credit-card' : 'paypal')
             };
 
 
@@ -295,11 +295,11 @@ console.log(query)
                 toast.success(response.message)
                 history.push("/user/dashboard/");
             } else {
-toast.error('Payment Error');
+                toast.error('Payment Error');
             }
 
         } catch (error) {
-            console.log("Error",error)
+            console.log("Error", error)
             toast.error(error);
         }
     }
@@ -312,42 +312,42 @@ toast.error('Payment Error');
         }
     }
 
-    const handleCuponcode = async (e)=>{
+    const handleCuponcode = async (e) => {
         e.preventDefault();
-        
+
         try {
             if (cuppon.code == cupponRef?.current?.value) {
                 toast.info('Cuppon Already Applied');
                 return;
             }
-            const response = await CheckCuppon(cupponRef?.current?.value??'');
+            const response = await CheckCuppon(cupponRef?.current?.value ?? '');
             if (response.isCouponCode && response.exists) {
-if (!response.isExpired) {
-    toast.success('Cuppon Applied');
+                if (!response.isExpired) {
+                    toast.success('Cuppon Applied');
                     setcuppon({
-                        code:cupponRef?.current?.value,
-                        price:response.discountPrice
+                        code: cupponRef?.current?.value,
+                        price: response.discountPrice
                     })
-} else {
-    if(cuppon.code) removeCuppon();
-    toast.error('Cuppon Code Expired');
-}
-            }else{
-                if(cuppon.code) removeCuppon();
+                } else {
+                    if (cuppon.code) removeCuppon();
+                    toast.error('Cuppon Code Expired');
+                }
+            } else {
+                if (cuppon.code) removeCuppon();
                 toast.error('Cuppon Code does not Exist');
             }
         } catch (error) {
-            if(cuppon.code) removeCuppon();
-            console.log("Error",error)
+            if (cuppon.code) removeCuppon();
+            console.log("Error", error)
             toast.error(error);
         }
     }
-    const removeCuppon = ()=>{
+    const removeCuppon = () => {
         setcuppon({
-            code:'',
-            price:0
+            code: '',
+            price: 0
         });
-        cupponRef.current.value=''
+        cupponRef.current.value = ''
     }
 
     return (
@@ -358,66 +358,66 @@ if (!response.isExpired) {
             {/*  Content */}
             <div className="py-6">
                 <Container>
-{
-    (data && !error) && <Card className="mb-4 card-hover">
-    <Row className="g-0">
-        <Link
-            to={`/courses/${data.slug}`}
-            className="bg-cover img-left-rounded col-12 col-md-12 col-xl-3 col-lg-3 "
-            style={{
-                background: `url(${END_POINT}${data.coverImage})`,
-                backgroundRepeat: 'no-repeat',
-                backgroundSize: 'cover',
-                backgroundPosition: 'top center'
-            }}
-        >
-            <Image
-                src={`${END_POINT}${data.coverImage}`}
-                alt="..."
-                className="img-fluid d-lg-none invisible"
-            />
-        </Link>
-        <Col lg={9} md={12} sm={12}>
-            {/* <!-- Card body --> */}
-            <Card.Body>
-                <h3 className="mb-2 text-truncate-line-2 ">
-                    <Link to={`/courses/${data.slug}`} className="text-inherit">
-                        {data.title}
-                    </Link>
-                </h3>
-                {/* <!-- List inline --> */}
-                <ListGroup as="ul" bsPrefix="list-inline" className="">
-                    <ListGroup.Item as="li" bsPrefix="list-inline-item">
-                        <i className="fa fa-dollar-sign me-1"></i>
-                        {data.saledPrice}
-                    </ListGroup.Item>
-                   
-                </ListGroup>
-                {/* <!-- Row --> */}
-                <Row className="align-items-center g-0">
-                    <Col className="col-auto">
-                        <Image
-                            src={`${END_POINT}${data.instructor.profileImage}`}
-                            className="rounded-circle avatar-xs"
-                            alt=""
-                        />
-                    </Col>
-                    <Col className="col ms-2">
-                        <span>{data.instructor.fullName}</span>
-                    </Col>
-                    <Col className="col-auto">
-                        <Tippy content="Add to Bookmarks" animation={'scale'}>
-                            <Link to="#" className="text-muted bookmark">
-                                <i className="fe fe-bookmark"></i>
-                            </Link>
-                        </Tippy>
-                    </Col>
-                </Row>
-            </Card.Body>
-        </Col>
-    </Row>
-</Card>
-}
+                    {
+                        (data && !error) && <Card className="mb-4 card-hover">
+                            <Row className="g-0">
+                                <Link
+                                    to={`/courses/${data.slug}`}
+                                    className="bg-cover img-left-rounded col-12 col-md-12 col-xl-3 col-lg-3 "
+                                    style={{
+                                        background: `url(${END_POINT}${data.coverImage})`,
+                                        backgroundRepeat: 'no-repeat',
+                                        backgroundSize: 'cover',
+                                        backgroundPosition: 'top center'
+                                    }}
+                                >
+                                    <Image
+                                        src={`${END_POINT}${data.coverImage}`}
+                                        alt="..."
+                                        className="img-fluid d-lg-none invisible"
+                                    />
+                                </Link>
+                                <Col lg={9} md={12} sm={12}>
+                                    {/* <!-- Card body --> */}
+                                    <Card.Body>
+                                        <h3 className="mb-2 text-truncate-line-2 ">
+                                            <Link to={`/courses/${data.slug}`} className="text-inherit">
+                                                {data.title}
+                                            </Link>
+                                        </h3>
+                                        {/* <!-- List inline --> */}
+                                        <ListGroup as="ul" bsPrefix="list-inline" className="">
+                                            <ListGroup.Item as="li" bsPrefix="list-inline-item">
+                                                <i className="fa fa-dollar-sign me-1"></i>
+                                                {data.saledPrice}
+                                            </ListGroup.Item>
+
+                                        </ListGroup>
+                                        {/* <!-- Row --> */}
+                                        <Row className="align-items-center g-0">
+                                            <Col className="col-auto">
+                                                <Image
+                                                    src={`${END_POINT}${data.instructor.profileImage}`}
+                                                    className="rounded-circle avatar-xs"
+                                                    alt=""
+                                                />
+                                            </Col>
+                                            <Col className="col ms-2">
+                                                <span>{data.instructor.fullName}</span>
+                                            </Col>
+                                            <Col className="col-auto">
+                                                <Tippy content="Add to Bookmarks" animation={'scale'}>
+                                                    <Link to="#" className="text-muted bookmark">
+                                                        <i className="fe fe-bookmark"></i>
+                                                    </Link>
+                                                </Tippy>
+                                            </Col>
+                                        </Row>
+                                    </Card.Body>
+                                </Col>
+                            </Row>
+                        </Card>
+                    }
 
                     <Row>
                         <Col xl={8} lg={8} md={12} sm={12}>
@@ -500,18 +500,18 @@ if (!response.isExpired) {
                                                 Apply
                                             </Button>
                                         </Form.Group>
-                                        {cuppon.code && <Badge bg='success' className='mt-2'>{cuppon.code} <i className="fa fa-times text-white ml-3" onClick={()=>removeCuppon()}></i></Badge>}
+                                        {cuppon.code && <Badge bg='success' className='mt-2'>{cuppon.code} <i className="fa fa-times text-white ml-3" onClick={() => removeCuppon()}></i></Badge>}
                                     </Form>
                                     <Form.Control
-                                                type="text"
-                                                className='mt-4'
-                                                placeholder="Referal code"
-                                                
-                                                ref={referalCodeRef}
-                                            />
+                                        type="text"
+                                        className='mt-4'
+                                        placeholder="Referal code"
+
+                                        ref={referalCodeRef}
+                                    />
                                     <Button variant="success" className='mt-4 btn-block'
-                                    disabled={!data}
-                                    onClick={processPayment}>Process Payment</Button>
+                                        disabled={!data}
+                                        onClick={processPayment}>Process Payment</Button>
                                 </Card.Body>
                             </Card>
                             {/*  Card */}
