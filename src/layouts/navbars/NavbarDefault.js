@@ -27,7 +27,7 @@ import "simplebar/dist/simplebar.min.css";
 import DotBadge from "components/elements/bootstrap/DotBadge";
 
 // import media files
-import Logo from "assets/images/brand/logo/logo.png";
+import Logo from "assets/images/brand/logo/logo.svg";
 import Avatar1 from "assets/images/avatar/avatar-1.jpg";
 
 // import data files
@@ -149,7 +149,7 @@ const NavbarDefault = ({ headerstyle, isLoading, login }) => {
             <div className="avatar avatar-md avatar-indicators avatar-online">
               <Image
                 alt="avatar"
-                src={baseUrl.baseUrl + currentUser.profileImage}
+                src={currentUser.profileImage? baseUrl.baseUrl + currentUser.profileImage:`https://ui-avatars.com/api/?name=${currentUser.fullName}&background=19a9c4&color=fff`}
                 className="rounded-circle"
               />
             </div>
@@ -165,7 +165,7 @@ const NavbarDefault = ({ headerstyle, isLoading, login }) => {
                 <div className="avatar avatar-md avatar-indicators avatar-online">
                   <Image
                     alt="avatar"
-                    src={baseUrl.baseUrl + currentUser.profileImage}
+                    src={currentUser.profileImage? baseUrl.baseUrl + currentUser.profileImage:`https://ui-avatars.com/api/?name=${currentUser.fullName}&background=19a9c4&color=fff`}
                     className="rounded-circle"
                   />
                 </div>
@@ -207,7 +207,7 @@ const NavbarDefault = ({ headerstyle, isLoading, login }) => {
       >
         <Container fluid className="px-0 ps-2">
           <Navbar.Brand as={Link} to="/">
-            <Image src={Logo} alt="" />
+            <Image width={175} src={Logo} alt="" />
           </Navbar.Brand>
           <div
             className={`navbar-nav navbar-right-wrap ms-auto d-lg-none nav-top-wrap ${

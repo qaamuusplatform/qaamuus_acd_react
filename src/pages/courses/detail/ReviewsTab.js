@@ -151,7 +151,7 @@ reviews.map((item, index) => (
 						</div>
 					</div>
 				))
-				):(<Center>Sooooror</Center>)}
+				):(<center>Sooooror</center>)}
 				
 				
 			</div>

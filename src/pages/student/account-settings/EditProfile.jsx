@@ -81,7 +81,8 @@ const EditProfile = (props) => {
           <div className="d-lg-flex align-items-center justify-content-between">
             <div className="d-flex align-items-center mb-4 mb-lg-0">
               <Image
-                src={baseUrl.baseUrl + currentUser.profileImage ?? `https://ui-avatars.com/api/?name=${dashboardData.fullName.split(' ')[0]}+${dashboardData.fullName.split(' ')[1]}/?bold=true`}
+              src={currentUser.profileImage? baseUrl.baseUrl + currentUser.profileImage:`https://ui-avatars.com/api/?name=${currentUser.fullName}&background=19a9c4&color=fff`}
+
                 id="img-uploaded"
                 className="avatar-xl rounded-circle"
                 alt=""

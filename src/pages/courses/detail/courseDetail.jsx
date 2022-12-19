@@ -247,8 +247,8 @@ const CourseDetail = ({ match }) => {
                   videoId={
                     courseEnrolmentDetail.theCourse.prevVideo
                       ? youTubeIdFromLink(
-                          courseEnrolmentDetail.theCourse.prevVideo
-                        )
+                        courseEnrolmentDetail.theCourse.prevVideo
+                      )
                       : ""
                   }
                   onClose={() => setOpen(false)}
@@ -258,35 +258,50 @@ const CourseDetail = ({ match }) => {
                 {/* Card body */}
                 <Card.Body>
                   {/* Price single page */}
-                  <div className="mb-3">
-                    <span className="text-dark fw-bold h2 me-2">
-                      ${courseEnrolmentDetail.theCourse.saledPrice}
-                    </span>
-                    {courseEnrolmentDetail.theCourse.showRegularPrice ? (
-                      <del className="fs-4 text-muted">
-                        ${courseEnrolmentDetail.theCourse.regularPrice}
-                      </del>
-                    ) : (
-                      <div></div>
-                    )}
-                  </div>
-                  <div className="d-grid">
-                    {/* <Link to="#" className="btn btn-primary mb-2  ">
+                  {courseEnrolmentDetail.theCourse.saledPrice == 0 && courseEnrolmentDetail.theCourse.itsFree ? (
+                     <div className="d-grid">
+                        <Link to={`/`} className={`btn btn-warning text-white`} >
+                    JOIN FOR FREE
+                  </Link>
+                     </div>
+                  
+                  ) : (
+                    <div>
+                      <div className="mb-3">
+                        <span className="text-dark fw-bold h2 me-2">
+                          ${courseEnrolmentDetail.theCourse.saledPrice}
+                        </span>
+                        {courseEnrolmentDetail.theCourse.showRegularPrice ? (
+                          <del className="fs-4 text-muted">
+                            ${courseEnrolmentDetail.theCourse.regularPrice}
+                          </del>
+                        ) : (
+                          <div></div>
+                        )}
+                      </div>
+                      <div className="d-grid">
+                        {/* <Link to="#" className="btn btn-primary mb-2  ">
                       Start Free Month
                     </Link> */}
-                    {/* {                      <Link  to={`/`} className={`btn btn-primary`} >
-                      
-                       Watch Course
-                    </Link>
+                        {courseEnrolmentDetail.isEnrolled ? (
+                          <Link to={`/`} className={`btn btn-primary`} >
+                            Watch Course
+                          </Link>
+                        ) : (<Link
+                          to={`/checkout/course/${courseEnrolmentDetail.theCourse.slug}`}
+                          className={`btn btn-outline-warning`}
+                        >
+                          Enroll Now
+                        </Link>)}
+                        {/* {                      
                     ) : (
-                      <Link
-                        to={`/checkout/course/${courseEnrolmentDetail.theCourse.slug}`}
-                        className={`btn btn-outline-warning`}
-                      >
-                        Enroll Now
-                      </Link>
+                     
                     )} */}
-                  </div>
+                      </div>
+                    </div>
+                  )}
+
+
                 </Card.Body>
               </Card>
               {/* Card */}

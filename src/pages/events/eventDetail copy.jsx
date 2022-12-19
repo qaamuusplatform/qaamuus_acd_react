@@ -36,7 +36,7 @@ import Ratings from "components/elements/common/ratings/Ratings";
 import LevelIcon from "pages/student/miscellaneous/LevelIcon";
 import FAQTab from "./FAQTab";
 import TranscriptTab from "./TranscriptTab";
-import ReviewsTab from "./ReviewsTab";
+import ReviewsTab from "./EventReviewsTab";
 import DescriptionTab from "./DescriptionTab";
 
 import { getEvent } from "services/evantService";

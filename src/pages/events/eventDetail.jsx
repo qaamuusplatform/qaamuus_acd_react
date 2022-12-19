@@ -31,7 +31,7 @@ import CheckedMark from "assets/images/svg/checked-mark.svg";
 // import sub components tabs
 import Ratings from "components/elements/common/ratings/Ratings";
 import LevelIcon from "pages/student/miscellaneous/LevelIcon";
-import ReviewsTab from "./ReviewsTab";
+import ReviewsTab from "./EventReviewsTab";
 import DescriptionTab from "./DescriptionTab";
 
 import { getEvent } from "services/evantService";
@@ -45,6 +45,7 @@ import Timer from "./Timer";
 import { ShimmerPostDetails } from "react-shimmer-effects";
 import { qaamuusPayments } from "data/qaamuusPayments";
 import { DahabPayment, WaafiPayment } from "./eventPaymentsComponents";
+import EventReviewsTab from "./EventReviewsTab";
 
 const EventDetail = () => {
   // const [isOpen, setOpen] = useState(false);
@@ -281,7 +282,7 @@ const EventDetail = () => {
                         </Tab.Pane>
                         <Tab.Pane eventKey="reviews" className="pb-4 p-4">
                           {/* Reviews Tab */}
-                          <ReviewsTab />
+                          <EventReviewsTab reviews={eventEnrolmentDetail.theEvent.theReviews} />
                         </Tab.Pane>
                       </Tab.Content>
                     </Card.Body>

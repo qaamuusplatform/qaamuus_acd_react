@@ -1,5 +1,5 @@
 // import node module libraries
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { login, getLoggedInUser } from "services/authService";
 import { Fragment } from "react";
 import { Link, useHistory } from "react-router-dom";
@@ -14,8 +14,10 @@ import {
   InputGroup,
 } from "react-bootstrap";
 import Logo from "assets/images/brand/logo/logo-icon.svg";
+import logoCard from "assets/images/brand/logo/logoCard.svg";
 import http from "services/httpService";
 import { toast } from "react-toastify";
+import { CurrentUserContext } from "services/currentUserContext";
 
 // import media files
 // import Logo from "assets/images/brand/logo/logo-icon.svg";
@@ -76,10 +78,14 @@ export default function SignIn() {
         <Col lg={5} md={5} className="py-8 py-xl-0">
           <Card>
             <Card.Body className="p-6">
-              <div className="mb-4">
-                {/* <Link to="/">
-                <Image src={Logo} className="mb-4" alt="" />
-              </Link> */}
+              <Row>
+              <Col lg={3} md={3} sm={3} className="py-8 py-xl-0">
+                  <Link to="/">
+                <Image width={90} src={logoCard} className="mb-4" alt="" />
+              </Link>
+              </Col>
+              <Col lg={9} md={9} sm={9} className="py-8 py-xl-0">
+               
                 <h1 className="mb-1 fw-bold">Sign in</h1>
                 <span>
                   Account kuu ma furna ?{" "}
@@ -87,7 +93,14 @@ export default function SignIn() {
                     nagu soo biir
                   </Link>
                 </span>
-              </div>
+              </Col>
+
+
+
+
+           
+              </Row>
+              
               {/* Form */}
               <Form onSubmit={handleSubmit}>
                 <Row>
@@ -138,7 +151,7 @@ export default function SignIn() {
                       >
                         <Form.Check type="checkbox" label="Remember me" />
                       </Form.Group>
-                      <Link to="/authentication/forget-password">
+                      <Link to="/auth/forget-password/">
                         Forgot your password?
                       </Link>
                     </div>

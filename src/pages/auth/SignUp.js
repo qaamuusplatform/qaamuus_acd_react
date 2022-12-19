@@ -14,6 +14,7 @@ import {
   InputGroup,
   Image,
   Modal,
+  Container,
 } from "react-bootstrap";
 
 import ProfileBackground from "assets/images/background/profile-bg.jpg";
@@ -21,7 +22,10 @@ import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import * as yub from "yup";
 import { getAllUsernamesAnsEmails } from "services/authService";
+import { ShimmerThumbnail } from "react-shimmer-effects";
 export default function SignUp() {
+  const [sendedCode, setSendedCode] = useState(0);
+
   const history = useHistory();
   const existUsernames = [
     "asdasdas",
@@ -32,21 +36,31 @@ export default function SignUp() {
   ];
 
   const [modalShow, setModalShow] = useState(false);
+  const [registringModal, setRegistringModal] = useState(false);
   const handleClose = () => {
     setModalShow(false);
     setFormIsLoading(false);
   };
-  const handleShow = () => setModalShow(true);
 
-  const [emailVerified, setEmailVerified] = useState(false);
+  const handleShow = async () => {
+    if (registringUserForm.values.email && registringUserForm.values.username && registringUserForm.values.password && registringUserForm.values.fullName) {
+      setFormIsLoading(true);
+      await http.get(`api/sendActivationEmailCode/${registringUserForm.values.email}/`).then((resp) => {
+        setSendedCode(resp.data.sendedCode)
+      })
+      setModalShow(true)
+    } else {
+      toast.warning("fadlan formka si saxan u buuxi")
+    }
 
-  const onSubmit = () => {
+  };
+
+
+  const onSubmit = async () => {
     setFormIsLoading(true);
-    // http.get(`api/sendActivationEmailCode/${registringUserForm.values.email}/`).then((resp) => {
-    //     setActivationCode(resp.data.sendedCode)
-    //   })
-
-    http
+    setRegistringModal(true)
+    localStorage.removeItem("access");
+    await http
       .post(
         "/api/userProfile-create/",
         JSON.stringify(registringUserForm.values),
@@ -56,6 +70,7 @@ export default function SignUp() {
       )
       .then((userProfileResp) => {
         console.log(userProfileResp.data);
+        setModalShow(true)
         setFormIsLoading(false);
         registringUserForm.resetForm();
         toast.success(
@@ -63,11 +78,8 @@ export default function SignUp() {
         );
         history.replace("/auth/login/");
       });
-    // if(emailVerified){
 
-    // }else{
-    //   setModalShow(true)
-    // }
+
   };
   const registringUserForm = useFormik({
     initialValues: {
@@ -103,6 +115,23 @@ export default function SignUp() {
       comfirmPassword: yub
         .string()
         .oneOf([yub.ref("password"), null], "Labada Password  isma lahan"),
+      activationCode: yub.number().min(6).required().test(
+        "activationEmail",
+        "Codeka Mahan mid saxan",
+        function (_theActivationCode) {
+          if ((_theActivationCode - registringUserForm.values.email.length) == sendedCode) {
+            return true;
+          } else {
+            return false;
+          }
+          // console.log(_theActivationCode)
+          // if (existUsernames.includes(_theUsername)) {
+          //   return false;
+          // } else {
+          //   return true;
+          // }
+        }
+      ),
     }),
     onSubmit,
   });
@@ -114,64 +143,98 @@ export default function SignUp() {
     setPasswordShown(!passwordShown);
   };
 
-  async function emailVerifieSubmit(e) {
-    // setUserRegistred(false);
-    e.preventDefault();
-  }
+
 
   return (
     <Fragment>
-      <Modal show={modalShow} onHide={handleClose} centered>
-        <Form onSubmit={emailVerifieSubmit}>
+      <Form onSubmit={registringUserForm.handleSubmit} controlId="validationFormik01" >
+        <Modal show={modalShow} data-backdrop="static" backdrop="static" onHide={handleClose} centered>
           <Modal.Header closeButton>
             <Modal.Title>Hubinta Emailka</Modal.Title>
+            <br></br>
           </Modal.Header>
           <Modal.Body>
-            <Col lg={12} md={12} sm={12} className="mb-3">
-              <h4 className="mb-0">Email Address</h4>
-              <p>
-                Fariin ayaa laguugu diray emailkan{" "}
-                <span className="text-success">
-                  {registringUserForm.values.email}
-                </span>
-              </p>
-              <Form.Group>
-                <Form.Label htmlFor="email">Codeka Hubinta</Form.Label>
-                <Form.Control
-                  placeholder="21 12 12"
-                  type="number"
-                  id="activateCode"
-                  value={registringUserForm.values.activationCode}
-                  onChange={registringUserForm.handleChange}
-                  onBlur={registringUserForm.handleBlur}
-                  // isInvalid={sendedCodeActive == true ? true : false}
-                  // isValid={sendedCodeActive == true ? false : true}
-                  required
-                />
-              </Form.Group>
-            </Col>
+            {registringModal ? (<div>
+
+              <ShimmerThumbnail height={100} rounded />
+            </div>) : (
+              <Col lg={12} md={12} sm={12} className="mb-3">
+                <h4 className="mb-0">Email Address</h4>
+                <p>
+                  Fariin ayaa laguugu diray emailkan{" "}
+                  <span className="text-success">
+                    {registringUserForm.values.email}
+                  </span>
+                </p>
+                <Form.Group>
+                  <Form.Label htmlFor="email">Codeka Hubinta</Form.Label>
+                  <Form.Control
+                    placeholder="00 00 00"
+                    type="text"
+                    id="activationCode"
+                    name="activationCode"
+                    value={registringUserForm.values.activationCode}
+                    onChange={registringUserForm.handleChange}
+                    onBlur={registringUserForm.handleBlur}
+                    isInvalid={
+                      registringUserForm.errors.activationCode &&
+                        registringUserForm.touched.activationCode
+                        ? true
+                        : false
+                    }
+                    isValid={
+                      registringUserForm.errors.activationCode &&
+                        registringUserForm.touched.activationCode
+                        ? false
+                        : true
+                    }
+                    required
+                  />
+                  <Form.Control.Feedback type="valid">
+                    waad ku guulaysatay activation codeka
+                  </Form.Control.Feedback>
+
+                  <Form.Control.Feedback type="invalid">
+                    {registringUserForm.errors.activationCode}
+                  </Form.Control.Feedback>
+                </Form.Group>
+
+              </Col>
+
+            )}
+
           </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" size="sm" onClick={handleClose}>
-              Close
-            </Button>
-            <Button variant="primary" type="submit" size="sm">
-              Active Now
-            </Button>
-          </Modal.Footer>
-        </Form>
-      </Modal>
-      <br />
-      <Row className="align-items-center justify-content-center g-0 min-vh-100">
-        <Col lg={10} md={12} className="py-8 py-xl-0">
-          <Card>
-            <Card.Img variant="top" src={ProfileBackground} />
-            <Card.Body className="p-6">
-              {/* Form */}
-              <Form
-                onSubmit={registringUserForm.handleSubmit}
-                controlId="validationFormik01"
-              >
+          {registringModal ? (<div></div>) : (
+            <Modal.Footer>
+              <Button variant="secondary" size="sm" onClick={handleClose}>
+                Close
+              </Button>
+              {/* {formIsLoading ? (
+                  <Button variant="primary" size="md" disabled>
+                    <Spinner
+                      as="span"
+                      animation="border"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                    />
+                    &nbsp; Loading...
+                  </Button>
+                ) : ()} */}
+              <Button variant="primary" onClick={registringUserForm.submitForm} size="md"> Diiwaangali </Button>
+
+            </Modal.Footer>
+          )}
+
+        </Modal>
+        <br />
+        <Row className="align-items-center justify-content-center g-0 min-vh-100">
+          <Col lg={10} md={12} className="py-8 py-xl-0">
+            <Card>
+              <Card.Img variant="top" src={ProfileBackground} />
+              <Card.Body className="p-6">
+                {/* Form */}
+
                 <Row>
                   <Col lg={8} md={8} className="mb-3">
                     {/* User Name */}
@@ -200,13 +263,13 @@ export default function SignUp() {
                         onBlur={registringUserForm.handleBlur}
                         isInvalid={
                           registringUserForm.errors.username &&
-                          registringUserForm.touched.username
+                            registringUserForm.touched.username
                             ? true
                             : false
                         }
                         isValid={
                           registringUserForm.errors.username &&
-                          registringUserForm.touched.username
+                            registringUserForm.touched.username
                             ? false
                             : true
                         }
@@ -233,7 +296,7 @@ export default function SignUp() {
                         id="email"
                         isInvalid={
                           registringUserForm.errors.email &&
-                          registringUserForm.touched.email
+                            registringUserForm.touched.email
                             ? true
                             : false
                         }
@@ -254,24 +317,24 @@ export default function SignUp() {
                     {/* Password */}
                     <Form.Label>Password </Form.Label>
                     <InputGroup>
-                    <Form.Control
-                      type={passwordShown ? "text" : "password"}
-                      value={registringUserForm.values.password}
-                      onChange={registringUserForm.handleChange}
-                      onBlur={registringUserForm.handleBlur}
-                      isInvalid={
-                        registringUserForm.errors.password &&
-                        registringUserForm.touched.password
-                          ? true
-                          : false
-                      }
-                      id="password"
-                      name="password"
-                      size="sm"
-                      placeholder="*****"
-                      required
-                    />
-                    <InputGroup.Text>
+                      <Form.Control
+                        type={passwordShown ? "text" : "password"}
+                        value={registringUserForm.values.password}
+                        onChange={registringUserForm.handleChange}
+                        onBlur={registringUserForm.handleBlur}
+                        isInvalid={
+                          registringUserForm.errors.password &&
+                            registringUserForm.touched.password
+                            ? true
+                            : false
+                        }
+                        id="password"
+                        name="password"
+                        size="sm"
+                        placeholder="*****"
+                        required
+                      />
+                      <InputGroup.Text>
                         <i
                           onClick={togglePassword}
                           className={
@@ -288,24 +351,24 @@ export default function SignUp() {
                     {/* Password */}
                     <Form.Label>Comfirm password </Form.Label>
                     <InputGroup>
-                    <Form.Control
-                      type={passwordShown ? "text" : "password"}
-                      value={registringUserForm.values.comfirmPassword}
-                      onChange={registringUserForm.handleChange}
-                      onBlur={registringUserForm.handleBlur}
-                      isInvalid={
-                        registringUserForm.errors.comfirmPassword &&
-                        registringUserForm.touched.comfirmPassword
-                          ? true
-                          : false
-                      }
-                      name="comfirmPassword"
-                      id="password"
-                      size="sm"
-                      placeholder="*******"
-                      required
-                    />
-                        <InputGroup.Text>
+                      <Form.Control
+                        type={passwordShown ? "text" : "password"}
+                        value={registringUserForm.values.comfirmPassword}
+                        onChange={registringUserForm.handleChange}
+                        onBlur={registringUserForm.handleBlur}
+                        isInvalid={
+                          registringUserForm.errors.comfirmPassword &&
+                            registringUserForm.touched.comfirmPassword
+                            ? true
+                            : false
+                        }
+                        name="comfirmPassword"
+                        id="password"
+                        size="sm"
+                        placeholder="*******"
+                        required
+                      />
+                      <InputGroup.Text>
                         <i
                           onClick={togglePassword}
                           className={
@@ -341,47 +404,49 @@ export default function SignUp() {
                     &nbsp; Loading...
                   </Button>
                 ) : (
-                  <Button variant="primary" type="submit" size="md">
+
+                  <Button variant="primary" onClick={handleShow} type="button" size="md">
                     {" "}
                     Diiwaangali{" "}
-                  </Button>
-                )}
-              </Form>
-              <hr className="my-4" />
-              <div className="mt-4 text-center">
-                {/* Facebook */}
-                <Link
-                  to="#"
-                  className="btn-social btn-social-outline btn-facebook"
-                >
-                  <i className="fab fa-facebook"></i>
-                </Link>{" "}
-                {/* Twitter */}
-                <Link
-                  to="#"
-                  className="btn-social btn-social-outline btn-twitter"
-                >
-                  <i className="fab fa-twitter"></i>
-                </Link>{" "}
-                {/* LinkedIn */}
-                <Link
-                  to="#"
-                  className="btn-social btn-social-outline btn-linkedin"
-                >
-                  <i className="fab fa-linkedin"></i>
-                </Link>{" "}
-                {/* GitHub */}
-                <Link
-                  to="#"
-                  className="btn-social btn-social-outline btn-github"
-                >
-                  <i className="fab fa-github"></i>
-                </Link>
-              </div>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
+                  </Button>)
+                }
+
+                <hr className="my-4" />
+                <div className="mt-4 text-center">
+                  {/* Facebook */}
+                  <Link
+                    to="#"
+                    className="btn-social btn-social-outline btn-facebook"
+                  >
+                    <i className="fab fa-facebook"></i>
+                  </Link>{" "}
+                  {/* Twitter */}
+                  <Link
+                    to="#"
+                    className="btn-social btn-social-outline btn-twitter"
+                  >
+                    <i className="fab fa-twitter"></i>
+                  </Link>{" "}
+                  {/* LinkedIn */}
+                  <Link
+                    to="#"
+                    className="btn-social btn-social-outline btn-linkedin"
+                  >
+                    <i className="fab fa-linkedin"></i>
+                  </Link>{" "}
+                  {/* GitHub */}
+                  <Link
+                    to="#"
+                    className="btn-social btn-social-outline btn-github"
+                  >
+                    <i className="fab fa-github"></i>
+                  </Link>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Form>
     </Fragment>
   );
 }
