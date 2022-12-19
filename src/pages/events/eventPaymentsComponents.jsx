@@ -20,19 +20,19 @@ import {
 } from "react-bootstrap";
 import http, { httpAxiosWithToken } from "services/httpService";
 
-export function WaafiPayment(theEventDetail) {
+export function WaafiPayment({theEventDetail}) {
   const [formIsLoading, setFormIsLoading] = useState(false);
   //   let eventInrollmentData={}
 
   const onSubmit = async () => {
-    theEventDetail.theEventDetail.number = paymentForm.values.number.toString();
-    // setFormIsLoading(true);
-    console.log(theEventDetail.theEventDetail);
+    theEventDetail.number = paymentForm.values.number.toString();
+    setFormIsLoading(true);
+    console.log(theEventDetail);
     try {
       await http
         .post(
-          `/api/inrollEventToUser/${theEventDetail.theEventDetail.type}/`,
-          JSON.stringify(theEventDetail.theEventDetail),
+          `/api/inrollEventToUser/${theEventDetail.type}/`,
+          JSON.stringify(theEventDetail),
           { headers: { "Content-Type": "application/json" } }
         )
         .then((eventInrollmentResp) => {
@@ -171,17 +171,17 @@ export function WaafiPayment(theEventDetail) {
   );
 }
 
-export function DahabPayment(theEventDetail) {
+export function DahabPayment({theEventDetail}) {
   const [formIsLoading, setFormIsLoading] = useState(false);
   const onSubmit = async () => {
-    theEventDetail.theEventDetail.number = paymentForm.values.number.toString();
+    theEventDetail.number = paymentForm.values.number.toString();
     // setFormIsLoading(true);
-    console.log(theEventDetail.theEventDetail);
+    console.log(theEventDetail);
     try {
       await http
         .post(
-          `/api/inrollEventToUser/${theEventDetail.theEventDetail.type}/`,
-          JSON.stringify(theEventDetail.theEventDetail),
+          `/api/inrollEventToUser/${theEventDetail.type}/`,
+          JSON.stringify(theEventDetail),
           { headers: { "Content-Type": "application/json" } }
         )
         .then((eventInrollmentResp) => {

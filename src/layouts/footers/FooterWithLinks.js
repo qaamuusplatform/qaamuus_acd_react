@@ -8,7 +8,7 @@ import Icon from '@mdi/react';
 import { mdiFacebook, mdiTwitter, mdiInstagram } from '@mdi/js';
 
 // import media files
-import FooterLogo from 'assets/images/brand/logo/logo.svg';
+import FooterLogo from 'assets/images/brand/logo/logo.png';
 
 const FooterWithLinks = () => {
 	return (

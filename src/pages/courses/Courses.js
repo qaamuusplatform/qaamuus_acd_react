@@ -12,6 +12,7 @@ import { ShimmerPostItem } from "react-shimmer-effects";
 import useSWR from "swr";
 
 import { toast } from "react-toastify";
+import PageHeadingBriefinfo from "components/elements/common/heading/PageHeadingBriefinfo";
 
 export default function Courses() {
   const { data: coursesList, error } = useSWR(
@@ -25,7 +26,10 @@ export default function Courses() {
 
   return (
     <Fragment>
-      <PageHeading pagetitle="Filter Page" />
+      <PageHeadingBriefinfo
+				pagetitle="JavaScript Courses"
+				briefinfo="6,979,934 students are learning JavaScript."
+			/>
       <div className="py-6">
         <Container>
           {error ? <span>{JSON.stringify(error)}</span> : null}

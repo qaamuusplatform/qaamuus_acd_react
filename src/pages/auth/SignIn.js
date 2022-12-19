@@ -24,6 +24,8 @@ export default function SignIn() {
   const history = useHistory();
   const [form, setForm] = useState({ username: "", password: "" });
   const [formIsLoading, setFormIsLoading] = useState(false);
+
+  const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
   const [formError, setFormError] = useState(false);
   const [passwordShown, setPasswordShown] = useState(false);
 
@@ -48,17 +50,20 @@ export default function SignIn() {
           JSON.stringify({ username: form.username, password: form.password }),
           { headers: { "Content-Type": "application/json" } }
         )
-        .then((userLoggedResp) => {
+        .then(async (userLoggedResp) => {
           if (userLoggedResp.data.status == 200) {
             localStorage.setItem("access", userLoggedResp.data.access);
             toast.success("si guul leh ayaad u soo gashay");
+            const { data } = await getLoggedInUser();
+            if (data) {
+              // console.log("data ready",data)
+              setCurrentUser(data);
+            }
             setFormIsLoading(false);
             history.replace("/user/dashboard/");
           }
         });
     } catch (error) {
-      console.log("redsd");
-      console.log(error);
       toast.error(error.response.data.detail);
       setFormError(true);
       setFormIsLoading(false);

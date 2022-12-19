@@ -1,6 +1,7 @@
 // import node module libraries
 import { Fragment, useState, useContext } from "react";
 import PropTypes from "prop-types";
+import moment from "moment/moment";
 import { Link } from "react-router-dom";
 import {
   Row,
@@ -26,7 +27,7 @@ import "simplebar/dist/simplebar.min.css";
 import DotBadge from "components/elements/bootstrap/DotBadge";
 
 // import media files
-import Logo from "assets/images/brand/logo/logo.svg";
+import Logo from "assets/images/brand/logo/logo.png";
 import Avatar1 from "assets/images/avatar/avatar-1.jpg";
 
 // import data files
@@ -36,6 +37,7 @@ import NavDropdownMain from "layouts/navbars/NavDropdownMain";
 import baseUrl from "services/baseUrl";
 import { CurrentUserContext } from "services/currentUserContext";
 import { ShimmerCircularImage } from "react-shimmer-effects";
+import { END_POINT } from "helper/constants";
 
 const NavbarDefault = ({ headerstyle, isLoading, login }) => {
   const isDesktop = useMediaQuery({
@@ -70,7 +72,7 @@ const NavbarDefault = ({ headerstyle, isLoading, login }) => {
             align="end"
           >
             <div className="border-bottom px-3 pt-3 pb-3 d-flex justify-content-between align-items-end">
-              <span className="h4 mb-0">Notifications</span>
+              <span className="h4 mb-0">Ogaysiisyada</span>
               <Link to="# " className="text-muted">
                 <span className="align-middle">
                   <i className="fe fe-settings me-1"></i>
@@ -79,7 +81,7 @@ const NavbarDefault = ({ headerstyle, isLoading, login }) => {
             </div>
             <SimpleBar style={{ maxHeight: "300px" }}>
               <ListGroup variant="flush">
-                {NotificationList.map(function (item, index) {
+                {currentUser.theNotifications?.filter((theNotific) => theNotific.seen === false).map(function (theNotific, index) {
                   return (
                     <ListGroup.Item
                       className={index === 0 ? "bg-light" : ""}
@@ -90,19 +92,19 @@ const NavbarDefault = ({ headerstyle, isLoading, login }) => {
                           <Link className="text-body" to="#">
                             <div className="d-flex">
                               <Image
-                                src={item.image}
+                                src={END_POINT +theNotific.fromUser.profileImage}
                                 alt=""
                                 className="avatar-md rounded-circle"
                               />
                               <div className="ms-3">
-                                <h5 className="fw-bold mb-1">{item.sender}</h5>
-                                <p className="mb-3">{item.message}</p>
+                                <h5 className="fw-bold mb-1">{theNotific.title}</h5>
+                                <p className="mb-3">{theNotific.text}</p>
                                 <span className="fs-6 text-muted">
                                   <span>
                                     <span className="fe fe-thumbs-up text-success me-1"></span>
-                                    {item.date}
+                                    {moment(theNotific.dateTime).format("MMMM Do YYYY")}
                                   </span>
-                                  <span className="ms-1">{item.time}</span>
+                                  <span className="ms-1">{moment(theNotific.dateTime).format("h:mm:ss a")}</span>
                                 </span>
                               </div>
                             </div>
@@ -129,7 +131,7 @@ const NavbarDefault = ({ headerstyle, isLoading, login }) => {
             </SimpleBar>
             <div className="border-top px-3 pt-3 pb-3">
               <Link
-                to="/authentication/notifications"
+                to="/user/notifications/"
                 className="text-link fw-semi-bold"
               >
                 See all Notifications

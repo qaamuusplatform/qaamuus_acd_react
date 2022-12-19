@@ -140,12 +140,12 @@ const EventDetail = () => {
             ))} */}
               <Tab.Pane eventKey="waafiP" className="pb-1 p-1">
                 {/* Description Tab */}
-                <WaafiPayment theEventDetail={{'number':0,'userId':`${currentUser.id}`,'evtId':`${eventEnrolmentDetail.theEvent.id}`,'money':`0.01`,'type':'waafi'} } />
+                <WaafiPayment theEventDetail={{'number':0,'userId':`${currentUser.id}`,'evtId':`${eventEnrolmentDetail.theEvent.pk}`,'money':`${eventEnrolmentDetail.theEvent.price}`,'type':'waafi'} } />
               </Tab.Pane>
               <Tab.Pane eventKey="visaCard" className="pb-1 p-1">
                 {/* Description Tab */}
                 {/* {thePayment.content} */}
-                <DahabPayment theEventDetail={{'number':0,'userId':`${currentUser.id}`,'evtId':`${eventEnrolmentDetail.theEvent.id}`,'money':`0.01`,'type':'waafi'} } />
+                <DahabPayment theEventDetail={{'number':0,'userId':`${currentUser.id}`,'evtId':`${eventEnrolmentDetail.theEvent.pk}`,'money':`${eventEnrolmentDetail.theEvent.price}`,'type':'eDahab'} } />
               </Tab.Pane>
               <Tab.Pane eventKey="waafiPayment" className="pb-1 p-1">
                 {/* Description Tab */}
@@ -207,8 +207,9 @@ const EventDetail = () => {
                           <Icon path={mdiAccountMultipleOutline} size={0.7} />{" "}
                           <span>
                             {
-                              eventEnrolmentDetail.theEvent.enrolledStudents
-                                .length
+                              2
+                              // eventEnrolmentDetail.theEvent.enrolledStudents
+                              //   .length
                             }
                           </span>
                         </span>
@@ -297,8 +298,8 @@ const EventDetail = () => {
                     {/* Price single page */}
                     <div className="mb-3">
                       <span className="text-dark fw-bold h3 me-2">&nbsp;</span>
-                      <span className="text-dark fw-bold h3 me-2">$600</span>
-                      <del className="fs-4 text-muted">$750</del>
+                      <span className="text-dark fw-bold h3 me-2">${eventEnrolmentDetail.theEvent.price}</span>
+                      {/* <del className="fs-4 text-muted">$750</del> */}
                     </div>
                     <Card.Body className="p-0">
                       <ListGroup variant="flush">

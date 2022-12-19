@@ -253,6 +253,7 @@ export default function SignUp() {
                   <Col lg={6} md={6} className="mb-3">
                     {/* Password */}
                     <Form.Label>Password </Form.Label>
+                    <InputGroup>
                     <Form.Control
                       type={passwordShown ? "text" : "password"}
                       value={registringUserForm.values.password}
@@ -267,9 +268,18 @@ export default function SignUp() {
                       id="password"
                       name="password"
                       size="sm"
-                      placeholder="**************"
+                      placeholder="*****"
                       required
                     />
+                    <InputGroup.Text>
+                        <i
+                          onClick={togglePassword}
+                          className={
+                            passwordShown ? "fas fa-eye-slash" : "fas fa-eye"
+                          }
+                        ></i>
+                      </InputGroup.Text>
+                    </InputGroup>
                     <Form.Control.Feedback type="invalid">
                       {registringUserForm.errors.password}
                     </Form.Control.Feedback>
@@ -277,6 +287,7 @@ export default function SignUp() {
                   <Col lg={6} md={6} className="mb-3">
                     {/* Password */}
                     <Form.Label>Comfirm password </Form.Label>
+                    <InputGroup>
                     <Form.Control
                       type={passwordShown ? "text" : "password"}
                       value={registringUserForm.values.comfirmPassword}
@@ -291,9 +302,18 @@ export default function SignUp() {
                       name="comfirmPassword"
                       id="password"
                       size="sm"
-                      placeholder="**************"
+                      placeholder="*******"
                       required
                     />
+                        <InputGroup.Text>
+                        <i
+                          onClick={togglePassword}
+                          className={
+                            passwordShown ? "fas fa-eye-slash" : "fas fa-eye"
+                          }
+                        ></i>
+                      </InputGroup.Text>
+                    </InputGroup>
                     <Form.Control.Feedback type="invalid">
                       {registringUserForm.errors.comfirmPassword}
                     </Form.Control.Feedback>

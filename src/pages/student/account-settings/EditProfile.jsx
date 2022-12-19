@@ -19,9 +19,13 @@ import 'react-phone-number-input/style.css'
 import PhoneInputWithCountrySelect from "react-phone-number-input";
 import { ShimmerPostDetails, ShimmerThumbnail } from "react-shimmer-effects";
 import { toast } from "react-toastify";
+import ReactQuillEditor from "components/editor/ReactQuillEditor";
+import ReactQuill from "react-quill";
 
 const EditProfile = (props) => {
+
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+  const [aboutMe, setAboutMe] = useState('sda' )
   const [userNumber, setUserNumber] = useState();
 
   if (Object.keys(currentUser).length == 0) {
@@ -41,6 +45,12 @@ const EditProfile = (props) => {
 
     setCurrentUser((prev) => ({ ...prev, [name]: value }));
   };
+
+  function handleaboutMe(value) {
+		setAboutMe(value);
+    setCurrentUser((prev) => ({ ...prev, ["aboutMe"]: value }));
+    console.log(currentUser)
+	}
 
   async function userUpdateHandleSubmit(e) {
     e.preventDefault();
@@ -133,9 +143,10 @@ const EditProfile = (props) => {
                   <Form.Group className="mb-3" controlId="formPhone">
                     <Form.Label>Number</Form.Label>
                     <PhoneInputWithCountrySelect
+                    
                       placeholder="Enter phone number"
                       value={userNumber}
-                      className="rounded rounded-full bg-gray-100 py-1 px-2 text-gray-700 shadow-sm border-green"
+                      className="form-control"
                       defaultCountry="SO"
 
                       onChange={setUserNumber} />
@@ -201,9 +212,10 @@ const EditProfile = (props) => {
                 <Col md={12} sm={12} className="mb-3">
                   <Form.Group className="mb-3" controlId="formBirthday">
                     <Form.Label>About U</Form.Label>
-                    <InputGroup>
-                      <FormControl onChange={(e) => handleChange(e)} value={currentUser.aboutMe} name="aboutMe" as="textarea" placeholder="Xog Ku Saabsan Userka" aria-label="With textarea" />
-                    </InputGroup>
+                    {/* <InputGroup> */}
+                    <ReactQuill value={aboutMe} onChange={handleaboutMe} />
+                      {/* <FormControl onChange={(e) => handleChange(e)} value={currentUser.aboutMe} name="aboutMe" as="textarea" placeholder="Xog Ku Saabsan Userka" aria-label="With textarea" /> */}
+                    {/* </InputGroup> */}
                   </Form.Group>
                 </Col>
                 {(currentUser.userType.name == 'Instructor') ? (<div>
