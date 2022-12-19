@@ -180,7 +180,7 @@ function AllRoutes() {
         exact
         path="/courses/:id/watch"
         layout={DefaultLayout}
-        component={<h1>Watch Course</h1>}
+        component={}
       />
       <AppRoute
         exact

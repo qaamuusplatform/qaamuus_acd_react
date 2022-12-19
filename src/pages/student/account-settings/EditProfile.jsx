@@ -16,7 +16,7 @@ import { CurrentUserContext } from "services/currentUserContext";
 import baseUrl from "services/baseUrl";
 import { updateUserInfo } from "services/authService";
 import 'react-phone-number-input/style.css'
-import PhoneInputWithCountrySelect from "react-phone-number-input";
+// import PhoneInputWithCountrySelect from "react-phone-number-input";
 import { ShimmerPostDetails, ShimmerThumbnail } from "react-shimmer-effects";
 import { toast } from "react-toastify";
 
@@ -132,13 +132,13 @@ const EditProfile = (props) => {
 
                   <Form.Group className="mb-3" controlId="formPhone">
                     <Form.Label>Number</Form.Label>
-                    <PhoneInputWithCountrySelect
+                    {/* <PhoneInputWithCountrySelect
                       placeholder="Enter phone number"
                       value={userNumber}
                       className="rounded rounded-full bg-gray-100 py-1 px-2 text-gray-700 shadow-sm border-green"
                       defaultCountry="SO"
 
-                      onChange={setUserNumber} />
+                      onChange={setUserNumber} /> */}
                     {/* <Form.Control
                       type="number"
                       placeholder="Phone"
