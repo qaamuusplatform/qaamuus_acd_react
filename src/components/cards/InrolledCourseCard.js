@@ -29,7 +29,7 @@ const InrolledCourseCard = ({ item, free, viewby, showprogressbar, extraclass })
 	const GridView = () => {
 		return (
 			<Card className={`mb-4 card-hover ${extraclass}`}>
-				<Link to={`/courses/${item.theCourse.id}`}>
+				<Link to={`/courses/${item.theCourse.slug}`}>
 					<Image
 						src={`${END_POINT}${item.theCourse.coverImage}`}
 						alt=""
@@ -39,7 +39,7 @@ const InrolledCourseCard = ({ item, free, viewby, showprogressbar, extraclass })
 				{/* Card body  */}
 				<Card.Body>
 					<h3 className="h4 mb-2 text-truncate-line-2 ">
-						<Link to={`/courses/${item.theCourse.id}`} className="text-inherit">
+						<Link to={`/courses/${item.theCourse.slug}`} className="text-inherit">
 							{item.theCourse.title}
 						</Link>
 					</h3>
@@ -128,7 +128,7 @@ const InrolledCourseCard = ({ item, free, viewby, showprogressbar, extraclass })
 			<Card className="mb-4 card-hover">
 				<Row className="g-0">
 					<Link
-						to={`/courses/${item.theCourse.id}`}
+						to={`/courses/${item.theCourse.slug}`}
 						className="bg-cover img-left-rounded col-12 col-md-12 col-xl-3 col-lg-3 "
 						style={{
 							background: `url(${END_POINT}${item.theCourse.coverImage})`,
@@ -147,7 +147,7 @@ const InrolledCourseCard = ({ item, free, viewby, showprogressbar, extraclass })
 						{/* <!-- Card body --> */}
 						<Card.Body>
 							<h3 className="mb-2 text-truncate-line-2 ">
-								<Link to={`/courses/${item.theCourse.id}`} className="text-inherit">
+								<Link to={`/courses/${item.theCourse.slug}`} className="text-inherit">
 									{item.theCourse.title}
 								</Link>
 							</h3>

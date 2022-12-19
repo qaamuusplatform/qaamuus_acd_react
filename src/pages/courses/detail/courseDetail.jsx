@@ -274,19 +274,8 @@ const CourseDetail = ({ match }) => {
                     {/* <Link to="#" className="btn btn-primary mb-2  ">
                       Start Free Month
                     </Link> */}
-                    {courseEnrolmentDetail.isEnrolled ? (
-                      // <Link
-                      //   to="#"
-                      //   className={`btn btn-primary`}
-                      // >
-                      //   <Icon.Youtube className="text-white me-2" />
-                      //   Continue Watching
-                      // </Link>
-                      <Link
-                      to={`/`}
-                      className={`btn btn-primary`}
-                    >
-                       {/* <Icon.Youtube className="text-white me-2" /> */}
+                    {/* {                      <Link  to={`/`} className={`btn btn-primary`} >
+                      
                        Watch Course
                     </Link>
                     ) : (
@@ -296,7 +285,7 @@ const CourseDetail = ({ match }) => {
                       >
                         Enroll Now
                       </Link>
-                    )}
+                    )} */}
                   </div>
                 </Card.Body>
               </Card>
