@@ -33,6 +33,7 @@ import LiveLayout from "./LiveLayout";
 import ReferralData from "pages/student/account-settings/ReferralData";
 import EventCheckout from "./../pages/checkout/EventCheckout";
 import { CurrentUserContext } from "services/currentUserContext";
+import WatchCourse from "pages/courses/watch";
 
 /* IMPORTS FOR MARKETING PAGES - END */
 /* --------------------------------- */
@@ -180,7 +181,7 @@ function AllRoutes() {
         exact
         path="/courses/:id/watch"
         layout={DefaultLayout}
-        component={}
+        component={WatchCourse}
       />
       <AppRoute
         exact
