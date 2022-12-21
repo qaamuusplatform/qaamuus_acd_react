@@ -9,6 +9,7 @@ import {
   Tab,
   ListGroup,
   Image,
+  Button,
 } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 
@@ -36,7 +37,7 @@ import Avatar1 from "assets/images/avatar/avatar-1.jpg";
 
 // import data files
 import { httpFetcher } from "services/coursesService";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 import useSWR from "swr";
 import { youTubeIdFromLink } from "helper/utils";
 import { END_POINT } from "helper/constants";
@@ -56,6 +57,33 @@ const CourseDetail = ({ match }) => {
   if (error) {
     toast.error(error);
   }
+  const enrollFreeCourse = async () => {
+    try {
+      await http
+        .post(
+          `/api/inrollCourseToUser/free/`,
+          JSON.stringify({ "number": "0", "userId": `${currentUser.id}`, "courseId": `${eventEnrolmentDetail.theEvent.pk}`, "money": "0", "months": "2", "referralCode": "0", "cupponCode": "0" }),
+          { headers: { "Content-Type": "application/json" } }
+        )
+        .then((courseEnrollmentResp) => {
+          console.log(courseEnrollmentResp.data);
+          toast.success(courseEnrollmentResp.data.message, {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          // history.replace("/auth/login/");
+        });
+    } catch (error) {
+      console.log('errr', error)
+      toast.error("laguma guulaysan lacag bixinta fadlan ku celi markale");
+    }
+  };
   if (userIsLoading) {
     return (
       <Fragment>
@@ -101,19 +129,19 @@ const CourseDetail = ({ match }) => {
                       className="bookmark text-white text-decoration-none"
                     >
                       <i className="fe fe-bookmark text-white-50 me-2"></i>
-                      Bookmark
+                      {courseEnrolmentDetail.theCourse.category.categoryName}
                     </Link>
                   </Tippy>
                   <span className="text-white ms-3">
                     <i className="fe fe-user text-white-50"></i>{" "}
                     {/* {courseEnrolmentDetail.theCourse.inrolledUsers.length} Enrolled{" "} */}
                   </span>
-                  <span className="ms-4">
+                  {/* <span className="ms-4">
                     <span className="text-warning">
                       <Ratings rating={4.5} />
                       <span className="text-white ms-1">(140)</span>
                     </span>
-                  </span>
+                  </span> */}
                   <span className="text-white ms-4 d-none d-md-block">
                     <svg
                       width="16"
@@ -258,13 +286,48 @@ const CourseDetail = ({ match }) => {
                 {/* Card body */}
                 <Card.Body>
                   {/* Price single page */}
-                  {courseEnrolmentDetail.theCourse.saledPrice == 0 && courseEnrolmentDetail.theCourse.itsFree ? (
-                     <div className="d-grid">
-                        <Link to={`/`} className={`btn btn-warning text-white`} >
-                    JOIN FOR FREE
-                  </Link>
-                     </div>
-                  
+                  {courseEnrolmentDetail.theCourse.saledPrice == 0 || courseEnrolmentDetail.theCourse.itsFree ? (
+                    <div>
+                      <div className="mb-1">
+                        <span className="text-dark fw-bold h3 me-2">
+                          ${courseEnrolmentDetail.theCourse.saledPrice} - FREE
+                        </span>
+
+                      </div>
+                      <div>
+
+                        <ListGroup.Item>
+                          <i className="fe fe-play-circle align-middle me-2 text-primary"></i>
+                          {courseEnrolmentDetail.theCourse.houres}
+                        </ListGroup.Item>
+                        <ListGroup.Item>
+                          <i className="fe fe-award me-2 align-middle text-success"></i>
+                          {courseEnrolmentDetail.theCourse.hasCertificate ? 'Certified' : 'No Certified'}
+                        </ListGroup.Item>
+                        <ListGroup.Item>
+                          <i className="fe fe-calendar align-middle me-2 text-info"></i>
+                          {courseEnrolmentDetail.theCourse.lessonCounts} Cashir
+                        </ListGroup.Item>
+                        <ListGroup.Item>
+                          <i className="fe fe-video align-middle me-2 text-secondary"></i>
+                          Daawo Markasta
+                        </ListGroup.Item>
+                        {/* <ListGroup.Item className="bg-transparent">
+                          <i className="fe fe-clock align-middle me-2 text-warning"></i>
+                          Lifetime access
+                        </ListGroup.Item> */}
+                        <br></br>
+                      </div>
+
+                      <div className="d-grid">
+                        <Button variant="success" onClick={enrollFreeCourse}
+                          className="mt-3"
+                        >
+                          IS-DIWAANGALI <strong>FREE</strong>
+                        </Button>
+                      </div>
+                    </div>
+
                   ) : (
                     <div>
                       <div className="mb-3">
@@ -376,12 +439,12 @@ const CourseDetail = ({ match }) => {
                 </Card.Body>
               </Card>
               <br></br>
-              <Card className="mb-4">
-                {/* Card header */}
+              {/* <Card className="mb-4">
+     
                 <Card.Header>
                   <h4 className="mb-0">What’s included</h4>
                 </Card.Header>
-                {/* Card Body */}
+           
                 <Card.Body className="p-0">
                   <ListGroup variant="flush">
                     <ListGroup.Item>
@@ -406,7 +469,7 @@ const CourseDetail = ({ match }) => {
                     </ListGroup.Item>
                   </ListGroup>
                 </Card.Body>
-              </Card>
+              </Card> */}
             </Col>
           </Row>
           {/* Card */}

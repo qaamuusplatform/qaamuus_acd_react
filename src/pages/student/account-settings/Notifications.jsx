@@ -22,9 +22,10 @@ import { CurrentUserContext } from 'services/currentUserContext';
 import DotBadge from 'components/elements/bootstrap/DotBadge';
 import NotificationData from 'data/NotificationData';
 import { Fragment } from 'react';
+import NotificationTable from './NotificationTable';
 
 const Notifications = (props) => {
-	const { theUser, setTheUser } = useContext(CurrentUserContext);
+	const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 	const account = props.location.pathname.substring(21, 11);
 	function NotificationsIcon(icon, color) {
 		if (icon === 'ThumbsUp') {
@@ -85,6 +86,16 @@ const Notifications = (props) => {
 				</Card.Header>
 					
 					<Card.Body className="rounded-3 p-0">
+					{currentUser.theNotifications ?  (<NotificationTable courses_data={currentUser.theNotifications} />):(
+						<ShimmerContentBlock
+							title
+							text
+							cta
+							thumbnailWidth={370}
+							thumbnailHeight={370}
+						/>) }
+			
+
 							<ListGroup>
 								{NotificationData.map((item, index) => {
 									return (

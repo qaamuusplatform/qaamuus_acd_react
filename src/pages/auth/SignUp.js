@@ -1,5 +1,5 @@
 // import node module libraries
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import "appStyle.css";
 import http from "services/httpService";
@@ -25,16 +25,15 @@ import { getAllUsernamesAnsEmails } from "services/authService";
 import { ShimmerThumbnail } from "react-shimmer-effects";
 export default function SignUp() {
   const [sendedCode, setSendedCode] = useState(0);
-
+  const [existsUsernamesWithEmail, setExistsUsernamesWithEmail] = useState({})
   const history = useHistory();
-  const existUsernames = [
-    "asdasdas",
-    "dasdasdas",
-    "maxamedj",
-    "maxamed",
-    "axamed",
-  ];
-
+  const qInit = async () => {
+    const { emails, usernames } = await getAllUsernamesAnsEmails();
+    setExistsUsernamesWithEmail({ emails: emails, usernames: usernames })
+  }
+  useEffect(() => {
+    qInit()
+  }, []);
   const [modalShow, setModalShow] = useState(false);
   const [registringModal, setRegistringModal] = useState(false);
   const handleClose = () => {
@@ -94,7 +93,17 @@ export default function SignUp() {
       email: yub
         .string()
         .email("Soo Gali Email Gira")
-        .required("Soo Gali Email"),
+        .required("Soo Gali Email").test(
+          "uniqueEmail",
+          "emailkan horay ayuu u jiray",
+          function (_theEmail) {
+            if (existsUsernamesWithEmail.emails.includes(_theEmail)) {
+              return false;
+            } else {
+              return true;
+            }
+          }
+        ),
       password: yub.string().min(4).required(),
       username: yub
         .string()
@@ -104,7 +113,7 @@ export default function SignUp() {
           "uniqueUsername",
           "usernamekan horay ayuu u jiray",
           function (_theUsername) {
-            if (existUsernames.includes(_theUsername)) {
+            if (existsUsernamesWithEmail.usernames.includes(_theUsername)) {
               return false;
             } else {
               return true;
@@ -151,80 +160,76 @@ export default function SignUp() {
         <Modal show={modalShow} data-backdrop="static" backdrop="static" onHide={handleClose} centered>
           <Modal.Header closeButton>
             <Modal.Title>Hubinta Emailka</Modal.Title>
-            <br></br>
           </Modal.Header>
           <Modal.Body>
-            {registringModal ? (<div>
 
-              <ShimmerThumbnail height={100} rounded />
-            </div>) : (
-              <Col lg={12} md={12} sm={12} className="mb-3">
-                <h4 className="mb-0">Email Address</h4>
-                <p>
-                  Fariin ayaa laguugu diray emailkan{" "}
-                  <span className="text-success">
-                    {registringUserForm.values.email}
-                  </span>
-                </p>
-                <Form.Group>
-                  <Form.Label htmlFor="email">Codeka Hubinta</Form.Label>
-                  <Form.Control
-                    placeholder="00 00 00"
-                    type="text"
-                    id="activationCode"
-                    name="activationCode"
-                    value={registringUserForm.values.activationCode}
-                    onChange={registringUserForm.handleChange}
-                    onBlur={registringUserForm.handleBlur}
-                    isInvalid={
-                      registringUserForm.errors.activationCode &&
-                        registringUserForm.touched.activationCode
-                        ? true
-                        : false
-                    }
-                    isValid={
-                      registringUserForm.errors.activationCode &&
-                        registringUserForm.touched.activationCode
-                        ? false
-                        : true
-                    }
-                    required
-                  />
-                  <Form.Control.Feedback type="valid">
-                    waad ku guulaysatay activation codeka
-                  </Form.Control.Feedback>
+            <Col lg={12} md={12} sm={12} className="mb-3">
+              <p>
+                Fariin ayaa laguugu diray emailkan{" "}
+                <span className="text-success">
+                  {registringUserForm.values.email}
+                </span>
+              </p>
+              <Form.Group>
+                <Form.Label htmlFor="email">Codeka Hubinta</Form.Label>
+                <Form.Control
+                  placeholder="00 00 00"
+                  type="text"
+                  id="activationCode"
+                  name="activationCode"
+                  value={registringUserForm.values.activationCode}
+                  onChange={registringUserForm.handleChange}
+                  onBlur={registringUserForm.handleBlur}
+                  isInvalid={
+                    registringUserForm.errors.activationCode &&
+                      registringUserForm.touched.activationCode
+                      ? true
+                      : false
+                  }
+                  isValid={registringUserForm.values.activationCode ?
+                    registringUserForm.errors.activationCode &&
+                      registringUserForm.touched.activationCode
+                      ? false
+                      : true
+                    : false
+                  }
+                  required
+                />
+                <Form.Control.Feedback type="valid">
+                  waad ku guulaysatay activation codeka
+                </Form.Control.Feedback>
 
-                  <Form.Control.Feedback type="invalid">
-                    {registringUserForm.errors.activationCode}
-                  </Form.Control.Feedback>
-                </Form.Group>
+                <Form.Control.Feedback type="invalid">
+                  {registringUserForm.errors.activationCode}
+                </Form.Control.Feedback>
+              </Form.Group>
 
-              </Col>
+            </Col>
 
-            )}
+
 
           </Modal.Body>
-          {registringModal ? (<div></div>) : (
-            <Modal.Footer>
-              <Button variant="secondary" size="sm" onClick={handleClose}>
-                Close
-              </Button>
-              {/* {formIsLoading ? (
-                  <Button variant="primary" size="md" disabled>
-                    <Spinner
-                      as="span"
-                      animation="border"
-                      size="sm"
-                      role="status"
-                      aria-hidden="true"
-                    />
-                    &nbsp; Loading...
-                  </Button>
-                ) : ()} */}
-              <Button variant="primary" onClick={registringUserForm.submitForm} size="md"> Diiwaangali </Button>
 
-            </Modal.Footer>
-          )}
+          <Modal.Footer>
+            <Button variant="secondary" size="sm" onClick={handleClose}>
+              Close
+            </Button>
+            {registringModal ? (
+              <Button variant="primary" size="md" disabled>
+                <Spinner
+                  as="span"
+                  animation="border"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                />
+                &nbsp; Loading...
+              </Button>
+            ) : (<Button variant="primary" onClick={registringUserForm.submitForm} size="md"> Diiwaangali </Button>)}
+
+
+          </Modal.Footer>
+
 
         </Modal>
         <br />

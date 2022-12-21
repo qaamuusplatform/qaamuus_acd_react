@@ -58,11 +58,10 @@ export default function SignIn() {
             toast.success("si guul leh ayaad u soo gashay");
             const { data } = await getLoggedInUser();
             if (data) {
-              // console.log("data ready",data)
               setCurrentUser(data);
             }
             setFormIsLoading(false);
-            history.replace("/user/dashboard/");
+            history.push("/user/dashboard/");
           }
         });
     } catch (error) {

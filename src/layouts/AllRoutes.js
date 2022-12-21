@@ -198,7 +198,7 @@ function AllRoutes() {
 
       <AppRoute
         exact
-        path="/events/:slug"
+        path="/event/:slug"
         layout={DefaultLayout}
         component={EventDetail}
       />

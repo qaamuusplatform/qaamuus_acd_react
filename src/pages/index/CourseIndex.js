@@ -19,6 +19,8 @@ import AboutUs from './AboutUs';
 import { httpFetcher } from 'services/coursesService';
 import { ShimmerPostItem } from 'react-shimmer-effects';
 import AppIntegrationData from 'data/AppIntegrationData';
+import InternationalFriends from './InternationalFriends';
+import HeroVideos from './HeroVideos';
 
 // import sub components
 
@@ -120,6 +122,7 @@ const CourseIndex = () => {
 					</div>
 
 					<br></br> */}
+					
 					<div className="position-relative">
 						<Row>
 							{!popularCourses && !error
@@ -139,7 +142,7 @@ const CourseIndex = () => {
 								</Col>
 							))}
 						</Row>
-
+						
 						{/* <Slider {...courseSliderSettings} className="pb-sm-5 mb-5 slick-slider-wrapper">
 							{popularCourses && !error
 								? [1, 2, 3, 4, 5, 6, 7, 8].map((idx) => (
@@ -159,7 +162,7 @@ const CourseIndex = () => {
 							))}
 
 						</Slider> */}
-
+						{/* <HeroVideos/> */}
 						{/* <h2 className="mb-0 mx-2">HERO EVENTS</h2> */}
 
 
@@ -169,8 +172,6 @@ const CourseIndex = () => {
 
 
 					<br></br>
-					<br></br>
-					{/* <h2 className="mb-0 mx-2">Fagaaraha Qaamuus</h2> */}
 					{/* <br></br> */}
 					<Row className="mb-8">
 						<Col md={12}>
@@ -178,24 +179,9 @@ const CourseIndex = () => {
 							<TestimonialsSlider />
 						</Col>
 					</Row>
+					<h2 className="mb-0 mx-2">fagaaraha aamuus</h2>
 					<br />
-					<Slider {...settings} className="pb-sm-5 mb-5 slick-slider-wrapper">
-						{AppIntegrationData.map((item, index) => {
-							return (
-								<div className="item px-md-1" key={index}>
-									<Card className="card-bordered border-gray-800 bg-black h-100">
-										{/* card body  */}
-										<Card.Body>
-											<Image src={item.applogo} alt="" className="icon-lg mb-3" />
-											<h3 className="text-white">{item.appname}</h3>
-											<p className="mb-0 text-white-50">{item.content}</p>
-										</Card.Body>
-									</Card>
-								</div>
-							);
-						})}
-
-					</Slider>
+					<InternationalFriends/>
 					<LogosTopHeading2
 						title="Loved by over 5 million users from companies like"
 						logos={LogoList1}

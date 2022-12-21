@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 function Timer({ date }) {
-  const comingDate = new Date("2022-12-26T16:12:01+03:00").getTime();
+  const comingDate = new Date(date).getTime();
   const [timer, setTimer] = useState(comingDate);
 
   const calculateTimeLeft = (timer) => {
@@ -38,7 +38,7 @@ function Timer({ date }) {
     return <p></p>;
   return (
     <>
-      <p style={{ margin: "0px", fontWeight: 600 }}>Coming soon ...</p>
+      <p style={{ margin: "0px", fontWeight: 600 }}>Waa ka dhiman</p>
       <TimerStyle>
         <div className="days">
           <p>{days}</p>

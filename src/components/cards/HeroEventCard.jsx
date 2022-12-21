@@ -31,7 +31,7 @@ const EventCardFullWidth = ({ event }) => {
       <Row className="g-0">
         {/*  Image */}
         <Link
-          to={`/events/${event.slug}`}
+          to={`/event/${event.slug}`}
           className="col-lg-8 col-md-12 col-12 bg-cover img-left-rounded"
           style={{
             background: `url(${END_POINT + event.coverImage})`,

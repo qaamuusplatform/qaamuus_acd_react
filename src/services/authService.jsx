@@ -31,7 +31,7 @@ export const getLoggedInUser = async () => {
 };
 
 export const getAllUsernamesAnsEmails = async () => {
-  const allUsernamesAndEmails = [];
+  let allUsernamesAndEmails = {};
 
   try {
     const { data } = await http.get("api/user-list/");
@@ -41,9 +41,13 @@ export const getAllUsernamesAnsEmails = async () => {
       emails.push(userInfo.email);
       usernames.push(userInfo.username);
     }
-    allUsernamesAndEmails.push({ emails: emails, usernames: usernames });
+
+    allUsernamesAndEmails={ emails: emails, usernames: usernames };
+
     // allUsernamesAndEmails=data.username
-  } catch (error) {}
+  } catch (error) {
+
+  }
   return allUsernamesAndEmails;
 };
 
