@@ -17,10 +17,11 @@ import LogosTopHeading2 from 'components/clientlogos/LogosTopHeading2';
 import LogoList1 from 'data/LogoList1';
 import AboutUs from './AboutUs';
 import { httpFetcher } from 'services/coursesService';
-import { ShimmerPostItem } from 'react-shimmer-effects';
+import { ShimmerContentBlock, ShimmerPostItem } from 'react-shimmer-effects';
 import AppIntegrationData from 'data/AppIntegrationData';
 import InternationalFriends from './InternationalFriends';
 import HeroVideos from './HeroVideos';
+import EventCardFullWidth from 'components/cards/HeroEventCard';
 
 // import sub components
 
@@ -28,6 +29,7 @@ const CourseIndex = () => {
 
 	const { data: popularCourses, error } = useSWR(`api/qaCourse-list/`, httpFetcher);
 	// console.log(data);
+	const { data: events, error: eventError } = useSWR("api/qaEvent-list/", httpFetcher);
 	const courseSliderSettings = {
 		infinite: true,
 		slidesToShow: 4,
@@ -109,8 +111,31 @@ const CourseIndex = () => {
 				</Container>
 			</div> */}
 
+
 			<div className="pb-lg-8 pt-lg-3 py-6">
 				<Container>
+						<h2 className="mb-2">Event Comming son</h2>
+					{!events && !eventError
+						? [1].map((idx) => (
+							<div>
+								<ShimmerContentBlock
+									title
+									text
+									cta
+									thumbnailWidth={500}
+									thumbnailHeight={500}
+								/>
+								<br></br>
+							</div>
+						))
+						: null}
+					{events
+						?.filter((event) => event.heroEvent === true)
+						.map((event, index) => (
+							<Col xl={12} lg={12} md={12} sm={12} key={index}>
+								<EventCardFullWidth event={event} />
+							</Col>
+						))}
 					{/* <h2 className="mb-0 mx-2">Most Popular</h2> */}
 
 					{/* <CourseSlider popular={true} /> */}
@@ -122,8 +147,11 @@ const CourseIndex = () => {
 					</div>
 
 					<br></br> */}
-					
+
 					<div className="position-relative">
+						<div className="mb-2">
+							<h3 className="mb-0 fw-bold">Event Comming son</h3>
+						</div>
 						<Row>
 							{!popularCourses && !error
 								? [1, 2, 3, 4].map((idx) => (
@@ -142,7 +170,7 @@ const CourseIndex = () => {
 								</Col>
 							))}
 						</Row>
-						
+
 						{/* <Slider {...courseSliderSettings} className="pb-sm-5 mb-5 slick-slider-wrapper">
 							{popularCourses && !error
 								? [1, 2, 3, 4, 5, 6, 7, 8].map((idx) => (
@@ -179,9 +207,9 @@ const CourseIndex = () => {
 							<TestimonialsSlider />
 						</Col>
 					</Row>
-					<h2 className="mb-0 mx-2">fagaaraha aamuus</h2>
+					<h2 className="mb-0">Saaxiibada Qaamuus</h2>
 					<br />
-					<InternationalFriends/>
+					<InternationalFriends />
 					<LogosTopHeading2
 						title="Loved by over 5 million users from companies like"
 						logos={LogoList1}

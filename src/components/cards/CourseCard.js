@@ -129,7 +129,7 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 				<Row className="g-0">
 					<Link
 						to={`/courses/${item.slug}`}
-						className="bg-cover img-left-rounded col-12 col-md-12 col-xl-3 col-lg-3 "
+						className="bg-cover img-left-rounded col-12 col-md-12 col-xl-3 col-lg-3"
 						style={{
 							background: `url(${END_POINT}${item.coverImage})`,
 							backgroundRepeat: 'no-repeat',

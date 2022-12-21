@@ -11,9 +11,6 @@ import Icon from '@mdi/react';
 import { mdiFacebook, mdiTwitter, mdiLinkedin, mdiContentCopy } from '@mdi/js';
 
 // import data
-import NavbarDefault from 'routes/NavbarDefault';
-import GKYouTube from 'components/marketing/common/video/GKYouTube';
-import GKAccordionDefault from 'components/accordions/GKAccordionDefault';
 import useSWR from 'swr';
 import { useContext } from 'react';
 import { CurrentUserContext } from 'services/currentUserContext';
