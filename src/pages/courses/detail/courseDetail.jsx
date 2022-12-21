@@ -347,7 +347,7 @@ const CourseDetail = ({ match }) => {
                       Start Free Month
                     </Link> */}
                         {courseEnrolmentDetail.isEnrolled ? (
-                          <Link to={`/`} className={`btn btn-primary`} >
+                          <Link to={`/courses/${courseEnrolmentDetail.theCourse.slug}/watch`} className={`btn btn-primary`} >
                             Watch Course
                           </Link>
                         ) : (<Link
