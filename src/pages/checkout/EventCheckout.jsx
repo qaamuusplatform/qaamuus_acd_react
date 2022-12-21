@@ -99,7 +99,7 @@ const EventCheckout = () => {
               />
             </Form.Group>
           </div>
-          <Button variant="primary">PayPal Checkout</Button>
+          <Button  variant="primary">PayPal Checkout</Button>
         </Form>
       </Fragment>
     );

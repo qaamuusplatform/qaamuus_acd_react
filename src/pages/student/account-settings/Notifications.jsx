@@ -1,180 +1,139 @@
 // import node module libraries
-import React, { useMemo, Fragment } from 'react';
+import { withRouter } from 'react-router-dom';
 import {
-	useTable,
-	useFilters,
-	useGlobalFilter,
-	usePagination
-} from 'react-table';
-import { Card, Row, Col, Dropdown, Table } from 'react-bootstrap';
+	Col,
+	Row,
+	Card,
+	ListGroup,
+	OverlayTrigger,
+	Tooltip,
+	CloseButton,
+	Image
+} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { Trash, Edit, MoreVertical } from 'react-feather';
-import OrdersData from 'data/OrdersData';
+
+// import custom components
+import { ThumbsUp, Award, MessageSquare } from 'react-feather';
+
+// import profile layout wrapper
 import ProfileLayout from 'layouts/ProfileLayout';
-import GlobalFilter from 'components/elements/advance-table/GlobalFilter';
-import Pagination from 'components/elements/advance-table/Pagination';
-import { numberWithCommas } from 'helper/utils';
+import { useContext,useState } from 'react';
+import { CurrentUserContext } from 'services/currentUserContext';
+import DotBadge from 'components/elements/bootstrap/DotBadge';
+import NotificationData from 'data/NotificationData';
+import { Fragment } from 'react';
 
+const Notifications = (props) => {
+	const { theUser, setTheUser } = useContext(CurrentUserContext);
+	const account = props.location.pathname.substring(21, 11);
+	function NotificationsIcon(icon, color) {
+		if (icon === 'ThumbsUp') {
+			return <ThumbsUp className={`text-${color} me-1`} size="12px" />;
+		}
+		if (icon === 'Award') {
+			return <Award className={`text-${color} me-1`} size="12px" />;
+		}
+		if (icon === 'MessageSquare') {
+			return <MessageSquare className={`text-${color} me-1`} size="12px" />;
+		}
+	}
+	function MarkAsRead(removable) {
+		if (removable) {
+			return (
+				<Fragment>
+					<OverlayTrigger
+						placement="top"
+						overlay={<Tooltip id="tooltip-top">Mark as read</Tooltip>}
+					>
+						<Link to="#">
+							<DotBadge bg="info"></DotBadge>
+						</Link>
+					</OverlayTrigger>
 
-const Notifications = () => {
-	// The forwardRef is important!!
-	// Dropdown needs access to the DOM node in order to position the Menu
-	const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-		<Link
-			to=""
-			ref={ref}
-			onClick={(e) => {
-				e.preventDefault();
-				onClick(e);
-			}}
-		>
-			{children}
-		</Link>
-	));
-
-	const ActionMenu = () => {
-		return (
-			<Dropdown>
-				<Dropdown.Toggle as={CustomToggle}>
-					<MoreVertical size="15px" className="text-secondary" />
-				</Dropdown.Toggle>
-				<Dropdown.Menu align="end">
-					<Dropdown.Header>SETTINGS</Dropdown.Header>
-					<Dropdown.Item eventKey="1">
-						<Edit size="18px" className="dropdown-item-icon" /> Edit
-					</Dropdown.Item>
-					<Dropdown.Item eventKey="2">
-						<Trash size="18px" className="dropdown-item-icon" /> Remove
-					</Dropdown.Item>
-				</Dropdown.Menu>
-			</Dropdown>
-		);
-	};
-
-	const columns = useMemo(
-		() => [
-			{ accessor: 'id', Header: 'ID', show: false },
-			{ accessor: 'course', Header: 'FROM' },
-			{ accessor: 'course', Header: 'MESSAGE' },
-			
-			{ accessor: 'date', Header: 'DATE' },
-			{ accessor: 'method', Header: 'METHOD' },
-			{
-				accessor: 'actionmenu',
-				Header: '',
-				Cell: () => {
-					return <ActionMenu />;
-				}
-			}
-		],
-		[]
-	);
-
-	const notificationData = useMemo(() => OrdersData, []);
-
-	const {
-		getTableProps,
-		getTableBodyProps,
-		headerGroups,
-		page,
-		nextPage,
-		previousPage,
-		state,
-		gotoPage,
-		pageCount,
-		prepareRow,
-		setGlobalFilter
-	} = useTable(
-		{
-			columns,
-			notificationData,
-			initialState: {
-				pageSize: 6,
-				hiddenColumns: columns.map((column) => {
-					if (column.show === false) return column.accessor || column.id;
-					else return false;
-				})
-			}
-		},
-		useFilters,
-		useGlobalFilter,
-		usePagination
-	);
-
-	const { pageIndex, globalFilter } = state;
-
+					<OverlayTrigger
+						placement="top"
+						overlay={<Tooltip id="tooltip-top">Remove</Tooltip>}
+					>
+						<CloseButton className="btn-close fs-6 d-block me-1" />
+					</OverlayTrigger>
+				</Fragment>
+			);
+		} else {
+			return (
+				<OverlayTrigger
+					placement="top"
+					overlay={<Tooltip id="tooltip-top">Mark as unread</Tooltip>}
+				>
+					<Link to="#">
+						<DotBadge bg="secondary"></DotBadge>
+					</Link>
+				</OverlayTrigger>
+			);
+		}
+	}
 	return (
 		<ProfileLayout>
+			{account === 'instructor'}
 			<Card className="border-0">
 				<Card.Header>
 					<div className="mb-3 mb-lg-0">
-						<h3 className="mb-0">Ogaysiisyadaada</h3>
+						<h3 className="mb-0">Profile Details</h3>
 						<p className="mb-0">
-							Order Dashboard is a quick overview of all current orders.
+							You have full control to manage your own account setting.
 						</p>
 					</div>
 				</Card.Header>
-				<Card.Body>
-					<div className=" overflow-hidden">
-						<Row>
-							<Col lg={12} md={12} sm={12} className="mb-lg-0 mb-2">
-								<GlobalFilter
-									filter={globalFilter}
-									setFilter={setGlobalFilter}
-									placeholder="Search Orders"
-								/>
-							</Col>
-						</Row>
-					</div>
-				</Card.Body>
-				<Card.Body className="p-0 pb-5">
-					<Row>
-						<Col lg={12} md={12} sm={12}>
-							<div className="table-responsive ">
-								<Table {...getTableProps()} className="text-nowrap">
-									<thead className="table-light">
-										{headerGroups.map((headerGroup) => (
-											<tr {...headerGroup.getHeaderGroupProps()}>
-												{headerGroup.headers.map((column) => (
-													<th {...column.getHeaderProps()}>
-														{column.render('Header')}
-													</th>
-												))}
-											</tr>
-										))}
-									</thead>
-									<tbody {...getTableBodyProps()}>
-										{page.map((row) => {
-											prepareRow(row);
-											return (
-												<tr {...row.getRowProps()}>
-													{row.cells.map((cell) => {
-														return (
-															<td {...cell.getCellProps()}>
-																{cell.render('Cell')}
-															</td>
-														);
-													})}
-												</tr>
-											);
-										})}
-									</tbody>
-								</Table>
-							</div>
-						</Col>
-					</Row>
-					{/* Pagination @ Footer */}
-					<Pagination
-						previousPage={previousPage}
-						pageCount={pageCount}
-						pageIndex={pageIndex}
-						gotoPage={gotoPage}
-						nextPage={nextPage}
-					/>
-				</Card.Body>
+					
+					<Card.Body className="rounded-3 p-0">
+							<ListGroup>
+								{NotificationData.map((item, index) => {
+									return (
+										<ListGroup.Item className="py-4" key={index}>
+											<Row className="align-items-center">
+												<Col>
+													<div className="d-flex align-items-center">
+														<Link to="#">
+															<Image
+																src={item.image}
+																alt=""
+																className="avatar-lg rounded-circle"
+															/>
+														</Link>
+														<div className="ms-3">
+															<Link to="#">
+																<p className="mb-0 text-body">
+																	<span className="fw-bold mb-0 h5">
+																		{item.name}:
+																	</span>{' '}
+																	{item.notification}
+																</p>
+															</Link>
+															<span className="fs-6 text-muted">
+																<span>
+																	{NotificationsIcon(
+																		item.icon,
+																		item.colorClass
+																	)}
+																	{item.date},
+																</span>
+																<span className="ms-1">{item.time}</span>
+															</span>
+														</div>
+													</div>
+												</Col>
+												<Col className="col-auto text-center p-2">
+													{MarkAsRead(item.removable)}
+												</Col>
+											</Row>
+										</ListGroup.Item>
+									);
+								})}
+							</ListGroup>
+						</Card.Body>
+					
 			</Card>
 		</ProfileLayout>
 	);
 };
 
-export default Notifications;
+export default withRouter(Notifications);

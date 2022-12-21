@@ -1,7 +1,7 @@
 // ** Import from react dom
 import { Route, Switch, Redirect } from "react-router-dom";
 
-import { localUser } from "../services/authService";
+import { userAccessToken } from "../services/authService";
 
 /* ----------------------------------- */
 /* IMPORTS FOR MARKETING PAGES - START */
@@ -34,6 +34,8 @@ import ReferralData from "pages/student/account-settings/ReferralData";
 import EventCheckout from "./../pages/checkout/EventCheckout";
 import { CurrentUserContext } from "services/currentUserContext";
 import WatchCourse from "pages/courses/watch";
+import ForgetPassword from "pages/auth/ForgetPassword";
+import CourseResumeLayout from "./CourseResumeLayout";
 
 /* IMPORTS FOR MARKETING PAGES - END */
 /* --------------------------------- */
@@ -54,7 +56,7 @@ const ProtectedRoute = ({ component: Component, layout: Layout, ...rest }) => {
     <Route
       {...rest}
       render={(props) => {
-        if (localUser() === null) return <Redirect to={"/auth/login"} />;
+        if (userAccessToken() === null) return <Redirect to={"/auth/login"} />;
 
         return (
           <Layout>
@@ -82,13 +84,19 @@ function AllRoutes() {
       />
       <AppRoute
         exact
+        path="/auth/forget-password/"
+        layout={AuthLayout}
+        component={ForgetPassword}
+      />
+      <AppRoute
+        exact
         path="/join/sign-up"
         layout={AuthLayout}
         component={SignUp}
       />
 
       {/* dashboard edit userifno */}
-      <AppRoute
+      <ProtectedRoute
         exact
         path="/user/dashboard/"
         layout={DefaultLayout}
@@ -100,7 +108,7 @@ function AllRoutes() {
         layout={DefaultLayout}
         component={EditProfile}
       />
-      <AppRoute
+      <ProtectedRoute
         exact
         path="/user/notifications/"
         layout={DefaultLayout}
@@ -118,7 +126,7 @@ function AllRoutes() {
         layout={DefaultLayout}
         component={EnrolledCourses}
       />
-      <AppRoute
+      <ProtectedRoute
         exact
         path="/user/referral-data/"
         layout={DefaultLayout}
@@ -149,7 +157,7 @@ function AllRoutes() {
         layout={DefaultLayout}
         component={InstructorDetail}
       />
-      <AppRoute
+      <ProtectedRoute
         exact
         path="/checkout/course/:courseid"
         layout={DefaultLayout}
@@ -173,14 +181,14 @@ function AllRoutes() {
       />
       <AppRoute
         exact
-        path="/courses/:id"
+        path="/courses/:slug"
         layout={DefaultLayout}
         component={CourseDetail}
       />
-      <AppRoute
+      <ProtectedRoute
         exact
-        path="/courses/:id/watch"
-        layout={DefaultLayout}
+        path="/courses/:slug/watch"
+        layout={CourseResumeLayout}
         component={WatchCourse}
       />
       <AppRoute

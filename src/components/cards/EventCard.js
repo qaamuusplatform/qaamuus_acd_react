@@ -34,7 +34,7 @@ const EventCard = ({ event }) => {
       </Link>
       {/* Card body  */}
       <Card.Body>
-        <div className="d-flex justify-content-between p-2 align-items-center mb-2  border border-primary rounded">
+        <div className="d-flex justify-content-between p-2 align-items-center mb-2 opacity-75  border border-primary rounded">
           <p className="mb-0 fw-bold">
             {moment(event.dateTimeStarting).format("MMMM Do YYYY")}
           </p>

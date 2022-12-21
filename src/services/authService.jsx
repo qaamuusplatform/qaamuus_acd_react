@@ -59,6 +59,6 @@ export const updateUserInfo = async (body, theUserId) => {
   }
 };
 
-export const localUser = () => {
+export const userAccessToken = () => {
   return localStorage.getItem("access");
 };

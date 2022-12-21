@@ -1,6 +1,7 @@
 // import node module libraries
 import { Fragment, useState, useContext } from "react";
 import PropTypes from "prop-types";
+import moment from "moment/moment";
 import { Link } from "react-router-dom";
 import {
   Row,
@@ -36,6 +37,7 @@ import NavDropdownMain from "layouts/navbars/NavDropdownMain";
 import baseUrl from "services/baseUrl";
 import { CurrentUserContext } from "services/currentUserContext";
 import { ShimmerCircularImage } from "react-shimmer-effects";
+import { END_POINT } from "helper/constants";
 
 const NavbarDefault = ({ headerstyle, isLoading, login }) => {
   const isDesktop = useMediaQuery({
@@ -70,7 +72,7 @@ const NavbarDefault = ({ headerstyle, isLoading, login }) => {
             align="end"
           >
             <div className="border-bottom px-3 pt-3 pb-3 d-flex justify-content-between align-items-end">
-              <span className="h4 mb-0">Notifications</span>
+              <span className="h4 mb-0">Ogaysiisyada</span>
               <Link to="# " className="text-muted">
                 <span className="align-middle">
                   <i className="fe fe-settings me-1"></i>
@@ -79,7 +81,7 @@ const NavbarDefault = ({ headerstyle, isLoading, login }) => {
             </div>
             <SimpleBar style={{ maxHeight: "300px" }}>
               <ListGroup variant="flush">
-                {NotificationList.map(function (item, index) {
+                {currentUser.theNotifications?.filter((theNotific) => theNotific.seen === false).map(function (theNotific, index) {
                   return (
                     <ListGroup.Item
                       className={index === 0 ? "bg-light" : ""}
@@ -90,19 +92,19 @@ const NavbarDefault = ({ headerstyle, isLoading, login }) => {
                           <Link className="text-body" to="#">
                             <div className="d-flex">
                               <Image
-                                src={item.image}
+                                src={END_POINT +theNotific.fromUser.profileImage}
                                 alt=""
                                 className="avatar-md rounded-circle"
                               />
                               <div className="ms-3">
-                                <h5 className="fw-bold mb-1">{item.sender}</h5>
-                                <p className="mb-3">{item.message}</p>
+                                <h5 className="fw-bold mb-1">{theNotific.title}</h5>
+                                <p className="mb-3">{theNotific.text}</p>
                                 <span className="fs-6 text-muted">
                                   <span>
                                     <span className="fe fe-thumbs-up text-success me-1"></span>
-                                    {item.date}
+                                    {moment(theNotific.dateTime).format("MMMM Do YYYY")}
                                   </span>
-                                  <span className="ms-1">{item.time}</span>
+                                  <span className="ms-1">{moment(theNotific.dateTime).format("h:mm:ss a")}</span>
                                 </span>
                               </div>
                             </div>
@@ -129,7 +131,7 @@ const NavbarDefault = ({ headerstyle, isLoading, login }) => {
             </SimpleBar>
             <div className="border-top px-3 pt-3 pb-3">
               <Link
-                to="/authentication/notifications"
+                to="/user/notifications/"
                 className="text-link fw-semi-bold"
               >
                 See all Notifications
@@ -147,7 +149,7 @@ const NavbarDefault = ({ headerstyle, isLoading, login }) => {
             <div className="avatar avatar-md avatar-indicators avatar-online">
               <Image
                 alt="avatar"
-                src={baseUrl.baseUrl + currentUser.profileImage}
+                src={currentUser.profileImage? baseUrl.baseUrl + currentUser.profileImage:`https://ui-avatars.com/api/?name=${currentUser.fullName}&background=19a9c4&color=fff`}
                 className="rounded-circle"
               />
             </div>
@@ -163,7 +165,7 @@ const NavbarDefault = ({ headerstyle, isLoading, login }) => {
                 <div className="avatar avatar-md avatar-indicators avatar-online">
                   <Image
                     alt="avatar"
-                    src={baseUrl.baseUrl + currentUser.profileImage}
+                    src={currentUser.profileImage? baseUrl.baseUrl + currentUser.profileImage:`https://ui-avatars.com/api/?name=${currentUser.fullName}&background=19a9c4&color=fff`}
                     className="rounded-circle"
                   />
                 </div>
@@ -205,7 +207,7 @@ const NavbarDefault = ({ headerstyle, isLoading, login }) => {
       >
         <Container fluid className="px-0 ps-2">
           <Navbar.Brand as={Link} to="/">
-            <Image src={Logo} alt="" />
+            <Image width={175} src={Logo} alt="" />
           </Navbar.Brand>
           <div
             className={`navbar-nav navbar-right-wrap ms-auto d-lg-none nav-top-wrap ${

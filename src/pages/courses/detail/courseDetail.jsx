@@ -35,45 +35,52 @@ import CourseJavascript from "assets/images/course/course-javascript.jpg";
 import Avatar1 from "assets/images/avatar/avatar-1.jpg";
 
 // import data files
-import { CourseIndex } from "data/CourseIndexData";
-import { useEffect } from "react";
-import { getCoursesDetail } from "services/coursesService";
+import { httpFetcher } from "services/coursesService";
 import toast from "react-hot-toast";
 import useSWR from "swr";
 import { youTubeIdFromLink } from "helper/utils";
 import { END_POINT } from "helper/constants";
 import { CurrentUserContext } from "services/currentUserContext";
 import { useContext } from "react";
-import * as Icon from "react-feather";
 import { ShimmerPostDetails } from "react-shimmer-effects";
+import Icon from "@mdi/react";
 
 const CourseDetail = ({ match }) => {
   const [isOpen, setOpen] = useState(false);
-  const [YouTubeURL] = useState("JRzWRZahOVU");
-  const { currentUser } = useContext(CurrentUserContext);
-  const { id } = useParams();
-  const { data, error } = useSWR(
-    `/api/qaCourse-detail-slug/${id}`,
-    getCoursesDetail
+  const { currentUser, userIsLoading } = useContext(CurrentUserContext);
+  const { slug } = useParams();
+  const { data: courseEnrolmentDetail, error } = useSWR(
+    `/api/checkThisUserInrolledCourse-slug/${currentUser.id}/${slug}/`,
+    httpFetcher
   );
   if (error) {
     toast.error(error);
   }
-  if (!data && !error) {
-    return <Fragment>
-      <div className=" pt-8 pb-8">
-        <Container>
-          <ShimmerPostDetails card cta variant="EDITOR" />
-        </Container>
-      </div>
-    </Fragment>;
+  if (userIsLoading) {
+    return (
+      <Fragment>
+        <div className=" pt-8 pb-8">
+          <Container>
+            <ShimmerPostDetails card cta variant="EDITOR" />
+          </Container>
+        </div>
+      </Fragment>
+    );
+  } else {
+    if (!courseEnrolmentDetail && !error) {
+      return (
+        <Fragment>
+          <div className=" pt-8 pb-8">
+            <Container>
+              <ShimmerPostDetails card cta variant="EDITOR" />
+            </Container>
+          </div>
+        </Fragment>
+      );
+    }
   }
 
-  const isUserAlreadyEnrolled = () =>
-    currentUser &&
-    data?.inrolledUsers?.find((user) => user.id == currentUser.id);
-
-  return (
+  return userIsLoading ? null : (
     <Fragment>
       {/* Page header */}
       <div className="pt-lg-8 pb-lg-16 pt-8 pb-12 bg-primary">
@@ -82,9 +89,11 @@ const CourseDetail = ({ match }) => {
             <Col xl={7} lg={7} md={12} sm={12}>
               <div>
                 <h1 className="text-white display-4 fw-semi-bold">
-                  {data.title}
+                  {courseEnrolmentDetail.theCourse.title}
                 </h1>
-                <p className="text-white mb-6 lead">{data.simDesc}</p>
+                <p className="text-white mb-6 lead">
+                  {courseEnrolmentDetail.theCourse.simDesc}
+                </p>
                 <div className="d-flex align-items-center">
                   <Tippy content="Add to Bookmarks" animation={"scale"}>
                     <Link
@@ -97,7 +106,7 @@ const CourseDetail = ({ match }) => {
                   </Tippy>
                   <span className="text-white ms-3">
                     <i className="fe fe-user text-white-50"></i>{" "}
-                    {data.inrolledUsers.length} Enrolled{" "}
+                    {/* {courseEnrolmentDetail.theCourse.inrolledUsers.length} Enrolled{" "} */}
                   </span>
                   <span className="ms-4">
                     <span className="text-warning">
@@ -138,7 +147,9 @@ const CourseDetail = ({ match }) => {
                         fill="#DBD8E9"
                       ></rect>
                     </svg>{" "}
-                    <span className="align-middle">{data.level}</span>
+                    <span className="align-middle">
+                      {courseEnrolmentDetail.theCourse.level}
+                    </span>
                   </span>
                 </div>
               </div>
@@ -151,12 +162,12 @@ const CourseDetail = ({ match }) => {
         <Container>
           <Row>
             <Col lg={8} md={12} sm={12} className="mt-n8 mb-4 mb-lg-0">
-              <Tab.Container defaultActiveKey="contents">
+              <Tab.Container defaultActiveKey="faahfaahin">
                 <Card>
                   <Nav className="nav-lb-tab">
                     {[
+                      "Faahfaahin",
                       "Contents",
-                      "Description",
                       // "Reviews",
                       // "Transcript",
                       // "FAQ",
@@ -177,33 +188,34 @@ const CourseDetail = ({ match }) => {
                       <Tab.Pane eventKey="contents" className="pb-4 pt-3 px-4">
                         {/* Course Index Accordion */}
                         <GKAccordionDefault
-                          accordionItems={data.theComponents}
+                          accordionItems={
+                            courseEnrolmentDetail.theCourse.theComponents
+                          }
                           itemClass="px-0"
                         />
                       </Tab.Pane>
-                      <Tab.Pane eventKey="description" className="pb-4 p-4">
+                      <Tab.Pane eventKey="faahfaahin" className="pb-4 p-4">
                         {/* Description */}
                         <DescriptionTab
-                          description={data.fullDesc}
-                          learn={data.youLearn}
+                          description={courseEnrolmentDetail.theCourse.fullDesc}
+                          learn={courseEnrolmentDetail.theCourse.youLearn}
                         />
                       </Tab.Pane>
                       <Tab.Pane eventKey="reviews" className="pb-4 p-4">
                         {/* Reviews */}
-                        {/* <ReviewsTab /> */}
-                      </Tab.Pane>
-                      <Tab.Pane eventKey="transcript" className="pb-4 p-4">
-                        {/* Transcript */}
-                        {/* <TranscriptTab /> */}
-                      </Tab.Pane>
-                      <Tab.Pane eventKey="faq" className="pb-4 p-4">
-                        {/* FAQ */}
-                        {/* <FAQTab /> */}
                       </Tab.Pane>
                     </Tab.Content>
                   </Card.Body>
                 </Card>
               </Tab.Container>
+              <br></br>
+              <Card>
+                <Card.Body className="pb-4 p-4">
+                  <ReviewsTab
+                    reviews={courseEnrolmentDetail.theCourse.theReviews}
+                  />
+                </Card.Body>
+              </Card>
             </Col>
             <Col lg={4} md={12} sm={12} className="mt-lg-n22">
               {/* Card */}
@@ -212,7 +224,7 @@ const CourseDetail = ({ match }) => {
                   <div
                     className="d-flex justify-content-center position-relative rounded py-10 border-white border rounded-3 bg-cover"
                     style={{
-                      background: `url(${END_POINT}${data.prevImage})`,
+                      background: `url(${END_POINT}${courseEnrolmentDetail.theCourse.prevImage})`,
                       backgroundRepeat: "no-repeat",
                       backgroundSize: "cover",
                       backgroundPosition: "top center",
@@ -233,7 +245,11 @@ const CourseDetail = ({ match }) => {
                   autoplay
                   isOpen={isOpen}
                   videoId={
-                    data.prevVideo ? youTubeIdFromLink(data.prevVideo) : ""
+                    courseEnrolmentDetail.theCourse.prevVideo
+                      ? youTubeIdFromLink(
+                        courseEnrolmentDetail.theCourse.prevVideo
+                      )
+                      : ""
                   }
                   onClose={() => setOpen(false)}
                 />
@@ -242,38 +258,125 @@ const CourseDetail = ({ match }) => {
                 {/* Card body */}
                 <Card.Body>
                   {/* Price single page */}
-                  <div className="mb-3">
-                    <span className="text-dark fw-bold h2 me-2">
-                      ${data.saledPrice}
-                    </span>
-                    <del className="fs-4 text-muted">${data.regularPrice}</del>
-                  </div>
-                  <div className="d-grid">
-                    {/* <Link to="#" className="btn btn-primary mb-2  ">
+                  {courseEnrolmentDetail.theCourse.saledPrice == 0 && courseEnrolmentDetail.theCourse.itsFree ? (
+                     <div className="d-grid">
+                        <Link to={`/`} className={`btn btn-warning text-white`} >
+                    JOIN FOR FREE
+                  </Link>
+                     </div>
+                  
+                  ) : (
+                    <div>
+                      <div className="mb-3">
+                        <span className="text-dark fw-bold h2 me-2">
+                          ${courseEnrolmentDetail.theCourse.saledPrice}
+                        </span>
+                        {courseEnrolmentDetail.theCourse.showRegularPrice ? (
+                          <del className="fs-4 text-muted">
+                            ${courseEnrolmentDetail.theCourse.regularPrice}
+                          </del>
+                        ) : (
+                          <div></div>
+                        )}
+                      </div>
+                      <div className="d-grid">
+                        {/* <Link to="#" className="btn btn-primary mb-2  ">
                       Start Free Month
                     </Link> */}
-                    {
-                        isUserAlreadyEnrolled()?
-                        <Link
-                        to={`${match.url}/watch`}
-                        className={`btn btn-primary`}
-                      >
-                      <Icon.Youtube className="text-white me-2" />
-                      Continue Watching
-                      </Link>
-                        :
-                      <Link
-                        to={`/checkout/course/${data.slug}`}
-                        className={`btn btn-outline-primary`}
-                      >
-                        Enroll Now
-                      </Link>
-                    }
-                  </div>
+                        {courseEnrolmentDetail.isEnrolled ? (
+                          <Link to={`/courses/${courseEnrolmentDetail.theCourse.slug}/watch`} className={`btn btn-primary`} >
+                            Watch Course
+                          </Link>
+                        ) : (<Link
+                          to={`/checkout/course/${courseEnrolmentDetail.theCourse.slug}`}
+                          className={`btn btn-outline-warning`}
+                        >
+                          Enroll Now
+                        </Link>)}
+                        {/* {                      
+                    ) : (
+                     
+                    )} */}
+                      </div>
+                    </div>
+                  )}
+
+
                 </Card.Body>
               </Card>
               {/* Card */}
-              <Card className="mb-4 d-none">
+
+              {/* Card */}
+              <Card>
+                {/* Card body */}
+                <Card.Body>
+                  <div className="d-flex align-items-center">
+                    <div className="position-relative">
+                      <Image
+                        src={`${END_POINT}${courseEnrolmentDetail.theCourse.instructor.profileImage}`}
+                        alt=""
+                        className="rounded-circle avatar-xl"
+                      />
+                      <Link
+                        to="#"
+                        className="position-absolute mt-2 ms-n3"
+                        data-bs-toggle="tooltip"
+                        data-placement="top"
+                        title="Verifed"
+                      >
+                        <Image
+                          src={CheckedMark}
+                          alt=""
+                          height="30"
+                          width="30"
+                        />
+                      </Link>
+                    </div>
+                    <div className="ms-4">
+                      <h4 className="mb-0">
+                        {courseEnrolmentDetail.theCourse.instructor.fullName}
+                      </h4>
+                      <p className="mb-1 fs-6">
+                        {courseEnrolmentDetail.theCourse.instructor.userTitle}
+                      </p>
+                      <span className="fs-6">
+                        <span className="text-warning">4.5</span>
+                        <span className="mdi mdi-star text-warning me-2"></span>
+                        Instructor Rating
+                      </span>
+                    </div>
+                  </div>
+                  {/* <Row className="border-top mt-3 border-bottom mb-3 g-0">
+                    <Col>
+                      <div className="pe-1 ps-2 py-3">
+                        <h5 className="mb-0">11,604</h5>
+                        <span>Students</span>
+                      </div>
+                    </Col>
+                    <Col className="border-start">
+                      <div className="pe-1 ps-3 py-3">
+                        <h5 className="mb-0">32</h5>
+                        <span>Courses</span>
+                      </div>
+                    </Col>
+                    <Col className="border-start">
+                      <div className="pe-1 ps-3 py-3">
+                        <h5 className="mb-0">12,230</h5>
+                        <span>Reviews</span>
+                      </div>
+                    </Col>
+                  </Row> */}
+                  <p>{courseEnrolmentDetail.theCourse.instructor.simAboutMe}</p>
+                  <Link
+                    to={`/instructor/${courseEnrolmentDetail.theCourse.instructor.id}/`}
+                    className="btn btn-outline-white btn-sm"
+                  >
+                    View Details
+                  </Link>
+                </Card.Body>
+              </Card>
+              <br></br>
+              <Card className="mb-4">
                 {/* Card header */}
                 <Card.Header>
                   <h4 className="mb-0">What’s included</h4>
@@ -302,71 +405,6 @@ const CourseDetail = ({ match }) => {
                       Lifetime access
                     </ListGroup.Item>
                   </ListGroup>
-                </Card.Body>
-              </Card>
-              {/* Card */}
-              <Card>
-                {/* Card body */}
-                <Card.Body>
-                  <div className="d-flex align-items-center">
-                    <div className="position-relative">
-                      <Image
-                        src={`${END_POINT}${data.instructor.profileImage}`}
-                        alt=""
-                        className="rounded-circle avatar-xl"
-                      />
-                      <Link
-                        to="#"
-                        className="position-absolute mt-2 ms-n3"
-                        data-bs-toggle="tooltip"
-                        data-placement="top"
-                        title="Verifed"
-                      >
-                        <Image
-                          src={CheckedMark}
-                          alt=""
-                          height="30"
-                          width="30"
-                        />
-                      </Link>
-                    </div>
-                    <div className="ms-4">
-                      <h4 className="mb-0">{data.instructor.fullName}</h4>
-                      <p className="mb-1 fs-6">{data.instructor.userTitle}</p>
-                      <span className="fs-6">
-                        <span className="text-warning">4.5</span>
-                        <span className="mdi mdi-star text-warning me-2"></span>
-                        Instructor Rating
-                      </span>
-                    </div>
-                  </div>
-                  {/* <Row className="border-top mt-3 border-bottom mb-3 g-0">
-                    <Col>
-                      <div className="pe-1 ps-2 py-3">
-                        <h5 className="mb-0">11,604</h5>
-                        <span>Students</span>
-                      </div>
-                    </Col>
-                    <Col className="border-start">
-                      <div className="pe-1 ps-3 py-3">
-                        <h5 className="mb-0">32</h5>
-                        <span>Courses</span>
-                      </div>
-                    </Col>
-                    <Col className="border-start">
-                      <div className="pe-1 ps-3 py-3">
-                        <h5 className="mb-0">12,230</h5>
-                        <span>Reviews</span>
-                      </div>
-                    </Col>
-                  </Row> */}
-                  <p>{data.instructor.aboutMe}</p>
-                  <Link
-                    to={`/instructor/${data.instructor.id}/`}
-                    className="btn btn-outline-white btn-sm"
-                  >
-                    View Details
-                  </Link>
                 </Card.Body>
               </Card>
             </Col>
