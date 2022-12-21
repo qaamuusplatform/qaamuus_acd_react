@@ -38,8 +38,8 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     </Link>
 ));
 
-const ActionMenu = ({url}) => {
-   
+const ActionMenu = ({ url }) => {
+
     return (
         <Dropdown>
             <Dropdown.Toggle as={CustomToggle}>
@@ -59,8 +59,8 @@ const ActionMenu = ({url}) => {
                     <Icon path={mdiLinkedin} size={0.8} className="text-secondary" />{' '}
                     Linked In
                 </Dropdown.Item>
-                <Dropdown.Item eventKey="4" onClick={()=>{
-                    
+                <Dropdown.Item eventKey="4" onClick={() => {
+
                     toast.success('Link Coppied')
                 }}>
                     <Icon path={mdiContentCopy} size={0.8} className="text-secondary" />
@@ -71,8 +71,8 @@ const ActionMenu = ({url}) => {
     );
 };
 
-export const WatchCourse = ({match}) => {
-    const [currentVideo,setCurrentVideo] = useState({});
+export const WatchCourse = ({ match }) => {
+    const [currentVideo, setCurrentVideo] = useState({});
     const { currentUser, userIsLoading } = useContext(CurrentUserContext);
     const { slug } = useParams();
     const { data: courseInfo, error } = useSWR(
@@ -80,14 +80,14 @@ export const WatchCourse = ({match}) => {
         httpFetcher
     );
 
-    
+
     useEffect(() => {
-    
-        if(courseInfo){
+
+        if (courseInfo) {
             // setCurrentVideo(courseInfo?.theCourse?.theComponents[0]?.lessonLink);
         }
     }, [courseInfo])
-    
+
 
 
     return (
@@ -102,14 +102,30 @@ export const WatchCourse = ({match}) => {
                                 <Col sm={12} md={12} lg={12}>
                                     {/*  Tab content  */}
                                     <div className="content">
-                                        <div className="mt-5">
+                                        <div className="mt-3">
                                             {/*  Video */}
-                                            <div className="d-flex align-items-center justify-content-between mb-4">
+
+                                            <div className="embed-responsive position-relative w-100 d-block overflow-hidden p-0" >
+                                                <div style={{ position: 'relative', paddingTop: '56.25%' }}><iframe src="https://iframe.mediadelivery.net/embed/36078/18b11231-8237-4040-b71a-c5da3e495df4?autoplay=false" loading="lazy" style={{ border: 'none', position: 'absolute', top: 0, height: '100%', width: '100%' }} allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowFullScreen="true" /></div>
+
+                                            </div>
+
+                                            <div className="mt-4 mb-4">
                                                 <div>
-                                                    <h3 className=" mb-0  text-truncate-line-2 text-capitalize">
-{currentVideo.lesson ?? courseInfo?.theCourse?.title}                                                    </h3>
+                                                    <h2 className=" mb-0 fw-bold text-truncate-line-2 text-capitalize">
+                                                        {currentVideo.lesson ?? courseInfo?.theCourse?.title}    </h2>
+                                                    <h5 className="mb-2 fw-normal text-truncate-line-2 ">
+                                                        {courseInfo?.theCourse?.simDesc}
+
+                                                    </h5>
+                                                    <hr></hr>
+                                                    <h5 className="mb-2 fw-normal text-truncate-line-2 ">
+                                                        {courseInfo?.theCourse?.fullDesc}
+
+                                                    </h5>
                                                 </div>
-                                                <div className="d-flex justify-content-between">
+                                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolores cumque quaerat doloremque alias. Quae nesciunt hic provident dignissimos natus repellat dolor quia eaque in id perspiciatis corporis, voluptas recusandae ad!</p>
+                                                {/* <div className="d-flex justify-content-between">
                                                     <Dropdown className="video-info-icon me-2">
                                                         <Dropdown.Toggle
                                                             bsPrefix=" "
@@ -125,18 +141,12 @@ export const WatchCourse = ({match}) => {
                                                             style={{ width: '300px' }}
                                                         >
                                                             <span>
-{courseInfo?.theCourse?.simDesc}
+                                                                {courseInfo?.theCourse?.simDesc}
                                                             </span>
                                                         </Dropdown.Menu>
                                                     </Dropdown>
                                                     <ActionMenu url={match.url} />
-                                                </div>
-                                            </div>
-                                            <div
-                                                className="embed-responsive position-relative w-100 d-block overflow-hidden p-0"
-                                                
-                                            >
-                                               <iframe src={currentVideo?.link??""} style={{ height: '500px',width:"100%"}}></iframe>
+                                                </div> */}
                                             </div>
                                         </div>
                                     </div>
@@ -144,7 +154,7 @@ export const WatchCourse = ({match}) => {
                             </Row>
 
                             :
-                           null
+                            null
                     }
                 </Container>
             </div>

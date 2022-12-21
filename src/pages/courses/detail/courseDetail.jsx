@@ -58,31 +58,33 @@ const CourseDetail = ({ match }) => {
     toast.error(error);
   }
   const enrollFreeCourse = async () => {
-    try {
-      await http
-        .post(
-          `/api/inrollCourseToUser/free/`,
-          JSON.stringify({ "number": "0", "userId": `${currentUser.id}`, "courseId": `${eventEnrolmentDetail.theEvent.pk}`, "money": "0", "months": "2", "referralCode": "0", "cupponCode": "0" }),
-          { headers: { "Content-Type": "application/json" } }
-        )
-        .then((courseEnrollmentResp) => {
-          console.log(courseEnrollmentResp.data);
-          toast.success(courseEnrollmentResp.data.message, {
-            position: "top-center",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          // history.replace("/auth/login/");
-        });
-    } catch (error) {
-      console.log('errr', error)
-      toast.error("laguma guulaysan lacag bixinta fadlan ku celi markale");
-    }
+    console.log(courseEnrolmentDetail)
+    // try {
+    //   await http
+    //     .post(
+    //       `/api/inrollCourseToUser/free/`,
+    //       JSON.stringify({ "number": "0", "userId": `${currentUser.id}`, "courseId": `${eventEnrolmentDetail.theEvent.pk}`, "money": "0", "months": "2", "referralCode": "0", "cupponCode": "0" }),
+    //       { headers: { "Content-Type": "application/json" } }
+    //     )
+    //     .then((courseEnrollmentResp) => {
+
+    //       console.log(courseEnrollmentResp.data);
+    //       toast.success(courseEnrollmentResp.data.message, {
+    //         position: "top-center",
+    //         autoClose: 2000,
+    //         hideProgressBar: false,
+    //         closeOnClick: true,
+    //         pauseOnHover: true,
+    //         draggable: true,
+    //         progress: undefined,
+    //         theme: "light",
+    //       });
+    //       // history.replace("/auth/login/");
+    //     });
+    // } catch (error) {
+    //   console.log('errr', error)
+    //   toast.error("laguma guulaysan lacag bixinta fadlan ku celi markale");
+    // }
   };
   if (userIsLoading) {
     return (
@@ -287,81 +289,98 @@ const CourseDetail = ({ match }) => {
                 <Card.Body>
                   {/* Price single page */}
                   {courseEnrolmentDetail.theCourse.saledPrice == 0 || courseEnrolmentDetail.theCourse.itsFree ? (
-                    <div>
-                      <div className="mb-1">
-                        <span className="text-dark fw-bold h3 me-2">
-                          ${courseEnrolmentDetail.theCourse.saledPrice} - FREE
-                        </span>
+                    <div className="mb-1">
+                      <span className="text-dark fw-bold h3 me-2">
+                        ${courseEnrolmentDetail.theCourse.saledPrice} - FREE
+                      </span>
 
-                      </div>
-                      <div>
+                    </div>
+                  ) : (
+                    <div className="mb-3">
+                      <span className="text-dark fw-bold h2 me-2">
+                        ${courseEnrolmentDetail.theCourse.saledPrice}
+                      </span>
+                      {courseEnrolmentDetail.theCourse.showRegularPrice ? (
+                        <del className="fs-4 text-muted">
+                          ${courseEnrolmentDetail.theCourse.regularPrice}
+                        </del>
+                      ) : (
+                        <div></div>
+                      )}
+                    </div>
+                  )}
 
-                        <ListGroup.Item>
-                          <i className="fe fe-play-circle align-middle me-2 text-primary"></i>
-                          {courseEnrolmentDetail.theCourse.houres}
-                        </ListGroup.Item>
-                        <ListGroup.Item>
-                          <i className="fe fe-award me-2 align-middle text-success"></i>
-                          {courseEnrolmentDetail.theCourse.hasCertificate ? 'Certified' : 'No Certified'}
-                        </ListGroup.Item>
-                        <ListGroup.Item>
-                          <i className="fe fe-calendar align-middle me-2 text-info"></i>
-                          {courseEnrolmentDetail.theCourse.lessonCounts} Cashir
-                        </ListGroup.Item>
-                        <ListGroup.Item>
-                          <i className="fe fe-video align-middle me-2 text-secondary"></i>
-                          Daawo Markasta
-                        </ListGroup.Item>
-                        {/* <ListGroup.Item className="bg-transparent">
+
+                  <div>
+
+                    <ListGroup.Item>
+                      <i className="fe fe-play-circle align-middle me-2 text-primary"></i>
+                      {courseEnrolmentDetail.theCourse.houres}
+                    </ListGroup.Item>
+                    <ListGroup.Item>
+                      <i className="fe fe-award me-2 align-middle text-success"></i>
+                      {courseEnrolmentDetail.theCourse.hasCertificate ? 'Certified' : 'No Certified'}
+                    </ListGroup.Item>
+                    <ListGroup.Item>
+                      <i className="fe fe-calendar align-middle me-2 text-info"></i>
+                      {courseEnrolmentDetail.theCourse.lessonCounts} Cashir
+                    </ListGroup.Item>
+                    <ListGroup.Item>
+                      <i className="fe fe-video align-middle me-2 text-secondary"></i>
+                      Daawo Markasta
+                    </ListGroup.Item>
+                    {/* <ListGroup.Item className="bg-transparent">
                           <i className="fe fe-clock align-middle me-2 text-warning"></i>
                           Lifetime access
                         </ListGroup.Item> */}
-                        <br></br>
-                      </div>
+                    <br></br>
+                  </div>
+                  {Object.keys(currentUser).length === 0 ? (
 
-                      <div className="d-grid">
-                        <Button variant="success" onClick={enrollFreeCourse}
-                          className="mt-3"
+                    <Nav className="navbar-nav navbar-right-wrap ms-auto d-flex nav-top-wrap">
+                      <span
+                        className={`ms-auto mt-3 mt-lg-0  ${false ? "d-none" : ""
+                          }`}
+                      >
+                        <Nav.Link
+                          as={Link}
+                          to="/auth/login"
+                          bsPrefix="btn"
+                          className="btn btn-primary"
                         >
-                          IS-DIWAANGALI <strong>FREE</strong>
-                        </Button>
-                      </div>
-                    </div>
+                          Login to Enroll
+                        </Nav.Link>
+                      </span>
 
+                    </Nav>
                   ) : (
-                    <div>
-                      <div className="mb-3">
-                        <span className="text-dark fw-bold h2 me-2">
-                          ${courseEnrolmentDetail.theCourse.saledPrice}
-                        </span>
-                        {courseEnrolmentDetail.theCourse.showRegularPrice ? (
-                          <del className="fs-4 text-muted">
-                            ${courseEnrolmentDetail.theCourse.regularPrice}
-                          </del>
-                        ) : (
-                          <div></div>
-                        )}
-                      </div>
-                      <div className="d-grid">
-                        {/* <Link to="#" className="btn btn-primary mb-2  ">
-                      Start Free Month
-                    </Link> */}
-                        {courseEnrolmentDetail.isEnrolled ? (
-                          <Link to={`/courses/${courseEnrolmentDetail.theCourse.slug}/watch`} className={`btn btn-primary`} >
-                            Watch Course
-                          </Link>
-                        ) : (<Link
-                          to={`/checkout/course/${courseEnrolmentDetail.theCourse.slug}`}
-                          className={`btn btn-outline-warning`}
-                        >
-                          Enroll Now
-                        </Link>)}
-                        {/* {                      
+                    courseEnrolmentDetail.isEnrolled ? (
+                      <Link to={`/courses/${courseEnrolmentDetail.theCourse.slug}/watch`} className={`btn btn-primary`} >
+                        Watch Course
+                      </Link>
+
                     ) : (
-                     
-                    )} */}
-                      </div>
-                    </div>
+
+                      courseEnrolmentDetail.theCourse.saledPrice == 0 || courseEnrolmentDetail.theCourse.itsFree ? (
+                        <div className="d-grid">
+                          <Button variant="success" onClick={enrollFreeCourse}
+                            className="mt-3"
+                          >
+                            IS-DIWAANGALI <strong>FREE</strong>
+                          </Button>
+                        </div>
+
+                      ) : (
+                        <div className="d-grid">
+                          <Link to={`/checkout/course/${courseEnrolmentDetail.theCourse.slug}`} className={`btn btn-outline-warning`}  >
+                            Enroll Now
+                          </Link>
+                        </div>
+
+                      )
+
+
+                    )
                   )}
 
 
@@ -493,7 +512,7 @@ const CourseDetail = ({ match }) => {
           </div>
         </Container>
       </div>
-    </Fragment>
+    </Fragment >
   );
 };
 
