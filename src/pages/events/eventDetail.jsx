@@ -66,8 +66,6 @@ const EventDetail = () => {
   const { data: eventEnrolmentDetail, error } = useSWR(`api/checkThisUserInrolledEvent-slug/${currentUser.id}/${slug}/`, getEvent);
 
   const enrollFreeEvent = async () => {
-
-    
     try {
       await http
         .post(
