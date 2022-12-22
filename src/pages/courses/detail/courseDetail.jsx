@@ -45,6 +45,7 @@ import { CurrentUserContext } from "services/currentUserContext";
 import { useContext } from "react";
 import { ShimmerPostDetails } from "react-shimmer-effects";
 import Icon from "@mdi/react";
+import { mdiAccount,mdiYoutube ,mdiVideo3d,mdiVideoImage} from "@mdi/js";
 
 const CourseDetail = ({ match }) => {
   const [isOpen, setOpen] = useState(false);
@@ -345,7 +346,6 @@ const CourseDetail = ({ match }) => {
                         <Nav.Link
                           as={Link}
                           to="/auth/login"
-                          bsPrefix="btn"
                           className="btn btn-primary"
                         >
                           Login to Enroll
@@ -355,9 +355,12 @@ const CourseDetail = ({ match }) => {
                     </Nav>
                   ) : (
                     courseEnrolmentDetail.isEnrolled ? (
+                     
+                      <div className="d-grid">
                       <Link to={`/courses/${courseEnrolmentDetail.theCourse.slug}/watch`} className={`btn btn-primary`} >
-                        Watch Course
+                        <Icon path={mdiYoutube} size={1}   color="white"/> &nbsp; Daawo Koorsada
                       </Link>
+                      </div>
 
                     ) : (
 
@@ -372,8 +375,8 @@ const CourseDetail = ({ match }) => {
 
                       ) : (
                         <div className="d-grid">
-                          <Link to={`/checkout/course/${courseEnrolmentDetail.theCourse.slug}`} className={`btn btn-outline-warning`}  >
-                            Enroll Now
+                          <Link to={`/checkout/course/${courseEnrolmentDetail.theCourse.slug}`} className={`btn btn-warning text-grey`}  >
+                          ISKA-DIWAANGALI
                           </Link>
                         </div>
 

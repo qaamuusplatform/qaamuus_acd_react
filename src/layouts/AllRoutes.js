@@ -33,7 +33,7 @@ import LiveLayout from "./LiveLayout";
 import ReferralData from "pages/student/account-settings/ReferralData";
 import EventCheckout from "./../pages/checkout/EventCheckout";
 import { CurrentUserContext } from "services/currentUserContext";
-import WatchCourse from "pages/courses/watch";
+import WatchCourse from "pages/courses/watchCourse";
 import ForgetPassword from "pages/auth/ForgetPassword";
 import CourseResumeLayout from "./CourseResumeLayout";
 
@@ -188,6 +188,12 @@ function AllRoutes() {
       <ProtectedRoute
         exact
         path="/courses/:slug/watch"
+        layout={CourseResumeLayout}
+        component={WatchCourse}
+      />
+      <ProtectedRoute
+        exact
+        path="/course/watch/:slug/"
         layout={CourseResumeLayout}
         component={WatchCourse}
       />
