@@ -17,14 +17,13 @@ import InrolledCourseCard from 'components/cards/InrolledCourseCard';
 import EventCard from 'components/cards/EventCard';
 import useSWR from 'swr';
 import { ShimmerPostItem } from 'react-shimmer-effects';
+import { httpFetcher } from 'services/coursesService';
 
 // import data files
 const StudentDashboard = () => {
     const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
-    const { data: userEnrolmentsData, error } = useSWR(`/api/userEnrollments-detail/14/`, getTheUserEnrolmentsData);
+    const { data: userEnrolmentsData, error } = useSWR(`api/userEnrollments-detail/${currentUser.id}/`,httpFetcher);
 
-
-    console.log(userEnrolmentsData);
     // const dashboardData = {
     //     avatar: Avatar3,
     //     name: 'Stella Flores',
@@ -40,35 +39,7 @@ const StudentDashboard = () => {
         document.body.style.backgroundColor = '#f5f4f8';
 
     }, []);
-    const courseSliderSettings = {
-        infinite: true,
-        slidesToShow: 4,
-        slidesToScroll: 1,
-        responsive: [
-            {
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1
-                }
-            },
-            {
-                breakpoint: 768,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-                    initialSlide: 2
-                }
-            },
-            {
-                breakpoint: 540,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1
-                }
-            }
-        ]
-    };
+
     return (
         <Fragment>
             <div className="pt-5 pb-5">

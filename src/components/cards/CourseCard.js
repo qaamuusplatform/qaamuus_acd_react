@@ -28,12 +28,12 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 	/** Used in Course Index, Course Category, Course Filter Page, Student Dashboard etc...  */
 	const GridView = () => {
 		return (
-			<Card className={`mb-4 card-hover ${extraclass}`}>
+			<Card  className={`mb-4 card-hover ${extraclass}`}>
 				<Link to={`/courses/${item.slug}`}>
 					<Image
 						src={`${END_POINT}${item.coverImage}`}
 						alt=""
-						className="card-img-top rounded-top-md course-grid-cover-image"
+						className="card-img-top img-fluid rounded-top-lg course-grid-cover-image"
 					/>
 				</Link>
 				{/* Card body  */}
@@ -129,7 +129,7 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 				<Row className="g-0">
 					<Link
 						to={`/courses/${item.slug}`}
-						className="bg-cover img-left-rounded col-12 col-md-12 col-xl-3 col-lg-3 "
+						className="bg-cover img-left-rounded col-12 col-md-12 col-xl-3 col-lg-3"
 						style={{
 							background: `url(${END_POINT}${item.coverImage})`,
 							backgroundRepeat: 'no-repeat',
@@ -151,8 +151,7 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 									{item.title}
 								</Link>
 							</h3>
-							{/* <!-- List inline --> */}
-							<ListGroup as="ul" bsPrefix="list-inline" className="mb-5">
+							<ListGroup as="ul" bsPrefix="list-inline" className="mb-2">
 								<ListGroup.Item as="li" bsPrefix="list-inline-item">
 									<i className="far fa-clock me-1"></i>
 									{item.houres}hrs
@@ -172,6 +171,13 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 									</span>
 								</ListGroup.Item>
 							</ListGroup>
+							<h5 className="mb-2 fw-normal text-truncate-line-2 ">
+									{item.simDesc}
+								
+							</h5>
+							
+							{/* <!-- List inline --> */}
+							
 							{/* <!-- Row --> */}
 							<Row className="align-items-center g-0">
 								<Col className="col-auto">

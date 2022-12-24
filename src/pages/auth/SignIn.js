@@ -2,7 +2,7 @@
 import React, { useContext, useState } from "react";
 import { login, getLoggedInUser } from "services/authService";
 import { Fragment } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import {
   Col,
   Row,
@@ -30,7 +30,8 @@ export default function SignIn() {
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
   const [formError, setFormError] = useState(false);
   const [passwordShown, setPasswordShown] = useState(false);
-
+  const location = useLocation()
+  console.log('dasdas',location);
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
   };
@@ -58,11 +59,10 @@ export default function SignIn() {
             toast.success("si guul leh ayaad u soo gashay");
             const { data } = await getLoggedInUser();
             if (data) {
-              // console.log("data ready",data)
               setCurrentUser(data);
             }
             setFormIsLoading(false);
-            history.replace("/user/dashboard/");
+            history.push("/user/dashboard/");
           }
         });
     } catch (error) {

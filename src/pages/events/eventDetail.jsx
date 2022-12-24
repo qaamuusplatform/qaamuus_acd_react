@@ -44,8 +44,11 @@ import useSWR from "swr";
 import Timer from "./Timer";
 import { ShimmerPostDetails } from "react-shimmer-effects";
 import { qaamuusPayments } from "data/qaamuusPayments";
-import { DahabPayment, WaafiPayment } from "./eventPaymentsComponents";
+import { DahabPayment, WaafiPayment } from "./paymentsComponents";
 import EventReviewsTab from "./EventReviewsTab";
+
+import http from "services/httpService";
+import { toast, ToastContainer } from "react-toastify";
 
 const EventDetail = () => {
   // const [isOpen, setOpen] = useState(false);
@@ -55,13 +58,40 @@ const EventDetail = () => {
   const userAccessInfo = {};
   const { currentUser, userIsLoading } = useContext(CurrentUserContext);
 
+
+
   const { slug } = useParams();
 
   // if (userIsLoading) return <p>loading</p>;
-  const { data: eventEnrolmentDetail, error } = useSWR(
-    `api/checkThisUserInrolledEvent-slug/${currentUser.id}/${slug}/`,
-    getEvent
-  );
+  const { data: eventEnrolmentDetail, error } = useSWR(`api/checkThisUserInrolledEvent-slug/${currentUser.id}/${slug}/`, getEvent);
+
+  const enrollFreeEvent = async () => {
+    try {
+      await http
+        .post(
+          `/api/inrollEventToUser/free/`,
+          JSON.stringify({"number": "0", "userId": `${currentUser.id}`, "evtId": `${eventEnrolmentDetail.theEvent.pk}`, "money": "0"}),
+          { headers: { "Content-Type": "application/json" } }
+        )
+        .then((eventInrollmentResp) => {
+          console.log(eventInrollmentResp.data);
+          toast.success(eventInrollmentResp.data.message, {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          // history.replace("/auth/login/");
+        });
+    } catch (error) {
+      console.log('errr',error)
+      toast.error("laguma guulaysan lacag bixinta fadlan ku celi markale");
+    }
+  };
 
   // console.log(eventEnrolmentDetail);
   // const { theEvent } = inrollmentDetail && inrollmentDetail;
@@ -135,18 +165,19 @@ const EventDetail = () => {
                 </Nav.Item>
               ))}
             </Nav>
+            <hr></hr>
             <Tab.Content>
               {/* {qaamuusPayments.map((thePayment, index) => (
               
             ))} */}
               <Tab.Pane eventKey="waafiP" className="pb-1 p-1">
                 {/* Description Tab */}
-                <WaafiPayment theEventDetail={{'number':0,'userId':`${currentUser.id}`,'evtId':`${eventEnrolmentDetail.theEvent.pk}`,'money':`${eventEnrolmentDetail.theEvent.price}`,'type':'waafi'} } />
+                <WaafiPayment theEnrollmentData={{ 'number': 0, 'userId': `${currentUser.id}`, 'evtId': `${eventEnrolmentDetail.theEvent.pk}`, 'money': `${eventEnrolmentDetail.theEvent.price}`, 'type': 'waafi' }} itsCourse={false} />
               </Tab.Pane>
               <Tab.Pane eventKey="visaCard" className="pb-1 p-1">
                 {/* Description Tab */}
                 {/* {thePayment.content} */}
-                <DahabPayment theEventDetail={{'number':0,'userId':`${currentUser.id}`,'evtId':`${eventEnrolmentDetail.theEvent.pk}`,'money':`${eventEnrolmentDetail.theEvent.price}`,'type':'eDahab'} } />
+                <DahabPayment theEventDetail={{ 'number': 0, 'userId': `${currentUser.id}`, 'evtId': `${eventEnrolmentDetail.theEvent.pk}`, 'money': `${eventEnrolmentDetail.theEvent.price}`, 'type': 'eDahab' }} />
               </Tab.Pane>
               <Tab.Pane eventKey="waafiPayment" className="pb-1 p-1">
                 {/* Description Tab */}
@@ -299,18 +330,23 @@ const EventDetail = () => {
                     {/* Price single page */}
                     <div className="mb-3">
                       <span className="text-dark fw-bold h3 me-2">&nbsp;</span>
-                      <span className="text-dark fw-bold h3 me-2">${eventEnrolmentDetail.theEvent.price}</span>
+                      <span className="text-dark fw-bold h3 me-2">
+                        {eventEnrolmentDetail.theEvent.price == 0 || eventEnrolmentDetail.theEvent.itsFree ? (<strong>$0-FREE</strong>) : (`$ ${eventEnrolmentDetail.theEvent.price}`)
+
+
+                        }
+                      </span>
                       {/* <del className="fs-4 text-muted">$750</del> */}
                     </div>
                     <Card.Body className="p-0">
                       <ListGroup variant="flush">
                         <ListGroup.Item>
                           <i className="fe fe-play-circle align-middle me-2 text-primary"></i>
-                          12 hours video
+                          {eventEnrolmentDetail.theEvent.language}
                         </ListGroup.Item>
                         <ListGroup.Item>
                           <i className="fe fe-award me-2 align-middle text-success"></i>
-                          Certificate
+                          {eventEnrolmentDetail.theEvent.level}
                         </ListGroup.Item>
                         {/* <ListGroup.Item>
                 <i className="fe fe-calendar align-middle me-2 text-info"></i>
@@ -322,7 +358,7 @@ const EventDetail = () => {
               </ListGroup.Item> */}
                         <ListGroup.Item className="bg-transparent">
                           <i className="fe fe-clock align-middle me-2 text-warning"></i>
-                          Lifetime access
+                          {eventEnrolmentDetail.theEvent.duration}
                         </ListGroup.Item>
                       </ListGroup>
                     </Card.Body>
@@ -330,9 +366,8 @@ const EventDetail = () => {
                       {Object.keys(currentUser).length === 0 ? (
                         <Nav className="navbar-nav navbar-right-wrap ms-auto d-flex nav-top-wrap">
                           <span
-                            className={`ms-auto mt-3 mt-lg-0  ${
-                              false ? "d-none" : ""
-                            }`}
+                            className={`ms-auto mt-3 mt-lg-0  ${false ? "d-none" : ""
+                              }`}
                           >
                             <Nav.Link
                               as={Link}
@@ -344,25 +379,20 @@ const EventDetail = () => {
                             </Nav.Link>
                           </span>
 
-                          {/* <span
-                  className={`${
-                    login
-                      ? isDesktop || isLaptop
-                        ? "d-flex"
-                        : "d-none"
-                      : "d-none"
-                  }`}
-                >
-                  <QuickMenu />
-                </span> */}
                         </Nav>
-                      ) : false ? (
+                      ) : eventEnrolmentDetail.isEnrolled ? (
                         <Button
-                          variant="warning"
-                          // onClick={handleShow}
+                          variant="info"
                           className="mt-3"
                         >
-                          Access Event
+                          HADA QAKAYB QAL
+                        </Button>
+                      ) : eventEnrolmentDetail.theEvent.price == 0 || eventEnrolmentDetail.theEvent.itsFree ? (
+                        // event is access trhis s
+                        <Button variant="success" onClick={enrollFreeEvent}
+                          className="mt-3"
+                        >
+                          IS-DIWAANGALI <strong>FREE</strong>
                         </Button>
                       ) : (
                         <Button
@@ -370,9 +400,8 @@ const EventDetail = () => {
                           onClick={() => setLgShow(true)}
                           className="mt-3"
                         >
-                          Enroll now
-                        </Button>
-                      )}
+                          ISKA DIIWAANGALI
+                        </Button>)}
                     </div>
                   </Card.Body>
                 </Card>

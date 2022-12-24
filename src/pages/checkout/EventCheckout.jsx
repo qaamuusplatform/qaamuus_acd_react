@@ -204,7 +204,7 @@ const EventCheckout = () => {
                   <Card.Body>
                     <h3 className="mb-2 text-truncate-line-2 ">
                       <Link
-                        to={`/events/${data.slug}`}
+                        to={`/event/${data.slug}`}
                         className="text-inherit"
                       >
                         {data.title}

@@ -25,7 +25,7 @@ const EventCard = ({ event }) => {
 
   return (
     <Card className="mb-4 shadow-lg">
-      <Link to={`/events/${event.slug}`}>
+      <Link to={`/event/${event.slug}`}>
         <Card.Img
           variant="top"
           src={END_POINT + event.coverImage}
@@ -43,7 +43,7 @@ const EventCard = ({ event }) => {
           </p>
         </div>
         <h3>
-          <Link to={`/events/${event.slug}`} className="text-inherit">
+          <Link to={`/event/${event.slug}`} className="text-inherit">
             {event.title}
           </Link>
         </h3>

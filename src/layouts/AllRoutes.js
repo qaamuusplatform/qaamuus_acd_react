@@ -33,7 +33,9 @@ import LiveLayout from "./LiveLayout";
 import ReferralData from "pages/student/account-settings/ReferralData";
 import EventCheckout from "./../pages/checkout/EventCheckout";
 import { CurrentUserContext } from "services/currentUserContext";
+import WatchCourse from "pages/courses/watchCourse";
 import ForgetPassword from "pages/auth/ForgetPassword";
+import CourseResumeLayout from "./CourseResumeLayout";
 
 /* IMPORTS FOR MARKETING PAGES - END */
 /* --------------------------------- */
@@ -157,7 +159,7 @@ function AllRoutes() {
       />
       <ProtectedRoute
         exact
-        path="/checkout/course/:courseid"
+        path="/checkout/course/:slug"
         layout={DefaultLayout}
         component={Checkout}
       />
@@ -183,12 +185,18 @@ function AllRoutes() {
         layout={DefaultLayout}
         component={CourseDetail}
       />
-      {/* <ProtectedRoute
+      <ProtectedRoute
         exact
-        path="/courses/:id/watch"
-        layout={DefaultLayout}
-        component={}
-      /> */}
+        path="/courses/:slug/watch"
+        layout={CourseResumeLayout}
+        component={WatchCourse}
+      />
+      <ProtectedRoute
+        exact
+        path="/course/watch/:slug/"
+        layout={CourseResumeLayout}
+        component={WatchCourse}
+      />
       <AppRoute
         exact
         path="/events/"
@@ -198,7 +206,7 @@ function AllRoutes() {
 
       <AppRoute
         exact
-        path="/events/:slug"
+        path="/event/:slug"
         layout={DefaultLayout}
         component={EventDetail}
       />

@@ -27,7 +27,7 @@ export function WaafiPayment({theEventDetail}) {
   const onSubmit = async () => {
     theEventDetail.number = paymentForm.values.number.toString();
     setFormIsLoading(true);
-    console.log(theEventDetail);
+    // console.log(theEventDetail);
     try {
       await http
         .post(

@@ -12,14 +12,12 @@ import CoursesTable from './CoursesTable';
 import useSWR from 'swr';
 import http from 'services/httpService';
 import { ShimmerContentBlock } from 'react-shimmer-effects';
+import { httpFetcher } from 'services/coursesService';
 
 const EnrolledCourses = (props) => {
 	const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 	const account = props.location.pathname.substring(21, 11);
-
-	const { data:enrolledCoursesDetail, error } = useSWR('/api/userEnrollments-detail/14/', async (url) => await http.get(url).then(r => r.data.enrolledCourses));
-	// console.log(data);
-	// console.log(allcourses);
+	const { data: enrolledCoursesDetail, error } = useSWR(`api/userEnrollments-detail/${currentUser.id}/`,httpFetcher);
 	return (
 		<ProfileLayout>
 			{account === 'instructor'}
@@ -30,7 +28,7 @@ const EnrolledCourses = (props) => {
 				</Card.Header>
 				<Card.Body className="p-0">
 
-					{enrolledCoursesDetail ?  (<CoursesTable courses_data={enrolledCoursesDetail} />):(
+					{enrolledCoursesDetail ?  (<CoursesTable courses_data={enrolledCoursesDetail.enrolledCourses} />):(
 						<ShimmerContentBlock
 							title
 							text
@@ -38,7 +36,7 @@ const EnrolledCourses = (props) => {
 							thumbnailWidth={370}
 							thumbnailHeight={370}
 						/>) }
-					{/*  */}
+			
 
 				</Card.Body>
 			</Card>
