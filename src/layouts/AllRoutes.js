@@ -159,7 +159,7 @@ function AllRoutes() {
       />
       <ProtectedRoute
         exact
-        path="/checkout/course/:courseid"
+        path="/checkout/course/:slug"
         layout={DefaultLayout}
         component={Checkout}
       />

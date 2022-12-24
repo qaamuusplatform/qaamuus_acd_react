@@ -44,7 +44,7 @@ import useSWR from "swr";
 import Timer from "./Timer";
 import { ShimmerPostDetails } from "react-shimmer-effects";
 import { qaamuusPayments } from "data/qaamuusPayments";
-import { DahabPayment, WaafiPayment } from "./eventPaymentsComponents";
+import { DahabPayment, WaafiPayment } from "./paymentsComponents";
 import EventReviewsTab from "./EventReviewsTab";
 
 import http from "services/httpService";
@@ -172,7 +172,7 @@ const EventDetail = () => {
             ))} */}
               <Tab.Pane eventKey="waafiP" className="pb-1 p-1">
                 {/* Description Tab */}
-                <WaafiPayment theEventDetail={{ 'number': 0, 'userId': `${currentUser.id}`, 'evtId': `${eventEnrolmentDetail.theEvent.pk}`, 'money': `${eventEnrolmentDetail.theEvent.price}`, 'type': 'waafi' }} />
+                <WaafiPayment theEnrollmentData={{ 'number': 0, 'userId': `${currentUser.id}`, 'evtId': `${eventEnrolmentDetail.theEvent.pk}`, 'money': `${eventEnrolmentDetail.theEvent.price}`, 'type': 'waafi' }} itsCourse={false} />
               </Tab.Pane>
               <Tab.Pane eventKey="visaCard" className="pb-1 p-1">
                 {/* Description Tab */}

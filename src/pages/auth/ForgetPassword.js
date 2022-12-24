@@ -47,28 +47,26 @@ export default function ForgetPassword() {
 
   };
   const onSubmit = async () => {
-    console.log('desc')
-    // setFormIsLoading(true);
+    
+    setFormIsLoading(true);
     // setRegistringModal(true)
     // localStorage.removeItem("access");
-    // await http
-    //   .post(
-    //     "/api/userProfile-create/",
-    //     JSON.stringify(passwordResetForm.values),
-    //     {
-    //       headers: { "Content-Type": "application/json" },
-    //     }
-    //   )
-    //   .then((userProfileResp) => {
-    //     console.log(userProfileResp.data);
-    //     setModalShow(true)
-    //     setFormIsLoading(false);
-    //     passwordResetForm.resetForm();
-    //     toast.success(
-    //       "Waad ku guulaysatay iska diiwaangalinta academiyadda qaamuus"
-    //     );
-    //     // history.replace("/auth/login/");
-    //   });
+    await http
+      .post(
+        `/api/userProfile-update-email/${passwordResetForm.values.email}/`,
+        JSON.stringify(passwordResetForm.values),
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      )
+      .then((userProfileResp) => {
+        setFormIsLoading(false);
+        passwordResetForm.resetForm();
+        toast.success(
+          "Waad ku guulaysatay iska badalidda passwordka"
+        );
+        // history.replace("/auth/login/");
+      });
 
 
   };
@@ -222,9 +220,19 @@ export default function ForgetPassword() {
                           <Form.Check.Label>SHOW PASSWORD</Form.Check.Label>
                         </Form.Check>
                       </Col> */}
-                      <Button type="submit" className="text-right btn btn-primary">
-                        Save Password
-                      </Button>
+                      {formIsLoading ? (
+                          <Button className="text-right btn btn-primary" size="md" disabled>
+                            <Spinner
+                              as="span"
+                              animation="border"
+                              size="sm"
+                              role="status"
+                              aria-hidden="true"
+                            />
+                            &nbsp; Loading ...
+                          </Button>
+                        ) : (<Button type="submit" className="text-right btn btn-primary">  Save Password </Button>)}
+                      
                     </div>
                   ) : (
 

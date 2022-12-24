@@ -4,7 +4,7 @@ import Mastercard from 'assets/images/creditcard/mastercard.svg';
 import Discover from 'assets/images/creditcard/discover.svg';
 import AmericanExpress from 'assets/images/png/wafi.png';
 import PaypalExpress from 'assets/images/creditcard/paypal.svg';
-import { WaafiPayment,DahabPayment,StripeOrPaypal } from 'pages/events/eventPaymentsComponents';
+import { WaafiPayment,DahabPayment,StripeOrPaypal } from 'pages/events/paymentsComponents';
 export const qaamuusPayments = [
 	{
 		id: 1,
