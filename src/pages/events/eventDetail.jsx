@@ -22,7 +22,7 @@ import {
 import { Link } from "react-router-dom";
 // import MDI icons
 import Icon from "@mdi/react";
-import { mdiAccountMultipleOutline } from "@mdi/js";
+import { mdiAccountMultipleOutline, mdiPowerSocketIt, mdiYoutube } from "@mdi/js";
 
 // import custom components
 // import LevelIcon from 'components/marketing/common/miscellaneous/LevelIcon';
@@ -357,7 +357,7 @@ const EventDetail = ({ location }) => {
                       <span className="text-dark fw-bold h3 me-2">&nbsp;</span>
                       <span className="text-dark fw-bold h3 me-2">
                         {eventEnrolmentDetail.theEvent.price == 0 ||
-                        eventEnrolmentDetail.theEvent.itsFree ? (
+                          eventEnrolmentDetail.theEvent.itsFree ? (
                           <strong>$0-FREE</strong>
                         ) : (
                           `$ ${eventEnrolmentDetail.theEvent.price}`
@@ -393,9 +393,8 @@ const EventDetail = ({ location }) => {
                       {Object.keys(currentUser).length === 0 ? (
                         <Nav className="navbar-nav navbar-right-wrap ms-auto d-flex nav-top-wrap">
                           <span
-                            className={`ms-auto mt-3 mt-lg-0  ${
-                              false ? "d-none" : ""
-                            }`}
+                            className={`ms-auto mt-3 mt-lg-0  ${false ? "d-none" : ""
+                              }`}
                           >
                             <Nav.Link
                               as={Link}
@@ -411,9 +410,23 @@ const EventDetail = ({ location }) => {
                           </span>
                         </Nav>
                       ) : eventEnrolmentDetail.isEnrolled ? (
-                        <Button variant="info" className="mt-3">
-                          HADA QAKAYB QAL
-                        </Button>
+                        eventEnrolmentDetail.isLiveSdk ? (
+                          <Link
+                            to={`/event/watch-live/${eventEnrolmentDetail.theEvent.slug}/`}
+                            className={`btn btn-info mt-3`}
+                          >
+                            <Icon path={mdiYoutube} size={1} className="mb-0" color="white" /> &nbsp;
+                            HADDA QAKAYB QAL
+                          </Link>
+                        ) : (
+                          <Link
+                            to={`/event/watch-live-vt/${eventEnrolmentDetail.theEvent.slug}/`}
+                            className={`btn btn-info mt-3`}
+                          >
+                            <Icon path={mdiPowerSocketIt} size={1} className="mb-0" color="white" /> &nbsp;
+                            HADDA QAKAYB QAL
+                          </Link>)
+
                       ) : eventEnrolmentDetail.theEvent.price == 0 ||
                         eventEnrolmentDetail.theEvent.itsFree ? (
                         // event is access trhis s

@@ -1,5 +1,5 @@
 // import node module libraries
-import React, { Fragment, useContext, useState } from "react";
+import React, { Fragment, useContext, useState, useRef } from "react";
 import { Link, useHistory, useLocation, useParams } from "react-router-dom";
 import InputMask from "react-input-mask";
 import {
@@ -19,7 +19,6 @@ import {
 } from "react-bootstrap";
 import PageHeading from "components/elements/common/heading/PageHeading";
 import FormSelect from "components/elements/custom/FormSelect";
-import { useRef } from "react";
 import { CurrentUserContext } from "services/currentUserContext";
 import {
   CheckCuppon,
@@ -50,14 +49,59 @@ function useQuery() {
 
 const Checkout = () => {
   const { slug } = useParams();
-  const { data: checkoutCourse, error } = useSWR( `/api/qaCourse-detail-slug/${slug}/`,httpFetcher);
+  const { data: checkoutCourse, error } = useSWR(`/api/qaCourse-detail-slug/${slug}/`, httpFetcher);
   const { currentUser, userIsLoading } = useContext(CurrentUserContext);
-  const [coursePrice, setCoursePrice] = useState(5);
-  const [cupponCodeDiscount, setCupponCodeDiscount] = useState(0);
+  let coursePrice = 5;
+  const cupponCodeRef = useRef(null);
+  const referralCodeRef = useRef(null);
+  const [cupponCodeDiscount, setCupponCodeDiscount] = useState({ code: '', price: 0 });
 
-  //   if(checkoutCourse){
-  //
-  //   }
+  if(checkoutCourse){
+    if (checkoutCourse.showRegularPrice) {
+      coursePrice = checkoutCourse.saledPrice
+    } else {
+      coursePrice = checkoutCourse.regularPrice
+    }
+  }
+  
+
+  const handleCuponcode = async (e) => {
+    e.preventDefault();
+    try {
+      if (cupponCodeDiscount == cupponCodeRef?.current?.value) {
+        toast.info('Codekan horay ayaad qabsatay');
+        return;
+      }
+      const response = await CheckCuppon(cupponCodeRef?.current?.value ?? '');
+      if (response.isCouponCode && response.exists) {
+        if (!response.isExpired) {
+          toast.success('Codekan Waa la aqbalay');
+          coursePrice=response.discountPrice;
+          setCupponCodeDiscount({
+            code: cupponCodeRef?.current?.value,
+            price: response.discountPrice
+          })
+        } else {
+          if (cupponCodeDiscount) removeCuppon();
+          toast.error('Cuppon Codekan waa expire');
+        }
+      } else {
+        if (cupponCodeDiscount) removeCuppon();
+        toast.error('Cuppon Codekan maaha midjira');
+      }
+    } catch (error) {
+      if (cupponCodeDiscount) removeCuppon();
+      console.log("Error", error)
+      toast.error(error);
+    }
+  }
+  const removeCuppon = () => {
+    setCupponCodeDiscount({
+      code: '',
+      price: 0
+    });
+    // cupponCodeRef.current.value = ''
+  }
   if (!checkoutCourse && !error) {
     return (
       <Fragment>
@@ -69,13 +113,13 @@ const Checkout = () => {
       </Fragment>
     );
   }
-//   useEffect(() => {
-//     setCoursePrice(
-//       checkoutCourse.showRegularPrice
-//         ? checkoutCourse.saledPrice
-//         : checkoutCourse.regularPrice
-//     );
-//   }, [checkoutCourse]);
+  //   useEffect(() => {
+  //     setCoursePrice(
+  //       checkoutCourse.showRegularPrice
+  //         ? checkoutCourse.saledPrice
+  //         : checkoutCourse.regularPrice
+  //     );
+  //   }, [checkoutCourse]);
   return (
     <Fragment>
       {/* Page header */}
@@ -196,6 +240,8 @@ const Checkout = () => {
                             courseId: `${checkoutCourse.id}`,
                             months: `2`,
                             money: `${coursePrice}`,
+                            referralCode:'',
+                            cupponCode: cupponCodeDiscount.code,
                             type: "waafi",
                           }}
                           itsCourse={true}
@@ -229,7 +275,7 @@ const Checkout = () => {
               <Card className="border-0 mb-3">
                 <Card.Body>
                   <div className="d-flex justify-content-between fs-4 mb-3">
-                    <p className="mb-0">Qiimaha</p>
+                    <p className="mb-0 fw-bold">QIIMAHA</p>
                     <div className="mb-3">
                       <span className="text-dark fw-bold h3 me-2">
                         ${checkoutCourse.saledPrice}
@@ -246,7 +292,7 @@ const Checkout = () => {
 
                   <div className="d-flex justify-content-between fs-4 mb-3">
                     <p className="mb-0 fw-bold">QIIMA-DHIMIS</p>
-                    <p className="mb-0  fw-bolder">${cupponCodeDiscount}</p>
+                    <p className="mb-0  fw-bolder">${cupponCodeDiscount.price}</p>
                   </div>
 
                   <hr />
@@ -254,12 +300,13 @@ const Checkout = () => {
                   <div className="d-flex justify-content-between fs-4">
                     <p className="fw-bold">TOTALKA</p>
                     <p className="fw-bolder">
-                      ${coursePrice - cupponCodeDiscount}
+                      ${coursePrice - cupponCodeDiscount.price}
                     </p>
                   </div>
-
-                  <h3 className="mb-2 mt-5">Cuppon Code</h3>
-                  <Form>
+                      <hr></hr>
+                  <Form.Label className='mt-3 fw-normal'>Cuppon Code</Form.Label>
+                  {/* <h3 className="mb-2 fw-bold mt-5">Cuppon Code</h3> */}
+                  <Form onSubmit={handleCuponcode}>
                     <Form.Group
                       className="input-group"
                       controlId="discountcodes"
@@ -268,12 +315,21 @@ const Checkout = () => {
                         type="text"
                         placeholder="Enter your code"
                         required
+                        ref={cupponCodeRef}
                       />
+
                       <Button variant="success" type="submit">
                         Apply
                       </Button>
                     </Form.Group>
-                    {/* {cuppon.code && <Badge bg='success' className='mt-2'>{cuppon.code} <i className="fa fa-times text-white ml-3" onClick={() => removeCuppon()}></i></Badge>} */}
+
+                    <Form.Label className='mt-3 fw-bold'>Reffral Code</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Referral code"
+                      ref={referralCodeRef}
+                    />
+                    {/* {cupponCodeDiscount && <Badge bg='success' className='mt-2'>{cupponCodeDiscount} <i className="fa fa-times text-white ml-3" onClick={() => removeCuppon()}></i></Badge>} */}
                   </Form>
                   {/* <Form.Control
                                         type="text"

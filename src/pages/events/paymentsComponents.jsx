@@ -27,9 +27,26 @@ export function WaafiPayment({theEnrollmentData,itsCourse}) {
   const onSubmit = async () => {
     theEnrollmentData.number = paymentForm.values.number.toString();
     setFormIsLoading(true);
-    // console.log(theEnrollmentData);
+    console.log(theEnrollmentData);
     if(itsCourse){
-
+      try {
+        await http
+          .post(
+            `/api/inrollCourseToUser/${theEnrollmentData.type}/`,
+            JSON.stringify(theEnrollmentData),
+            { headers: { "Content-Type": "application/json" } }
+          )
+          .then((courseInrollmentResp) => {
+            console.log(courseInrollmentResp.data);
+            setFormIsLoading(false);
+            registringUserForm.resetForm();
+            toast.success(courseInrollmentResp.data.message);
+            history.replace("/auth/login/");
+          });
+      } catch (error) {
+        console.log('errr',error)
+        toast.error("laguma guulaysan lacag bixinta fadlan ku celi markale");
+      }
     }else{
       try {
         await http
