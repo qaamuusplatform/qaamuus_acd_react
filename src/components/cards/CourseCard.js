@@ -28,7 +28,7 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 	/** Used in Course Index, Course Category, Course Filter Page, Student Dashboard etc...  */
 	const GridView = () => {
 		return (
-			<Card  className={`mb-4 card-hover ${extraclass}`}>
+			<Card className={`mb-4 card-hover ${extraclass}`}>
 				<Link to={`/course/${item.slug}`}>
 					<Image
 						src={`${END_POINT}${item.coverImage}`}
@@ -46,7 +46,7 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 					<ListGroup as="ul" bsPrefix="list-inline" className="mb-3">
 						<ListGroup.Item as="li" bsPrefix="list-inline-item">
 							<i className="far fa-clock me-1"></i>
-							{item.houres}hrs
+							{item.houres}
 						</ListGroup.Item>
 						<ListGroup.Item as="li" bsPrefix="list-inline-item">
 							<LevelIcon level={item.level} />
@@ -54,13 +54,11 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 						</ListGroup.Item>
 					</ListGroup>
 					<div
-						className={`lh-1 d-flex align-items-center ${
-							item.itsFree ||
-							item.regularPrice === undefined ||
-							item.saledPrice <= 0 
+						className={`lh-1 d-flex align-items-center ${item.itsFree ||
+								item.saledPrice == 0
 								? 'mb-5'
 								: ''
-						}`}
+							}`}
 					>
 						<span className="text-warning me-1 mb-1">
 							{' '}
@@ -69,23 +67,36 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 						<span className="text-warning me-1"> {'4.5'}</span>
 						<span className="fs-6 text-muted">
 							{' '}
-							25,300
+							{/* 25,300 */}
 						</span>
 					</div>
-					<div
-						className={`lh-1 mt-3 ${
-							item.itsFree ||
-							item.regularPrice === undefined ||
-							item.saledPrice <= 0
-								? 'd-none'
-								: ''
-						}`}
-					>
-						<span className="text-dark fw-bold">
-							${item.saledPrice}
-						</span>{' '}
-						<del className="fs-6 text-muted">${item.regularPrice}</del>
-					</div>
+					{item.showDiscountPrice ? (
+						<div
+							className={`lh-1 mt-3 ${item.regularPrice == 'a'
+									? 'd-none'
+									: ''
+								}`}
+						>
+							<span className="text-dark fw-bold">
+								${item.discountPrice}
+							</span>{' '}
+							<del className="fs-6 text-muted">${item.regularPrice}</del>
+						</div>
+					) : (
+						<div
+							className={`lh-1 mt-3 ${item.itsFree ||
+									item.regularPrice == 0
+									? 'd-none'
+									: ''
+								}`}
+						>
+							<span className="text-dark fw-bold">
+								${item.regularPrice}
+							</span>{' '}
+							{/* <del className="fs-6 text-muted">${item.regularPrice}</del> */}
+						</div>
+					)}
+
 				</Card.Body>
 				{/* Card Footer */}
 				<Card.Footer>
@@ -154,7 +165,7 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 							<ListGroup as="ul" bsPrefix="list-inline" className="mb-2">
 								<ListGroup.Item as="li" bsPrefix="list-inline-item">
 									<i className="far fa-clock me-1"></i>
-									{item.houres}hrs
+									{item.houres}
 								</ListGroup.Item>
 								<ListGroup.Item as="li" bsPrefix="list-inline-item">
 									<LevelIcon level={item.level} />
@@ -172,12 +183,12 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 								</ListGroup.Item>
 							</ListGroup>
 							<h5 className="mb-2 fw-normal text-truncate-line-2 ">
-									{item.simDesc}
-								
+								{item.simDesc}
+
 							</h5>
-							
+
 							{/* <!-- List inline --> */}
-							
+
 							{/* <!-- Row --> */}
 							<Row className="align-items-center g-0">
 								<Col className="col-auto">

@@ -46,6 +46,7 @@ import { useContext } from "react";
 import { ShimmerPostDetails } from "react-shimmer-effects";
 import Icon from "@mdi/react";
 import { mdiAccount, mdiYoutube, mdiVideo3d, mdiVideoImage } from "@mdi/js";
+import http from "services/httpService";
 
 const CourseDetail = ({ match, location }) => {
   const [isOpen, setOpen] = useState(false);
@@ -60,32 +61,32 @@ const CourseDetail = ({ match, location }) => {
   }
   const enrollFreeCourse = async () => {
     console.log(courseEnrolmentDetail);
-    // try {
-    //   await http
-    //     .post(
-    //       `/api/inrollCourseToUser/free/`,
-    //       JSON.stringify({ "number": "0", "userId": `${currentUser.id}`, "courseId": `${eventEnrolmentDetail.theEvent.pk}`, "money": "0", "months": "2", "referralCode": "0", "cupponCode": "0" }),
-    //       { headers: { "Content-Type": "application/json" } }
-    //     )
-    //     .then((courseEnrollmentResp) => {
+    try {
+      await http
+        .post(
+          `/api/inrollCourseToUser/free/`,
+          JSON.stringify({ "number": "0", "userId": `${currentUser.id}`, "courseId": `${courseEnrolmentDetail.theCourse.pk}`, "money": "0", "months": "1", "referralCode": "0", "cupponCode": "0" }),
+          { headers: { "Content-Type": "application/json" } }
+        )
+        .then((courseEnrollmentResp) => {
 
-    //       console.log(courseEnrollmentResp.data);
-    //       toast.success(courseEnrollmentResp.data.message, {
-    //         position: "top-center",
-    //         autoClose: 2000,
-    //         hideProgressBar: false,
-    //         closeOnClick: true,
-    //         pauseOnHover: true,
-    //         draggable: true,
-    //         progress: undefined,
-    //         theme: "light",
-    //       });
-    //       // history.replace("/auth/login/");
-    //     });
-    // } catch (error) {
-    //   console.log('errr', error)
-    //   toast.error("laguma guulaysan lacag bixinta fadlan ku celi markale");
-    // }
+          console.log(courseEnrollmentResp.data);
+          toast.success(courseEnrollmentResp.data.message, {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          // history.replace("/auth/login/");
+        });
+    } catch (error) {
+      console.log('errr', error)
+      toast.error("laguma guulaysan lacag bixinta fadlan ku celi markale");
+    }
   };
   if (userIsLoading) {
     return (
@@ -289,19 +290,19 @@ const CourseDetail = ({ match, location }) => {
                 {/* Card body */}
                 <Card.Body>
                   {/* Price single page */}
-                  {courseEnrolmentDetail.theCourse.saledPrice == 0 ||
+                  {courseEnrolmentDetail.theCourse.regularPrice == 0 ||
                   courseEnrolmentDetail.theCourse.itsFree ? (
                     <div className="mb-1">
                       <span className="text-dark fw-bold h3 me-2">
-                        ${courseEnrolmentDetail.theCourse.saledPrice} - FREE
+                      $0 - <del className="fs-4 text-muted"> ${courseEnrolmentDetail.theCourse.regularPrice} </del>
                       </span>
                     </div>
                   ) : (
                     <div className="mb-3">
                       <span className="text-dark fw-bold h2 me-2">
-                        ${courseEnrolmentDetail.theCourse.saledPrice}
+                        ${courseEnrolmentDetail.theCourse.discountPrice}
                       </span>
-                      {courseEnrolmentDetail.theCourse.showRegularPrice ? (
+                      {courseEnrolmentDetail.theCourse.showDiscountPrice ? (
                         <del className="fs-4 text-muted">
                           ${courseEnrolmentDetail.theCourse.regularPrice}
                         </del>
@@ -361,8 +362,8 @@ const CourseDetail = ({ match, location }) => {
                         to={`/courses/${courseEnrolmentDetail.theCourse.slug}/watch`}
                         className={`btn btn-primary`}
                       >
-                        <Icon path={mdiYoutube} size={1} color="white" /> &nbsp;
-                        Daawo Koorsada
+                        <Icon path={mdiYoutube} size={1} className="mb-0" color="white" /> &nbsp;
+                        DAAWO KOORSADA
                       </Link>
                     </div>
                   ) : courseEnrolmentDetail.theCourse.saledPrice == 0 ||
