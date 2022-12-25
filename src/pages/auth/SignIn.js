@@ -82,14 +82,14 @@ export default function SignIn(props) {
       <Row className="align-items-center justify-content-center g-0 min-vh-100">
         <Col lg={5} md={5} className="py-8 py-xl-0">
           <Card>
-            <Card.Body className="p-6">
-              <Row>
-                <Col lg={3} md={3} sm={3} className="py-0 py-0">
+            <Card.Body className="p-5">
+              <div className="d-flex">
+                
                   <Link to="/">
                     <Image width={90} src={logoCard} className="mb-4" alt="" />
                   </Link>
-                </Col>
-                <Col lg={9} md={9} sm={9} className="py-2 py-0">
+               
+                <div className="ms-2 py-2 py-0">
                   <h1 className="mb-1 fw-bold">Sign in</h1>
                   <span>
                     Account kuu ma furna ?{" "}
@@ -97,8 +97,8 @@ export default function SignIn(props) {
                       nagu soo biir
                     </Link>
                   </span>
-                </Col>
-              </Row>
+                </div>
+              </div>
 
               {/* Form */}
               <Form onSubmit={handleSubmit}>

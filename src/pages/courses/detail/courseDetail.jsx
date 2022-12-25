@@ -249,7 +249,7 @@ const CourseDetail = ({ match, location }) => {
                 </Card.Body>
               </Card>
             </Col>
-            <Col lg={4} md={12} sm={12} className="mt-lg-n22">
+            <Col lg={4} md={12} sm={12} className="mt-lg-n22 order-1 order-md-2">
               {/* Card */}
               <Card className="mb-3 mb-4">
                 <div className="p-1">
