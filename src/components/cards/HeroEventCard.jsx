@@ -59,7 +59,7 @@ const EventCardFullWidth = ({ event }) => {
             </div>
 
             <h1 className="mb-2 mb-lg-4">
-              <Link to={`/events/${event.slug}`} className="text-inherit">
+              <Link to={`/event/${event.slug}`} className="text-inherit">
                 {event.title}
               </Link>
             </h1>

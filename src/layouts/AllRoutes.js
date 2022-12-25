@@ -181,7 +181,7 @@ function AllRoutes() {
       />
       <AppRoute
         exact
-        path="/courses/:slug"
+        path="/course/:slug"
         layout={DefaultLayout}
         component={CourseDetail}
       />
