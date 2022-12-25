@@ -22,16 +22,16 @@ import { CurrentUserContext } from "services/currentUserContext";
 // import media files
 // import Logo from "assets/images/brand/logo/logo-icon.svg";
 
-export default function SignIn() {
+export default function SignIn(props) {
   const history = useHistory();
+
   const [form, setForm] = useState({ username: "", password: "" });
   const [formIsLoading, setFormIsLoading] = useState(false);
 
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
   const [formError, setFormError] = useState(false);
   const [passwordShown, setPasswordShown] = useState(false);
-  const location = useLocation()
-  console.log('dasdas',location);
+  const { state } = useLocation();
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
   };
@@ -62,7 +62,12 @@ export default function SignIn() {
               setCurrentUser(data);
             }
             setFormIsLoading(false);
-            history.push("/user/dashboard/");
+
+            const { state } = props.location;
+
+            window.location = state ? state.from.pathname : "/";
+            // history.push("/user/dashboard/");
+            // window.location.reload();
           }
         });
     } catch (error) {
@@ -79,28 +84,22 @@ export default function SignIn() {
           <Card>
             <Card.Body className="p-6">
               <Row>
-              <Col lg={3} md={3} sm={3} className="py-8 py-xl-0">
+                <Col lg={3} md={3} sm={3} className="py-0 py-0">
                   <Link to="/">
-                <Image width={90} src={logoCard} className="mb-4" alt="" />
-              </Link>
-              </Col>
-              <Col lg={9} md={9} sm={9} className="py-8 py-xl-0">
-               
-                <h1 className="mb-1 fw-bold">Sign in</h1>
-                <span>
-                  Account kuu ma furna ?{" "}
-                  <Link to="/join/sign-up/" className="ms-1">
-                    nagu soo biir
+                    <Image width={90} src={logoCard} className="mb-4" alt="" />
                   </Link>
-                </span>
-              </Col>
-
-
-
-
-           
+                </Col>
+                <Col lg={9} md={9} sm={9} className="py-2 py-0">
+                  <h1 className="mb-1 fw-bold">Sign in</h1>
+                  <span>
+                    Account kuu ma furna ?{" "}
+                    <Link to="/join/sign-up/" className="ms-1">
+                      nagu soo biir
+                    </Link>
+                  </span>
+                </Col>
               </Row>
-              
+
               {/* Form */}
               <Form onSubmit={handleSubmit}>
                 <Row>

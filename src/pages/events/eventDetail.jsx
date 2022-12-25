@@ -50,7 +50,7 @@ import EventReviewsTab from "./EventReviewsTab";
 import http from "services/httpService";
 import { toast, ToastContainer } from "react-toastify";
 
-const EventDetail = () => {
+const EventDetail = ({ location }) => {
   // const [isOpen, setOpen] = useState(false);
   const [lgShow, setLgShow] = useState(false);
 
@@ -58,19 +58,25 @@ const EventDetail = () => {
   const userAccessInfo = {};
   const { currentUser, userIsLoading } = useContext(CurrentUserContext);
 
-
-
   const { slug } = useParams();
 
   // if (userIsLoading) return <p>loading</p>;
-  const { data: eventEnrolmentDetail, error } = useSWR(`api/checkThisUserInrolledEvent-slug/${currentUser.id}/${slug}/`, getEvent);
+  const { data: eventEnrolmentDetail, error } = useSWR(
+    `api/checkThisUserInrolledEvent-slug/${currentUser.id}/${slug}/`,
+    getEvent
+  );
 
   const enrollFreeEvent = async () => {
     try {
       await http
         .post(
           `/api/inrollEventToUser/free/`,
-          JSON.stringify({"number": "0", "userId": `${currentUser.id}`, "evtId": `${eventEnrolmentDetail.theEvent.pk}`, "money": "0"}),
+          JSON.stringify({
+            number: "0",
+            userId: `${currentUser.id}`,
+            evtId: `${eventEnrolmentDetail.theEvent.pk}`,
+            money: "0",
+          }),
           { headers: { "Content-Type": "application/json" } }
         )
         .then((eventInrollmentResp) => {
@@ -88,7 +94,7 @@ const EventDetail = () => {
           // history.replace("/auth/login/");
         });
     } catch (error) {
-      console.log('errr',error)
+      console.log("errr", error);
       toast.error("laguma guulaysan lacag bixinta fadlan ku celi markale");
     }
   };
@@ -172,12 +178,29 @@ const EventDetail = () => {
             ))} */}
               <Tab.Pane eventKey="waafiP" className="pb-1 p-1">
                 {/* Description Tab */}
-                <WaafiPayment theEnrollmentData={{ 'number': 0, 'userId': `${currentUser.id}`, 'evtId': `${eventEnrolmentDetail.theEvent.pk}`, 'money': `${eventEnrolmentDetail.theEvent.price}`, 'type': 'waafi' }} itsCourse={false} />
+                <WaafiPayment
+                  theEnrollmentData={{
+                    number: 0,
+                    userId: `${currentUser.id}`,
+                    evtId: `${eventEnrolmentDetail.theEvent.pk}`,
+                    money: `${eventEnrolmentDetail.theEvent.price}`,
+                    type: "waafi",
+                  }}
+                  itsCourse={false}
+                />
               </Tab.Pane>
               <Tab.Pane eventKey="visaCard" className="pb-1 p-1">
                 {/* Description Tab */}
                 {/* {thePayment.content} */}
-                <DahabPayment theEventDetail={{ 'number': 0, 'userId': `${currentUser.id}`, 'evtId': `${eventEnrolmentDetail.theEvent.pk}`, 'money': `${eventEnrolmentDetail.theEvent.price}`, 'type': 'eDahab' }} />
+                <DahabPayment
+                  theEventDetail={{
+                    number: 0,
+                    userId: `${currentUser.id}`,
+                    evtId: `${eventEnrolmentDetail.theEvent.pk}`,
+                    money: `${eventEnrolmentDetail.theEvent.price}`,
+                    type: "eDahab",
+                  }}
+                />
               </Tab.Pane>
               <Tab.Pane eventKey="waafiPayment" className="pb-1 p-1">
                 {/* Description Tab */}
@@ -313,7 +336,9 @@ const EventDetail = () => {
                         </Tab.Pane>
                         <Tab.Pane eventKey="reviews" className="pb-4 p-4">
                           {/* Reviews Tab */}
-                          <EventReviewsTab reviews={eventEnrolmentDetail.theEvent.theReviews} />
+                          <EventReviewsTab
+                            reviews={eventEnrolmentDetail.theEvent.theReviews}
+                          />
                         </Tab.Pane>
                       </Tab.Content>
                     </Card.Body>
@@ -331,10 +356,12 @@ const EventDetail = () => {
                     <div className="mb-3">
                       <span className="text-dark fw-bold h3 me-2">&nbsp;</span>
                       <span className="text-dark fw-bold h3 me-2">
-                        {eventEnrolmentDetail.theEvent.price == 0 || eventEnrolmentDetail.theEvent.itsFree ? (<strong>$0-FREE</strong>) : (`$ ${eventEnrolmentDetail.theEvent.price}`)
-
-
-                        }
+                        {eventEnrolmentDetail.theEvent.price == 0 ||
+                        eventEnrolmentDetail.theEvent.itsFree ? (
+                          <strong>$0-FREE</strong>
+                        ) : (
+                          `$ ${eventEnrolmentDetail.theEvent.price}`
+                        )}
                       </span>
                       {/* <del className="fs-4 text-muted">$750</del> */}
                     </div>
@@ -366,30 +393,33 @@ const EventDetail = () => {
                       {Object.keys(currentUser).length === 0 ? (
                         <Nav className="navbar-nav navbar-right-wrap ms-auto d-flex nav-top-wrap">
                           <span
-                            className={`ms-auto mt-3 mt-lg-0  ${false ? "d-none" : ""
-                              }`}
+                            className={`ms-auto mt-3 mt-lg-0  ${
+                              false ? "d-none" : ""
+                            }`}
                           >
                             <Nav.Link
                               as={Link}
-                              to="/auth/login"
+                              to={{
+                                pathname: "/auth/login",
+                                state: { from: location },
+                              }}
                               bsPrefix="btn"
                               className="btn btn-primary"
                             >
                               Login to Enroll
                             </Nav.Link>
                           </span>
-
                         </Nav>
                       ) : eventEnrolmentDetail.isEnrolled ? (
-                        <Button
-                          variant="info"
-                          className="mt-3"
-                        >
+                        <Button variant="info" className="mt-3">
                           HADA QAKAYB QAL
                         </Button>
-                      ) : eventEnrolmentDetail.theEvent.price == 0 || eventEnrolmentDetail.theEvent.itsFree ? (
+                      ) : eventEnrolmentDetail.theEvent.price == 0 ||
+                        eventEnrolmentDetail.theEvent.itsFree ? (
                         // event is access trhis s
-                        <Button variant="success" onClick={enrollFreeEvent}
+                        <Button
+                          variant="success"
+                          onClick={enrollFreeEvent}
                           className="mt-3"
                         >
                           IS-DIWAANGALI <strong>FREE</strong>
@@ -401,7 +431,8 @@ const EventDetail = () => {
                           className="mt-3"
                         >
                           ISKA DIIWAANGALI
-                        </Button>)}
+                        </Button>
+                      )}
                     </div>
                   </Card.Body>
                 </Card>

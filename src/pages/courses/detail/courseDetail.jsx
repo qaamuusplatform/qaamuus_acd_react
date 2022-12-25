@@ -45,9 +45,9 @@ import { CurrentUserContext } from "services/currentUserContext";
 import { useContext } from "react";
 import { ShimmerPostDetails } from "react-shimmer-effects";
 import Icon from "@mdi/react";
-import { mdiAccount,mdiYoutube ,mdiVideo3d,mdiVideoImage} from "@mdi/js";
+import { mdiAccount, mdiYoutube, mdiVideo3d, mdiVideoImage } from "@mdi/js";
 
-const CourseDetail = ({ match }) => {
+const CourseDetail = ({ match, location }) => {
   const [isOpen, setOpen] = useState(false);
   const { currentUser, userIsLoading } = useContext(CurrentUserContext);
   const { slug } = useParams();
@@ -59,7 +59,7 @@ const CourseDetail = ({ match }) => {
     toast.error(error);
   }
   const enrollFreeCourse = async () => {
-    console.log(courseEnrolmentDetail)
+    console.log(courseEnrolmentDetail);
     // try {
     //   await http
     //     .post(
@@ -278,8 +278,8 @@ const CourseDetail = ({ match }) => {
                   videoId={
                     courseEnrolmentDetail.theCourse.prevVideo
                       ? youTubeIdFromLink(
-                        courseEnrolmentDetail.theCourse.prevVideo
-                      )
+                          courseEnrolmentDetail.theCourse.prevVideo
+                        )
                       : ""
                   }
                   onClose={() => setOpen(false)}
@@ -289,12 +289,12 @@ const CourseDetail = ({ match }) => {
                 {/* Card body */}
                 <Card.Body>
                   {/* Price single page */}
-                  {courseEnrolmentDetail.theCourse.saledPrice == 0 || courseEnrolmentDetail.theCourse.itsFree ? (
+                  {courseEnrolmentDetail.theCourse.saledPrice == 0 ||
+                  courseEnrolmentDetail.theCourse.itsFree ? (
                     <div className="mb-1">
                       <span className="text-dark fw-bold h3 me-2">
                         ${courseEnrolmentDetail.theCourse.saledPrice} - FREE
                       </span>
-
                     </div>
                   ) : (
                     <div className="mb-3">
@@ -311,16 +311,16 @@ const CourseDetail = ({ match }) => {
                     </div>
                   )}
 
-
                   <div>
-
                     <ListGroup.Item>
                       <i className="fe fe-play-circle align-middle me-2 text-primary"></i>
                       {courseEnrolmentDetail.theCourse.houres}
                     </ListGroup.Item>
                     <ListGroup.Item>
                       <i className="fe fe-award me-2 align-middle text-success"></i>
-                      {courseEnrolmentDetail.theCourse.hasCertificate ? 'Certified' : 'No Certified'}
+                      {courseEnrolmentDetail.theCourse.hasCertificate
+                        ? "Certified"
+                        : "No Certified"}
                     </ListGroup.Item>
                     <ListGroup.Item>
                       <i className="fe fe-calendar align-middle me-2 text-info"></i>
@@ -337,56 +337,55 @@ const CourseDetail = ({ match }) => {
                     <br></br>
                   </div>
                   {Object.keys(currentUser).length === 0 ? (
-
                     <Nav className="navbar-nav navbar-right-wrap ms-auto d-flex nav-top-wrap">
                       <span
-                        className={`ms-auto mt-3 mt-lg-0  ${false ? "d-none" : ""
-                          }`}
+                        className={`ms-auto mt-3 mt-lg-0  ${
+                          false ? "d-none" : ""
+                        }`}
                       >
                         <Nav.Link
                           as={Link}
-                          to="/auth/login"
+                          to={{
+                            pathname: "/auth/login",
+                            state: { from: location },
+                          }}
                           className="btn btn-primary"
                         >
                           Login to Enroll
                         </Nav.Link>
                       </span>
-
                     </Nav>
-                  ) : (
-                    courseEnrolmentDetail.isEnrolled ? (
-                     
-                      <div className="d-grid">
-                      <Link to={`/courses/${courseEnrolmentDetail.theCourse.slug}/watch`} className={`btn btn-primary`} >
-                        <Icon path={mdiYoutube} size={1}   color="white"/> &nbsp; Daawo Koorsada
+                  ) : courseEnrolmentDetail.isEnrolled ? (
+                    <div className="d-grid">
+                      <Link
+                        to={`/courses/${courseEnrolmentDetail.theCourse.slug}/watch`}
+                        className={`btn btn-primary`}
+                      >
+                        <Icon path={mdiYoutube} size={1} color="white" /> &nbsp;
+                        Daawo Koorsada
                       </Link>
-                      </div>
-
-                    ) : (
-
-                      courseEnrolmentDetail.theCourse.saledPrice == 0 || courseEnrolmentDetail.theCourse.itsFree ? (
-                        <div className="d-grid">
-                          <Button variant="success" onClick={enrollFreeCourse}
-                            className="mt-3"
-                          >
-                            IS-DIWAANGALI <strong>FREE</strong>
-                          </Button>
-                        </div>
-
-                      ) : (
-                        <div className="d-grid">
-                          <Link to={`/checkout/course/${courseEnrolmentDetail.theCourse.slug}`} className={`btn btn-warning text-grey`}  >
-                          ISKA-DIWAANGALI
-                          </Link>
-                        </div>
-
-                      )
-
-
-                    )
+                    </div>
+                  ) : courseEnrolmentDetail.theCourse.saledPrice == 0 ||
+                    courseEnrolmentDetail.theCourse.itsFree ? (
+                    <div className="d-grid">
+                      <Button
+                        variant="success"
+                        onClick={enrollFreeCourse}
+                        className="mt-3"
+                      >
+                        IS-DIWAANGALI <strong>FREE</strong>
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="d-grid">
+                      <Link
+                        to={`/checkout/course/${courseEnrolmentDetail.theCourse.slug}`}
+                        className={`btn btn-warning text-grey`}
+                      >
+                        ISKA-DIWAANGALI
+                      </Link>
+                    </div>
                   )}
-
-
                 </Card.Body>
               </Card>
               {/* Card */}
@@ -515,7 +514,7 @@ const CourseDetail = ({ match }) => {
           </div>
         </Container>
       </div>
-    </Fragment >
+    </Fragment>
   );
 };
 

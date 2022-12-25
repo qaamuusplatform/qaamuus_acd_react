@@ -1,5 +1,5 @@
 // ** Import from react dom
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch, Redirect, useLocation } from "react-router-dom";
 
 import { userAccessToken } from "../services/authService";
 
@@ -56,11 +56,20 @@ const ProtectedRoute = ({ component: Component, layout: Layout, ...rest }) => {
     <Route
       {...rest}
       render={(props) => {
-        if (userAccessToken() === null) return <Redirect to={"/auth/login"} />;
+        // console.log(props);
+        if (userAccessToken() === null)
+          return (
+            <Redirect
+              to={{
+                pathname: "/auth/login",
+                state: { from: props.location },
+              }}
+            />
+          );
 
         return (
           <Layout>
-            <Component {...props}></Component>
+            <Component {...props} />
           </Layout>
         );
       }}
