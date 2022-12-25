@@ -13,7 +13,7 @@ import {
 import Icon from '@mdi/react';
 import { mdiPlay } from '@mdi/js';
 
-const GKAccordionProgress = ({ accordionItems }) => {
+const GKAccordionProgress = ({ lessons : accordionItems, itemClass,onClickLesson,currentLesson:{link:currentLesson} }) => {
 	const ContextAwareToggle = ({ children, eventKey, callback }) => {
 		const currentEventKey = useContext(AccordionContext);
 		const decoratedOnClick = useAccordionButton(
@@ -33,9 +33,9 @@ const GKAccordionProgress = ({ accordionItems }) => {
 					aria-controls="courseTwo"
 				>
 					<div className={`me-auto ${isCurrentEventKey ? 'text-primary' : ''}`}>
-						{children.title}
+						{children.compoName}
 						<p className="mb-0 text-muted fs-6 mt-1 fw-normal">
-							{children.total_videos} videos ({children.total_duratoin})
+							{children.lessonsCount} videos ({children.totalHours})
 						</p>
 					</div>
 					<span className="chevron-arrow ms-4">
@@ -47,10 +47,10 @@ const GKAccordionProgress = ({ accordionItems }) => {
 	};
 
 	return (
-		<Accordion defaultActiveKey={accordionItems[0].id} className="card">
+		<Accordion defaultActiveKey={currentLesson} className="card">
 			<ListGroup as="ul" variant="flush">
 				{accordionItems.map((item, index) => {
-					if (item.topics.length === 0) {
+					if (item.theCompoLessons.length === 0) {
 						return (
 							<ListGroup.Item key={index} as="li" className="p-0">
 								<ContextAwareToggle eventKey={item.id}>
@@ -80,35 +80,26 @@ const GKAccordionProgress = ({ accordionItems }) => {
 												now={item.completed}
 												style={{ height: '6px' }}
 											/>
-											<small>{item.completed}% Completed</small>
+											<small>{item.completed ?? 0}% Completed</small>
 										</ListGroup.Item>
-										{item.topics.map((subitem, index) => (
+										{item.theCompoLessons.map((subitem, index) => (
 											<ListGroup.Item
 												key={index}
-												active={subitem.status === 'continue'}
-												disabled={subitem.locked}
+												active={currentLesson == subitem.lessonLink}
+												// disabled={true}
+												onClick={()=>onClickLesson({lesson:subitem.title, link:subitem.lessonLink})}
+												className='cursor-pointer'
 											>
-												<Link
-													to="#"
-													className={`d-flex justify-content-between align-items-center text-${
-														subitem.status === 'continue' ? 'white' : 'inherit'
-													} text-decoration-none`}
-												>
+												
 													<div className="text-truncate ">
 														<span
 															className={`icon-shape bg-${
-																subitem.status === 'continue' || subitem.locked
-																	? 'light'
-																	: subitem.status === 'finished'
-																	? 'success'
-																	: 'light'
+																currentLesson != subitem.lessonLink 
+																	? 'light' : 'success'
 															} text-${
-																subitem.locked
-																	? 'muted'
-																	: subitem.status === 'continue' ||
-																	  subitem.status === 'pending'
-																	? 'primary'
-																	: 'white'
+																currentLesson == subitem.lessonLink
+																	? 'white'
+																	: 'muted'
 															} icon-sm rounded-circle me-2`}
 														>
 															{subitem.locked ? (
@@ -117,12 +108,12 @@ const GKAccordionProgress = ({ accordionItems }) => {
 																<Icon path={mdiPlay} size={0.8} />
 															)}{' '}
 														</span>
-														<span className="fs-5">{subitem.topic}</span>
+														<span className="fs-5">{subitem.title}</span>
 													</div>
 													<div className="text-truncate fs-5">
-														<span>{subitem.duratoin}</span>
+														<span>{subitem.duration}</span>
 													</div>
-												</Link>
+												
 											</ListGroup.Item>
 										))}
 									</ListGroup>

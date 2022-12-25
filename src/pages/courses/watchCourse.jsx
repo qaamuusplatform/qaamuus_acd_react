@@ -21,7 +21,7 @@ import CourseContent from 'components/accordions/CourseContent';
 import { toast } from 'react-toastify';
 import GKAccordionProgress from 'components/accordions/GKAccordionProgress';
 import { CourseIndex } from 'data/CourseIndexData';
-
+import Parse from 'html-react-parser'
 // The forwardRef is important!!
 // Dropdown needs access to the DOM node in order to position the Menu
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
@@ -92,7 +92,7 @@ export const WatchCourse = ({ match }) => {
     return (
         <Fragment>
             {/* <NavbarDefault login /> */}
-            <div className="mt-0 course-container">
+            <div className="mt-2 course-container">
                 <Container fluid>
                     {
                         courseInfo?.isEnrolled ?
@@ -100,8 +100,8 @@ export const WatchCourse = ({ match }) => {
                             <Row>
                                 <Col sm={12} md={12} lg={12}>
                                     {/*  Tab content  */}
-                                    <div className="content">
-                                        <div className="mt-3">
+                                    <div className="content ">
+                                        <div className="rounded-2 overflow-hidden">
                                             {/*  Video */}
 
                                             <div className="embed-responsive position-relative w-100 d-block overflow-hidden p-0" >
@@ -113,13 +113,13 @@ export const WatchCourse = ({ match }) => {
                                                 <div>
                                                     <h2 className=" mb-0 fw-bold text-truncate-line-2 text-capitalize">
                                                         {currentVideo.lesson ?? courseInfo?.theCourse?.title}    </h2>
-                                                    <h5 className="mb-0 fw-normal text-truncate-line-2 ">
+                                                    <h5 className="mb-0 fw-normal">
                                                         {courseInfo?.theCourse?.simDesc}
 
                                                     </h5>
                                                     <hr></hr>
-                                                    <h5 className="mb-2 fw-normal text-truncate-line-2 ">
-                                                        {courseInfo?.theCourse?.fullDesc}
+                                                    <h5 className="mb-2 fw-normal ">
+                                                        {Parse(courseInfo?.theCourse?.fullDesc)}
 
                                                     </h5>
                                                 </div>
@@ -159,19 +159,11 @@ export const WatchCourse = ({ match }) => {
             {/*  Card */}
             {
                 courseInfo?.isEnrolled ?
-                    <Card className="course-sidebar " id="courseAccordion">
-                    
-								<GKAccordionProgress accordionItems={CourseIndex} />
-						
-                        <SimpleBar style={{ maxHeight: '93vh' }}>
-                            <Card>
-                                <Card.Header>
-                                    <h4 className="mb-0">Course Content</h4>
-                                </Card.Header>
-                                {/* Course Index Accordion */}
-                                <CourseContent lessons={courseInfo?.theCourse?.theComponents ?? []} onClickLesson={setCurrentVideo} currentLesson={currentVideo} />
-                            </Card>
-                        </SimpleBar>
+
+                    <Card className="course-sidebar h-100 rounded-2" id="courseAccordion">
+
+                        
+								<GKAccordionProgress lessons={courseInfo?.theCourse?.theComponents ?? []} onClickLesson={setCurrentVideo} currentLesson={currentVideo} />
                     </Card> : null}
         </Fragment>
     );
