@@ -22,16 +22,16 @@ import { CurrentUserContext } from "services/currentUserContext";
 // import media files
 // import Logo from "assets/images/brand/logo/logo-icon.svg";
 
-export default function SignIn() {
+export default function SignIn(props) {
   const history = useHistory();
+
   const [form, setForm] = useState({ username: "", password: "" });
   const [formIsLoading, setFormIsLoading] = useState(false);
 
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
   const [formError, setFormError] = useState(false);
   const [passwordShown, setPasswordShown] = useState(false);
-  const location = useLocation()
-  console.log('dasdas',location);
+  const { state } = useLocation();
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
   };
@@ -62,7 +62,12 @@ export default function SignIn() {
               setCurrentUser(data);
             }
             setFormIsLoading(false);
-            history.push("/user/dashboard/");
+
+            const { state } = props.location;
+
+            window.location = state ? state.from.pathname : "/";
+            // history.push("/user/dashboard/");
+            // window.location.reload();
           }
         });
     } catch (error) {
