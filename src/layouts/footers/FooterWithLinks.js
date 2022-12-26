@@ -49,13 +49,11 @@ const FooterWithLinks = () => {
 								</p>
 								<p>
 									Phone:{' '}
-									<span className="text-dark fw-semi-bold">
+									<Link to="https://wa.me/252618361444" className="text-dark fw-semi-bold">
 										(252) 618 3614 44
-									</span>
+									</Link>
 								</p>
-								<p className="mb-1">
-									Qaamuus: <Link to="https://wa.me/252618361444">WHATSAPP</Link>
-								</p>
+								
 							</div>
 						</Col>
 

@@ -297,19 +297,26 @@ const CourseDetail = ({ match, location }) => {
                         $0 - <del className="fs-4 text-muted"> ${courseEnrolmentDetail.theCourse.regularPrice} </del>
                       </span>
                     </div>
-                  ) : (
+                  ) : (courseEnrolmentDetail.theCourse.showDiscountPrice ? (
                     <div className="mb-3">
                       <span className="text-dark fw-bold h2 me-2">
                         ${courseEnrolmentDetail.theCourse.discountPrice}
                       </span>
-                      {courseEnrolmentDetail.theCourse.showDiscountPrice ? (
-                        <del className="fs-4 text-muted">
-                          ${courseEnrolmentDetail.theCourse.regularPrice}
-                        </del>
-                      ) : (
-                        <div></div>
-                      )}
+                      <del className="fs-4 text-muted">
+                        ${courseEnrolmentDetail.theCourse.regularPrice}
+                      </del>
+
                     </div>
+                  ) : (
+                    <div className="mb-3">
+                      <span className="text-dark fw-bold h2 me-2">
+                        ${courseEnrolmentDetail.theCourse.regularPrice}
+                      </span>
+
+
+                    </div>
+                  )
+
                   )}
 
                   <div>
@@ -356,7 +363,7 @@ const CourseDetail = ({ match, location }) => {
                         </Link>
 
                       </span>
-                    
+
                     </Nav>
 
                   ) : courseEnrolmentDetail.isEnrolled ? (

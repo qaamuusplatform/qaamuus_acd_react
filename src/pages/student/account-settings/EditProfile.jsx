@@ -21,11 +21,16 @@ import { ShimmerPostDetails, ShimmerThumbnail } from "react-shimmer-effects";
 import { toast } from "react-toastify";
 import ReactQuillEditor from "components/editor/ReactQuillEditor";
 import ReactQuill from "react-quill";
+import { useEffect } from "react";
 
 const EditProfile = (props) => {
 
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
-  const [aboutMe, setAboutMe] = useState('sda' )
+  const [aboutMe, setAboutMe] = useState("")
+  useEffect(() => {
+    setAboutMe(currentUser.aboutMe)
+  }, [currentUser]);
+  const [formIsLoading, setFormIsLoading] = useState(false);
   const [userNumber, setUserNumber] = useState();
 
   if (Object.keys(currentUser).length == 0) {
@@ -47,18 +52,23 @@ const EditProfile = (props) => {
   };
 
   function handleaboutMe(value) {
-		setAboutMe(value);
+    setAboutMe(value);
     setCurrentUser((prev) => ({ ...prev, ["aboutMe"]: value }));
     console.log(currentUser)
-	}
+  }
 
   async function userUpdateHandleSubmit(e) {
     e.preventDefault();
     const userData = new FormData(e.target);
+    userData.set('aboutMe', aboutMe)
+    for (const [key, value] of userData) {
+      console.log(key, value);
+    }
     updateUserInfo(userData, currentUser.id).then((e) => {
       toast.success("Waad Ku guulaysatay Xog badallida")
     });
   }
+
   const account = props.location.pathname.substring(21, 11);
   // const statelist = [
   //   { value: "1", label: "Gujarat" },
@@ -78,35 +88,35 @@ const EditProfile = (props) => {
 					</div>
 				</Card.Header> */}
         <Card.Body>
-          <div className="d-lg-flex align-items-center justify-content-between">
-            <div className="d-flex align-items-center mb-4 mb-lg-0">
-              <Image
-              src={currentUser.profileImage? baseUrl.baseUrl + currentUser.profileImage:`https://ui-avatars.com/api/?name=${currentUser.fullName}&background=19a9c4&color=fff`}
+          <Form onSubmit={userUpdateHandleSubmit}>
+            <div className="d-lg-flex align-items-center justify-content-between">
+              <div className="d-flex align-items-center mb-4 mb-lg-0">
+                <Image
+                  src={currentUser.profileImage ? baseUrl.baseUrl + currentUser.profileImage : `https://ui-avatars.com/api/?name=${currentUser.fullName}&background=19a9c4&color=fff`}
 
-                id="img-uploaded"
-                className="avatar-xl rounded-circle"
-                alt=""
-              />
-              <div className="ms-3">
-                <h4 className="mb-0">{currentUser.fullName}</h4>
-                <p className="mb-0">{currentUser.userTitle}</p>
+                  id="img-uploaded"
+                  className="avatar-xl rounded-circle"
+                  alt=""
+                />
+                <div className="ms-3">
+
+                  <Form.Control name="profileImage" onChange={(e) => handleChange(e)} type="file" />
+                </div>
+              </div>
+              <div>
+                <Button type="submit" variant="success" size="sm">
+                  Save
+                </Button>{" "}
+                <Button variant="outline-danger" size="sm">
+                  Delete
+                </Button>
               </div>
             </div>
+            <hr className="my-5" />
             <div>
-              <Button variant="outline-white" size="sm">
-                Update
-              </Button>{" "}
-              <Button variant="outline-danger" size="sm">
-                Delete
-              </Button>
-            </div>
-          </div>
-          <hr className="my-5" />
-          <div>
-            <h4 className="mb-0">Personal Details</h4>
-            <p className="mb-4">Edit your personal information and address.</p>
-            {/* Form */}
-            <Form onSubmit={userUpdateHandleSubmit}>
+              <h4 className="mb-0">Personal Details</h4>
+              <p className="mb-4">Edit your personal information and address.</p>
+              {/* Form */}
               <Row>
                 {/* First name */}
                 <Col md={6} sm={12} className="mb-3">
@@ -139,24 +149,19 @@ const EditProfile = (props) => {
                 </Col>
 
                 {/* Phone */}
-                <Col md={9} sm={9} className="mb-3">
+                {/* <Col md={9} sm={9} className="mb-3">
 
                   <Form.Group className="mb-3" controlId="formPhone">
                     <Form.Label>Number</Form.Label>
-                    {/* <PhoneInputWithCountrySelect
-                      placeholder="Enter phone number"
-                      value={userNumber}
-                      className="form-control"
-                      defaultCountry="SO"
-
-                      onChange={setUserNumber} /> */}
-                    {/* <Form.Control
-                      type="number"
-                      placeholder="Phone"
-                      name="number"
+                    <Form.Control
+                      type="text"
+                      placeholder="Your Title"
                       required
+                      name="usrNumber"
+                      onChange={(e) => handleChange(e)}
                       value={currentUser.number}
-                    /> */}
+                    />
+                   
                   </Form.Group>
                 </Col>
                 <Col md={3} sm={3} className="mb-3">
@@ -167,7 +172,7 @@ const EditProfile = (props) => {
                       HUBI NUMBERKA
                     </Button>
                   </Form.Group>
-                </Col>
+                </Col> */}
 
                 {/* Birthday */}
                 {/* <Col md={6} sm={12} className="mb-3">
@@ -214,7 +219,7 @@ const EditProfile = (props) => {
                     <Form.Label>About U</Form.Label>
                     {/* <InputGroup> */}
                     <ReactQuill value={aboutMe} onChange={handleaboutMe} />
-                      {/* <FormControl onChange={(e) => handleChange(e)} value={currentUser.aboutMe} name="aboutMe" as="textarea" placeholder="Xog Ku Saabsan Userka" aria-label="With textarea" /> */}
+                    {/* <FormControl onChange={(e) => handleChange(e)} value={currentUser.aboutMe} name="aboutMe" as="textarea" placeholder="Xog Ku Saabsan Userka" aria-label="With textarea" /> */}
                     {/* </InputGroup> */}
                   </Form.Group>
                 </Col>
@@ -278,13 +283,26 @@ const EditProfile = (props) => {
 
                 {/* Button */}
                 <Col sm={12} md={12}>
-                  <Button variant="primary" type="submit">
-                    Update Profile
-                  </Button>
+                  {formIsLoading ? (
+                    <Button variant="primary" size="md" disabled>
+                      <Spinner
+                        as="span"
+                        animation="border"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                      />
+                      &nbsp; Loading...
+                    </Button>
+                  ) : (
+                    <Button variant="primary" type="submit" size="md">
+                      Update Profile
+                    </Button>
+                  )}
                 </Col>
               </Row>
-            </Form>
-          </div>
+            </div>
+          </Form>
         </Card.Body>
       </Card>
     </ProfileLayout>

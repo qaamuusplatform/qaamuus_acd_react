@@ -253,20 +253,20 @@ const NavbarDefault = ({ headerstyle, isLoading, login }) => {
               >
                 <NavDropdown.Item
                   as={Link}
-                  to="/dashboard/documentation"
+                  to="/nagu-saabsan/"
                   className="py-2 px-3"
                 >
                   <div className="d-flex align-items-center">
                     <i className="fe fe-file-text fs-3 text-primary"></i>
                     <div className="ms-3 lh-3">
-                      <h5 className="mb-0">Documentations</h5>
-                      <p className="mb-0 fs-6">Browse the all documentation</p>
+                      <h5 className="mb-0">Ngu saabsan</h5>
+                      <p className="mb-0 fs-6">Maclumaad ku saabsan Qaamuus</p>
                     </div>
                   </div>
                 </NavDropdown.Item>
                 <NavDropdown.Item
                   as={Link}
-                  to="/dashboard/changelog"
+                  to="#"
                   className="py-2 px-3"
                 >
                   <div className="d-flex align-items-center">

@@ -38,6 +38,8 @@ import ForgetPassword from "pages/auth/ForgetPassword";
 import CourseResumeLayout from "./CourseResumeLayout";
 import EventWatchVr from "pages/events/eventWatch/EventWatchVirtual";
 import DashboardIndexTop from "./DashboardIndexTop";
+import AboutQaamuus from "pages/aboutQ/AboutQaamuus";
+import BlankLayout from "./BlankLayout";
 
 /* IMPORTS FOR MARKETING PAGES - END */
 /* --------------------------------- */
@@ -85,6 +87,7 @@ function AllRoutes() {
       {/* --------------------------- */}
       {/* LANDING PAGES ROUTERS - START */}
       <AppRoute exact path="/" layout={DefaultLayout} component={CourseIndex} />
+      <AppRoute exact path="/nagu-saabsan/" layout={BlankLayout} component={AboutQaamuus} />
 
       {/* authentication joining forgetting  */}
       <AppRoute

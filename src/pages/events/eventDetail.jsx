@@ -65,7 +65,7 @@ const EventDetail = ({ location }) => {
     `api/checkThisUserInrolledEvent-slug/${currentUser.id}/${slug}/`,
     getEvent
   );
-
+console.log(eventEnrolmentDetail)
   const enrollFreeEvent = async () => {
     try {
       await http
@@ -410,17 +410,17 @@ const EventDetail = ({ location }) => {
                           </span>
                         </Nav>
                       ) : eventEnrolmentDetail.isEnrolled ? (
-                        eventEnrolmentDetail.isLiveSdk ? (
+                        eventEnrolmentDetail.isLiveSdk == true ? (
                           <Link
                             to={`/event/watch-live/${eventEnrolmentDetail.theEvent.slug}/`}
                             className={`btn btn-info mt-3`}
                           >
-                            <Icon path={mdiYoutube} size={1} className="mb-0" color="white" /> &nbsp;
+                            <Icon path={mdiPowerSocketIt} size={1} className="mb-0" color="white" /> &nbsp;
                             HADDA QAKAYB QAL
                           </Link>
                         ) : (
                           <Link
-                            to={`/event/watch-live-vt/${eventEnrolmentDetail.theEvent.slug}/`}
+                            to={`/event/watch-live/${eventEnrolmentDetail.theEvent.slug}/`}
                             className={`btn btn-info mt-3`}
                           >
                             <Icon path={mdiPowerSocketIt} size={1} className="mb-0" color="white" /> &nbsp;
