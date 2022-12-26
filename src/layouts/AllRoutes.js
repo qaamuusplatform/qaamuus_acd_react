@@ -36,7 +36,8 @@ import { CurrentUserContext } from "services/currentUserContext";
 import WatchCourse from "pages/courses/watchCourse";
 import ForgetPassword from "pages/auth/ForgetPassword";
 import CourseResumeLayout from "./CourseResumeLayout";
-import EventWatchVr from "pages/events/eventWatch/eventWatchVirtual";
+import EventWatchVr from "pages/events/eventWatch/EventWatchVirtual";
+import DashboardIndexTop from "./DashboardIndexTop";
 
 /* IMPORTS FOR MARKETING PAGES - END */
 /* --------------------------------- */
@@ -195,16 +196,16 @@ function AllRoutes() {
         layout={DefaultLayout}
         component={CourseDetail}
       />
-      <ProtectedRoute
+      {/* <ProtectedRoute
         exact
         path="/courses/:slug/watch"
-        layout={CourseResumeLayout}
+        layout={DashboardIndexTop}
         component={WatchCourse}
-      />
+      /> */}
       <ProtectedRoute
         exact
-        path="/course/watch/:slug/"
-        layout={CourseResumeLayout}
+        path="/course/:slug/watch"
+        layout={DashboardIndexTop}
         component={WatchCourse}
       />
       <AppRoute

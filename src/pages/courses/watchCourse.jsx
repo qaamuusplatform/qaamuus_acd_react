@@ -123,7 +123,7 @@ export const WatchCourse = ({ match }) => {
 
                                                     </h5>
                                                 </div>
-                                                 {/* <div className="d-flex justify-content-between">
+                                                {/* <div className="d-flex justify-content-between">
                                                     <Dropdown className="video-info-icon me-2">
                                                         <Dropdown.Toggle
                                                             bsPrefix=" "
@@ -161,9 +161,9 @@ export const WatchCourse = ({ match }) => {
                 courseInfo?.isEnrolled ?
 
                     <Card className="course-sidebar h-100 rounded-2" id="courseAccordion">
+                        <Card.Header className='fw-bold bg-dark text-white'>CASHIRADA COURSKA</Card.Header>
 
-                        
-								<GKAccordionProgress lessons={courseInfo?.theCourse?.theComponents ?? []} onClickLesson={setCurrentVideo} currentLesson={currentVideo} />
+                        <GKAccordionProgress lessons={courseInfo?.theCourse?.theComponents ?? []} onClickLesson={setCurrentVideo} currentLesson={currentVideo} />
                     </Card> : null}
         </Fragment>
     );

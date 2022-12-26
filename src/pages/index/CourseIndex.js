@@ -114,7 +114,7 @@ const CourseIndex = () => {
 
 			<div className="pb-lg-8 pt-lg-3 py-6">
 				<Container>
-							<h3 className="mb-0 fw-bold">Event Comming son</h3>
+							<h3 className="mb-0 fw-w500">Event Comming son</h3>
 					{!events && !eventError
 						? [1].map((idx) => (
 							<div>
@@ -150,7 +150,7 @@ const CourseIndex = () => {
 
 					<div className="position-relative">
 						<div className="mb-2 mt-4">
-							<h3 className="mb-0 fw-bold">Event Comming son</h3>
+							<h3 className="mb-0 fw-w600">Coursooyinka</h3>
 						</div>
 						<Row>
 							{!popularCourses && !error

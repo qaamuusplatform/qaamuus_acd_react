@@ -359,7 +359,7 @@ const CourseDetail = ({ match, location }) => {
                   ) : courseEnrolmentDetail.isEnrolled ? (
                     <div className="d-grid">
                       <Link
-                        to={`/courses/${courseEnrolmentDetail.theCourse.slug}/watch`}
+                        to={`/course/${courseEnrolmentDetail.theCourse.slug}/watch`}
                         className={`btn btn-primary`}
                       >
                         <Icon path={mdiYoutube} size={1} className="mb-0" color="white" /> &nbsp;
