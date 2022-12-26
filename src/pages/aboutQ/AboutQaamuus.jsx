@@ -12,8 +12,8 @@ import { useContext } from 'react';
 import { CurrentUserContext } from 'services/currentUserContext';
 import JustifiedGallery from './JustifiedGallery';
 import HeroContent from './HeroContent';
-import TeamGridRoundImages from './TeamGridRoundImages';
 import ZafarGallery from './zafarGallery';
+import TeamGridRoundImages from './TeamGridRoundImages';
 
 // import layouts
 
@@ -22,7 +22,7 @@ const AboutQaamuus = () => {
 	return (
 		<Fragment>
 			{/* Default Navbar */}
-        {userIsLoading?(<NavbarDefault isLoading />):Object.keys(currentUser).length === 0 ? (<NavbarDefault /> ) : (<NavbarDefault login />)}
+        	{userIsLoading?(<NavbarDefault isLoading />):Object.keys(currentUser).length === 0 ? (<NavbarDefault /> ) : (<NavbarDefault login />)}
 
 			<div className="py-10 bg-white">
 				<Container>
@@ -42,7 +42,7 @@ const AboutQaamuus = () => {
 			<FeaturesList />
 
 			{/* Team Section in Rounded Image with Grid Layout */}
-			<TeamGridRoundImages />
+			{/* <TeamGridRoundImages /> */}
 
 			{/* Hero Call to Action */}
 			<CTAButton />

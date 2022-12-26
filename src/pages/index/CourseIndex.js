@@ -8,20 +8,20 @@ import Slider from 'react-slick';
 
 // import custom components
 import HeroHeader from './HeroHeader';
-import FeaturesList from './FeaturesList';
 import allInternationalFriendData from 'data/AllInternationalFriends';
 import CourseCard from 'components/cards/CourseCard';
 import WorldClassInstructors from './WorldClassInstructors';
 import TestimonialsSlider from './TestimonialsSlider';
 import LogosTopHeading2 from 'components/clientlogos/LogosTopHeading2';
 import LogoList1 from 'data/LogoList1';
-import AboutUs from './AboutUs';
 import { httpFetcher } from 'services/coursesService';
 import { ShimmerContentBlock, ShimmerPostItem } from 'react-shimmer-effects';
 import AppIntegrationData from 'data/AppIntegrationData';
 import InternationalFriends from './InternationalFriends';
 import HeroVideos from './HeroVideos';
 import EventCardFullWidth from 'components/cards/HeroEventCard';
+import TopFeaturesList from './TopFeaturesList';
+import HomeFeaturesList from './HomeFeaturesList';
 
 // import sub components
 
@@ -96,8 +96,8 @@ const CourseIndex = () => {
 			<HeroHeader />
 
 			{/*  Features list  */}
-			<FeaturesList />
-			<AboutUs />
+			<TopFeaturesList />
+			<HomeFeaturesList />
 
 			{/* <div className="pb-lg-3 pt-lg-3">
 				<Container>
@@ -201,20 +201,20 @@ const CourseIndex = () => {
 
 					<br></br>
 					{/* <br></br> */}
-					<Row className="mb-8">
+					<Row className="mb-4">
 						<Col md={12}>
 							{/*  Testimonial slider */}
 							<TestimonialsSlider />
 						</Col>
 					</Row>
-					<h2 className="mb-0">Saaxiibada Qaamuus</h2>
-					<br />
+					<h3 className="mb-0 fw-w700">Saaxiibada Qaamuus</h3>
+				
 					<InternationalFriends />
-					<LogosTopHeading2
+					{/* <LogosTopHeading2
 						title="Loved by over 5 million users from companies like"
 						logos={LogoList1}
 						limit={0}
-					/>
+					/> */}
 				</Container>
 			</div>
 

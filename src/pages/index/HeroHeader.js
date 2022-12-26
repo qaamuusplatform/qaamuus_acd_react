@@ -17,20 +17,19 @@ const HeroHeader = () => {
 					<Col xl={5} lg={6} md={12}>
 						<div className="py-5 py-lg-0">
 							<h1 className="text-white display-4 fw-bold">
-								Ku soo dhawoow Qaamuus Academy
+								QAAMUUS ACADEMY
 							</h1>
 							<p className="text-white-50 mb-4 lead">
-								Hand-picked Instructor and expertly crafted courses, designed
-								for the modern students and entrepreneur.
+							Akaademiyadda Qaamuus: waa goob waxbarasho oo ku shaqaysa hab elektarooni ah, kuna baxaysa si fogaan dhigad ah 
 							</p>
 							<Link
-								to="/marketing/courses/course-filter-page/"
+								to="/events/"
 								className="btn btn-success"
 							>
-								Browse Courses
+								Webinaradeena
 							</Link>{' '}
-							<Link to="/authentication/sign-in/" className="btn btn-white">
-								Are You Instructor?
+							<Link to="/nagu-saabsan/" className="btn btn-white">
+								Nagu-saabsan
 							</Link>
 						</div>
 					</Col>

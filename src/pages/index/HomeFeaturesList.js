@@ -3,33 +3,31 @@ import { Col, Container, Row } from 'react-bootstrap'
 import { mdiSchoolOutline, mdiAccountGroup, mdiFinance } from '@mdi/js';
 import FeatureTopIconCard from 'components/elements/common/features/FeatureTopIconCard';
 
-export default function AboutUs() {
+export default function HomeFeaturesList() {
   const title = 'Our core values';
   const description = `Our core values are the fundamental beliefs of a person or organization geeks academy. We help
     people understand the difference between right and wrong.`;
 
-  const features = [
-    {
-      id: 1,
-      icon: mdiSchoolOutline,
-      title: 'Make Education Accessible',
-      description: `Quis cursus turpis in habitant sagittis amet dolor malesuada ut. Volutpat nunc id
-            blanvolutpat nunc.`
-    },
-    {
-      id: 2,
-      icon: mdiAccountGroup,
-      title: 'Learn and Grow',
-      description: `Quis cursus turpis in habitant sagittis amet dolor malesuada ut. Volutpat nunc id blanvolutpat nunc.`
-    },
-    {
-      id: 3,
-      icon: mdiFinance,
-      title: 'Make Education Accessible',
-      description: `Quis cursus turpis in habitant sagittis amet dolor malesuada ut. Volutpat nunc id
-            blanvolutpat nunc.`
-    }
-  ];
+    const features = [
+      {
+        id: 1,
+        icon: mdiSchoolOutline,
+        title: 'Bixinta Koorsooyin gaagaaban',
+        description: `Khubaro iyo barayaal aqoon xeeldheer u leh maadooyinka ay dhigayaan `
+      },
+      {
+        id: 2,
+        icon: mdiAccountGroup,
+        title: 'Wadashaqayn & xiriiro caalami ah',
+        description: `Iskuxidhka bulshada iyo aqoonyahankeeda U carbinta iy fahanka shaqada suuqa`
+      },
+      {
+        id: 3,
+        icon: mdiFinance,
+        title: 'Bixinta Shahaadooyin rasmi',
+        description: `iskudiyaarinta imtixaanaadka caalamiga ah iyo shahaadooyinkooda .`
+      }
+    ];
   return (
     <div>
       <Container>

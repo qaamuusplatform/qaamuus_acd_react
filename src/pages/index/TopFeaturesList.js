@@ -4,25 +4,25 @@ import { Col, Row, Container } from 'react-bootstrap';
 
 // import custom components
 
-const FeaturesList = () => {
+const TopFeaturesList = () => {
 	const features = [
 		{
 			id: 1,
-			title: '30,000 online courses',
+			title: 'Koorsooyin tayaysan',
 			description: 'Enjoy a variety of fresh topics',
 			icon: 'video',
 			colorclass: 'warning'
 		},
 		{
 			id: 2,
-			title: 'Expert instruction',
+			title: 'khubaro iyo barayaal sare ',
 			description: 'Find the right instructor for you',
 			icon: 'users',
 			colorclass: 'warning'
 		},
 		{
 			id: 3,
-			title: 'Lifetime access',
+			title: 'Webinars & siminars',
 			description: 'Learn on your schedule',
 			icon: 'clock',
 			colorclass: 'warning'
@@ -44,4 +44,4 @@ const FeaturesList = () => {
 		</div>
 	);
 };
-export default FeaturesList;
+export default TopFeaturesList;

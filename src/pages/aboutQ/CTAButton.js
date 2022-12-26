@@ -17,12 +17,12 @@ const CTAButton = () => {
 						{/* Heading */}
 						<div className="pt-6 pt-lg-0">
 							<h1 className="text-white display-4 fw-bold pe-lg-8">
-								Join the Geeks team & shape the future of design
+								LA TASHO OO LA TALI QAAMUUS ACADEMY
 							</h1>
 							<p className="text-white-50 mb-4 lead">
-								If you’re passionate and ready to dive in, we’d love to meet
-								you. We’re committed to supporting our employee professional
-								development and well-being.
+							<strong style={{color:"white"}}>Dhaqangayaga</strong> :
+Qiyamka iyo dhaqanka Akaademiyadda Qaamuus waa karti, hagarbax, daacadnimo, xilkas, caawin iyo wadashaqayn
+
 							</p>
 							{/*Button */}
 							<Link to="#" className="btn btn-dark">
