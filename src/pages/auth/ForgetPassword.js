@@ -34,11 +34,12 @@ export default function ForgetPassword() {
     console.log(passwordResetForm.errors.email)
     if (!passwordResetForm.errors.email) {
       setSendedCode(1)
-      await http.get(`api/sendActivationEmailCode/${passwordResetForm.values.email}/`).then((resp) => {
+      await http.get(`api/send-reset-password-code/${passwordResetForm.values.email}/`).then((resp) => {
+        if(resp.data.sended){
         setSendedCode(resp.data.sendedCode)
-        console.log(resp.data.sendedCode)
-        setSendedCode(resp.data.sendedCode)
-        console.log(sendedCode)
+        }else{
+          toast.warning('emailka aad galisay maaha mid jira')
+        }
 
       })
     } else {

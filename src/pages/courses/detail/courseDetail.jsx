@@ -45,7 +45,7 @@ import { CurrentUserContext } from "services/currentUserContext";
 import { useContext } from "react";
 import { ShimmerPostDetails } from "react-shimmer-effects";
 import Icon from "@mdi/react";
-import { mdiAccount, mdiYoutube, mdiVideo3d, mdiVideoImage } from "@mdi/js";
+import { mdiAccount, mdiYoutube, mdiVideo3d, mdiVideoImage, mdiLock } from "@mdi/js";
 import http from "services/httpService";
 
 const CourseDetail = ({ match, location }) => {
@@ -279,8 +279,8 @@ const CourseDetail = ({ match, location }) => {
                   videoId={
                     courseEnrolmentDetail.theCourse.prevVideo
                       ? youTubeIdFromLink(
-                          courseEnrolmentDetail.theCourse.prevVideo
-                        )
+                        courseEnrolmentDetail.theCourse.prevVideo
+                      )
                       : ""
                   }
                   onClose={() => setOpen(false)}
@@ -291,10 +291,10 @@ const CourseDetail = ({ match, location }) => {
                 <Card.Body>
                   {/* Price single page */}
                   {courseEnrolmentDetail.theCourse.regularPrice == 0 ||
-                  courseEnrolmentDetail.theCourse.itsFree ? (
+                    courseEnrolmentDetail.theCourse.itsFree ? (
                     <div className="mb-1">
                       <span className="text-dark fw-bold h3 me-2">
-                      $0 - <del className="fs-4 text-muted"> ${courseEnrolmentDetail.theCourse.regularPrice} </del>
+                        $0 - <del className="fs-4 text-muted"> ${courseEnrolmentDetail.theCourse.regularPrice} </del>
                       </span>
                     </div>
                   ) : (
@@ -338,24 +338,27 @@ const CourseDetail = ({ match, location }) => {
                     <br></br>
                   </div>
                   {Object.keys(currentUser).length === 0 ? (
+
                     <Nav className="navbar-nav navbar-right-wrap ms-auto d-flex nav-top-wrap">
                       <span
-                        className={`ms-auto mt-3 mt-lg-0  ${
-                          false ? "d-none" : ""
-                        }`}
+                        className={`ms-auto mt-3 mt-lg-0  ${false ? "d-none" : ""
+                          }`}
                       >
-                        <Nav.Link
-                          as={Link}
+                        <Link
                           to={{
                             pathname: "/auth/login",
                             state: { from: location },
                           }}
-                          className="btn btn-primary"
+                          className={`btn btn-dark`}
                         >
-                          Login to Enroll
-                        </Nav.Link>
+                          <Icon path={mdiLock} size={1} className="mb-0" color="white" /> &nbsp;
+                          LOGIN NOW TO INROLL
+                        </Link>
+
                       </span>
+                    
                     </Nav>
+
                   ) : courseEnrolmentDetail.isEnrolled ? (
                     <div className="d-grid">
                       <Link

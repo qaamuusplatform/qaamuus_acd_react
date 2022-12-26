@@ -53,6 +53,9 @@ const FooterWithLinks = () => {
 										(252) 618 3614 44
 									</span>
 								</p>
+								<p className="mb-1">
+									Qaamuus: <Link to="https://wa.me/252618361444">WHATSAPP</Link>
+								</p>
 							</div>
 						</Col>
 
