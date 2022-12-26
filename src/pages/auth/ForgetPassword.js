@@ -31,7 +31,6 @@ export default function ForgetPassword() {
 
   const sendResetPasswordCode = async () => {
     console.log(passwordResetForm.errors.email)
-    console.log(passwordResetForm.errors.email)
     if (!passwordResetForm.errors.email) {
       setSendedCode(1)
       await http.get(`api/send-reset-password-code/${passwordResetForm.values.email}/`).then((resp) => {
@@ -66,7 +65,7 @@ export default function ForgetPassword() {
         toast.success(
           "Waad ku guulaysatay iska badalidda passwordka"
         );
-        // history.replace("/auth/login/");
+        history.replace("/auth/login/");
       });
 
 
@@ -336,7 +335,7 @@ export default function ForgetPassword() {
                   )}
                 </Row>
                 <span>
-                  Return to <Link to="/authentication/sign-in">Sign in</Link>
+                  Return to <Link to="/auth/login"> Sign in</Link>
                 </span>
               </Form>
             </Card.Body>
