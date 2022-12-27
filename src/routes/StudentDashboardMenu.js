@@ -30,13 +30,14 @@ export const AccountSettingsMenu = [
 	{
 		id: 1,
 		title: 'Doodda Casharka',
-		link: '/user/discussion topics/',
+		// link: '/user/discussion topics/',
+		link: '#',
 		icon: 'settings'
 	},
 	{
 		id: 2,
 		title: 'Jawaab celin',
-		link: '/marketing/user/student-security/',
+		link: '#',
 		icon: 'user'
 	},
 	{

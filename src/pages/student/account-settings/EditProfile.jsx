@@ -1,6 +1,17 @@
 // import node module libraries
 import { withRouter } from "react-router-dom";
-import { Card, Form, Row, Col, Button, Image, InputGroup, FormControl, Container } from "react-bootstrap";
+import {
+  Card,
+  Form,
+  Row,
+  Col,
+  Button,
+  Image,
+  InputGroup,
+  FormControl,
+  Container,
+  Spinner,
+} from "react-bootstrap";
 
 // import custom components
 import FormSelect from "components/elements/custom/FormSelect";
@@ -15,7 +26,7 @@ import { Fragment, useContext, useState } from "react";
 import { CurrentUserContext } from "services/currentUserContext";
 import baseUrl from "services/baseUrl";
 import { updateUserInfo } from "services/authService";
-import 'react-phone-number-input/style.css'
+import "react-phone-number-input/style.css";
 // import PhoneInputWithCountrySelect from "react-phone-number-input";
 import { ShimmerPostDetails, ShimmerThumbnail } from "react-shimmer-effects";
 import { toast } from "react-toastify";
@@ -24,26 +35,27 @@ import ReactQuill from "react-quill";
 import { useEffect } from "react";
 
 const EditProfile = (props) => {
-
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
-  const [aboutMe, setAboutMe] = useState("")
+  const [aboutMe, setAboutMe] = useState("");
   useEffect(() => {
-    setAboutMe(currentUser.aboutMe)
+    setAboutMe(currentUser.aboutMe);
   }, [currentUser]);
   const [formIsLoading, setFormIsLoading] = useState(false);
   const [userNumber, setUserNumber] = useState();
 
   if (Object.keys(currentUser).length == 0) {
-    return <Fragment>
-      <Card className="p-lg-2 pt-2 pt-lg-0 rounded-0 border-0">
-        <Container>
-          <br />
-          <ShimmerThumbnail height={100} rounded />
-          <ShimmerPostDetails card cta variant="EDITOR" />
-          <br></br>
-        </Container>
-      </Card>
-    </Fragment>;
+    return (
+      <Fragment>
+        <Card className="p-lg-2 pt-2 pt-lg-0 rounded-0 border-0">
+          <Container>
+            <br />
+            <ShimmerThumbnail height={100} rounded />
+            <ShimmerPostDetails card cta variant="EDITOR" />
+            <br></br>
+          </Container>
+        </Card>
+      </Fragment>
+    );
   }
   const handleChange = ({ target }) => {
     const { name, value } = target;
@@ -54,18 +66,24 @@ const EditProfile = (props) => {
   function handleaboutMe(value) {
     setAboutMe(value);
     setCurrentUser((prev) => ({ ...prev, ["aboutMe"]: value }));
-    console.log(currentUser)
+    console.log(currentUser);
   }
 
   async function userUpdateHandleSubmit(e) {
     e.preventDefault();
+    setFormIsLoading(true);
     const userData = new FormData(e.target);
-    userData.set('aboutMe', aboutMe)
+    userData.set("aboutMe", aboutMe);
     for (const [key, value] of userData) {
-      console.log(key, value);
+      if(key=='profileImage'){
+        if(value.name==''){
+          userData.delete("profileImage")
+        }
+      }
     }
     updateUserInfo(userData, currentUser.id).then((e) => {
-      toast.success("Waad Ku guulaysatay Xog badallida")
+      toast.success("Waad Ku guulaysatay Xog badallida");
+      setFormIsLoading(false);
     });
   }
 
@@ -92,21 +110,40 @@ const EditProfile = (props) => {
             <div className="d-lg-flex align-items-center justify-content-between">
               <div className="d-flex align-items-center mb-4 mb-lg-0">
                 <Image
-                  src={currentUser.profileImage ? baseUrl.baseUrl + currentUser.profileImage : `https://ui-avatars.com/api/?name=${currentUser.fullName}&background=19a9c4&color=fff`}
-
+                  src={
+                    currentUser.profileImage
+                      ? baseUrl.baseUrl + currentUser.profileImage
+                      : `https://ui-avatars.com/api/?name=${currentUser.fullName}&background=19a9c4&color=fff`
+                  }
                   id="img-uploaded"
                   className="avatar-xl rounded-circle"
                   alt=""
                 />
                 <div className="ms-3">
-
-                  <Form.Control name="profileImage" onChange={(e) => handleChange(e)} type="file" />
+                  <Form.Control
+                    name="profileImage"
+                    onChange={(e) => handleChange(e)}
+                    type="file"
+                  />
                 </div>
               </div>
               <div>
-                <Button type="submit" variant="success" size="sm">
-                  Save
-                </Button>{" "}
+                {formIsLoading ? (
+                  <Button variant="success" size="sm" disabled>
+                    <Spinner
+                      as="span"
+                      animation="border"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                    />
+                    &nbsp; Loading...
+                  </Button>
+                ) : (
+                  <Button type="submit" variant="success" size="sm">
+                    Save
+                  </Button>
+                )}{" "}
                 <Button variant="outline-danger" size="sm">
                   Delete
                 </Button>
@@ -115,7 +152,9 @@ const EditProfile = (props) => {
             <hr className="my-5" />
             <div>
               <h4 className="mb-0">Personal Details</h4>
-              <p className="mb-4">Edit your personal information and address.</p>
+              <p className="mb-4">
+                Edit your personal information and address.
+              </p>
               {/* Form */}
               <Row>
                 {/* First name */}
@@ -223,48 +262,48 @@ const EditProfile = (props) => {
                     {/* </InputGroup> */}
                   </Form.Group>
                 </Col>
-                {(currentUser.userType.name == 'Instructor') ? (<div>
-                  <Col md={12} sm={12} className="mb-3">
-                    <Form.Group className="mb-3" controlId="formBirthday">
-                      <Form.Label>Facebook Url</Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="facebook_link"
-                        onChange={(e) => handleChange(e)}
-                        value={currentUser.facebook_link}
-                        placeholder="Facebook Profile link"
-
-                      />
-                    </Form.Group>
-                  </Col>
-                  <Col md={12} sm={12} className="mb-3">
-                    <Form.Group className="mb-3" controlId="formBirthday">
-                      <Form.Label>Twitter Url</Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="twitter_link"
-                        onChange={(e) => handleChange(e)}
-                        value={currentUser.twitter_link}
-                        placeholder="Twiter Profile link"
-                      />
-                    </Form.Group>
-                  </Col>
-                  <Col md={12} sm={12} className="mb-3">
-                    <Form.Group className="mb-3" controlId="formBirthday">
-                      <Form.Label>Linkiga Seddexaad</Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="third_link"
-                        onChange={(e) => handleChange(e)}
-                        value={currentUser.third_link}
-                        placeholder="Third link"
-                      />
-                    </Form.Group>
-                  </Col>
-                </div>) : (<div>
-
-                </div>)}
-
+                {currentUser.userType.name == "Instructor" ? (
+                  <div>
+                    <Col md={12} sm={12} className="mb-3">
+                      <Form.Group className="mb-3" controlId="formBirthday">
+                        <Form.Label>Facebook Url</Form.Label>
+                        <Form.Control
+                          type="text"
+                          name="facebook_link"
+                          onChange={(e) => handleChange(e)}
+                          value={currentUser.facebook_link}
+                          placeholder="Facebook Profile link"
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col md={12} sm={12} className="mb-3">
+                      <Form.Group className="mb-3" controlId="formBirthday">
+                        <Form.Label>Twitter Url</Form.Label>
+                        <Form.Control
+                          type="text"
+                          name="twitter_link"
+                          onChange={(e) => handleChange(e)}
+                          value={currentUser.twitter_link}
+                          placeholder="Twiter Profile link"
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col md={12} sm={12} className="mb-3">
+                      <Form.Group className="mb-3" controlId="formBirthday">
+                        <Form.Label>Linkiga Seddexaad</Form.Label>
+                        <Form.Control
+                          type="text"
+                          name="third_link"
+                          onChange={(e) => handleChange(e)}
+                          value={currentUser.third_link}
+                          placeholder="Third link"
+                        />
+                      </Form.Group>
+                    </Col>
+                  </div>
+                ) : (
+                  <div></div>
+                )}
 
                 {/* State */}
                 {/* <Col md={6} sm={12} className="mb-3">

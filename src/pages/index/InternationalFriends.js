@@ -19,6 +19,8 @@ const InternationalFriends = () => {
     dots: true,
     speed: 500,
     infinite: true,
+	autoplay: true,
+    autoplaySpeed: 3000,
     slidesToShow: 5,
     slidesToScroll: 1,
     responsive: [

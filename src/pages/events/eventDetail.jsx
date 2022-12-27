@@ -22,7 +22,11 @@ import {
 import { Link } from "react-router-dom";
 // import MDI icons
 import Icon from "@mdi/react";
-import { mdiAccountMultipleOutline, mdiPowerSocketIt, mdiYoutube } from "@mdi/js";
+import {
+  mdiAccountMultipleOutline,
+  mdiPowerSocketIt,
+  mdiYoutube,
+} from "@mdi/js";
 
 // import custom components
 // import LevelIcon from 'components/marketing/common/miscellaneous/LevelIcon';
@@ -65,7 +69,7 @@ const EventDetail = ({ location }) => {
     `api/checkThisUserInrolledEvent-slug/${currentUser.id}/${slug}/`,
     getEvent
   );
-console.log(eventEnrolmentDetail)
+  console.log(eventEnrolmentDetail);
   const enrollFreeEvent = async () => {
     try {
       await http
@@ -357,7 +361,7 @@ console.log(eventEnrolmentDetail)
                       <span className="text-dark fw-bold h3 me-2">&nbsp;</span>
                       <span className="text-dark fw-bold h3 me-2">
                         {eventEnrolmentDetail.theEvent.price == 0 ||
-                          eventEnrolmentDetail.theEvent.itsFree ? (
+                        eventEnrolmentDetail.theEvent.itsFree ? (
                           <strong>$0-FREE</strong>
                         ) : (
                           `$ ${eventEnrolmentDetail.theEvent.price}`
@@ -393,8 +397,9 @@ console.log(eventEnrolmentDetail)
                       {Object.keys(currentUser).length === 0 ? (
                         <Nav className="navbar-nav navbar-right-wrap ms-auto d-flex nav-top-wrap">
                           <span
-                            className={`ms-auto mt-3 mt-lg-0  ${false ? "d-none" : ""
-                              }`}
+                            className={`ms-auto mt-3 mt-lg-0  ${
+                              false ? "d-none" : ""
+                            }`}
                           >
                             <Nav.Link
                               as={Link}
@@ -409,24 +414,63 @@ console.log(eventEnrolmentDetail)
                             </Nav.Link>
                           </span>
                         </Nav>
-                      ) : eventEnrolmentDetail.isEnrolled ? (
-                        eventEnrolmentDetail.isLiveSdk == true ? (
+                      ) : eventEnrolmentDetail.theEvent.persenter.pk == currentUser.id ? 
+                      eventEnrolmentDetail.theEvent.isLiveSdk ? (
+                        <Link
+                          to={`/event/watch-live/${eventEnrolmentDetail.theEvent.slug}/`}
+                          className={`btn btn-info mt-3`}
+                        >
+                          <Icon
+                            path={mdiPowerSocketIt}
+                            size={1}
+                            className="mb-0"
+                            color="white"
+                          />{" "}
+                          &nbsp; HADDA QAKAYB QAL
+                        </Link>
+                      ) : (
+                        <Link
+                          to={`/event/watch-live-vt/${eventEnrolmentDetail.theEvent.slug}/`}
+                          className={`btn btn-info mt-3`}
+                        >
+                          <Icon
+                            path={mdiPowerSocketIt}
+                            size={1}
+                            className="mb-0"
+                            color="white"
+                          />{" "}
+                          &nbsp; HADDA QAKAYB QAL
+                        </Link>
+                      )
+                      
+                      : eventEnrolmentDetail.isEnrolled ? (
+                        eventEnrolmentDetail.theEvent.isLiveSdk ? (
                           <Link
                             to={`/event/watch-live/${eventEnrolmentDetail.theEvent.slug}/`}
                             className={`btn btn-info mt-3`}
                           >
-                            <Icon path={mdiPowerSocketIt} size={1} className="mb-0" color="white" /> &nbsp;
-                            HADDA QAKAYB QAL
+                            <Icon
+                              path={mdiPowerSocketIt}
+                              size={1}
+                              className="mb-0"
+                              color="white"
+                            />{" "}
+                            &nbsp; HADDA QAKAYB QAL
                           </Link>
                         ) : (
                           <Link
-                            to={`/event/watch-live/${eventEnrolmentDetail.theEvent.slug}/`}
+                            to={`/event/watch-live-vt/${eventEnrolmentDetail.theEvent.slug}/`}
                             className={`btn btn-info mt-3`}
                           >
-                            <Icon path={mdiPowerSocketIt} size={1} className="mb-0" color="white" /> &nbsp;
-                            HADDA QAKAYB QAL
-                          </Link>)
-
+                            <Icon
+                              path={mdiPowerSocketIt}
+                              size={1}
+                              className="mb-0"
+                              color="white"
+                            />{" "}
+                            &nbsp; HADDA QAKAYB QAL
+                          </Link>
+                        )
                       ) : eventEnrolmentDetail.theEvent.price == 0 ||
                         eventEnrolmentDetail.theEvent.itsFree ? (
                         // event is access trhis s
@@ -459,8 +503,11 @@ console.log(eventEnrolmentDetail)
                       <div className="position-relative">
                         <Image
                           src={
-                            END_POINT +
                             eventEnrolmentDetail.theEvent.persenter.profileImage
+                              ? END_POINT +
+                                eventEnrolmentDetail.theEvent.persenter
+                                  .profileImage
+                              : `https://ui-avatars.com/api/?name=${currentUser.fullName}&background=19a9c4&color=fff`
                           }
                           alt=""
                           className="rounded-circle avatar-xl"

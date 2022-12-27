@@ -23,9 +23,11 @@ import DotBadge from 'components/elements/bootstrap/DotBadge';
 import NotificationData from 'data/NotificationData';
 import { Fragment } from 'react';
 import NotificationTable from './NotificationTable';
+import { ShimmerContentBlock } from 'react-shimmer-effects';
 
 const Notifications = (props) => {
 	const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+	console.log(currentUser.theNotifications)
 	const account = props.location.pathname.substring(21, 11);
 	function NotificationsIcon(icon, color) {
 		if (icon === 'ThumbsUp') {
@@ -86,7 +88,9 @@ const Notifications = (props) => {
 				</Card.Header>
 					
 					<Card.Body className="rounded-3 p-0">
-					{currentUser.theNotifications ?  (<NotificationTable courses_data={currentUser.theNotifications} />):(
+					{currentUser.theNotifications ?  (
+					<NotificationTable courses_data={currentUser.theNotifications} />
+					):(
 						<ShimmerContentBlock
 							title
 							text
