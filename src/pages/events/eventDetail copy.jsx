@@ -332,7 +332,7 @@ const EventDetail = () => {
                       <div className="position-relative">
                         <Image
                           src={
-                            END_POINT +
+                            
                             eventEnrolmentDetail.theEvent.persenter.profileImage
                           }
                           alt=""

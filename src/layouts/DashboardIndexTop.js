@@ -95,7 +95,7 @@ const DashboardIndexTop = (props) => {
 													<Link className="text-body" to="#">
 														<div className="d-flex">
 															<Image
-																src={END_POINT + theNotific.fromUser.profileImage}
+																src={ theNotific.fromUser.profileImage}
 																alt=""
 																className="avatar-md rounded-circle"
 															/>
@@ -152,7 +152,7 @@ const DashboardIndexTop = (props) => {
 						<div className="avatar avatar-md avatar-indicators avatar-online">
 							<Image
 								alt="avatar"
-								src={currentUser.profileImage ? END_POINT + currentUser.profileImage : `https://ui-avatars.com/api/?name=${currentUser.fullName}&background=19a9c4&color=fff`}
+								src={currentUser.profileImage ?  currentUser.profileImage : `https://ui-avatars.com/api/?name=${currentUser.fullName}&background=19a9c4&color=fff`}
 								className="rounded-circle"
 							/>
 						</div>
@@ -168,7 +168,7 @@ const DashboardIndexTop = (props) => {
 								<div className="avatar avatar-md avatar-indicators avatar-online">
 									<Image
 										alt="avatar"
-										src={currentUser.profileImage ? baseUrl.baseUrl + currentUser.profileImage : `https://ui-avatars.com/api/?name=${currentUser.fullName}&background=19a9c4&color=fff`}
+										src={currentUser.profileImage ?  currentUser.profileImage : `https://ui-avatars.com/api/?name=${currentUser.fullName}&background=19a9c4&color=fff`}
 										className="rounded-circle"
 									/>
 								</div>

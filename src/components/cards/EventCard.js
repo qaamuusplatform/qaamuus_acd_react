@@ -28,7 +28,7 @@ const EventCard = ({ event }) => {
       <Link to={`/event/${event.slug}`}>
         <Card.Img
           variant="top"
-          src={END_POINT + event.coverImage}
+          src={ event.coverImage}
           className="rounded-top-md img-fluid"
         />
       </Link>
@@ -52,7 +52,7 @@ const EventCard = ({ event }) => {
         <Row className="align-items-center g-0 mt-4">
           <Col className="col-auto">
             <Image
-              src={END_POINT + event.persenter.profileImage}
+              src={ event.persenter.profileImage}
               alt=""
               className="rounded-circle avatar-sm me-2"
             />

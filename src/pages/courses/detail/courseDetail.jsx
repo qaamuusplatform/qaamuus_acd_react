@@ -256,7 +256,7 @@ const CourseDetail = ({ match, location }) => {
                   <div
                     className="d-flex justify-content-center position-relative rounded py-10 border-white border rounded-3 bg-cover"
                     style={{
-                      background: `url(${END_POINT}${courseEnrolmentDetail.theCourse.prevImage})`,
+                      background: `url(${courseEnrolmentDetail.theCourse.prevImage})`,
                       backgroundRepeat: "no-repeat",
                       backgroundSize: "cover",
                       backgroundPosition: "top center",
@@ -376,7 +376,7 @@ const CourseDetail = ({ match, location }) => {
                         DAAWO KOORSADA
                       </Link>
                     </div>
-                  ) : courseEnrolmentDetail.theCourse.saledPrice == 0 ||
+                  ) : courseEnrolmentDetail.theCourse.regularPrice == 0 ||
                     courseEnrolmentDetail.theCourse.itsFree ? (
                     <div className="d-grid">
                       <Button
@@ -384,7 +384,7 @@ const CourseDetail = ({ match, location }) => {
                         onClick={enrollFreeCourse}
                         className="mt-3"
                       >
-                        IS-DIWAANGALI <strong>FREE</strong>
+                        IS-DIIWAANGALI <strong>FREE</strong>
                       </Button>
                     </div>
                   ) : (
@@ -408,7 +408,11 @@ const CourseDetail = ({ match, location }) => {
                   <div className="d-flex align-items-center">
                     <div className="position-relative">
                       <Image
-                        src={`${END_POINT}${courseEnrolmentDetail.theCourse.instructor.profileImage}`}
+                        src={
+                          courseEnrolmentDetail.theCourse.instructor.profileImage
+                            ?  courseEnrolmentDetail.theCourse.instructor.profileImage
+                            : `https://ui-avatars.com/api/?name=${courseEnrolmentDetail.theCourse.instructor.fullName}&background=19a9c4&color=fff`
+                          }
                         alt=""
                         className="rounded-circle avatar-xl"
                       />

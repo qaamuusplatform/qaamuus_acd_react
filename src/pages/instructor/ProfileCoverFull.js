@@ -39,7 +39,11 @@ const ProfileCoverFull = ({ dashboardData }) => {
 							<div className="d-flex align-items-center">
 								<div className="position-relative mt-n9">
 									<Image
-										src={END_POINT+ dashboardData.profileImage}
+										src={
+											dashboardData.profileImage
+											  ?  dashboardData.profileImage
+											  : `https://ui-avatars.com/api/?name=${dashboardData.fullName}&background=19a9c4&color=fff`
+										  }
 										alt=""
 										className="rounded-circle avatar-xxl border-white border border-4 position-relative"
 									/>

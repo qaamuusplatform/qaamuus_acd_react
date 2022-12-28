@@ -56,13 +56,13 @@ const InternationalFriends = () => {
           <div className="item px-md-1 bg-white" key={index}>
               <Image
                 height={76}
-                src={END_POINT + item.image}
+                src={ item.image}
                 alt=""
               />
           </div>
           // <div className="item px-md-1 bg-white" key={index}>
           // 	<Card className="card-bordered border-primary-800 bg-dark h-100">
-          // 		<Card.Img variant="top"  src={END_POINT +item.image} />
+          // 		<Card.Img variant="top"  src={item.image} />
           // 		{/* card body  */}
 
           // 	</Card>

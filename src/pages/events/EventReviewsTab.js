@@ -124,7 +124,7 @@ const EventReviewsTab = ({ reviews }) => {
           reviews.map((item, index) => (
             <div className="d-flex border-bottom pb-4 mb-4" key={index}>
               <Image
-                src={END_POINT + item.theUser.profileImage}
+                src={ item.theUser.profileImage}
                 alt=""
                 className="rounded-circle avatar-lg"
               />
@@ -153,7 +153,7 @@ const EventReviewsTab = ({ reviews }) => {
               </div>
             </div>
           ))
-        ) : (<center>Sooooror</center>)}
+        ) : (<center>Ma jiraan Wax Falcelin ah</center>)}
 
       </div>
     </Fragment>

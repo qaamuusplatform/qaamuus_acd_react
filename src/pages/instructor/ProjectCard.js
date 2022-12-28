@@ -3,6 +3,7 @@ import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, ProgressBar, Dropdown, Image } from 'react-bootstrap';
 
+import parse from 'html-react-parser';
 // import custom components
 import { Avatar, AvatarGroup } from 'components/elements/bootstrap/Avatar';
 
@@ -75,130 +76,70 @@ const ProjectCard = ({ item }) => {
 
 
 	return (
-		<Card className="h-100">
+		<Card className="mb-4 card-hover">
+			{/* img */}
 			<Card.Img
 				variant="top"
-				src={END_POINT + item.profileImage}
-				className="bg-cover img-fluid rounded-top img-left-rounded col-12 col-md-12 col-xl-3 col-lg-3"
-				style={{
-					height: '50%',
-					objectFit: 'cover'
-				}}
+				src={
+					item.profileImage
+					  ?  item.profileImage
+					  : `https://ui-avatars.com/api/?name=${item.fullName}&background=19a9c4&color=fff`
+				  }
+				  style={{height:"250px",objectFit:"cover"}}
+				className="rounded-top-md img-fluid"
 			/>
-			{/* <Link
-				to={`/courses/${item.id}`}
-				className="bg-cover img-left-rounded col-12 col-md-12 col-xl-3 col-lg-3"
-				style={{
-					background: `url(${END_POINT}${item.profileImage})`,
-					backgroundRepeat: 'no-repeat',
-					backgroundSize: 'cover',
-					backgroundPosition: 'top center'
-				}}
-			>
-
-				<Image
-					src={`${END_POINT}${item.profileImage}`}
-					alt="..."
-					className="img-fluid d-lg-none invisible"
-				/>
-			</Link> */}
-			<div className="d-flex position-absolute end-0 pe-3 pt-3">
-				<ActionMenu />
-			</div>
-
-
+			{/* card body */}
 			<Card.Body>
-				<div>
-					<h3 className="mb-0">
-						<Link to="#" className="fw-bold text-inherit">
-							{item.fullName}
-						</Link>
-					</h3>
-					<span className="text-muted fs-6">{item.userTitle}</span>
-				</div>
-
+				<h3 className="mb-0 fw-semi-bold">
+					{' '}
+					<Link to={`instructor/${item.username}/`} className="text-inherit">
+						{item.fullName}
+					</Link>
+				</h3>
+				<p className="mb-3">{item.userTitle}</p>
+				{/* <div className="lh-1  d-flex justify-content-between">
+					<div>
+						<span className="fs-6 text-warning">
+							<Icon path={mdiStar} size={0.5} /> <span>{item.rating}</span>
+							<Icon path={mdiStar} size={0.5} /> <span>4</span> 
+						</span>
+					</div>
+					<div>
+						<span className="fs-6 text-muted">
+							<span className="text-dark">
+								{numberWithCommas(item.students)}12
+							</span>{' '}
+							Students
+						</span>
+					</div>
+					<div>
+						<span className="fs-6 text-muted">
+							<span className="text-dark">{item.id}</span> Course
+						</span>
+					</div>
+				</div> */}
 				<div className="mt-2 mb-3">
-					{item.aboutMe ? (<p className="mb-0">{`${item.aboutMe.substring(0, 70)} `}<a href="/instructor/">....</a></p>):(
+					
+					<p> {parse(item.aboutMe ?? '')}	</p>
+					{/* {item.aboutMe ? (<p className="mb-0">{`${item.aboutMe.substring(0, 70)} `}<a href="/instructor/">....</a></p>):(
 						<p></p>
-					)}
+					)} */}
 					
 				</div>
-				{/* progress */}
-				<div className="d-flex justify-content-between align-items-center mb-5">
-					<div className="d-flex align-items-center">
-						{/* avatar group */}
-						{/* <AvatarGroup>
-							{ProjectTeamMembersData.filter(function (dataSource) {
-								return (
-									dataSource.id === item.team[0] ||
-									dataSource.id === item.team[1] ||
-									dataSource.id === item.team[2]
-								);
-							}).map((member, index) => {
-								return (
-									<Avatar
-										size="md"
-										src={member.image}
-										type={`${member.image == null ? 'initial' : 'image'}`}
-										name={member.name}
-										className="rounded-circle"
-										imgtooltip
-										key={index}
-									/>
-								);
-							})}
-							<Avatar
-								size="md"
-								type="initial"
-								name={item.team.length - 3 + '+'}
-								variant="light"
-								className="rounded-circle text-dark"
-								showExact
-							/>
-						</AvatarGroup> */}
-					</div>
-					{/* text */}
-					{/* <div>
-						<span
-							className={`badge bg-light-${getStatusColor(
-								item.status
-							)} text-dark-${getStatusColor(item.status)}`}
-						>
-							{item.status}
-						</span>
-					</div> */}
-				</div>
-				<div>
-					{/* progress bar */}
-					{/* <ProgressBar className="progress-tooltip" style={{ height: '6px' }}>
-						<ProgressBar
-							now={item.progress}
-							style={{ width: item.progress + '%' }}
-							variant={getStatusColor(item.status)}
-						/>
-						<div className="progress-bar">
-							<span>{item.progress}%</span>
-						</div>
-					</ProgressBar> */}
-				</div>
 			</Card.Body>
-
-			{/* card footer */}
 			<Card.Footer className="bg-white p-0">
 				<div className="d-flex justify-content-between ">
 					<div className="w-50 py-3 px-4 ">
 						<h6 className="mb-0 text-muted">COURSES:</h6>
-						<p className="text-dark fs-6 fw-semi-bold mb-0">{item.duedate}</p>
 					</div>
 					<div className="border-start w-50 py-3 px-4">
 						<h6 className="mb-0 text-muted">EVENTS:</h6>
-						<p className="text-dark fs-6 fw-semi-bold mb-0">
-							{/* ${numberWithCommas(item.budget)} */}
-						</p>
+						
 					</div>
 				</div>
 			</Card.Footer>
 		</Card>
+	
 	);
 };
 

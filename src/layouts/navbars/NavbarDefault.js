@@ -92,7 +92,7 @@ const NavbarDefault = ({ headerstyle, isLoading, login }) => {
                           <Link className="text-body" to="#">
                             <div className="d-flex">
                               <Image
-                                src={END_POINT +theNotific.fromUser.profileImage}
+                                src={theNotific.fromUser.profileImage}
                                 alt=""
                                 className="avatar-md rounded-circle"
                               />
@@ -149,7 +149,7 @@ const NavbarDefault = ({ headerstyle, isLoading, login }) => {
             <div className="avatar avatar-md avatar-indicators avatar-online">
               <Image
                 alt="avatar"
-                src={currentUser.profileImage? baseUrl.baseUrl + currentUser.profileImage:`https://ui-avatars.com/api/?name=${currentUser.fullName}&background=19a9c4&color=fff`}
+                src={currentUser.profileImage?  currentUser.profileImage:`https://ui-avatars.com/api/?name=${currentUser.fullName}&background=19a9c4&color=fff`}
                 className="rounded-circle"
               />
             </div>
@@ -165,7 +165,7 @@ const NavbarDefault = ({ headerstyle, isLoading, login }) => {
                 <div className="avatar avatar-md avatar-indicators avatar-online">
                   <Image
                     alt="avatar"
-                    src={currentUser.profileImage? baseUrl.baseUrl + currentUser.profileImage:`https://ui-avatars.com/api/?name=${currentUser.fullName}&background=19a9c4&color=fff`}
+                    src={currentUser.profileImage?  currentUser.profileImage:`https://ui-avatars.com/api/?name=${currentUser.fullName}&background=19a9c4&color=fff`}
                     className="rounded-circle"
                   />
                 </div>
@@ -187,7 +187,7 @@ const NavbarDefault = ({ headerstyle, isLoading, login }) => {
             </Dropdown.Item>
             <Dropdown.Divider />
             {/* localStorage.removeItem("access") */}
-            <Dropdown.Item  className="mb-3">
+            <Dropdown.Item onClick={()=>{localStorage.removeItem('access'); setCurrentUser({})}} className="mb-3">
               <i className="fe fe-power me-2"></i> Sign Out
             </Dropdown.Item>
           </Dropdown.Menu>

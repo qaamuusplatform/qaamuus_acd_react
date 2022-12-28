@@ -5,6 +5,9 @@ import React from "react";
 import { useState } from "react";
 import { Fragment } from "react";
 import AmericanExpress from "assets/images/creditcard/americanexpress.svg";
+import Hormuud from "assets/images/creditcard/SVG/hormuud.svg";
+import Somnet from "assets/images/creditcard/SVG/somnet.png";
+import Goolis from "assets/images/creditcard/SVG/golis.png";
 import PaypalExpress from "assets/images/creditcard/paypal.svg";
 
 import {
@@ -109,21 +112,21 @@ export function WaafiPayment({theEnrollmentData,itsCourse}) {
                 defaultChecked
               />
               <Form.Check.Label>
-                <Image src={AmericanExpress} alt="" className="me-3" />
+                <Image src={Hormuud} width={60} alt="" className="me-3" />
               </Form.Check.Label>
             </Form.Check>
 
             <Form.Check type="radio" id="inline-radio-2">
               <Form.Check.Input type="radio" name="paymentRadioOne" />
               <Form.Check.Label>
-                <Image src={PaypalExpress} alt="" className="me-3" />
+                <Image src={Somnet} width={60}  alt="" className="me-3" />
               </Form.Check.Label>
             </Form.Check>
 
             <Form.Check type="radio" id="inline-radio-3">
               <Form.Check.Input type="radio" name="paymentRadioOne" />
               <Form.Check.Label>
-                <Image src={PaypalExpress} alt="" className="me-3" />
+                <Image src={Goolis} width={40} alt="" className="me-3" />
               </Form.Check.Label>
             </Form.Check>
           </div>  

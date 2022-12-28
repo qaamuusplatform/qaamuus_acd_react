@@ -37,8 +37,9 @@ import { qaamuusPayments } from "data/qaamuusPayments";
 import {
   DahabPayment,
   WaafiPayment,
-} from "pages/events/paymentsComponents";
+} from "pages/payments/paymentsComponents";
 import { useEffect } from "react";
+import PaypalSdk from "pages/payments/paypal_sdk";
 
 // import custom components
 function useQuery() {
@@ -56,14 +57,14 @@ const Checkout = () => {
   const referralCodeRef = useRef(null);
   const [cupponCodeDiscount, setCupponCodeDiscount] = useState({ code: '', price: 0 });
 
-  if(checkoutCourse){
-    if (checkoutCourse.showRegularPrice) {
+  if (checkoutCourse) {
+    if (checkoutCourse.showDiscountPrice) {
       coursePrice = checkoutCourse.saledPrice
     } else {
       coursePrice = checkoutCourse.regularPrice
     }
   }
-  
+
 
   const handleCuponcode = async (e) => {
     e.preventDefault();
@@ -76,7 +77,7 @@ const Checkout = () => {
       if (response.isCouponCode && response.exists) {
         if (!response.isExpired) {
           toast.success('Codekan Waa la aqbalay');
-          coursePrice=response.discountPrice;
+          coursePrice = response.discountPrice;
           setCupponCodeDiscount({
             code: cupponCodeRef?.current?.value,
             price: response.discountPrice
@@ -133,21 +134,21 @@ const Checkout = () => {
               <Row className="g-0">
                 <Link
                   to={`/courses/${checkoutCourse.slug}`}
-                  className="bg-cover img-left-rounded col-12 col-md-12 col-xl-3 col-lg-3 "
+                  className="bg-cover img-left-rounded col-12 col-md-12 col-xl-4 col-lg-4 "
                   style={{
-                    background: `url(${END_POINT}${checkoutCourse.coverImage})`,
+                    background: `url(${checkoutCourse.coverImage})`,
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",
                     backgroundPosition: "top center",
                   }}
                 >
                   <Image
-                    src={`${END_POINT}${checkoutCourse.coverImage}`}
+                    src={`${checkoutCourse.coverImage}`}
                     alt="..."
                     className="img-fluid d-lg-none invisible"
                   />
                 </Link>
-                <Col lg={9} md={12} sm={12}>
+                <Col lg={8} md={12} sm={12}>
                   {/* <!-- Card body --> */}
                   <Card.Body>
                     <h3 className="mb-2 text-truncate-line-2 ">
@@ -161,15 +162,27 @@ const Checkout = () => {
                     {/* <!-- List inline --> */}
                     <ListGroup as="ul" bsPrefix="list-inline" className="">
                       <ListGroup.Item as="li" bsPrefix="list-inline-item">
+                        <i className="far fa-clock me-1"></i>
+                        {checkoutCourse.houres}
+                      </ListGroup.Item>
+                      <ListGroup.Item as="li" bsPrefix="list-inline-item">
+                        <LevelIcon level={checkoutCourse.level} />
+                        {checkoutCourse.level}
+                      </ListGroup.Item>
+                      <ListGroup.Item as="li" bsPrefix="list-inline-item">
                         <i className="fa fa-dollar-sign me-1"></i>
                         {checkoutCourse.saledPrice}
                       </ListGroup.Item>
                     </ListGroup>
+                    <h5 className="mb-2 fw-normal text-truncate-line-2 ">
+                      {checkoutCourse.simDesc}
+
+                    </h5>
                     {/* <!-- Row --> */}
                     <Row className="align-items-center g-0">
                       <Col className="col-auto">
                         <Image
-                          src={`${END_POINT}${checkoutCourse.instructor.profileImage}`}
+                          src={`${checkoutCourse.instructor.profileImage}`}
                           className="rounded-circle avatar-xs"
                           alt=""
                         />
@@ -214,6 +227,7 @@ const Checkout = () => {
                             <div className="d-flex">
                               <Image
                                 src={thePayment.image}
+                                width={thePayment.width}
                                 alt=""
                                 className="me-3"
                               />
@@ -239,15 +253,15 @@ const Checkout = () => {
                             userId: `${currentUser.id}`,
                             courseId: `${checkoutCourse.id}`,
                             months: `2`,
-                            money: `${coursePrice}`,
-                            referralCode:'',
+                            money: `${coursePrice - cupponCodeDiscount.price}`,
+                            referralCode: '',
                             cupponCode: cupponCodeDiscount.code,
                             type: "waafi",
                           }}
                           itsCourse={true}
                         />
                       </Tab.Pane>
-                      <Tab.Pane eventKey="visaCard" className="pb-1 p-1">
+                      <Tab.Pane eventKey="somtelP" className="pb-1 p-1">
                         {/* Description Tab */}
                         {/* {thePayment.content} */}
                         <DahabPayment
@@ -256,13 +270,24 @@ const Checkout = () => {
                             userId: `${currentUser.id}`,
                             courseId: `${checkoutCourse.id}`,
                             months: `2`,
-                            money: `${coursePrice}`,
+                            money: `${coursePrice - cupponCodeDiscount.price}`,
                             type: "eDahab",
                           }}
                         />
                       </Tab.Pane>
-                      <Tab.Pane eventKey="waafiPayment" className="pb-1 p-1">
+                      <Tab.Pane eventKey="paypalP" className="pb-1 p-1">
                         {/* Description Tab */}
+                        <PaypalSdk theEnrollmentData={{
+                            number: 0,
+                            userId: `${currentUser.id}`,
+                            courseId: `${checkoutCourse.id}`,
+                            months: `2`,
+                            money: `${coursePrice - cupponCodeDiscount.price}`,
+                            referralCode: '',
+                            cupponCode: cupponCodeDiscount.code,
+                            type: "PAYBAL PAYMENT",
+                          }}
+                          itsCourse={true}/>
                         {/* {thePayment.content} */}
                       </Tab.Pane>
                     </Tab.Content>
@@ -277,15 +302,23 @@ const Checkout = () => {
                   <div className="d-flex justify-content-between fs-4 mb-3">
                     <p className="mb-0 fw-bold">QIIMAHA</p>
                     <div className="mb-3">
-                      <span className="text-dark fw-bold h3 me-2">
-                        ${checkoutCourse.saledPrice}
-                      </span>
-                      {checkoutCourse.showRegularPrice ? (
-                        <del className="fs-5 text-muted">
-                          ${checkoutCourse.regularPrice}
-                        </del>
+
+                      {checkoutCourse.showDiscountPrice ? (
+                        <div>
+                          <span className="text-dark fw-bold h3 me-2">
+                            ${checkoutCourse.saledPrice}
+                          </span>
+                          <del className="fs-5 text-muted">
+                            ${checkoutCourse.regularPrice}
+                          </del>
+                        </div>
                       ) : (
-                        <div></div>
+                        <div>
+                          <span className="text-dark fw-bold h3 me-2">
+                            ${checkoutCourse.regularPrice}
+                          </span>
+
+                        </div>
                       )}
                     </div>
                   </div>
@@ -303,8 +336,8 @@ const Checkout = () => {
                       ${coursePrice - cupponCodeDiscount.price}
                     </p>
                   </div>
-                      <hr></hr>
-                  <Form.Label className='mt-3 fw-normal'>Cuppon Code</Form.Label>
+                  <hr></hr>
+                  <Form.Label className='mt-3 fw-bold'>Cuppon Code</Form.Label>
                   {/* <h3 className="mb-2 fw-bold mt-5">Cuppon Code</h3> */}
                   <Form onSubmit={handleCuponcode}>
                     <Form.Group

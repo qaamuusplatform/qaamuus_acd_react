@@ -18,7 +18,12 @@ const GKInstructorCard = ({ item }) => {
 			{/* img */}
 			<Card.Img
 				variant="top"
-				src={END_POINT+item.profileImage}
+				src={
+					item.profileImage
+					  ?  item.profileImage
+					  : `https://ui-avatars.com/api/?name=${item.fullName}&background=19a9c4&color=fff`
+				  }
+				  style={{height:"250px",objectFit:"cover"}}
 				className="rounded-top-md img-fluid"
 			/>
 			{/* card body */}
@@ -30,17 +35,17 @@ const GKInstructorCard = ({ item }) => {
 					</Link>
 				</h3>
 				<p className="mb-3">{item.userTitle}</p>
-				<div className="lh-1  d-flex justify-content-between">
+				{/* <div className="lh-1  d-flex justify-content-between">
 					<div>
 						<span className="fs-6 text-warning">
-							{/* <Icon path={mdiStar} size={0.5} /> <span>{item.rating}</span> */}
+							<Icon path={mdiStar} size={0.5} /> <span>{item.rating}</span>
 							<Icon path={mdiStar} size={0.5} /> <span>4</span> 
 						</span>
 					</div>
 					<div>
 						<span className="fs-6 text-muted">
 							<span className="text-dark">
-								{/* {numberWithCommas(item.students)} */}12
+								{numberWithCommas(item.students)}12
 							</span>{' '}
 							Students
 						</span>
@@ -50,8 +55,19 @@ const GKInstructorCard = ({ item }) => {
 							<span className="text-dark">{item.id}</span> Course
 						</span>
 					</div>
-				</div>
+				</div> */}
 			</Card.Body>
+			<Card.Footer className="bg-white p-0">
+				<div className="d-flex justify-content-between ">
+					<div className="w-50 py-3 px-4 ">
+						<h6 className="mb-0 text-muted">COURSES:</h6>
+					</div>
+					<div className="border-start w-50 py-3 px-4">
+						<h6 className="mb-0 text-muted">EVENTS:</h6>
+						
+					</div>
+				</div>
+			</Card.Footer>
 		</Card>
 	);
 };

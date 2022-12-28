@@ -72,14 +72,14 @@ const StudentDashboard = () => {
                                                             Events
                                                         </Nav.Link>
                                                     </Nav.Item>
-                                                    <Nav.Item className="ms-0">
+                                                    {/* <Nav.Item className="ms-0">
                                                         <Nav.Link
                                                             eventKey="bookmarked"
                                                             className="mb-sm-3 mb-md-0"
                                                         >
                                                             Bookmarked
                                                         </Nav.Link>
-                                                    </Nav.Item>
+                                                    </Nav.Item> */}
                                                 </Nav>
                                             </Card.Header>
                                             <Card.Body className="p-0">
@@ -152,14 +152,12 @@ const StudentDashboard = () => {
                                                             {/* end of learning events */}
                                                         </Row>
                                                     </Tab.Pane>
-                                                    <Tab.Pane
+                                                    {/* <Tab.Pane
                                                         eventKey="bookmarked"
                                                         className="pb-4 p-4 ps-0 pe-0"
                                                     >
-                                                        {/* bookmarked started */}
-
-                                                        {/* end of bookmarked */}
-                                                    </Tab.Pane>
+                                                        
+                                                    </Tab.Pane> */}
                                                 </Tab.Content>
                                             </Card.Body>
                                         </Card>

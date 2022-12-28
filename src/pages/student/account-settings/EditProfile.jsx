@@ -70,21 +70,31 @@ const EditProfile = (props) => {
   }
 
   async function userUpdateHandleSubmit(e) {
+    try {
+      
+    
     e.preventDefault();
     setFormIsLoading(true);
     const userData = new FormData(e.target);
     userData.set("aboutMe", aboutMe);
     for (const [key, value] of userData) {
-      if(key=='profileImage'){
-        if(value.name==''){
+      if (key == 'profileImage') {
+        if (value.name == '') {
           userData.delete("profileImage")
         }
       }
     }
-    updateUserInfo(userData, currentUser.id).then((e) => {
-      toast.success("Waad Ku guulaysatay Xog badallida");
-      setFormIsLoading(false);
-    });
+    let userInfo = await updateUserInfo(userData, currentUser.id);
+    // then((e) => {
+    toast.success("Waad Ku guulaysatay Xog badallida");
+    setFormIsLoading(false);
+    setCurrentUser(userInfo.data)
+
+  } catch (error) {
+    toast.error(error.message);
+    setFormIsLoading(false);
+  }
+    // });
   }
 
   const account = props.location.pathname.substring(21, 11);
@@ -112,7 +122,7 @@ const EditProfile = (props) => {
                 <Image
                   src={
                     currentUser.profileImage
-                      ? baseUrl.baseUrl + currentUser.profileImage
+                      ?  currentUser.profileImage
                       : `https://ui-avatars.com/api/?name=${currentUser.fullName}&background=19a9c4&color=fff`
                   }
                   id="img-uploaded"

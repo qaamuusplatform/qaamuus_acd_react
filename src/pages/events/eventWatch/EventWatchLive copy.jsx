@@ -1,7 +1,6 @@
 // import node module libraries
 
 import { VideoSDKMeeting } from "@videosdk.live/rtc-js-prebuilt";
-import { END_POINT } from "helper/constants";
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { httpFetcher } from "services/coursesService";
@@ -36,15 +35,17 @@ const EventWatchLive = () => {
 
   useEffect(() => {
     if (enrolledEventDetail) {
-      const coHostsConfig=()=>{}
       const participantConfig = () => {
         return {
           name: `${currentUser.fullName}`,
           apiKey: "e149227c-a781-4093-87c6-627b0db2073e", // generated in step 1
-          meetingId: `${enrolledEventDetail.theEvent.meetingId}`, // enter your meeting id
+          meetingId: "maxamednuurxaashi", // enter your meeting id
           theme: "DARK", // DARK || LIGHT || DEFAULT
           containerId: null,
-          
+          micEnabled: false,
+          webcamEnabled: false,
+          participantCanToggleSelfWebcam: true,
+          participantCanToggleSelfMic: true,
           mode: "VIEWER", // VIEWER || CONFERENCE
 
           chatEnabled: true,
@@ -53,12 +54,9 @@ const EventWatchLive = () => {
           raiseHandEnabled: true,
 
           brandingEnabled: true,
-          brandLogoURL: "https://qaamuusbackend.up.railway.app/media/images/logos/logoCard.svg",
+          brandLogoURL: "https://picsum.photos/200",
           brandName: "QAAMUUS ACADEMY",
           poweredBy: true,
-          hls: {
-            playerControlsVisible: false,
-          },
 
           participantCanLeave: true, // if false, leave button won't be visible
 
@@ -72,14 +70,12 @@ const EventWatchLive = () => {
               // },
             ],
           },
-          
+          // waitingScreen: {
+          //     imageUrl: "<imageUrl || lottieUrl>",
+          //     text: "Connecting to the meeting...",
+          // },
           permissions: {
-            // changeLayout: true,
-          },
-          layout: {
-            type: "SIDEBAR", // "SPOTLIGHT" | "SIDEBAR" | "GRID"
-            priority: "SPEAKER", // "SPEAKER" | "PIN",
-            // gridSize: 3,
+            changeLayout: true,
           },
 
           joinScreen: {
@@ -87,6 +83,10 @@ const EventWatchLive = () => {
             title: "QAAMUUS ACADEMY", // Meeting title
           },
 
+          // pin: {
+          //     allowed: false, // participant can pin any participant in meeting
+          //     layout: "SIDEBAR", // meeting layout - GRID | SPOTLIGHT | SIDEBAR
+          // },
 
           leftScreen: {
             // visible when redirect on leave not provieded
@@ -107,7 +107,7 @@ const EventWatchLive = () => {
         return {
           name: `${currentUser.fullName}`,
           apiKey: "e149227c-a781-4093-87c6-627b0db2073e", // generated in step 1
-          meetingId: `${enrolledEventDetail.theEvent.meetingId}`, // enter your meeting id
+          meetingId: "maxamednuurxaashi", // enter your meeting id
           theme: "DARK", // DARK || LIGHT || DEFAULT
           containerId: null,
           micEnabled: true,
@@ -119,12 +119,6 @@ const EventWatchLive = () => {
             priority: "SPEAKER", // "SPEAKER" | "PIN",
             // gridSize: 3,
           },
-          hls: {
-            enabled: true,
-            autoStart: false,
-            theme: "DARK", // DARK || LIGHT || DEFAULT
-          },
-          
           chatEnabled: true,
           screenShareEnabled: true,
           pollEnabled: true,
@@ -132,7 +126,7 @@ const EventWatchLive = () => {
           raiseHandEnabled: true,
 
           brandingEnabled: true,
-          brandLogoURL: `${END_POINT}+/media/images/logos/logoCard.svg`,
+          brandLogoURL: "https://picsum.photos/200",
           brandName: "QAAMUUS ACADEMY",
           poweredBy: true,
 
@@ -155,7 +149,7 @@ const EventWatchLive = () => {
           recording: {
             enabled: true,
             webhookUrl: "https://www.videosdk.live/callback",
-            awsDirPath: `/meeting-recordings/${enrolledEventDetail.theEvent.meetingId}/`, // Pass it only after configuring your S3 Bucket credentials on Video SDK dashboard
+            awsDirPath: `/meeting-recordings/maxamednuurxaashi/`, // Pass it only after configuring your S3 Bucket credentials on Video SDK dashboard
             autoStart: false,
             theme: "DARK", // DARK || LIGHT || DEFAULT
 
@@ -180,11 +174,13 @@ const EventWatchLive = () => {
             toggleParticipantScreenshare: true, // Can toggle other partcipant's screen share
             drawOnWhiteboard: true, // Can draw on whiteboard
             toggleWhiteboard: true, // Can toggle whiteboard
-            toggleRecording: true, // Can toggle meeting recording
+            // toggleRecording: true, // Can toggle meeting recording
             removeParticipant: true, // Can remove participant
             endMeeting: true, // Can end meeting
           },
-          
+          hls: {
+            playerControlsVisible: true,
+          },
 
           joinScreen: {
             visible: true, // Show the join screen ?

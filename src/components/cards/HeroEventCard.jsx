@@ -34,7 +34,7 @@ const EventCardFullWidth = ({ event }) => {
           to={`/event/${event.slug}`}
           className="col-lg-8 col-md-12 col-12 bg-cover img-left-rounded"
           style={{
-            background: `url(${END_POINT + event.coverImage})`,
+            background: `url(${ event.coverImage})`,
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             backgroundPosition: "top center",
@@ -42,7 +42,7 @@ const EventCardFullWidth = ({ event }) => {
         >
           <Card.Img
             variant="left"
-            src={END_POINT + event.image}
+            src={ event.image}
             className="img-fluid d-lg-none invisible"
           />
         </Link>
@@ -69,7 +69,11 @@ const EventCardFullWidth = ({ event }) => {
               <Col className="col-auto">
                 {/*  Img  */}
                 <Image
-                  src={END_POINT + event.persenter.profileImage}
+                  src={
+                    event.persenter.profileImage
+                      ?  event.persenter.profileImage
+                      : `https://ui-avatars.com/api/?name=${event.persenter.fullName}&background=19a9c4&color=fff`
+                    }
                   alt=""
                   className="rounded-circle avatar-sm me-2"
                 />

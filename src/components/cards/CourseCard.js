@@ -31,7 +31,7 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 			<Card className={`mb-4 card-hover ${extraclass}`}>
 				<Link to={`/course/${item.slug}`}>
 					<Image
-						src={`${END_POINT}${item.coverImage}`}
+						src={`${item.coverImage}`}
 						alt=""
 						className="card-img-top img-fluid rounded-top-lg course-grid-cover-image"
 					/>
@@ -103,7 +103,11 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 					<Row className="align-items-center g-0">
 						<Col className="col-auto">
 							<Image
-								src={`${END_POINT}${item.instructor?.profileImage}`}
+								src={
+									item.instructor.profileImage
+									  ?  item.instructor?.profileImage
+									  : `https://ui-avatars.com/api/?name=${item.instructor.fullName}&background=19a9c4&color=fff`
+								  }
 								className="rounded-circle avatar-xs"
 								alt=""
 							/>
@@ -142,14 +146,14 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 						to={`/course/${item.slug}`}
 						className="bg-cover img-left-rounded col-12 col-md-12 col-xl-3 col-lg-3"
 						style={{
-							background: `url(${END_POINT}${item.coverImage})`,
+							background: `url(${item.coverImage})`,
 							backgroundRepeat: 'no-repeat',
 							backgroundSize: 'cover',
 							backgroundPosition: 'top center'
 						}}
 					>
 						<Image
-							src={`${END_POINT}${item.coverImage}`}
+							src={`${item.coverImage}`}
 							alt="..."
 							className="img-fluid d-lg-none invisible"
 						/>
@@ -193,7 +197,12 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 							<Row className="align-items-center g-0">
 								<Col className="col-auto">
 									<Image
-										src={`${END_POINT}${item.instructor.profileImage}`}
+										
+										src={
+											item.instructor.profileImage
+											  ?  item.instructor.profileImage
+											  : `https://ui-avatars.com/api/?name=${item.instructor.fullName}&background=19a9c4&color=fff`
+										  }
 										className="rounded-circle avatar-xs"
 										alt=""
 									/>

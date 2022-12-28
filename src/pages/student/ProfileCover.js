@@ -30,7 +30,7 @@ const ProfileCover = ({ dashboardData, isDashboard }) => {
             <div className="me-2 position-relative d-flex justify-content-end align-items-end mt-n5">
               
               <Image
-              src={dashboardData.profileImage? baseUrl.baseUrl + dashboardData.profileImage:`https://ui-avatars.com/api/?name=${dashboardData.fullName}&background=19a9c4&color=fff&bold=true`}
+              src={dashboardData.profileImage?  dashboardData.profileImage:`https://ui-avatars.com/api/?name=${dashboardData.fullName}&background=19a9c4&color=fff&bold=true`}
                 className="avatar-xl rounded-circle border border-4 border-white position-relative"
                 alt=""
               />

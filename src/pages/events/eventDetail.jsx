@@ -21,6 +21,9 @@ import {
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 // import MDI icons
+import Hormuud from "assets/images/creditcard/SVG/hormuud.svg";
+import Somnet from "assets/images/creditcard/SVG/somnet.png";
+import Goolis from "assets/images/creditcard/SVG/golis.png";
 import Icon from "@mdi/react";
 import {
   mdiAccountMultipleOutline,
@@ -48,7 +51,7 @@ import useSWR from "swr";
 import Timer from "./Timer";
 import { ShimmerPostDetails } from "react-shimmer-effects";
 import { qaamuusPayments } from "data/qaamuusPayments";
-import { DahabPayment, WaafiPayment } from "./paymentsComponents";
+import { DahabPayment, WaafiPayment } from "../payments/paymentsComponents";
 import EventReviewsTab from "./EventReviewsTab";
 
 import http from "services/httpService";
@@ -193,7 +196,7 @@ const EventDetail = ({ location }) => {
                   itsCourse={false}
                 />
               </Tab.Pane>
-              <Tab.Pane eventKey="visaCard" className="pb-1 p-1">
+              <Tab.Pane eventKey="somtelP" className="pb-1 p-1">
                 {/* Description Tab */}
                 {/* {thePayment.content} */}
                 <DahabPayment
@@ -504,7 +507,7 @@ const EventDetail = ({ location }) => {
                         <Image
                           src={
                             eventEnrolmentDetail.theEvent.persenter.profileImage
-                              ? END_POINT +
+                              ? 
                                 eventEnrolmentDetail.theEvent.persenter
                                   .profileImage
                               : `https://ui-avatars.com/api/?name=${currentUser.fullName}&background=19a9c4&color=fff`

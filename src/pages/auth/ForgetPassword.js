@@ -1,7 +1,7 @@
 // import node module libraries
 import { Fragment, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Col, Row, Card, Form, Button, Image, InputGroup, Spinner } from 'react-bootstrap';
+import { Col, Row, Card, Form, Button, Image, InputGroup, Spinner,Collapse,Fade  } from 'react-bootstrap';
 
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
@@ -12,6 +12,7 @@ import logoCard from "assets/images/brand/logo/logoCard.svg";
 import { getAllUsernamesAnsEmails } from 'services/authService';
 import http from 'services/httpService';
 export default function ForgetPassword() {
+  const [open, setOpen] = useState(false);
   const [sendedCode, setSendedCode] = useState(0);
   const [passwordShown, setPasswordShown] = useState(false);
   const [formIsLoading, setFormIsLoading] = useState(false);
@@ -35,6 +36,7 @@ export default function ForgetPassword() {
       setSendedCode(1)
       await http.get(`api/send-reset-password-code/${passwordResetForm.values.email}/`).then((resp) => {
         if(resp.data.sended){
+          setOpen(true)
         setSendedCode(resp.data.sendedCode)
         }else{
           toast.warning('emailka aad galisay maaha mid jira')
@@ -51,7 +53,7 @@ export default function ForgetPassword() {
     setFormIsLoading(true);
     // setRegistringModal(true)
     // localStorage.removeItem("access");
-    await http
+    let userProfileResp=await http
       .post(
         `/api/userProfile-update-email/${passwordResetForm.values.email}/`,
         JSON.stringify(passwordResetForm.values),
@@ -59,14 +61,14 @@ export default function ForgetPassword() {
           headers: { "Content-Type": "application/json" },
         }
       )
-      .then((userProfileResp) => {
+      // .then((userProfileResp) => {
         setFormIsLoading(false);
         passwordResetForm.resetForm();
         toast.success(
           "Waad ku guulaysatay iska badalidda passwordka"
         );
         history.replace("/auth/login/");
-      });
+      // });
 
 
   };
@@ -288,6 +290,8 @@ export default function ForgetPassword() {
 
                       </Col>
                       {sendedCode != 0 && sendedCode != 1 ? (
+                        <Fade in={open}>
+                          {/* <div id="example-collapse-text"> */}
                         <Col lg={12} md={12} className="mb-3">
                           <p>
                             Fariin ayaa laguugu diray emailkan{" "}
@@ -328,7 +332,10 @@ export default function ForgetPassword() {
                               {passwordResetForm.errors.activationCode}
                             </Form.Control.Feedback>
                           </Form.Group>
-                        </Col>) : (<div></div>)
+                        </Col>
+                        {/* </div> */}
+                        </Fade>
+                        ) : (<div></div>)
 
                       }
                     </div>
