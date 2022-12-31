@@ -35,6 +35,7 @@ import Ratings from "components/elements/common/ratings/Ratings";
 import LevelIcon from "pages/student/miscellaneous/LevelIcon";
 import { qaamuusPayments } from "data/qaamuusPayments";
 import {
+  CashOnDelivery,
   DahabPayment,
   WaafiPayment,
 } from "pages/payments/paymentsComponents";
@@ -274,6 +275,21 @@ const Checkout = () => {
                             type: "eDahab",
                           }}
                         />
+                      </Tab.Pane>
+                      <Tab.Pane eventKey="othersp" className="pb-1 p-1">
+                        {/* Description Tab */}
+                        <CashOnDelivery theEnrollmentData={{
+                            number: 0,
+                            userId: `${currentUser.id}`,
+                            courseId: `${checkoutCourse.id}`,
+                            months: `2`,
+                            money: `${coursePrice - cupponCodeDiscount.price}`,
+                            referralCode: '',
+                            cupponCode: cupponCodeDiscount.code,
+                            type: "PAYBAL PAYMENT",
+                          }}
+                          itsCourse={true}/>
+                        {/* {thePayment.content} */}
                       </Tab.Pane>
                       <Tab.Pane eventKey="paypalP" className="pb-1 p-1">
                         {/* Description Tab */}

@@ -20,10 +20,11 @@ import {
   Image,
   Row,
   Spinner,
+  Alert,
 } from "react-bootstrap";
 import http, { httpAxiosWithToken } from "services/httpService";
 
-export function WaafiPayment({theEnrollmentData,itsCourse}) {
+export function WaafiPayment({ theEnrollmentData, itsCourse }) {
   const [formIsLoading, setFormIsLoading] = useState(false);
   //   let eventInrollmentData={}
 
@@ -31,7 +32,7 @@ export function WaafiPayment({theEnrollmentData,itsCourse}) {
     theEnrollmentData.number = paymentForm.values.number.toString();
     setFormIsLoading(true);
     console.log(theEnrollmentData);
-    if(itsCourse){
+    if (itsCourse) {
       try {
         await http
           .post(
@@ -47,10 +48,10 @@ export function WaafiPayment({theEnrollmentData,itsCourse}) {
             history.replace("/auth/login/");
           });
       } catch (error) {
-        console.log('errr',error)
+        console.log("errr", error);
         toast.error("laguma guulaysan lacag bixinta fadlan ku celi markale");
       }
-    }else{
+    } else {
       try {
         await http
           .post(
@@ -70,7 +71,6 @@ export function WaafiPayment({theEnrollmentData,itsCourse}) {
         toast.error("laguma guulaysan lacag bixinta fadlan ku celi markale");
       }
     }
-    
 
     // if(emailVerified){
 
@@ -103,35 +103,35 @@ export function WaafiPayment({theEnrollmentData,itsCourse}) {
     <Fragment>
       <Form onSubmit={paymentForm.handleSubmit} controlId="validationFormik01">
         <Row>
-            <center>
-              <div className="d-inline-flex text-center" >
-            <Form.Check type="radio" id="inline-radio-1">
-              <Form.Check.Input
-                type="radio"
-                name="paymentRadioOne"
-                defaultChecked
-              />
-              <Form.Check.Label>
-                <Image src={Hormuud} width={60} alt="" className="me-3" />
-              </Form.Check.Label>
-            </Form.Check>
+          <center>
+            <div className="d-inline-flex text-center">
+              <Form.Check type="radio" id="inline-radio-1">
+                <Form.Check.Input
+                  type="radio"
+                  name="paymentRadioOne"
+                  defaultChecked
+                />
+                <Form.Check.Label>
+                  <Image src={Hormuud} width={60} alt="" className="me-3" />
+                </Form.Check.Label>
+              </Form.Check>
 
-            <Form.Check type="radio" id="inline-radio-2">
-              <Form.Check.Input type="radio" name="paymentRadioOne" />
-              <Form.Check.Label>
-                <Image src={Somnet} width={60}  alt="" className="me-3" />
-              </Form.Check.Label>
-            </Form.Check>
+              <Form.Check type="radio" id="inline-radio-2">
+                <Form.Check.Input type="radio" name="paymentRadioOne" />
+                <Form.Check.Label>
+                  <Image src={Somnet} width={60} alt="" className="me-3" />
+                </Form.Check.Label>
+              </Form.Check>
 
-            <Form.Check type="radio" id="inline-radio-3">
-              <Form.Check.Input type="radio" name="paymentRadioOne" />
-              <Form.Check.Label>
-                <Image src={Goolis} width={40} alt="" className="me-3" />
-              </Form.Check.Label>
-            </Form.Check>
-          </div>  
-            </center>
-          
+              <Form.Check type="radio" id="inline-radio-3">
+                <Form.Check.Input type="radio" name="paymentRadioOne" />
+                <Form.Check.Label>
+                  <Image src={Goolis} width={40} alt="" className="me-3" />
+                </Form.Check.Label>
+              </Form.Check>
+            </div>
+          </center>
+
           <br></br>
           <br></br>
           <Form.Label>Numberka Mobileka</Form.Label>
@@ -196,7 +196,7 @@ export function WaafiPayment({theEnrollmentData,itsCourse}) {
   );
 }
 
-export function DahabPayment({theEventDetail}) {
+export function DahabPayment({ theEventDetail }) {
   const [formIsLoading, setFormIsLoading] = useState(false);
   const onSubmit = async () => {
     theEventDetail.number = paymentForm.values.number.toString();
@@ -316,4 +316,30 @@ export function DahabPayment({theEventDetail}) {
 
 export function StripeOrPaypal() {
   return <div>stripe</div>;
+}
+
+export function CashOnDelivery({ theEnrollmentData, itsCourse }) {
+  return (
+    <Fragment>
+      <Form controlId="validationFormik01">
+        <Row>
+          <Form.Label>Lacag Bixinta</Form.Label>
+          <Alert variant="info">EVC 616 981411</Alert>
+          <Alert variant="dark">SALAAM 30330044</Alert>
+        </Row>
+
+        <div style={{ marginLeft: "3px", marginRight: "3px", width: "100%" }}>
+          <Button
+            variant="primary"
+            className="text-right btn btn-primary"
+            type="submit"
+            size="sm"
+          >
+            {" "}
+            Click{" "}
+          </Button>
+        </div>
+      </Form>
+    </Fragment>
+  );
 }

@@ -16,8 +16,6 @@ import { useContext } from 'react';
 import { CurrentUserContext } from 'services/currentUserContext';
 import { httpFetcher } from 'services/coursesService';
 import { useEffect } from 'react';
-import { youTubeIdFromLink } from 'helper/utils';
-import CourseContent from 'components/accordions/CourseContent';
 import { toast } from 'react-toastify';
 import GKAccordionProgress from 'components/accordions/GKAccordionProgress';
 import { CourseIndex } from 'data/CourseIndexData';
@@ -105,7 +103,9 @@ export const WatchCourse = ({ match }) => {
                                             {/*  Video */}
 
                                             <div className="embed-responsive position-relative w-100 d-block overflow-hidden p-0" >
-                                                <div style={{ position: 'relative', paddingTop: '56.25%' }}><iframe src="https://iframe.mediadelivery.net/embed/36078/18b11231-8237-4040-b71a-c5da3e495df4?autoplay=false" loading="lazy" style={{ border: 'none', position: 'absolute', top: 0, height: '100%', width: '100%' }} allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowFullScreen="true" /></div>
+                                                <div style={{ position: 'relative', paddingTop: '56.25%' }}>
+                                                    <iframe src="https://iframe.mediadelivery.net/embed/36022/294f5363-1627-4c84-a4db-c02cc22a9c62?autoplay=true" loading="lazy" style={{ border: 'none', position: 'absolute', top: 0, height: '100%', width: '100%' }} allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowFullScreen="true" />
+                                                </div>
 
                                             </div>
 
@@ -160,8 +160,8 @@ export const WatchCourse = ({ match }) => {
             {
                 courseInfo?.isEnrolled ?
 
-                    <Card className="course-sidebar h-100 rounded-2" id="courseAccordion">
-                        <Card.Header className='fw-bold bg-dark text-white'>CASHIRADA COURSKA</Card.Header>
+                    <Card className="course-sidebar h-100 rounded-0" id="courseAccordion">
+                        <Card.Header className='fw-bold bg-dark text-white rounded-0'>CASHIRADA COURSKA</Card.Header>
 
                         <GKAccordionProgress lessons={courseInfo?.theCourse?.theComponents ?? []} onClickLesson={setCurrentVideo} currentLesson={currentVideo} />
                     </Card> : null}

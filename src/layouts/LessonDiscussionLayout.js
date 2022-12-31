@@ -43,7 +43,7 @@ import { END_POINT } from "helper/constants";
 
 // import data files
 
-const DashboardIndexTop = (props) => {
+const LsnDiscussionLayout = (props) => {
   const { currentUser, setCurrentUser, userIsLoading } =
     useContext(CurrentUserContext);
   const isDesktop = useMediaQuery({
@@ -236,7 +236,7 @@ const DashboardIndexTop = (props) => {
           </Navbar.Brand>
           {/* search box */}
           <div className="ms-lg-3 d-none d-md-none d-lg-block">
-            {/* <Link to={"/course/:slug/discussions/"} className="text-muted">
+            <Link to={"/course/:slug/discussions/"} className="text-muted">
               <Button
                 variant="primary"
                 
@@ -245,8 +245,8 @@ const DashboardIndexTop = (props) => {
               >
                 Dooda Cashirka
               </Button>
-            </Link> */}
-            <Form className="d-flex align-items-center">
+            </Link>
+            {/* <Form className="d-flex align-items-center">
 							<span className="position-absolute ps-3 search-icon">
 								<i className="fe fe-search text-muted"></i>
 							</span>
@@ -255,7 +255,7 @@ const DashboardIndexTop = (props) => {
 								placeholder="Search Entire Dashboard"
 								className="form-control form-control-sm ps-6 border-white"
 							/>
-						</Form>
+						</Form> */}
           </div>
           {/* Right side quick / shortcut menu  */}
           <Nav className="navbar-nav navbar-right-wrap ms-auto d-flex nav-top-wrap">
@@ -272,8 +272,8 @@ const DashboardIndexTop = (props) => {
       </Navbar>
 
       {/* body container */}
-      <Fragment className="my-6">{props.children}</Fragment>
+			<Container className="my-6">{props.children}</Container>
     </div>
   );
 };
-export default DashboardIndexTop;
+export default LsnDiscussionLayout;

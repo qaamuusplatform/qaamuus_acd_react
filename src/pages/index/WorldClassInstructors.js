@@ -42,7 +42,7 @@ const WorldClassInstructors = () => {
 			</Row>
 			<div className="d-flex justify-content-between">
 				<h2 className="mb-0 mx-2"> </h2>
-				<Link to="/courses/" className="btn btn-secondary">
+				<Link to="/members/" className="btn btn-secondary">
 				See All Instructors
 				</Link>
 			</div>

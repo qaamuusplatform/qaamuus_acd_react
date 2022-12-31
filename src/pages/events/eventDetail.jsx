@@ -510,7 +510,7 @@ const EventDetail = ({ location }) => {
                               ? 
                                 eventEnrolmentDetail.theEvent.persenter
                                   .profileImage
-                              : `https://ui-avatars.com/api/?name=${currentUser.fullName}&background=19a9c4&color=fff`
+                              : `https://ui-avatars.com/api/?name=${eventEnrolmentDetail.theEvent.persenter.fullName}&background=19a9c4&color=fff`
                           }
                           alt=""
                           className="rounded-circle avatar-xl"

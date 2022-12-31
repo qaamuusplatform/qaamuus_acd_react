@@ -40,6 +40,9 @@ import EventWatchVr from "pages/events/eventWatch/EventWatchVirtual";
 import DashboardIndexTop from "./DashboardIndexTop";
 import AboutQaamuus from "pages/aboutQ/AboutQaamuus";
 import BlankLayout from "./BlankLayout";
+import LsnDiscussionLayout from "./LessonDiscussionLayout";
+import LessonDiscussion from "pages/courses/LessonDiscussion";
+import MailProvider from "components/mail-app/providers/MailProvider";
 
 /* IMPORTS FOR MARKETING PAGES - END */
 /* --------------------------------- */
@@ -53,6 +56,16 @@ const AppRoute = ({ component: Component, layout: Layout, ...rest }) => (
       </Layout>
     )}
   ></Route>
+);
+const MailRoutes = ({ component: Component, layout: Layout, ...rest }) => (
+	<Route
+		{...rest}
+		render={(props) => (
+			<Layout>
+					<Component {...props}></Component>
+			</Layout>
+		)}
+	></Route>
 );
 
 const ProtectedRoute = ({ component: Component, layout: Layout, ...rest }) => {
@@ -207,10 +220,17 @@ function AllRoutes() {
       /> */}
       <ProtectedRoute
         exact
-        path="/course/:slug/watch"
+        path="/course/:slug/watch/"
         layout={DashboardIndexTop}
         component={WatchCourse}
       />
+      <MailRoutes
+        exact
+        path="/course/:slug/discussions/"
+        layout={LsnDiscussionLayout}
+        component={LessonDiscussion}
+      />
+
       <AppRoute
         exact
         path="/events/"
@@ -239,7 +259,7 @@ function AllRoutes() {
       <ProtectedRoute
         exact
         path="/event/watch-live-vt/:slug"
-        layout={LiveLayout}
+        layout={BlankLayout}
         component={EventWatchVr}
       />
       

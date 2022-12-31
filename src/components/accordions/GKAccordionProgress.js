@@ -73,7 +73,8 @@ const GKAccordionProgress = ({ lessons : accordionItems, itemClass,onClickLesson
 								</ContextAwareToggle>
 								<Accordion.Collapse eventKey={item.id}>
 									<ListGroup variant="flush">
-										<ListGroup.Item className="border-top-0">
+										{/* pinner */}
+										{/* <ListGroup.Item className="border-top-0">
 											<ProgressBar
 												variant="success"
 												className="mb-2 progress"
@@ -81,7 +82,7 @@ const GKAccordionProgress = ({ lessons : accordionItems, itemClass,onClickLesson
 												style={{ height: '6px' }}
 											/>
 											<small>{item.completed ?? 0}% Completed</small>
-										</ListGroup.Item>
+										</ListGroup.Item> */}
 										{item.theCompoLessons.map((subitem, index) => (
 											<ListGroup.Item
 												key={index}
@@ -110,9 +111,9 @@ const GKAccordionProgress = ({ lessons : accordionItems, itemClass,onClickLesson
 														</span>
 														<span className="fs-5">{subitem.title}</span>
 													</div>
-													<div className="text-truncate fs-5">
+													{/* <div className="text-truncate fs-5">
 														<span>{subitem.duration}</span>
-													</div>
+													</div> */}
 												
 											</ListGroup.Item>
 										))}
