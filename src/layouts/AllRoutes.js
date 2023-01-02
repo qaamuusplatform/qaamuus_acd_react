@@ -43,6 +43,7 @@ import BlankLayout from "./BlankLayout";
 import LsnDiscussionLayout from "./LessonDiscussionLayout";
 import LessonDiscussion from "pages/courses/LessonDiscussion";
 import MailProvider from "components/mail-app/providers/MailProvider";
+import SecCardCourse from "./../pages/checkout/SecCardCourse";
 
 /* IMPORTS FOR MARKETING PAGES - END */
 /* --------------------------------- */
@@ -58,14 +59,14 @@ const AppRoute = ({ component: Component, layout: Layout, ...rest }) => (
   ></Route>
 );
 const MailRoutes = ({ component: Component, layout: Layout, ...rest }) => (
-	<Route
-		{...rest}
-		render={(props) => (
-			<Layout>
-					<Component {...props}></Component>
-			</Layout>
-		)}
-	></Route>
+  <Route
+    {...rest}
+    render={(props) => (
+      <Layout>
+        <Component {...props}></Component>
+      </Layout>
+    )}
+  ></Route>
 );
 
 const ProtectedRoute = ({ component: Component, layout: Layout, ...rest }) => {
@@ -100,7 +101,12 @@ function AllRoutes() {
       {/* --------------------------- */}
       {/* LANDING PAGES ROUTERS - START */}
       <AppRoute exact path="/" layout={DefaultLayout} component={CourseIndex} />
-      <AppRoute exact path="/nagu-saabsan/" layout={BlankLayout} component={AboutQaamuus} />
+      <AppRoute
+        exact
+        path="/nagu-saabsan/"
+        layout={BlankLayout}
+        component={AboutQaamuus}
+      />
 
       {/* authentication joining forgetting  */}
       <AppRoute
@@ -250,6 +256,12 @@ function AllRoutes() {
         layout={DefaultLayout}
         component={EventCheckout}
       />
+      <AppRoute
+        exact
+        path="/nadaara"
+        layout={DefaultLayout}
+        component={SecCardCourse}
+      />
       <ProtectedRoute
         exact
         path="/event/watch-live/:slug"
@@ -262,7 +274,7 @@ function AllRoutes() {
         layout={BlankLayout}
         component={EventWatchVr}
       />
-      
+
       {/* <AppRoute exact path="/event-waiting/:slug" layout={DefaultLayout}  component={EventWatingScreen} /> */}
 
       <AppRoute exact path="/404" layout={DefaultLayout} component={Error404} />
