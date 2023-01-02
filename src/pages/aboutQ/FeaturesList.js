@@ -40,7 +40,7 @@ const Features3Columns = () => {
 	];
 
 	return (
-		<div className="py-lg-16 py-10">
+		<div className="py-lg-10 py-10">
 			<Container>
 				<SectionHeading title={title} description={description} />
 				<Row>

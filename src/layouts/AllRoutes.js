@@ -36,7 +36,7 @@ import { CurrentUserContext } from "services/currentUserContext";
 import WatchCourse from "pages/courses/watchCourse";
 import ForgetPassword from "pages/auth/ForgetPassword";
 import CourseResumeLayout from "./CourseResumeLayout";
-import EventWatchVr from "pages/events/eventWatch/EventWatchVirtual";
+import EventWatchVr from "pages/events/eventWatch/eventWatchVirtual";
 import DashboardIndexTop from "./DashboardIndexTop";
 import AboutQaamuus from "pages/aboutQ/AboutQaamuus";
 import BlankLayout from "./BlankLayout";

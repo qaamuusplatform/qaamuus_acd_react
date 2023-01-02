@@ -31,7 +31,7 @@ const InrolledCourseCard = ({ item, free, viewby, showprogressbar, extraclass })
 			<Card className={`mb-4 card-hover ${extraclass}`}>
 				<Link to={`/course/${item.theCourse.slug}`}>
 					<Image
-						src={`${END_POINT}${item.theCourse.coverImage}`}
+						src={`${item.theCourse.coverImage}`}
 						alt=""
 						className="card-img-top rounded-top-md course-grid-cover-image"
 					/>
@@ -131,14 +131,14 @@ const InrolledCourseCard = ({ item, free, viewby, showprogressbar, extraclass })
 						to={`/courses/${item.theCourse.slug}`}
 						className="bg-cover img-left-rounded col-12 col-md-12 col-xl-3 col-lg-3 "
 						style={{
-							background: `url(${END_POINT}${item.theCourse.coverImage})`,
+							background: `url(${item.theCourse.coverImage})`,
 							backgroundRepeat: 'no-repeat',
 							backgroundSize: 'cover',
 							backgroundPosition: 'top center'
 						}}
 					>
 						<Image
-							src={`${END_POINT}${item.theCourse.coverImage}`}
+							src={`${item.theCourse.coverImage}`}
 							alt="..."
 							className="img-fluid d-lg-none invisible"
 						/>

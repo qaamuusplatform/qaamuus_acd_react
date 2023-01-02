@@ -91,7 +91,12 @@ const GKAccordionProgress = ({ lessons : accordionItems, itemClass,onClickLesson
 												onClick={()=>onClickLesson({lesson:subitem.title, link:subitem.lessonLink})}
 												className='cursor-pointer'
 											>
-												
+												<Link
+													to="#"
+													className={`d-flex justify-content-between align-items-center text-${
+														currentLesson == subitem.lessonLink ? 'white' : 'inherit'
+													} text-decoration-none`}
+												>
 													<div className="text-truncate ">
 														<span
 															className={`icon-shape bg-${
@@ -111,10 +116,10 @@ const GKAccordionProgress = ({ lessons : accordionItems, itemClass,onClickLesson
 														</span>
 														<span className="fs-5">{subitem.title}</span>
 													</div>
-													{/* <div className="text-truncate fs-5">
+													<div className="text-truncate fs-5">
 														<span>{subitem.duration}</span>
-													</div> */}
-												
+													</div>
+												</Link>
 											</ListGroup.Item>
 										))}
 									</ListGroup>

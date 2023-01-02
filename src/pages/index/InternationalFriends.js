@@ -50,7 +50,7 @@ const InternationalFriends = () => {
   };
 
   return (
-    <Slider {...settings} className="pb-sm-5 bg-white rounded mb-3 pt-5 slick-slider-wrapper">
+    <Slider {...settings} className="pb-sm-5 bg-white rounded-25 mb-3 pt-5 slick-slider-wrapper">
       {internationalFriendsData?.map((item, index) => {
         return (
           <div className="item px-md-1 bg-white" key={index}>

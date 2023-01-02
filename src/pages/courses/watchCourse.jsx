@@ -86,7 +86,6 @@ export const WatchCourse = ({ match }) => {
     }, [courseInfo])
 
 
-
     return (
         <Fragment>
             {/* <NavbarDefault login /> */}
@@ -104,7 +103,7 @@ export const WatchCourse = ({ match }) => {
 
                                             <div className="embed-responsive position-relative w-100 d-block overflow-hidden p-0" >
                                                 <div style={{ position: 'relative', paddingTop: '56.25%' }}>
-                                                    <iframe src="https://iframe.mediadelivery.net/embed/36022/294f5363-1627-4c84-a4db-c02cc22a9c62?autoplay=true" loading="lazy" style={{ border: 'none', position: 'absolute', top: 0, height: '100%', width: '100%' }} allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowFullScreen="true" />
+                                                    <iframe src={currentVideo.link} loading="lazy" style={{ border: 'none', position: 'absolute', top: 0, height: '100%', width: '100%' }} allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowFullScreen="true" />
                                                 </div>
 
                                             </div>

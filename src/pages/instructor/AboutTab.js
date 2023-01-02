@@ -3,6 +3,7 @@ import CertificateCard from "components/cards/CertificateCard";
 import InstructorData from "data/InstructorData";
 import { Col, Row, Card, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import parse from 'html-react-parser';
 
 // import media files
 const AboutTab = ({ instructorInfo }) => {
@@ -64,7 +65,7 @@ const AboutTab = ({ instructorInfo }) => {
             <h3 className="mb-0">About Path</h3>
           </Card.Header>
           <Card.Body>
-            {instructorInfo?.aboutMe}
+            {parse(instructorInfo?.aboutMe)}
             {/* Blockquote */}
             {/* <blockquote className="blockquote-left ">
 							<p className="mb-4 font-italic ms-4">
