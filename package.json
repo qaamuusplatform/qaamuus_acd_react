@@ -46,6 +46,7 @@
     "react-scripts": "^5.0.0",
     "react-shimmer-effects": "^1.0.2",
     "react-simple-maps": "^2.3.0",
+    "react-simple-star-rating": "^5.1.7",
     "react-slick": "^0.28.1",
     "react-table": "^7.7.0",
     "react-to-print": "^2.13.0",

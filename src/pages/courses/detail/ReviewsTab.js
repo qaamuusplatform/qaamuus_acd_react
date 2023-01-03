@@ -1,18 +1,156 @@
 // import node module libraries
-import { Fragment } from 'react';
+import { Fragment, useState,forwardRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Col, Row, Image, ProgressBar, Form } from 'react-bootstrap';
+import { Col, Row, Image, ProgressBar, Form, Modal, Button, Spinner, Badge, Dropdown } from 'react-bootstrap';
 
 // import custom components
 import Ratings from 'components/elements/common/ratings/Ratings';
 import { END_POINT } from 'helper/constants';
+import { Rating } from "react-simple-star-rating";
+import http from 'services/httpService';
+import { useContext } from 'react';
+import { CurrentUserContext } from 'services/currentUserContext';
+import Icon from '@mdi/react';
+import { mdiLock } from '@mdi/js';
+import { toast } from 'react-toastify';
+// import {mutate} from 'swr';
+// import useSWR from 'swr';
+import { httpFetcher } from 'services/coursesService';
+import { Edit, MoreVertical, Move, ToggleLeft, ToggleRight, Trash } from 'react-feather';
 // import { Reviews } from 'data/CourseIndexData';
 
 // import data files
 
-const ReviewsTab = ({reviews}) => {
+const ReviewsTab = ({ reviews, courseId,mutate }) => {
+
+	const { currentUser, userIsLoading } = useContext(CurrentUserContext);
+	const [registringReviewModal, setRegistringReviewModal] = useState(false)
+	const [modalShow, setModalShow] = useState(false);
+	const [rating, setRating] = useState(0)
+	const [theRatingComp, setRatingComp] = useState(<Badge bg="primary" className="me-1">Heerka</Badge>)
+
+	const CustomToggle = forwardRef(({ children, onClick }, ref) => (
+		<Link
+			to=""
+			ref={ref}
+			onClick={(e) => {
+				e.preventDefault();
+				onClick(e);
+			}}
+		>
+			{children}
+		</Link>
+	))
+	// const { data,error,mutate } = useSWR( `/api/checkThisUserInrolledCourse-slug/${currentUser.id}/${slug}/`, httpFetcher );
+	const handleRating = (number) => {
+		setRating(number)
+	}
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		var theUser = currentUser.id;
+		setRegistringReviewModal(true)
+		const formData = new FormData(e.target)
+		let resp=	await http.post(
+			"/api/courseReview-create/",
+			JSON.stringify({
+				'theText': formData.get('theText'),
+				'theUser': theUser,
+				'theRating': rating,
+				'theCourse': courseId,
+			}),
+			{
+				headers: { "Content-Type": "application/json" },
+			}
+		)
+
+		console.log(resp)
+		toast.success(
+			"Waad ku mahadsantahy falcelintaada"
+		);
+		setRegistringReviewModal(false)
+		mutate()
+		setModalShow(false)
+
+	}
+	const ActionMenu = () => {
+		return (
+			<Dropdown>
+				<Dropdown.Toggle as={CustomToggle}>
+					<MoreVertical size="15px" className="text-secondary" />
+				</Dropdown.Toggle>
+				<Dropdown.Menu align="end">
+					<Dropdown.Header>SETTINGS</Dropdown.Header>
+					<Dropdown.Item eventKey="1">
+						{' '}
+						<Edit size="18px" className="dropdown-item-icon" /> Badalid
+					</Dropdown.Item>
+					{/* <Dropdown.Item eventKey="2">
+						{' '}
+						<Move size="18px" className="dropdown-item-icon" /> Move
+					</Dropdown.Item>
+					
+					<Dropdown.Item eventKey="4">
+						{' '}
+						<ToggleLeft size="18px" className="dropdown-item-icon" /> Publish
+					</Dropdown.Item>
+					<Dropdown.Item eventKey="5">
+						{' '}
+						<ToggleRight size="18px" className="dropdown-item-icon" /> Unpublish
+					</Dropdown.Item> */}
+					<Dropdown.Item className='bg-danger text-white' eventKey="6">
+						{' '}
+						<Trash size="18px" className="dropdown-item-icon" color='white' /> Delete
+					</Dropdown.Item>
+				</Dropdown.Menu>
+			</Dropdown>
+		);
+	};
 	return (
 		<Fragment>
+				<Modal show={modalShow} data-backdrop="static" backdrop="static" onHide={() => setModalShow(false)} centered>
+			<Form onSubmit={handleSubmit} controlId="validationFormik01" >
+					<Modal.Header closeButton className="pt-4 pb-2">
+						<Modal.Title>Faahfaahinta Falcelinta</Modal.Title>
+					</Modal.Header>
+					<Modal.Body>
+
+						<Col lg={12} md={12} sm={12} className="mb-1 mt-0">
+
+							<Rating onClick={handleRating} initialValue={rating} className="mb-3" /> {theRatingComp}
+							<Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+								<Form.Label>Faahfaahin Dheeri Ah</Form.Label>
+								<Form.Control as="textarea"  required name="theText" rows={3} />
+							</Form.Group>
+
+						</Col>
+
+
+
+					</Modal.Body>
+
+					<Modal.Footer className="pt-1 pb-2">
+						<Button variant="secondary" size="sm" onClick={() => setModalShow(false)}>
+							Close
+						</Button>
+						{registringReviewModal ? (
+							<Button variant="primary" size="md" disabled>
+								<Spinner
+									as="span"
+									animation="border"
+									size="sm"
+									role="status"
+									aria-hidden="true"
+								/>
+								&nbsp; Loading...
+							</Button>
+						) : (<Button variant="primary" type="submit" size="md"> Diiwaangali </Button>)}
+
+
+					</Modal.Footer>
+
+					</Form>
+
+				</Modal>
 			{/* <div className="mb-3">
 				<h3 className="mb-4">How students rated this courses</h3>
 				<Row className="align-items-center">
@@ -100,60 +238,68 @@ const ReviewsTab = ({reviews}) => {
 					</div>
 					<div>
 						{/* Form */}
-						<Form className="form-inline">
-							<Form.Group
-								className="d-flex align-items-center me-2"
-								controlId="formBasicEmail"
-							>
-								<span className="position-absolute ps-3">
-									<i className="fe fe-search"></i>
-								</span>
-								<Form.Control
-									type="search"
-									placeholder="Search Review"
-									className=" ps-6"
-								/>
-							</Form.Group>
-						</Form>
+						{Object.keys(currentUser).length === 0 ? (
+							 <Link
+							 to={{
+							   pathname: "/auth/login",
+							   state: { from: location },
+							 }}
+							 className={`btn btn-dark`}
+						   >
+							 <Icon path={mdiLock} size={1} className="mb-0" color="white" /> &nbsp;
+							 LOGIN 
+						   </Link>
+						):(
+							<Button variant="primary" type="submit" size="smd" onClick={() => setModalShow(true)}>
+							{" "}
+							Falcelin Reeb{" "}
+						</Button>
+						)}
+						
 					</div>
 				</div>
 				{/* Rating */}
-				{reviews.length!=0?(
-reviews.map((item, index) => (
-					<div className="d-flex border-bottom pb-4 mb-4" key={index}>
-						<Image
-							src={item.theUser.profileImage}
-							alt=""
-							className="rounded-circle avatar-lg"
-						/>
-						<div className=" ms-3">
-							<h4 className="mb-1">
-								{item.theUser.fullName}
-								<span className="ms-1 fs-6 text-muted">{item.postedon}</span>
-							</h4>
-							<div className="fs-6 mb-2 text-warning">
-								<Ratings rating={item.theRate} />
-							</div>
-							<div
-								dangerouslySetInnerHTML={{
-									__html: item.theText
-								}}
+				{reviews.length != 0 ? (
+					reviews.map((item, index) => (
+						<div className="d-flex border-bottom pb-4 mb-4" key={index}>
+							<Image
+								src={item.theUser.profileImage}
+								alt=""
+								className="rounded-circle avatar-lg"
 							/>
-							<div className="d-lg-flex">
-								<p className="mb-0">Was this review helpful?</p>
-								<Link to="#" className="btn btn-xs btn-primary ms-lg-3">
-									Yes
-								</Link>
-								<Link to="#" className="btn btn-xs btn-outline-white ms-1">
-									No
-								</Link>
+							<div className="ms-3 w-100">
+								<h4 className="mb-1">
+									<div className='d-flex justify-content-between' >
+										<div>{item.theUser.fullName} </div>
+										<ActionMenu />
+									</div>
+									
+									<span className="ms-1 fs-6 text-muted">{item.userTitle} </span>
+								</h4>
+
+								<div className="fs-6 mb-2 text-warning">
+									<Ratings rating={item.theRate} />
+								</div>
+								<div
+									dangerouslySetInnerHTML={{
+										__html: item.theText
+									}}
+								/>
+								{/* <div className="d-lg-flex">
+									<p className="mb-0">Was this review helpful?</p>
+									<Link to="#" className="btn btn-xs btn-primary ms-lg-3">
+										Yes
+									</Link>
+									<Link to="#" className="btn btn-xs btn-outline-white ms-1">
+										No
+									</Link>
+								</div> */}
 							</div>
 						</div>
-					</div>
-				))
-				):(<center>Ma jiraan Wax Falcelin ah</center>)}
-				
-				
+					))
+				) : (<center>Ma jiraan Wax Falcelin ah</center>)}
+
+
 			</div>
 		</Fragment>
 	);

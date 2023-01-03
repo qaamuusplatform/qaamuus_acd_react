@@ -52,7 +52,7 @@ const CourseDetail = ({ match, location }) => {
   const [isOpen, setOpen] = useState(false);
   const { currentUser, userIsLoading } = useContext(CurrentUserContext);
   const { slug } = useParams();
-  const { data: courseEnrolmentDetail, error } = useSWR(
+  const { data: courseEnrolmentDetail, error,mutate } = useSWR(
     `/api/checkThisUserInrolledCourse-slug/${currentUser.id}/${slug}/`,
     httpFetcher
   );
@@ -114,6 +114,7 @@ const CourseDetail = ({ match, location }) => {
 
   return userIsLoading ? null : (
     <Fragment>
+      
       {/* Page header */}
       <div className="pt-lg-8 pb-lg-16 pt-8 pb-12 bg-primary">
         <Container>
@@ -243,9 +244,7 @@ const CourseDetail = ({ match, location }) => {
               <br></br>
               <Card>
                 <Card.Body className="pb-4 p-4">
-                  <ReviewsTab
-                    reviews={courseEnrolmentDetail.theCourse.theReviews}
-                  />
+                  <ReviewsTab reviews={courseEnrolmentDetail.theCourse.theReviews} courseId={courseEnrolmentDetail.theCourse.id} mutate />
                 </Card.Body>
               </Card>
             </Col>

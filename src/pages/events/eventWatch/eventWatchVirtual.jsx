@@ -149,7 +149,7 @@ const EventWatchVr = () => {
       {/* body container */}
       <div  className="p-3">
         <Row>
-          <Col lg={9} md={8} sm={12} >
+          <Col lg={10} md={9} sm={12} >
             {/* <div className="bg-primary rounded p-0" style={{
               background: `url(${LiveImage})`,
 							backgroundRepeat: 'no-repeat',
@@ -161,7 +161,7 @@ const EventWatchVr = () => {
             <video  width='100%' ref={localStreamVideoRef} autoPlay ></video>
           </Col>
 
-          <Col lg={3} className="pt-sm-5 pt-lg-0 pt-md-0" md={4} sm={12} >
+          <Col lg={2} className="pt-sm-5 pt-lg-0 pt-md-0" md={3} sm={12} >
 
             <div className="bg-grey border border-primary rounded" >
             

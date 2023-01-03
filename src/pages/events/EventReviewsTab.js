@@ -1,18 +1,77 @@
 // import node module libraries
 
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
-import { Col, Row, Image, ProgressBar, Form } from "react-bootstrap";
+import { Col, Row, Image, ProgressBar, Form, Button, Spinner, Modal } from "react-bootstrap";
 import Ratings from "../../components/elements/common/ratings/Ratings";
 import { Reviews } from "../../data/CourseIndexData";
+import { Rating } from "react-simple-star-rating";
 
 // import custom components
 
 // import data files
 
 const EventReviewsTab = ({ reviews }) => {
+  const [registringReviewModal, setRegistringReviewModal] = useState(false)
+  const [modalShow, setModalShow] = useState(false);
+  const [rating, setRating] = useState(0)
+
+  const handleRating = ( number) => {
+    setRating(number)
+    console.log(number)
+  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log('dsadas')
+    setRegistringReviewModal(true)
+  }
   return (
     <Fragment>
+       <Form onSubmit={handleSubmit} controlId="validationFormik01" >
+        <Modal show={modalShow} data-backdrop="static" backdrop="static" onHide={() => setModalShow(false)}  centered>
+          <Modal.Header closeButton  className="pt-4 pb-2">
+            <Modal.Title>Faahfaahinta Falcelinta</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+
+            <Col lg={12} md={12} sm={12} className="mb-1 mt-0">
+              
+              <Form.Group>
+                <Form.Label htmlFor="email">Heerka Qiyaasta</Form.Label><br></br>
+                <Rating onClick={handleRating} initialValue={rating} />
+               
+              </Form.Group>
+
+            </Col>
+
+
+
+          </Modal.Body>
+
+          <Modal.Footer className="pt-1 pb-2">
+            <Button variant="secondary" size="sm" onClick={() => setModalShow(false)}>
+              Close
+            </Button>
+            {registringReviewModal ? (
+              <Button variant="primary" size="md" disabled>
+                <Spinner
+                  as="span"
+                  animation="border"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                />
+                &nbsp; Loading...
+              </Button>
+            ) : (<Button variant="primary" type="submit" size="md"> Diiwaangali </Button>)}
+
+
+          </Modal.Footer>
+
+
+        </Modal>
+        </Form>
+
       {/* <div className="mb-3">
         <h3 className="mb-4">How students rated this courses</h3>
         <Row className="align-items-center">
@@ -99,7 +158,13 @@ const EventReviewsTab = ({ reviews }) => {
         </div>
         <div>
           {/* Form */}
-          <Form className="form-inline">
+         
+            <Button variant="primary" type="submit" size="smd" onClick={() => setModalShow(true)}>
+              {" "}
+              Falcelin Reeb{" "}
+            </Button>
+    
+          {/* <Form className="form-inline">
             <Form.Group
               className="d-flex align-items-center me-2"
               controlId="formBasicEmail"
@@ -107,13 +172,12 @@ const EventReviewsTab = ({ reviews }) => {
               <span className="position-absolute ps-3">
                 <i className="fe fe-search"></i>
               </span>
-              <Form.Control
-                type="search"
+              <Button
                 placeholder="Search Review"
                 className=" ps-6"
               />
             </Form.Group>
-          </Form>
+          </Form> */}
         </div>
       </div>
       <hr className="my-5" />
@@ -124,7 +188,7 @@ const EventReviewsTab = ({ reviews }) => {
           reviews.map((item, index) => (
             <div className="d-flex border-bottom pb-4 mb-4" key={index}>
               <Image
-                src={ item.theUser.profileImage}
+                src={item.theUser.profileImage}
                 alt=""
                 className="rounded-circle avatar-lg"
               />
