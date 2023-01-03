@@ -43,7 +43,7 @@ import BlankLayout from "./BlankLayout";
 import LsnDiscussionLayout from "./LessonDiscussionLayout";
 import LessonDiscussion from "pages/courses/LessonDiscussion";
 import MailProvider from "components/mail-app/providers/MailProvider";
-import SecCardCourse from "./../pages/checkout/SecCardCourse";
+import SecCardCourse from "../pages/courses/NCourseCard";
 
 /* IMPORTS FOR MARKETING PAGES - END */
 /* --------------------------------- */
@@ -256,12 +256,7 @@ function AllRoutes() {
         layout={DefaultLayout}
         component={EventCheckout}
       />
-      <AppRoute
-        exact
-        path="/nadaara"
-        layout={DefaultLayout}
-        component={SecCardCourse}
-      />
+   
       <ProtectedRoute
         exact
         path="/event/watch-live/:slug"

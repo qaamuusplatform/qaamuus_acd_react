@@ -42,18 +42,63 @@ const EventWatchVr = () => {
   const { data: enrolledEventDetail, error } = useSWR(`/api/checkThisUserInrolledEvent-slug/${currentUser.id}/${slug}/`, httpFetcher);
   const localStreamVideoRef = useRef(null);
 
+  const otherUsersStreamVideoRef=useRef(null)
+  
+  let localStream;
+  let remoteStream;
+  let peerConnection;
   const [peerVtMeeting, setPeerVtMeeting] = useState()
 
+  const servers = {
+    iceServers:[
+      {
+        url:['stun.l.google.com:19302','stun1.l.google.com:19302','stun2.l.google.com:19302']
+      }
+    ]
+  }
 
   const qInit = async () => {
     // setLocalStream(await Promise.resolve( navigator.mediaDevices.getUserMedia({video:true,audio:true})))
-    navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((streamData) => {
-      localStreamVideoRef.current.srcObject = streamData;
-    })
+    localStream=await navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+    localStreamVideoRef.current.srcObject = localStream;
+    createOffer();
   }
+
   useEffect(() => {
     qInit()
   }, [enrolledEventDetail, currentUser]);
+
+  const createOffer = async () => {
+    peerConnection= new RTCPeerConnection()
+    remoteStream = new MediaStream()
+    otherUsersStreamVideoRef.current.srcObject=remoteStream;
+    localStream.getTracks().forEach((track)=>{
+      peerConnection.addTrack(track,localStream);
+    })
+
+    peerConnection.ontrack = (event)=>{
+      event.streams[0].getTracks().forEach((track)=>{
+        remoteStream.addTrack()
+      })
+    }
+
+    peerConnection.onicecandidate = async (event)=>{
+      if(event.candidate){
+        console.log('new ice',event.candidate)
+      }
+    }
+
+
+    let offer = await peerConnection.createOffer()
+    await peerConnection.setLocalDescription(offer)
+
+    console.log(offer)
+
+  }
+
+
+
+
   const isDesktop = useMediaQuery({
     query: "(min-width: 1224px)",
   });
@@ -64,7 +109,7 @@ const EventWatchVr = () => {
   const [expandedMenu, setExpandedMenu] = useState(false);
 
   return (
-    <div style={{ backgroundColor: "#212032" ,height:'100vh'}} >
+    <div style={{ backgroundColor: "#212032" ,height:'100%',width:'100%'}} >
       <Navbar style={{ borderBottom: "1px solid grey" }}
         onToggle={(collapsed) => setExpandedMenu(collapsed)}
       >
@@ -81,9 +126,9 @@ const EventWatchVr = () => {
           <Nav className="navbar-nav navbar-right-wrap ms-auto d-flex nav-top-wrap">
             <span className={`d-flex`}>
               <Button variant="primary" size="sm">
-                <Icon
+                {/* <Icon
                   path={mdiCalendarArrowLeft} size={0.8}
-                  rotate={0} />
+                  rotate={0} /> */}
               </Button>
               <Button variant="danger" className="ms-2" size="sm">
                 {/* <Icon
@@ -120,6 +165,7 @@ const EventWatchVr = () => {
 
             <div className="bg-grey border border-primary rounded" >
             
+              <video  width='100%' ref={otherUsersStreamVideoRef} autoPlay ></video>
             </div>
           </Col>
 

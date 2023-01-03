@@ -7,17 +7,17 @@ const DescriptionTab = ({ event }) => {
   return (
     <Fragment>
       <div className="mb-4">
-        <h3 className="mb-2">Event Descriptions</h3>
+        <h3 className="mb-2">Faahfaahin Ku Saabsan</h3>
         <p>{parse(event.desc ?? "")}</p>
-        <p>
+        {/* <p>
           Next, you’ll explore the basics of the language, giving plenty of
           examples. Lastly, you’ll put your JavaScript knowledge to work and
           modify a modern, responsive web page. When you’re finished with this
           course, you’ll have the skills and knowledge in JavaScript to create
           simple programs, create simple web applications, and modify web pages.
-        </p>
+        </p> */}
       </div>
-      <h4 className="mb-3">What you’ll learn</h4>
+      {/* <h4 className="mb-3">What you’ll learn</h4>
       <Row className="mb-3">
         <Col lg={6} md={6} sm={12}>
           <ListGroup bsPrefix="list-unstyled" variant="flush">
@@ -75,7 +75,7 @@ const DescriptionTab = ({ event }) => {
         Duis facilisis ex a urna blandit ultricies. Nullam sagittis ligula non
         eros semper, nec mattis odio ullamcorper. Phasellus feugiat sit amet leo
         eget consectetur.
-      </p>
+      </p> */}
     </Fragment>
   );
 };

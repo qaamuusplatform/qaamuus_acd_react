@@ -20,6 +20,7 @@ import {
   Tabs,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import parse from 'html-react-parser';
 // import MDI icons
 import Hormuud from "assets/images/creditcard/SVG/hormuud.svg";
 import Somnet from "assets/images/creditcard/SVG/somnet.png";
@@ -564,7 +565,7 @@ const EventDetail = ({ location }) => {
                         </div>
                       </Col>
                     </Row>
-                    <p>{eventEnrolmentDetail.theEvent.persenter.aboutMe}</p>
+                    <p>{parse(eventEnrolmentDetail.theEvent.persenter.aboutMe)}</p>
                     <Link
                       to={`/instructor/${eventEnrolmentDetail.theEvent.persenter.id}`}
                       className="btn btn-outline-white btn-sm"

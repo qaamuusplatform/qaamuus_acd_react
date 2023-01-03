@@ -22,6 +22,7 @@ import HeroVideos from './HeroVideos';
 import EventCardFullWidth from 'components/cards/HeroEventCard';
 import TopFeaturesList from './TopFeaturesList';
 import HomeFeaturesList from './HomeFeaturesList';
+import NCourseCard from 'pages/courses/NCourseCard';
 
 // import sub components
 
@@ -161,11 +162,9 @@ const CourseIndex = () => {
 								))
 								: null}
 							{popularCourses?.map((course, idx) => (
-								<Col lg={3} md={4} sm={12} key={idx}>
-									<CourseCard
+								<Col lg={4} md={4} sm={12} key={idx}>
+									<NCourseCard
 										item={course}
-										showprogressbar={true}
-										viewby="grid"
 									/>
 								</Col>
 							))}
