@@ -7,7 +7,6 @@ const DescriptionTab = ({description,learn}) => {
 	return (
 		<Fragment>
 			<div className="mb-4">
-				<h3 className="mb-2">Course Descriptions</h3>
 				{parse(description ?? '')}
 			</div>
 			{/* <h4 className="mb-3">What you’ll learn</h4> */}

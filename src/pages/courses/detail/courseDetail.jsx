@@ -244,7 +244,7 @@ const CourseDetail = ({ match, location }) => {
               <br></br>
               <Card>
                 <Card.Body className="pb-4 p-4">
-                  <ReviewsTab reviews={courseEnrolmentDetail.theCourse.theReviews} courseId={courseEnrolmentDetail.theCourse.id} mutate />
+                  <ReviewsTab reviews={courseEnrolmentDetail.theCourse.theReviews} courseId={courseEnrolmentDetail.theCourse.id}  />
                 </Card.Body>
               </Card>
             </Col>

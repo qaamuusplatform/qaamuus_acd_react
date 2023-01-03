@@ -1,5 +1,5 @@
 // import node module libraries
-import { Fragment, useState,forwardRef } from 'react';
+import { Fragment, useState, forwardRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Col, Row, Image, ProgressBar, Form, Modal, Button, Spinner, Badge, Dropdown } from 'react-bootstrap';
 
@@ -21,8 +21,8 @@ import { Edit, MoreVertical, Move, ToggleLeft, ToggleRight, Trash } from 'react-
 
 // import data files
 
-const ReviewsTab = ({ reviews, courseId,mutate }) => {
-
+const ReviewsTab = ({ reviews, courseId }) => {
+	console.log(reviews)
 	const { currentUser, userIsLoading } = useContext(CurrentUserContext);
 	const [registringReviewModal, setRegistringReviewModal] = useState(false)
 	const [modalShow, setModalShow] = useState(false);
@@ -45,12 +45,19 @@ const ReviewsTab = ({ reviews, courseId,mutate }) => {
 	const handleRating = (number) => {
 		setRating(number)
 	}
+	const deleteReview = async (id) =>{
+		
+		await http.delete(`/api/courseReview-create/${id}/`);
+		toast.success(
+			"Waad ku guulaysatay bixinta falcelintaada"
+		);
+	}
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		var theUser = currentUser.id;
 		setRegistringReviewModal(true)
 		const formData = new FormData(e.target)
-		let resp=	await http.post(
+		let resp = await http.post(
 			"/api/courseReview-create/",
 			JSON.stringify({
 				'theText': formData.get('theText'),
@@ -72,7 +79,8 @@ const ReviewsTab = ({ reviews, courseId,mutate }) => {
 		setModalShow(false)
 
 	}
-	const ActionMenu = () => {
+	const ActionMenu = ({theUserId,theReviewId}) => {
+		
 		return (
 			<Dropdown>
 				<Dropdown.Toggle as={CustomToggle}>
@@ -99,7 +107,7 @@ const ReviewsTab = ({ reviews, courseId,mutate }) => {
 					</Dropdown.Item> */}
 					<Dropdown.Item className='bg-danger text-white' eventKey="6">
 						{' '}
-						<Trash size="18px" className="dropdown-item-icon" color='white' /> Delete
+						<Trash size="18px" className="dropdown-item-icon" onClick={deleteReview} color='white' /> Delete
 					</Dropdown.Item>
 				</Dropdown.Menu>
 			</Dropdown>
@@ -107,8 +115,8 @@ const ReviewsTab = ({ reviews, courseId,mutate }) => {
 	};
 	return (
 		<Fragment>
-				<Modal show={modalShow} data-backdrop="static" backdrop="static" onHide={() => setModalShow(false)} centered>
-			<Form onSubmit={handleSubmit} controlId="validationFormik01" >
+			<Modal show={modalShow} data-backdrop="static" backdrop="static" onHide={() => setModalShow(false)} centered>
+				<Form onSubmit={handleSubmit} controlId="validationFormik01" >
 					<Modal.Header closeButton className="pt-4 pb-2">
 						<Modal.Title>Faahfaahinta Falcelinta</Modal.Title>
 					</Modal.Header>
@@ -119,7 +127,7 @@ const ReviewsTab = ({ reviews, courseId,mutate }) => {
 							<Rating onClick={handleRating} initialValue={rating} className="mb-3" /> {theRatingComp}
 							<Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
 								<Form.Label>Faahfaahin Dheeri Ah</Form.Label>
-								<Form.Control as="textarea"  required name="theText" rows={3} />
+								<Form.Control as="textarea" required name="theText" rows={3} />
 							</Form.Group>
 
 						</Col>
@@ -148,11 +156,11 @@ const ReviewsTab = ({ reviews, courseId,mutate }) => {
 
 					</Modal.Footer>
 
-					</Form>
+				</Form>
 
-				</Modal>
-			{/* <div className="mb-3">
-				<h3 className="mb-4">How students rated this courses</h3>
+			</Modal>
+			<div className="mb-3">
+				<h3 className="mb-4">Ardada Ka Cod Bixisay</h3>
 				<Row className="align-items-center">
 					<Col xs="auto" className="text-center">
 						<h3 className="display-2 fw-bold">4.5</h3>
@@ -194,7 +202,7 @@ const ReviewsTab = ({ reviews, courseId,mutate }) => {
 						/>
 					</Col>
 					<Col xs={6} md="auto" className="order-2 order-md-3">
-						
+
 						<div>
 							<span className="text-warning">
 								<Ratings rating={5} />
@@ -227,9 +235,9 @@ const ReviewsTab = ({ reviews, courseId,mutate }) => {
 						</div>
 					</Col>
 				</Row>
-			</div> */}
-			{/* hr */}
-			{/* <hr className="my-5" /> */}
+			</div>
+
+			<hr className="my-5" />
 			<div className="mb-3">
 				<div className="d-lg-flex align-items-center justify-content-between mb-5">
 					{/* Reviews */}
@@ -239,23 +247,23 @@ const ReviewsTab = ({ reviews, courseId,mutate }) => {
 					<div>
 						{/* Form */}
 						{Object.keys(currentUser).length === 0 ? (
-							 <Link
-							 to={{
-							   pathname: "/auth/login",
-							   state: { from: location },
-							 }}
-							 className={`btn btn-dark`}
-						   >
-							 <Icon path={mdiLock} size={1} className="mb-0" color="white" /> &nbsp;
-							 LOGIN 
-						   </Link>
-						):(
+							<Link
+								to={{
+									pathname: "/auth/login",
+									state: { from: location },
+								}}
+								className={`btn btn-dark`}
+							>
+								<Icon path={mdiLock} size={1} className="mb-0" color="white" /> &nbsp;
+								LOGIN
+							</Link>
+						) : (
 							<Button variant="primary" type="submit" size="smd" onClick={() => setModalShow(true)}>
-							{" "}
-							Falcelin Reeb{" "}
-						</Button>
+								{" "}
+								Falcelin Reeb{" "}
+							</Button>
 						)}
-						
+
 					</div>
 				</div>
 				{/* Rating */}
@@ -271,9 +279,9 @@ const ReviewsTab = ({ reviews, courseId,mutate }) => {
 								<h4 className="mb-1">
 									<div className='d-flex justify-content-between' >
 										<div>{item.theUser.fullName} </div>
-										<ActionMenu />
+										<ActionMenu theUserId={item.theUser.id} theReviewId={item.id} />
 									</div>
-									
+
 									<span className="ms-1 fs-6 text-muted">{item.userTitle} </span>
 								</h4>
 
