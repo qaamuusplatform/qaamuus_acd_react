@@ -27,8 +27,8 @@ export default function Courses() {
   return (
     <Fragment>
       <PageHeadingBriefinfo
-				pagetitle="JavaScript Courses"
-				briefinfo="6,979,934 students are learning JavaScript."
+				pagetitle="Koorsooyin Tayo"
+				briefinfo="Baro Waqti-kasta Meel kasta."
 			/>
       <div className="py-6">
         <Container>
@@ -39,8 +39,8 @@ export default function Courses() {
                 <Row className="d-lg-flex justify-content-between align-items-center">
                   <Col md={6} lg={8} xl={9}>
                     <h4 className="mb-3 mb-lg-0">
-                      Displaying {coursesList?.length} out of{" "}
-                      {coursesList?.length} courses
+                      Tirada Courseska {coursesList?.length}  of{" "}
+                      {coursesList?.length} course
                     </h4>
                   </Col>
                   <Col md={6} lg={4} xl={3} className="d-inline-flex">
@@ -72,7 +72,6 @@ export default function Courses() {
                         <Col lg={4} xl={3} md={6} sm={12} key={idx}>
                           <CourseCard
                             item={course}
-                            showprogressbar={true}
                             viewby="grid"
                           />
                         </Col>
@@ -84,7 +83,6 @@ export default function Courses() {
                     {coursesList?.map((course, idx) => (
                       <CourseCard
                         item={course}
-                        showprogressbar
                         viewby="list"
                         key={idx}
                       />

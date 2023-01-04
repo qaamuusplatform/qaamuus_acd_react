@@ -46,7 +46,7 @@ const InrolledCourseCard = ({ item, free, viewby, showprogressbar, extraclass })
 					<ListGroup as="ul" bsPrefix="list-inline" className="mb-3">
 						<ListGroup.Item as="li" bsPrefix="list-inline-item">
 							<i className="far fa-clock me-1"></i>
-							{item.theCourse.houres}hrs
+							{item.theCourse.houres}
 						</ListGroup.Item>
 						<ListGroup.Item as="li" bsPrefix="list-inline-item">
 							<LevelIcon level={item.theCourse.level} />
@@ -54,13 +54,7 @@ const InrolledCourseCard = ({ item, free, viewby, showprogressbar, extraclass })
 						</ListGroup.Item>
 					</ListGroup>
 					<div
-						className={`lh-1 d-flex align-items-center ${
-							item.theCourse.itsFree ||
-							item.theCourse.regularPrice === undefined ||
-							item.theCourse.saledPrice <= 0 
-								? 'mb-5'
-								: ''
-						}`}
+						className={`lh-1 d-flex align-items-center`}
 					>
 						<span className="text-warning me-1 mb-1">
 							{' '}
@@ -72,27 +66,18 @@ const InrolledCourseCard = ({ item, free, viewby, showprogressbar, extraclass })
 							25,300
 						</span>
 					</div>
-					<div
-						className={`lh-1 mt-3 ${
-							item.theCourse.itsFree ||
-							item.theCourse.regularPrice === undefined ||
-							item.theCourse.saledPrice <= 0
-								? 'd-none'
-								: ''
-						}`}
-					>
-						<span className="text-dark fw-bold">
-							${item.saledPrice}
-						</span>{' '}
-						<del className="fs-6 text-muted">${item.theCourse.regularPrice}</del>
-					</div>
+			
 				</Card.Body>
 				{/* Card Footer */}
 				<Card.Footer>
 					<Row className="align-items-center g-0">
 						<Col className="col-auto">
 							<Image
-								src={`${END_POINT}${item.theCourse.instructor?.profileImage}`}
+							src={
+								item.theCourse.instructor?.profileImage
+								  ?  item.theCourse.instructor?.profileImage
+								  : `https://ui-avatars.com/api/?name=${item.theCourse.instructor?.fullName}&background=19a9c4&color=fff`
+							  }
 								className="rounded-circle avatar-xs"
 								alt=""
 							/>
@@ -108,15 +93,15 @@ const InrolledCourseCard = ({ item, free, viewby, showprogressbar, extraclass })
 							</Tippy>
 						</Col>
 					</Row>
-					{/* <span className={`${showprogressbar ? '' : 'd-none'}`}>
+					<span className={`${showprogressbar ? '' : 'd-none'}`}>
 						{' '}
 						<ProgressBar
 							variant="success"
-							now={item.progress}
+							now={6}
 							className="mt-3"
 							style={{ height: '5px' }}
 						/>
-					</span> */}
+					</span>
 				</Card.Footer>
 			</Card>
 		);

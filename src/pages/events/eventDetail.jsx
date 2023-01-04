@@ -384,13 +384,13 @@ const EventDetail = ({ location }) => {
                           {eventEnrolmentDetail.theEvent.level}
                         </ListGroup.Item>
                         {/* <ListGroup.Item>
-                <i className="fe fe-calendar align-middle me-2 text-info"></i>
-                12 Article
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <i className="fe fe-video align-middle me-2 text-secondary"></i>
-                Watch Offline
-              </ListGroup.Item> */}
+                          <i className="fe fe-calendar align-middle me-2 text-info"></i>
+                          12 Article
+                        </ListGroup.Item>
+                        <ListGroup.Item>
+                          <i className="fe fe-video align-middle me-2 text-secondary"></i>
+                          Watch Offline
+                        </ListGroup.Item> */}
                         <ListGroup.Item className="bg-transparent">
                           <i className="fe fe-clock align-middle me-2 text-warning"></i>
                           {eventEnrolmentDetail.theEvent.duration}

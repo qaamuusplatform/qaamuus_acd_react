@@ -38,7 +38,18 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 				</Link>
 				{/* Card body  */}
 				<Card.Body>
-					<h3 className="h4 mb-2 text-truncate-line-2 ">
+				<div className={`lh-1 mt-0 d-flex align-items-center`} >
+						<span className="text-warning me-1 mb-1">
+							{' '}
+							<Ratings rating={'4.5'} />
+						</span>
+						<span className="text-warning me-1"> {'4.5'}</span>
+						<span className="fs-6 text-muted">
+							{' '}
+							{/* 25,300 */}
+						</span>
+					</div>
+					<h3 className="h4 fw-bold mb-2 text-truncate-line-2 ">
 						<Link to={`/course/${item.slug}`} className="text-inherit">
 							{item.title}
 						</Link>
@@ -53,23 +64,8 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 							{item.level}
 						</ListGroup.Item>
 					</ListGroup>
-					<div
-						className={`lh-1 d-flex align-items-center ${item.itsFree ||
-								item.saledPrice == 0
-								? 'mb-5'
-								: ''
-							}`}
-					>
-						<span className="text-warning me-1 mb-1">
-							{' '}
-							<Ratings rating={'4.5'} />
-						</span>
-						<span className="text-warning me-1"> {'4.5'}</span>
-						<span className="fs-6 text-muted">
-							{' '}
-							{/* 25,300 */}
-						</span>
-					</div>
+					
+					
 					{item.showDiscountPrice ? (
 						<div
 							className={`lh-1 mt-3 ${item.regularPrice == 'a'
@@ -123,15 +119,15 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 							</Tippy>
 						</Col>
 					</Row>
-					{/* <span className={`${showprogressbar ? '' : 'd-none'}`}>
+					<span className={`${showprogressbar ? '' : 'd-none'}`}>
 						{' '}
 						<ProgressBar
 							variant="success"
-							now={item.progress}
+							now={25}
 							className="mt-3"
 							style={{ height: '5px' }}
 						/>
-					</span> */}
+					</span>
 				</Card.Footer>
 			</Card>
 		);
@@ -198,7 +194,7 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 								<Col className="col-auto">
 									<Image
 										
-										src={
+									src={
 											item.instructor.profileImage
 											  ?  item.instructor.profileImage
 											  : `https://ui-avatars.com/api/?name=${item.instructor.fullName}&background=19a9c4&color=fff`

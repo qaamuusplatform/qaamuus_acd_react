@@ -115,7 +115,7 @@ const CourseIndex = () => {
 
 			<div className="pb-lg-8 pt-lg-3 py-6">
 				<Container>
-							<h3 className="mb-0 fw-w500">Event Comming son</h3>
+							<h3 className="mb-0 fw-w500 fs-3 text-underline">DHAWAAN FILO</h3>
 					{!events && !eventError
 						? [1].map((idx) => (
 							<div>
@@ -151,17 +151,17 @@ const CourseIndex = () => {
 
 					<div className="position-relative">
 						<div className="mb-2 mt-4">
-							<h3 className="mb-0 fw-w600">Coursooyinka</h3>
+							<h3 className="mb-0 fw-w600 fs-4">UGU DANMBEEYAY</h3>
 						</div>
 						<Row>
 							{!popularCourses && !error
-								? [1, 2, 3, 4].map((idx) => (
-									<Col lg={3} md={4} sm={12} key={idx}>
+								? [1, 2, 3].map((idx) => (
+									<Col lg={4} md={4} sm={12} key={idx}>
 										<ShimmerPostItem card title text cta />
 									</Col>
 								))
 								: null}
-							{popularCourses?.map((course, idx) => (
+							{popularCourses?.filter((course, index) => index < 3).map((course, idx) => (
 								<Col lg={4} md={4} sm={12} key={idx}>
 									<NCourseCard
 										item={course}
@@ -194,6 +194,7 @@ const CourseIndex = () => {
 
 
 
+						<h3 className="mb-2 fs-4 fw-regular">CLASSIC INSTRUCTORS</h3>
 						<WorldClassInstructors />
 					</div>
 

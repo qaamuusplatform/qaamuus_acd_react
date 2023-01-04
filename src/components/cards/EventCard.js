@@ -52,7 +52,11 @@ const EventCard = ({ event }) => {
         <Row className="align-items-center g-0 mt-4">
           <Col className="col-auto">
             <Image
-              src={ event.persenter.profileImage}
+            src={
+              event.persenter.profileImage
+                ?  event.persenter.profileImage
+                : `https://ui-avatars.com/api/?name=${event.persenter.fullName}&background=19a9c4&color=fff`
+              }
               alt=""
               className="rounded-circle avatar-sm me-2"
             />

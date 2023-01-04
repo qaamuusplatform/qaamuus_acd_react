@@ -15,7 +15,7 @@ const LevelIcon = ({ level }) => {
 			</svg>
 		);
 	}
-	if (level === 'Intermediate') {
+	if (level === 'Standared') {
 		return (
 			<svg
 				className="me-1 mt-n1"
@@ -31,7 +31,7 @@ const LevelIcon = ({ level }) => {
 			</svg>
 		);
 	}
-	if (level === 'Advance') {
+	if (level === 'Advanced') {
 		return (
 			<svg
 				className="me-1 mt-n1"

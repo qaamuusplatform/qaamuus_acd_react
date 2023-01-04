@@ -21,21 +21,16 @@ export default function Events() {
   return (
     <Fragment>
       {/* Page header */}
-      <div className="pt-9 pb-9 bg-white ">
+      <div className="pt-9 pb-3 bg-white ">
         <Container>
           <Row>
             <div className="text-left">
               <h3 className="display-4 fw-bold">Qaamuus Events</h3>
               <p className="lead">
-                Our features, journey, tips and us being us. Lorem ipsum dolor
-                sit amet, accumsan in, tempor dictum neque.
+                Hel siminaaro kooban oo sare u qaayada xirfadda aqooneed iyo middada ganacsi
               </p>
             </div>
-            <Col
-              lg={{ span: 10, offset: 1 }}
-              xl={{ span: 8, offset: 2 }}
-              md={12}
-              sm={12}
+            <Col lg={{ span: 10, offset: 1 }} xl={{ span: 8, offset: 2 }} md={12} sm={12}
             >
               {/* Form */}
               {/* <Form className="row px-md-20">
@@ -60,7 +55,7 @@ export default function Events() {
       </div>
 
       {/* Content */}
-      <div className="pb-8 bg-white">
+      <div className="pb-5 bg-white">
         {/* <Container>
 					<Row>
 						<Col xl={12} lg={12} md={12} sm={12}>
