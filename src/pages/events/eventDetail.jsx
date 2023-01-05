@@ -49,6 +49,7 @@ import { CurrentUserContext } from "services/currentUserContext";
 // import { CourseIndex } from 'data/marketing/CourseIndexData';np
 import { END_POINT } from "../../helper/constants";
 import useSWR from "swr";
+import {mutate} from "swr";
 import Timer from "./Timer";
 import { ShimmerPostDetails } from "react-shimmer-effects";
 import { qaamuusPayments } from "data/qaamuusPayments";
@@ -57,6 +58,7 @@ import EventReviewsTab from "./EventReviewsTab";
 
 import http from "services/httpService";
 import { toast, ToastContainer } from "react-toastify";
+import { httpFetcher } from "services/coursesService";
 
 const EventDetail = ({ location }) => {
   // const [isOpen, setOpen] = useState(false);
@@ -99,6 +101,7 @@ const EventDetail = ({ location }) => {
             progress: undefined,
             theme: "light",
           });
+          mutate(`api/checkThisUserInrolledEvent-slug/${currentUser.id}/${slug}/`, httpFetcher)
           // history.replace("/auth/login/");
         });
     } catch (error) {

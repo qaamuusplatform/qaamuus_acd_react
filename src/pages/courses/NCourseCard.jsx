@@ -5,7 +5,7 @@ import { Card, ListGroup, Image, Badge } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 function NCourseCard({ item }) {
-
+console.log(item.theReviews.length)
   return (
     <Card className="card-hover mb-4" >
       <Link to={`/course/${item.slug}`}>
@@ -48,7 +48,6 @@ function NCourseCard({ item }) {
 									</span>
 									<span className="fs-6 text-muted">
 										{' '}
-										25,00
 									</span>
 								</ListGroup.Item>
 							</ListGroup>

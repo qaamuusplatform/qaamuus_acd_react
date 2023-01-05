@@ -22,7 +22,6 @@ import { Edit, MoreVertical, Move, ToggleLeft, ToggleRight, Trash } from 'react-
 // import data files
 
 const ReviewsTab = ({ reviews, courseId }) => {
-	console.log(reviews)
 	const { currentUser, userIsLoading } = useContext(CurrentUserContext);
 	const [registringReviewModal, setRegistringReviewModal] = useState(false)
 	const [modalShow, setModalShow] = useState(false);
@@ -47,7 +46,7 @@ const ReviewsTab = ({ reviews, courseId }) => {
 	}
 	const deleteReview = async (id) =>{
 		
-		await http.delete(`/api/courseReview-create/${id}/`);
+		await http.delete(`/api/courseReview-create/${reviews.id}/`);
 		toast.success(
 			"Waad ku guulaysatay bixinta falcelintaada"
 		);
@@ -75,7 +74,6 @@ const ReviewsTab = ({ reviews, courseId }) => {
 			"Waad ku mahadsantahy falcelintaada"
 		);
 		setRegistringReviewModal(false)
-		mutate()
 		setModalShow(false)
 
 	}

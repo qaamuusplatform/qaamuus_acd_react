@@ -25,6 +25,8 @@ import { numberWithCommas } from 'helper/utils';
 import { END_POINT } from 'helper/constants';
 
 const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
+	
+console.log(item.theReviews.length)
 	/** Used in Course Index, Course Category, Course Filter Page, Student Dashboard etc...  */
 	const GridView = () => {
 		return (
@@ -46,7 +48,7 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 						<span className="text-warning me-1"> {'4.5'}</span>
 						<span className="fs-6 text-muted">
 							{' '}
-							{/* 25,300 */}
+							( {item.theReviews.length} )
 						</span>
 					</div>
 					<h3 className="h4 fw-bold mb-2 text-truncate-line-2 ">

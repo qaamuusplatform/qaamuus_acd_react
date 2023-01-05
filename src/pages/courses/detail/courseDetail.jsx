@@ -220,12 +220,17 @@ const CourseDetail = ({ match, location }) => {
                     <Tab.Content>
                       <Tab.Pane eventKey="contents" className="pb-4 pt-3 px-4">
                         {/* Course Index Accordion */}
-                        <GKAccordionDefault
+                        {courseEnrolmentDetail.theCourse.theComponents.length==0?(
+<div></div>
+                        ):(
+                          <GKAccordionDefault
                           accordionItems={
                             courseEnrolmentDetail.theCourse.theComponents
                           }
                           itemClass="px-0"
                         />
+                        )}
+                        
                       </Tab.Pane>
                       <Tab.Pane eventKey="faahfaahin" className="pb-4 p-4">
                         {/* Description */}

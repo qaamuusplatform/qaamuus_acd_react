@@ -125,86 +125,12 @@ const Checkout = () => {
   return (
     <Fragment>
       {/* Page header */}
-      <PageHeading pagetitle="Checkout" />
+      <PageHeading pagetitle="Godoshada Courseska" />
 
       {/*  Content */}
       <div className="py-6">
         <Container>
-          {checkoutCourse && !error && (
-            <Card className="mb-4 card-hover">
-              <Row className="g-0">
-                <Link
-                  to={`/courses/${checkoutCourse.slug}`}
-                  className="bg-cover img-left-rounded col-12 col-md-12 col-xl-4 col-lg-4 "
-                  style={{
-                    background: `url(${checkoutCourse.coverImage})`,
-                    backgroundRepeat: "no-repeat",
-                    backgroundSize: "cover",
-                    backgroundPosition: "top center",
-                  }}
-                >
-                  <Image
-                    src={`${checkoutCourse.coverImage}`}
-                    alt="..."
-                    className="img-fluid d-lg-none invisible"
-                  />
-                </Link>
-                <Col lg={8} md={12} sm={12}>
-                  {/* <!-- Card body --> */}
-                  <Card.Body>
-                    <h3 className="mb-2 text-truncate-line-2 ">
-                      <Link
-                        to={`/courses/${checkoutCourse.slug}`}
-                        className="text-inherit"
-                      >
-                        {checkoutCourse.title}
-                      </Link>
-                    </h3>
-                    {/* <!-- List inline --> */}
-                    <ListGroup as="ul" bsPrefix="list-inline" className="">
-                      <ListGroup.Item as="li" bsPrefix="list-inline-item">
-                        <i className="far fa-clock me-1"></i>
-                        {checkoutCourse.houres}
-                      </ListGroup.Item>
-                      <ListGroup.Item as="li" bsPrefix="list-inline-item">
-                        <LevelIcon level={checkoutCourse.level} />
-                        {checkoutCourse.level}
-                      </ListGroup.Item>
-                      <ListGroup.Item as="li" bsPrefix="list-inline-item">
-                        <i className="fa fa-dollar-sign me-1"></i>
-                        {checkoutCourse.saledPrice}
-                      </ListGroup.Item>
-                    </ListGroup>
-                    <h5 className="mb-2 fw-normal text-truncate-line-2 ">
-                      {checkoutCourse.simDesc}
-
-                    </h5>
-                    {/* <!-- Row --> */}
-                    <Row className="align-items-center g-0">
-                      <Col className="col-auto">
-                        <Image
-                          src={`${checkoutCourse.instructor.profileImage}`}
-                          className="rounded-circle avatar-xs"
-                          alt=""
-                        />
-                      </Col>
-                      <Col className="col ms-2">
-                        <span>{checkoutCourse.instructor.fullName}</span>
-                      </Col>
-                      <Col className="col-auto">
-                        <Tippy content="Add to Bookmarks" animation={"scale"}>
-                          <Link to="#" className="text-muted bookmark">
-                            <i className="fe fe-bookmark"></i>
-                          </Link>
-                        </Tippy>
-                      </Col>
-                    </Row>
-                  </Card.Body>
-                </Col>
-              </Row>
-            </Card>
-          )}
-
+         
           <Row>
             <Col xl={8} lg={8} md={12} sm={12}>
               <Card className="mb-3 mb-lg-0">
@@ -286,7 +212,7 @@ const Checkout = () => {
                             money: `${coursePrice - cupponCodeDiscount.price}`,
                             referralCode: '',
                             cupponCode: cupponCodeDiscount.code,
-                            type: "PAYBAL PAYMENT",
+                            type: "cashOnDelivery",
                           }}
                           itsCourse={true}/>
                         {/* {thePayment.content} */}
@@ -395,6 +321,85 @@ const Checkout = () => {
               {/*  Card */}
             </Col>
           </Row>
+          {checkoutCourse && !error && (
+            <Card className="mb-4 card-hover">
+              <Row className="g-0">
+                <Link
+                  to='#'
+                  className="bg-cover img-left-rounded col-12 col-md-12 col-xl-4 col-lg-4 "
+                  style={{
+                    background: `url(${checkoutCourse.coverImage})`,
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "cover",
+                    backgroundPosition: "top center",
+                  }}
+                >
+                  <Image
+                    src={`${checkoutCourse.coverImage}`}
+                    alt="..."
+                    className="img-fluid d-lg-none invisible"
+                  />
+                </Link>
+                <Col lg={8} md={12} sm={12}>
+                  {/* <!-- Card body --> */}
+                  <Card.Body>
+                    <h3 className="mb-2 text-truncate-line-2 ">
+                      <Link
+                  to='#'
+                        className="text-inherit"
+                      >
+                        {checkoutCourse.title}
+                      </Link>
+                    </h3>
+                    {/* <!-- List inline --> */}
+                    <ListGroup as="ul" bsPrefix="list-inline" className="">
+                      <ListGroup.Item as="li" bsPrefix="list-inline-item">
+                        <i className="far fa-clock me-1"></i>
+                        {checkoutCourse.houres}
+                      </ListGroup.Item>
+                      <ListGroup.Item as="li" bsPrefix="list-inline-item">
+                        <LevelIcon level={checkoutCourse.level} />
+                        {checkoutCourse.level}
+                      </ListGroup.Item>
+                      <ListGroup.Item as="li" bsPrefix="list-inline-item">
+                        <i className="fa fa-dollar-sign me-1"></i>
+                        {checkoutCourse.saledPrice}
+                      </ListGroup.Item>
+                    </ListGroup>
+                    <h5 className="mb-2 fw-normal text-truncate-line-2 ">
+                      {checkoutCourse.simDesc}
+
+                    </h5>
+                    {/* <!-- Row --> */}
+                    <Row className="align-items-center g-0">
+                      <Col className="col-auto">
+                        <Image
+                          src={
+                            checkoutCourse.instructor.profileImage
+                              ?  checkoutCourse.instructor.profileImage
+                              : `https://ui-avatars.com/api/?name=${checkoutCourse.instructor.fullName}&background=19a9c4&color=fff`
+                            }
+                          className="rounded-circle avatar-xs"
+                          alt=""
+                        />
+                      </Col>
+                      <Col className="col ms-2">
+                        <span>{checkoutCourse.instructor.fullName}</span>
+                      </Col>
+                      <Col className="col-auto">
+                        <Tippy content="Add to Bookmarks" animation={"scale"}>
+                          <Link to="#" className="text-muted bookmark">
+                            <i className="fe fe-bookmark"></i>
+                          </Link>
+                        </Tippy>
+                      </Col>
+                    </Row>
+                  </Card.Body>
+                </Col>
+              </Row>
+            </Card>
+          )}
+
         </Container>
       </div>
     </Fragment>

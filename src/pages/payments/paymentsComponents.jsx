@@ -2,6 +2,7 @@ import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import * as yub from "yup";
 import React from "react";
+import {mutate} from "swr";
 import { useState } from "react";
 import { Fragment } from "react";
 import AmericanExpress from "assets/images/creditcard/americanexpress.svg";
@@ -23,6 +24,7 @@ import {
   Alert,
 } from "react-bootstrap";
 import http, { httpAxiosWithToken } from "services/httpService";
+import { httpFetcher } from "services/coursesService";
 
 export function WaafiPayment({ theEnrollmentData, itsCourse }) {
   const [formIsLoading, setFormIsLoading] = useState(false);
@@ -31,46 +33,8 @@ export function WaafiPayment({ theEnrollmentData, itsCourse }) {
   const onSubmit = async () => {
     theEnrollmentData.number = paymentForm.values.number.toString();
     setFormIsLoading(true);
-    console.log(theEnrollmentData);
-    if (itsCourse) {
-      try {
-        await http
-          .post(
-            `/api/inrollCourseToUser/${theEnrollmentData.type}/`,
-            JSON.stringify(theEnrollmentData),
-            { headers: { "Content-Type": "application/json" } }
-          )
-          .then((courseInrollmentResp) => {
-            console.log(courseInrollmentResp.data);
-            setFormIsLoading(false);
-            registringUserForm.resetForm();
-            toast.success(courseInrollmentResp.data.message);
-            history.replace("/auth/login/");
-          });
-      } catch (error) {
-        console.log("errr", error);
-        toast.error("laguma guulaysan lacag bixinta fadlan ku celi markale");
-      }
-    } else {
-      try {
-        await http
-          .post(
-            `/api/inrollEventToUser/${theEnrollmentData.type}/`,
-            JSON.stringify(theEnrollmentData),
-            { headers: { "Content-Type": "application/json" } }
-          )
-          .then((eventInrollmentResp) => {
-            console.log(eventInrollmentResp.data);
-            setFormIsLoading(false);
-            registringUserForm.resetForm();
-            toast.success(eventInrollmentResp.data.message);
-            history.replace("/auth/login/");
-          });
-      } catch (error) {
-        // console.log('errr',error)
-        toast.error("laguma guulaysan lacag bixinta fadlan ku celi markale");
-      }
-    }
+    await qaamuusEnrollingCourseWithEventPayment(theEnrollmentData, itsCourse);
+    setFormIsLoading(false);
 
     // if(emailVerified){
 
@@ -319,27 +283,108 @@ export function StripeOrPaypal() {
 }
 
 export function CashOnDelivery({ theEnrollmentData, itsCourse }) {
+  const [formIsLoading, setFormIsLoading] = useState(false);
+  const cashPymentSubmit = async () => {
+    setFormIsLoading(true);
+    let enrollmentResp = await qaamuusEnrollingCourseWithEventPayment(theEnrollmentData, itsCourse)
+    console.log(enrollmentResp)
+    setFormIsLoading(false);
+    // if(emailVerified){
+
+    // }else{
+    //   setModalShow(true)
+    // }
+  };
   return (
     <Fragment>
       <Form controlId="validationFormik01">
         <Row>
-          <Form.Label>Lacag Bixinta</Form.Label>
-          <Alert variant="info">EVC 616 981411</Alert>
-          <Alert variant="dark">SALAAM 30330044</Alert>
+          <Form.Label className="mx-0 fw-bold fs-4">Lacag Bixinta</Form.Label>
+          <Alert className="m-2 mt-0" variant="info">EVC 616 981411</Alert>
+          <Alert className="m-2 mt-0" variant="dark">SALAAM 30330044</Alert>
         </Row>
 
-        <div style={{ marginLeft: "3px", marginRight: "3px", width: "100%" }}>
+        {formIsLoading ? (
           <Button
             variant="primary"
+            size="md"
             className="text-right btn btn-primary"
+            disabled
+          >
+            <Spinner
+              as="span"
+              animation="border"
+              size="sm"
+              role="status"
+              aria-hidden="true"
+            />
+            &nbsp; Loading...
+          </Button>
+        ) : (
+          <Button
+            variant="primary"
+            className="text-right ms-0 btn btn-primary"
             type="submit"
-            size="sm"
+            onClick={cashPymentSubmit}
+            size="md"
           >
             {" "}
-            Click{" "}
+            ISKA DIIWAANGALI{" "}
           </Button>
-        </div>
+        )}
+
       </Form>
     </Fragment>
   );
 }
+
+
+
+
+const qaamuusEnrollingCourseWithEventPayment = async (theEnrollmentData, itsCourse) => {
+  if (itsCourse) {
+    try {
+      let resp = await http
+        .post(
+          `/api/inrollCourseToUser/${theEnrollmentData.type}/`,
+          JSON.stringify(theEnrollmentData),
+          { headers: { "Content-Type": "application/json" } }
+        );
+      if (resp.data.paided) {
+        toast.success(resp.data.message);
+
+      } else {
+        if (theEnrollmentData.type == 'cashOnDelivery') {
+
+          toast.warning(resp.data.message);
+        } else {
+          toast.error(resp.data.message);
+        }
+      }
+      return resp;
+    } catch (error) {
+      console.log("errr", error);
+      toast.error("laguma guulaysan lacag bixinta fadlan ku celi markale");
+      return error;
+    }
+  } else {
+    try {
+      let resp = await http
+        .post(
+          `/api/inrollEventToUser/${theEnrollmentData.type}/`,
+          JSON.stringify(theEnrollmentData),
+          { headers: { "Content-Type": "application/json" } }
+        )
+      toast.success(resp.data.message);
+      
+      mutate(`api/checkThisUserInrolledEvent-slug/${currentUser.id}/${slug}/`, httpFetcher)
+      return resp
+    } catch (error) {
+      // console.log('errr',error)
+      toast.error("laguma guulaysan lacag bixinta fadlan ku celi markale");
+      return error;
+    }
+  }
+}
+
+
