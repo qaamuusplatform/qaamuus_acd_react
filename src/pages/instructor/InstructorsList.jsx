@@ -36,8 +36,8 @@ export default function Members() {
   return (
     <Fragment>
       <PageHeadingBriefinfo
-				pagetitle="Our Members"
-				briefinfo="6,979,934 students are learning JavaScript."
+				pagetitle="Macalimiinta Qaamuus"
+				briefinfo="Khubaro Takhusus takhusas kasta leh."
 			/>
       <div className="pt-5 pb-9 bg-white ">
         <Container>
@@ -45,13 +45,13 @@ export default function Members() {
           <Row>
             {!instructorsList && !error
               ? [1, 2, 3, 4].map((idx) => (
-                <Col lg={4} xl={3} md={6} sm={12} key={idx}>
+                <Col lg={4} xl={4} md={6} sm={12} key={idx}>
                   <ShimmerPostItem card title cta />
                 </Col>
               ))
               : (
-                instructorsList.map((item, index) => {
-                  return <Col xxl={3} xl={4} lg={6} xs={12} className="mb-4" key={index}>
+                instructorsList.filter((theUser) => theUser.userType.id === 2).map((item, index) => {
+                  return <Col xl={3} lg={3} md={3} sm={6} xs={12} className="mb-4" key={index}>
                     <ProjectCard item={item} />
                   </Col>
                 })

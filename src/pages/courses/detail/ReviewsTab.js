@@ -277,7 +277,11 @@ const ReviewsTab = ({ reviews, courseId }) => {
 								<h4 className="mb-1">
 									<div className='d-flex justify-content-between' >
 										<div>{item.theUser.fullName} </div>
+										
+						{Object.keys(currentUser).length === 0 ? (<div></div>):(
 										<ActionMenu theUserId={item.theUser.id} theReviewId={item.id} />
+
+						)}
 									</div>
 
 									<span className="ms-1 fs-6 text-muted">{item.userTitle} </span>

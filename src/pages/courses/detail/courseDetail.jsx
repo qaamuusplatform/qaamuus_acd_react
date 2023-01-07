@@ -52,15 +52,16 @@ const CourseDetail = ({ match, location }) => {
   const [isOpen, setOpen] = useState(false);
   const { currentUser, userIsLoading } = useContext(CurrentUserContext);
   const { slug } = useParams();
-  const { data: courseEnrolmentDetail, error,mutate } = useSWR(
+  const { data: courseEnrolmentDetail, error } = useSWR(
     `/api/checkThisUserInrolledCourse-slug/${currentUser.id}/${slug}/`,
     httpFetcher
   );
   if (error) {
     toast.error(error);
   }
+  
+  console.log(courseEnrolmentDetail);
   const enrollFreeCourse = async () => {
-    console.log(courseEnrolmentDetail);
     try {
       await http
         .post(

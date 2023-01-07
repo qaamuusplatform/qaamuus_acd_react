@@ -120,7 +120,7 @@ const ProjectCard = ({ item }) => {
 				</div> */}
 				<div className="mt-2 mb-3">
 					
-					<p> {parse(item.aboutMe ?? '')}	</p>
+					{/* <p> {parse(item.aboutMe ?? '')}	</p> */}
 					{/* {item.aboutMe ? (<p className="mb-0">{`${item.aboutMe.substring(0, 70)} `}<a href="/instructor/">....</a></p>):(
 						<p></p>
 					)} */}

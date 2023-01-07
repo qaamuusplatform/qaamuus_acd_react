@@ -51,11 +51,16 @@ function useQuery() {
 
 const Checkout = () => {
   const { slug } = useParams();
+  // console.log(queryParameters.get("idd"))
+  const location = useLocation()
+  const queryParameters = new URLSearchParams(location.search)
   const { data: checkoutCourse, error } = useSWR(`/api/qaCourse-detail-slug/${slug}/`, httpFetcher);
   const { currentUser, userIsLoading } = useContext(CurrentUserContext);
   let coursePrice = 5;
   const cupponCodeRef = useRef(null);
   const referralCodeRef = useRef(null);
+
+
   const [cupponCodeDiscount, setCupponCodeDiscount] = useState({ code: '', price: 0 });
 
   if (checkoutCourse) {
@@ -69,6 +74,35 @@ const Checkout = () => {
 
   const handleCuponcode = async (e) => {
     e.preventDefault();
+    try {
+      if (cupponCodeDiscount == cupponCodeRef?.current?.value) {
+        toast.info('Codekan horay ayaad qabsatay');
+        return;
+      }
+      const response = await CheckCuppon(cupponCodeRef?.current?.value ?? '');
+      if (response.isCouponCode && response.exists) {
+        if (!response.isExpired) {
+          toast.success('Codekan Waa la aqbalay');
+          coursePrice = response.discountPrice;
+          setCupponCodeDiscount({
+            code: cupponCodeRef?.current?.value,
+            price: response.discountPrice
+          })
+        } else {
+          if (cupponCodeDiscount) removeCuppon();
+          toast.error('Cuppon Codekan waa expire');
+        }
+      } else {
+        if (cupponCodeDiscount) removeCuppon();
+        toast.error('Cuppon Codekan maaha midjira');
+      }
+    } catch (error) {
+      if (cupponCodeDiscount) removeCuppon();
+      console.log("Error", error)
+      toast.error(error);
+    }
+  }
+  const handleCuponcodeWithOutSubmit=async()=>{
     try {
       if (cupponCodeDiscount == cupponCodeRef?.current?.value) {
         toast.info('Codekan horay ayaad qabsatay');
@@ -115,13 +149,9 @@ const Checkout = () => {
       </Fragment>
     );
   }
-  //   useEffect(() => {
-  //     setCoursePrice(
-  //       checkoutCourse.showRegularPrice
-  //         ? checkoutCourse.saledPrice
-  //         : checkoutCourse.regularPrice
-  //     );
-  //   }, [checkoutCourse]);
+    // useEffect(() => {
+    //   handleCuponcodeWithOutSubmit();
+    // }, [cupponCodeRef]);
   return (
     <Fragment>
       {/* Page header */}
@@ -290,6 +320,7 @@ const Checkout = () => {
                         type="text"
                         placeholder="Enter your code"
                         required
+                        value={queryParameters.get('cupponCode')}
                         ref={cupponCodeRef}
                       />
 
@@ -302,6 +333,7 @@ const Checkout = () => {
                     <Form.Control
                       type="text"
                       placeholder="Referral code"
+                      value={queryParameters.get('refrralCode')}
                       ref={referralCodeRef}
                     />
                     {/* {cupponCodeDiscount && <Badge bg='success' className='mt-2'>{cupponCodeDiscount} <i className="fa fa-times text-white ml-3" onClick={() => removeCuppon()}></i></Badge>} */}

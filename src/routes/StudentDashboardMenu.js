@@ -43,7 +43,8 @@ export const AccountSettingsMenu = [
 	{
 		id: 4,
 		title: 'Ogeysiisyada',
-		link: '/user/notifications/',
+		link: '#',
+		// link: '/user/notifications/',
 		icon: 'bell'
 	},
 	// {
