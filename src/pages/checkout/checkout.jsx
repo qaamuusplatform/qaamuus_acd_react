@@ -16,6 +16,7 @@ import {
   Image,
   Tab,
   Nav,
+  Alert,
 } from "react-bootstrap";
 import PageHeading from "components/elements/common/heading/PageHeading";
 import FormSelect from "components/elements/custom/FormSelect";
@@ -54,8 +55,8 @@ const Checkout = () => {
   // console.log(queryParameters.get("idd"))
   const location = useLocation()
   const queryParameters = new URLSearchParams(location.search)
-  const { data: checkoutCourse, error } = useSWR(`/api/qaCourse-detail-slug/${slug}/`, httpFetcher);
   const { currentUser, userIsLoading } = useContext(CurrentUserContext);
+  const { data: checkoutCourse, error } = useSWR(`/api/checkThisUserInrolledCourse-slug/${currentUser.id}/${slug}/`,httpFetcher);
   let coursePrice = 5;
   const cupponCodeRef = useRef(null);
   const referralCodeRef = useRef(null);
@@ -64,10 +65,10 @@ const Checkout = () => {
   const [cupponCodeDiscount, setCupponCodeDiscount] = useState({ code: '', price: 0 });
 
   if (checkoutCourse) {
-    if (checkoutCourse.showDiscountPrice) {
-      coursePrice = checkoutCourse.saledPrice
+    if (checkoutCourse.theCourse.showDiscountPrice) {
+      coursePrice = checkoutCourse.theCourse.saledPrice
     } else {
-      coursePrice = checkoutCourse.regularPrice
+      coursePrice = checkoutCourse.theCourse.regularPrice
     }
   }
 
@@ -102,7 +103,7 @@ const Checkout = () => {
       toast.error(error);
     }
   }
-  const handleCuponcodeWithOutSubmit=async()=>{
+  const handleCuponcodeWithOutSubmit = async () => {
     try {
       if (cupponCodeDiscount == cupponCodeRef?.current?.value) {
         toast.info('Codekan horay ayaad qabsatay');
@@ -149,9 +150,9 @@ const Checkout = () => {
       </Fragment>
     );
   }
-    // useEffect(() => {
-    //   handleCuponcodeWithOutSubmit();
-    // }, [cupponCodeRef]);
+  // useEffect(() => {
+  //   handleCuponcodeWithOutSubmit();
+  // }, [cupponCodeRef]);
   return (
     <Fragment>
       {/* Page header */}
@@ -160,7 +161,8 @@ const Checkout = () => {
       {/*  Content */}
       <div className="py-6">
         <Container>
-         
+          {/* {checkoutCourse.is} */}
+          <Alert variant="success" >This is a success alert—check it out!</Alert>
           <Row>
             <Col xl={8} lg={8} md={12} sm={12}>
               <Card className="mb-3 mb-lg-0">
@@ -208,7 +210,7 @@ const Checkout = () => {
                           theEnrollmentData={{
                             number: 0,
                             userId: `${currentUser.id}`,
-                            courseId: `${checkoutCourse.id}`,
+                            courseId: `${checkoutCourse.theCourse.id}`,
                             months: `2`,
                             money: `${coursePrice - cupponCodeDiscount.price}`,
                             referralCode: '',
@@ -225,7 +227,7 @@ const Checkout = () => {
                           theEventDetail={{
                             number: 0,
                             userId: `${currentUser.id}`,
-                            courseId: `${checkoutCourse.id}`,
+                            courseId: `${checkoutCourse.theCourse.id}`,
                             months: `2`,
                             money: `${coursePrice - cupponCodeDiscount.price}`,
                             type: "eDahab",
@@ -235,31 +237,31 @@ const Checkout = () => {
                       <Tab.Pane eventKey="othersp" className="pb-1 p-1">
                         {/* Description Tab */}
                         <CashOnDelivery theEnrollmentData={{
-                            number: 0,
-                            userId: `${currentUser.id}`,
-                            courseId: `${checkoutCourse.id}`,
-                            months: `2`,
-                            money: `${coursePrice - cupponCodeDiscount.price}`,
-                            referralCode: '',
-                            cupponCode: cupponCodeDiscount.code,
-                            type: "cashOnDelivery",
-                          }}
-                          itsCourse={true}/>
+                          number: 0,
+                          userId: `${currentUser.id}`,
+                          courseId: `${checkoutCourse.theCourse.id}`,
+                          months: `2`,
+                          money: `${coursePrice - cupponCodeDiscount.price}`,
+                          referralCode: '',
+                          cupponCode: cupponCodeDiscount.code,
+                          type: "cashOnDelivery",
+                        }}
+                          itsCourse={true} />
                         {/* {thePayment.content} */}
                       </Tab.Pane>
                       <Tab.Pane eventKey="paypalP" className="pb-1 p-1">
                         {/* Description Tab */}
                         <PaypalSdk theEnrollmentData={{
-                            number: 0,
-                            userId: `${currentUser.id}`,
-                            courseId: `${checkoutCourse.id}`,
-                            months: `2`,
-                            money: `${coursePrice - cupponCodeDiscount.price}`,
-                            referralCode: '',
-                            cupponCode: cupponCodeDiscount.code,
-                            type: "PAYBAL PAYMENT",
-                          }}
-                          itsCourse={true}/>
+                          number: 0,
+                          userId: `${currentUser.id}`,
+                          courseId: `${checkoutCourse.theCourse.id}`,
+                          months: `2`,
+                          money: `${coursePrice - cupponCodeDiscount.price}`,
+                          referralCode: '',
+                          cupponCode: cupponCodeDiscount.code,
+                          type: "PAYBAL PAYMENT",
+                        }}
+                          itsCourse={true} />
                         {/* {thePayment.content} */}
                       </Tab.Pane>
                     </Tab.Content>
@@ -275,19 +277,19 @@ const Checkout = () => {
                     <p className="mb-0 fw-bold">QIIMAHA</p>
                     <div className="mb-3">
 
-                      {checkoutCourse.showDiscountPrice ? (
+                      {checkoutCourse.theCourse.showDiscountPrice ? (
                         <div>
                           <span className="text-dark fw-bold h3 me-2">
-                            ${checkoutCourse.saledPrice}
+                            ${checkoutCourse.theCourse.saledPrice}
                           </span>
                           <del className="fs-5 text-muted">
-                            ${checkoutCourse.regularPrice}
+                            ${checkoutCourse.theCourse.regularPrice}
                           </del>
                         </div>
                       ) : (
                         <div>
                           <span className="text-dark fw-bold h3 me-2">
-                            ${checkoutCourse.regularPrice}
+                            ${checkoutCourse.theCourse.regularPrice}
                           </span>
 
                         </div>
@@ -360,14 +362,14 @@ const Checkout = () => {
                   to='#'
                   className="bg-cover img-left-rounded col-12 col-md-12 col-xl-4 col-lg-4 "
                   style={{
-                    background: `url(${checkoutCourse.coverImage})`,
+                    background: `url(${checkoutCourse.theCourse.coverImage})`,
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",
                     backgroundPosition: "top center",
                   }}
                 >
                   <Image
-                    src={`${checkoutCourse.coverImage}`}
+                    src={`${checkoutCourse.theCourse.coverImage}`}
                     alt="..."
                     className="img-fluid d-lg-none invisible"
                   />
@@ -377,29 +379,29 @@ const Checkout = () => {
                   <Card.Body>
                     <h3 className="mb-2 text-truncate-line-2 ">
                       <Link
-                  to='#'
+                        to='#'
                         className="text-inherit"
                       >
-                        {checkoutCourse.title}
+                        {checkoutCourse.theCourse.title}
                       </Link>
                     </h3>
                     {/* <!-- List inline --> */}
                     <ListGroup as="ul" bsPrefix="list-inline" className="">
                       <ListGroup.Item as="li" bsPrefix="list-inline-item">
                         <i className="far fa-clock me-1"></i>
-                        {checkoutCourse.houres}
+                        {checkoutCourse.theCourse.houres}
                       </ListGroup.Item>
                       <ListGroup.Item as="li" bsPrefix="list-inline-item">
-                        <LevelIcon level={checkoutCourse.level} />
-                        {checkoutCourse.level}
+                        <LevelIcon level={checkoutCourse.theCourse.level} />
+                        {checkoutCourse.theCourse.level}
                       </ListGroup.Item>
                       <ListGroup.Item as="li" bsPrefix="list-inline-item">
                         <i className="fa fa-dollar-sign me-1"></i>
-                        {checkoutCourse.saledPrice}
+                        {checkoutCourse.theCourse.saledPrice}
                       </ListGroup.Item>
                     </ListGroup>
                     <h5 className="mb-2 fw-normal text-truncate-line-2 ">
-                      {checkoutCourse.simDesc}
+                      {checkoutCourse.theCourse.simDesc}
 
                     </h5>
                     {/* <!-- Row --> */}
@@ -407,16 +409,16 @@ const Checkout = () => {
                       <Col className="col-auto">
                         <Image
                           src={
-                            checkoutCourse.instructor.profileImage
-                              ?  checkoutCourse.instructor.profileImage
-                              : `https://ui-avatars.com/api/?name=${checkoutCourse.instructor.fullName}&background=19a9c4&color=fff`
-                            }
+                            checkoutCourse.theCourse.instructor.profileImage
+                              ? checkoutCourse.theCourse.instructor.profileImage
+                              : `https://ui-avatars.com/api/?name=${checkoutCourse.theCourse.instructor.fullName}&background=19a9c4&color=fff`
+                          }
                           className="rounded-circle avatar-xs"
                           alt=""
                         />
                       </Col>
                       <Col className="col ms-2">
-                        <span>{checkoutCourse.instructor.fullName}</span>
+                        <span>{checkoutCourse.theCourse.instructor.fullName}</span>
                       </Col>
                       <Col className="col-auto">
                         <Tippy content="Add to Bookmarks" animation={"scale"}>

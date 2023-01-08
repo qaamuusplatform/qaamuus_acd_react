@@ -17,11 +17,12 @@ import { toast } from 'react-toastify';
 // import useSWR from 'swr';
 import { httpFetcher } from 'services/coursesService';
 import { Edit, MoreVertical, Move, ToggleLeft, ToggleRight, Trash } from 'react-feather';
+import { mutate } from 'swr';
 // import { Reviews } from 'data/CourseIndexData';
 
 // import data files
 
-const ReviewsTab = ({ reviews, courseId }) => {
+const ReviewsTab = ({ reviews, theCourse }) => {
 	const { currentUser, userIsLoading } = useContext(CurrentUserContext);
 	const [registringReviewModal, setRegistringReviewModal] = useState(false)
 	const [modalShow, setModalShow] = useState(false);
@@ -62,7 +63,7 @@ const ReviewsTab = ({ reviews, courseId }) => {
 				'theText': formData.get('theText'),
 				'theUser': theUser,
 				'theRating': rating,
-				'theCourse': courseId,
+				'theCourse': theCourse.id,
 			}),
 			{
 				headers: { "Content-Type": "application/json" },
@@ -75,6 +76,7 @@ const ReviewsTab = ({ reviews, courseId }) => {
 		);
 		setRegistringReviewModal(false)
 		setModalShow(false)
+		mutate(`/api/checkThisUserInrolledCourse-slug/${currentUser.id}/${theCourse.slug}/`, httpFetcher);
 
 	}
 	const ActionMenu = ({theUserId,theReviewId}) => {
@@ -269,7 +271,11 @@ const ReviewsTab = ({ reviews, courseId }) => {
 					reviews.map((item, index) => (
 						<div className="d-flex border-bottom pb-4 mb-4" key={index}>
 							<Image
-								src={item.theUser.profileImage}
+								src={
+									item.theUser.profileImage
+									  ?  item.theUser.profileImage
+									  : `https://ui-avatars.com/api/?name=${item.theUser.fullName}&background=19a9c4&color=fff`
+									}
 								alt=""
 								className="rounded-circle avatar-lg"
 							/>

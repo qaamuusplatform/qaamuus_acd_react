@@ -60,7 +60,6 @@ const CourseDetail = ({ match, location }) => {
     toast.error(error);
   }
   
-  console.log(courseEnrolmentDetail);
   const enrollFreeCourse = async () => {
     try {
       await http
@@ -250,7 +249,7 @@ const CourseDetail = ({ match, location }) => {
               <br></br>
               <Card>
                 <Card.Body className="pb-4 p-4">
-                  <ReviewsTab reviews={courseEnrolmentDetail.theCourse.theReviews} courseId={courseEnrolmentDetail.theCourse.id}  />
+                  <ReviewsTab reviews={courseEnrolmentDetail.theCourse.theReviews} theCourse={courseEnrolmentDetail.theCourse}  />
                 </Card.Body>
               </Card>
             </Col>
