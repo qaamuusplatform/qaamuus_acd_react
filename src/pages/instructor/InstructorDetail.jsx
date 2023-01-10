@@ -24,8 +24,8 @@ import AboutTab from './AboutTab';
 import { httpFetcher } from 'services/coursesService';
 import useSWR from 'swr';
 import { ShimmerPostDetails,  ShimmerThumbnail } from 'react-shimmer-effects';
-import CoursesTab from './CoursesTab';
 import EventsTap from './EventsTab';
+import InstructorCoursesTab from './InstructorCoursesTab';
 // Import required data
 
 const InstructorDetail = () => {
@@ -33,7 +33,6 @@ const InstructorDetail = () => {
     // The forwardRef is important!!
     // Dropdown needs access to the DOM node in order to position the Menu
     const { data: instructorInfo, error } = useSWR(`/api/userProfile-detail-username/${instructorUsername}/`, httpFetcher);
-    console.log(instructorInfo)
     if (error) {
         toast.error(error);
     }
@@ -115,7 +114,7 @@ const InstructorDetail = () => {
                                     </Tab.Pane>
                                     <Tab.Pane eventKey="courses" className="pb-4 px-0">
                                         {/* Beginner Courses */}
-                                        <CoursesTab instructorInfo={instructorInfo}  />
+                                        <InstructorCoursesTab instructorInfo={instructorInfo}  />
                                         
                                     </Tab.Pane>
 

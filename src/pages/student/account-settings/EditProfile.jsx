@@ -237,6 +237,19 @@ const EditProfile = (props) => {
                 </Col> */}
 
                 {/* Address Line 1 */}
+                <Col md={12} sm={12} className="mb-3">
+                  <Form.Group className="mb-3" controlId="formBirthday">
+                    <Form.Label>Faahfaahin Yar</Form.Label>
+                    <Form.Control
+                      as="textarea"
+                      placeholder="Faahfaahin Yar Oo kugu saabsan"
+                      
+                      name="summerInfo"
+                      onChange={(e) => handleChange(e)}
+                    value={currentUser.summerInfo}
+                    />
+                  </Form.Group>
+                </Col>
                 <Col md={6} sm={12} className="mb-3">
                   <Form.Group className="mb-3" controlId="formBirthday">
                     <Form.Label>Magalada</Form.Label>

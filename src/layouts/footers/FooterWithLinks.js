@@ -49,7 +49,7 @@ const FooterWithLinks = () => {
 								</p>
 								<p>
 									Phone:{' '}
-									<Link to="https://wa.me/252618361444" className="text-dark fw-semi-bold">
+									<Link to="https://wa.me/252618361444" rel='noopener' target='_blank' className="text-dark fw-semi-bold">
 										(252) 618 3614 44
 									</Link>
 								</p>

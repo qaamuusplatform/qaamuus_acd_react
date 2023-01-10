@@ -61,7 +61,6 @@ const Checkout = () => {
   const cupponCodeRef = useRef(null);
   const referralCodeRef = useRef(null);
 
-
   const [cupponCodeDiscount, setCupponCodeDiscount] = useState({ code: '', price: 0 });
 
   if (checkoutCourse) {
@@ -161,8 +160,12 @@ const Checkout = () => {
       {/*  Content */}
       <div className="py-6">
         <Container>
-          {/* {checkoutCourse.is} */}
-          <Alert variant="success" >This is a success alert—check it out!</Alert>
+          {/* {checkoutCourse.isEnrolled && checkoutCourse.paided ?(
+            
+            <Alert variant="success" ><strong>MAHADSANID</strong> Horay Ayaad uga diiwaangashneed courskan </Alert>
+          ):(
+            <div></div>
+          ) } */}
           <Row>
             <Col xl={8} lg={8} md={12} sm={12}>
               <Card className="mb-3 mb-lg-0">
@@ -259,7 +262,7 @@ const Checkout = () => {
                           money: `${coursePrice - cupponCodeDiscount.price}`,
                           referralCode: '',
                           cupponCode: cupponCodeDiscount.code,
-                          type: "PAYBAL PAYMENT",
+                          type: "paybalCc",
                         }}
                           itsCourse={true} />
                         {/* {thePayment.content} */}

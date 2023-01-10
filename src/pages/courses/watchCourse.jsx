@@ -93,7 +93,6 @@ export const WatchCourse = ({ match }) => {
                 <Container fluid>
                     {
                         courseInfo?.isEnrolled ?
-
                             <Row>
                                 <Col sm={12} md={12} lg={12}>
                                     {/*  Tab content  */}

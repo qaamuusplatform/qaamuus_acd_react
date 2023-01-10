@@ -25,6 +25,7 @@ import {
 } from "react-bootstrap";
 import http, { httpAxiosWithToken } from "services/httpService";
 import { httpFetcher } from "services/coursesService";
+import swal from "sweetalert";
 
 export function WaafiPayment({ theEnrollmentData, itsCourse }) {
   const [formIsLoading, setFormIsLoading] = useState(false);
@@ -351,7 +352,20 @@ const qaamuusEnrollingCourseWithEventPayment = async (theEnrollmentData, itsCour
           { headers: { "Content-Type": "application/json" } }
         );
       if (resp.data.paided) {
-        toast.success(resp.data.message);
+        swal({
+          title: `Scope-ID ${resp.data.scopeId} `,
+          text: resp.data.message,
+          icon: "success",
+          allowClickOutside:false,
+          button: "Whatsapp Chat",
+        }).then((value)=>{
+          window.open(
+            'https://wa.me/252618361444',
+            '_blank' // <- This is what makes it open in a new window.
+          );
+         
+        });
+        // swal(resp.data.message);
 
       } else {
         if (theEnrollmentData.type == 'cashOnDelivery') {

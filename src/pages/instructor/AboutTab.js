@@ -1,30 +1,39 @@
 // import node module libraries
 import CertificateCard from "components/cards/CertificateCard";
 import InstructorData from "data/InstructorData";
-import { Col, Row, Card, Image } from "react-bootstrap";
+import { Col, Row, Card, Image, Alert } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import parse from 'html-react-parser';
 
 // import media files
 const AboutTab = ({ instructorInfo }) => {
-  console.log(instructorInfo);
+  console.log(instructorInfo)
   return (
     <Row>
       <Col lg={4} md={5} sm={12}>
-	  <Card.Header>
-            <h3 className="mb-0">Shahaadooyinka</h3>
-          </Card.Header>
-	  {instructorInfo.theCertifications?.map((theCertificate, idx) => (
-              <CertificateCard item={theCertificate} />
-            ))}
+        <Card.Header>
+          <h3 className="mb-0">Shahaadooyinka</h3>
+        </Card.Header>
         
+        {!instructorInfo.theCertifications ? (
+         <div></div>
+        ) : instructorInfo.theCertifications.length ==
+          0 ? (
+          <Alert className="mt-1" size="sm" variant="warning">Shahaado uma diiwaangashna</Alert>
+        ) : (
+          instructorInfo.theCertifications?.map((theCertificate, idx) => (
+            <CertificateCard item={theCertificate} />
+          ))
+        )}
+
+
         <Card className="border-0 mb-4">
           {/* Card body */}
 
           <Card.Body>
             <div className="d-flex align-items-center justify-content-between border-bottom pb-3 mb-3">
               <div>
-                <h4 className="mb-0 fw-bold">{InstructorData[1].courses}</h4>
+                <h4 className="mb-0 fw-bold">{instructorInfo.instructorCourses.length}</h4>
                 <p className="fs-6 mb-0">Coursoyinka</p>
               </div>
               <div>
@@ -35,8 +44,8 @@ const AboutTab = ({ instructorInfo }) => {
             </div>
             <div className="d-flex align-items-center justify-content-between border-bottom pb-3 mb-3">
               <div>
-                <h4 className="mb-0 fw-bold">{InstructorData[1].students}</h4>
-                <p className="fs-6 mb-0">Ardada Iibsatay</p>
+                {/* <h4 className="mb-0 fw-bold">{instructorInfo.persenters.length}</h4> */}
+                <p className="fs-6 mb-0">Eventska</p>
               </div>
               <div>
                 <span>
@@ -44,7 +53,7 @@ const AboutTab = ({ instructorInfo }) => {
                 </span>
               </div>
             </div>
-            <div className="d-flex align-items-center justify-content-between">
+            {/* <div className="d-flex align-items-center justify-content-between">
               <div>
                 <h4 className="mb-0 fw-bold">{InstructorData[1].reviews}</h4>
                 <p className="fs-6 mb-0">Codbixinta</p>
@@ -54,7 +63,7 @@ const AboutTab = ({ instructorInfo }) => {
                   <i className="fe fe-star fs-3"></i>
                 </span>
               </div>
-            </div>
+            </div> */}
           </Card.Body>
         </Card>
       </Col>

@@ -24,7 +24,7 @@ import Ratings from 'components/elements/common/ratings/Ratings';
 import { numberWithCommas } from 'helper/utils';
 import { END_POINT } from 'helper/constants';
 
-const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
+const InstructorCourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 	
 	/** Used in Course Index, Course Category, Course Filter Page, Student Dashboard etc...  */
 	const GridView = () => {
@@ -40,7 +40,7 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 				{/* Card body  */}
 				<Card.Body>
 				<div className={`lh-1 mt-0 d-flex align-items-center`} >
-						<span className="text-warning me-1 mb-1">
+						{/* <span className="text-warning me-1 mb-1">
 							{' '}
 							<Ratings rating={'4.5'} />
 						</span>
@@ -48,7 +48,7 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 						<span className="fs-6 text-muted">
 							{' '}
 							( {item.theReviews.length} )
-						</span>
+						</span> */}
 					</div>
 					<h3 className="h4 fw-bold mb-2 text-truncate-line-2 ">
 						<Link to={`/course/${item.slug}`} className="text-inherit">
@@ -96,7 +96,7 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 
 				</Card.Body>
 				{/* Card Footer */}
-				<Card.Footer>
+				{/* <Card.Footer>
 					<Row className="align-items-center g-0">
 						<Col className="col-auto">
 							<Image
@@ -129,7 +129,7 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 							style={{ height: '5px' }}
 						/>
 					</span>
-				</Card.Footer>
+				</Card.Footer> */}
 			</Card>
 		);
 	};
@@ -279,7 +279,7 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
 };
 
 // Specifies the default values for props
-CourseCard.defaultProps = {
+InstructorCourseCard.defaultProps = {
 	free: false,
 	viewby: 'grid',
 	showprogressbar: false,
@@ -287,7 +287,7 @@ CourseCard.defaultProps = {
 };
 
 // Typechecking With PropTypes
-CourseCard.propTypes = {
+InstructorCourseCard.propTypes = {
 	item: PropTypes.object.isRequired,
 	free: PropTypes.bool,
 	viewby: PropTypes.string,
@@ -295,4 +295,4 @@ CourseCard.propTypes = {
 	extraclass: PropTypes.string
 };
 
-export default CourseCard;
+export default InstructorCourseCard;

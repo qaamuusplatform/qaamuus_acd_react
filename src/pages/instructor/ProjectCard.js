@@ -92,7 +92,7 @@ const ProjectCard = ({ item }) => {
 			<Card.Body>
 				<h3 className="mb-0 fw-semi-bold">
 					{' '}
-					<Link to={`instructor/${item.username}/`} className="text-inherit">
+					<Link to={`/instructor/${item.username}/`} className="text-inherit">
 						{item.fullName}
 					</Link>
 				</h3>
@@ -120,7 +120,7 @@ const ProjectCard = ({ item }) => {
 				</div> */}
 				<div className="mt-2 mb-3">
 					
-					{/* <p> {parse(item.aboutMe ?? '')}	</p> */}
+					<p> {parse(item.summerInfo ?? '')}	</p>
 					{/* {item.aboutMe ? (<p className="mb-0">{`${item.aboutMe.substring(0, 70)} `}<a href="/instructor/">....</a></p>):(
 						<p></p>
 					)} */}

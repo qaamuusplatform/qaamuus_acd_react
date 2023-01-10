@@ -1,6 +1,6 @@
 // import node module libraries
 import { Fragment, useEffect, useContext } from "react";
-import { Col, Row, Nav, Tab, Card, Container } from "react-bootstrap";
+import { Col, Row, Nav, Tab, Card, Container, Alert } from "react-bootstrap";
 
 // import custom components
 // import CourseCard from 'components/marketing/pages/courses/CourseCard';
@@ -31,6 +31,7 @@ const StudentDashboard = () => {
     `api/userEnrollments-detail/${currentUser.id}/`,
     httpFetcher
   );
+  console.log(currentUser)
   
   // const dashboardData = {
   //     avatar: Avatar3,
@@ -105,17 +106,17 @@ const StudentDashboard = () => {
                           >
                             {/* learning courses started */}
                             <Row>
-                              {!userEnrolmentsData && !error ? (
+                              {userIsLoading ? (
                                 [1, 2, 3, 4].map((idx) => (
                                   <Col lg={3} md={4} sm={12} key={idx}>
                                     <ShimmerPostItem card title text cta />
                                   </Col>
                                 ))
-                              ) : userEnrolmentsData.enrolledCourses.length ==
+                              ) : currentUser.enrolledCourses.length ==
                                 0 ? (
-                                <div>Wax course ah kama diiwaangashnid</div>
+                                <Alert variant="info">Wax course ah kama diiwaangashnid</Alert>
                               ) : (
-                                userEnrolmentsData.enrolledCourses?.map(
+                                currentUser.enrolledCourses?.map(
                                   (course, idx) => (
                                     <Col lg={3} md={4} sm={12} key={idx}>
                                       <InrolledCourseCard
@@ -135,17 +136,17 @@ const StudentDashboard = () => {
                           >
                             {/* learning events started */}
                             <Row>
-                              {!userEnrolmentsData && !error ? (
+                              {userIsLoading? (
                                 [1, 2, 3].map((idx) => (
                                   <Col lg={4} md={4} sm={12} key={idx}>
                                     <ShimmerPostItem card title cta />
                                   </Col>
                                 ))
-                              ) : userEnrolmentsData.bookedEvents.length ==
+                              ) : currentUser.enrolledEvents.length ==
                                 0 ? (
-                                    <div>Wax Event ah kama diiwaangashnid</div>
+                                    <Alert variant="warning">Wax Event ah kama diiwaangashnid</Alert>
                               ) : (
-                                userEnrolmentsData.bookedEvents?.map(
+                                currentUser.enrolledEvents?.map(
                                   (theBookedEvent, idx) => (
                                     <Col lg={4} md={4} sm={12} key={idx}>
                                       <EventCard
