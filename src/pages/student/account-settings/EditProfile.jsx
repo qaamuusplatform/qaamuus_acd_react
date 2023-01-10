@@ -243,7 +243,6 @@ const EditProfile = (props) => {
                     <Form.Control
                       as="textarea"
                       placeholder="Faahfaahin Yar Oo kugu saabsan"
-                      
                       name="summerInfo"
                       onChange={(e) => handleChange(e)}
                     value={currentUser.summerInfo}

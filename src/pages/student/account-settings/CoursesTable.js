@@ -49,7 +49,7 @@ const CoursesTable = ({ courses_data }) => {
 							<div className="d-lg-flex align-items-center">
 								<div>
 									<Image
-										src={END_POINT+row.original.prevImage}
+										src={row.original.coverImage}
 										alt=""
 										className="img-4by3-lg rounded"
 									/>

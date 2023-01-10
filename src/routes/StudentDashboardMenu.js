@@ -14,8 +14,8 @@ export const DashboardMenu = [
 	
 	{
 		id: 3,
-		title: 'Referral  Data',
-		link: '/user/referral-data/',
+		title: 'Koontada Lacagta',
+		link: '/user/referral-money/',
 		icon: 'star'
 	},
 	{

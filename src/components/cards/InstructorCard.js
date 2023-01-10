@@ -60,10 +60,10 @@ const GKInstructorCard = ({ item }) => {
 			<Card.Footer className="bg-white p-0">
 				<div className="d-flex justify-content-between ">
 					<div className="w-50 py-3 px-4 ">
-						<h6 className="mb-0 text-muted">COURSES:</h6>
+						<h6 className="mb-0 text-muted">Koorsooyin:  <strong className='fw-bold'>{item.enrolledCourses.length}</strong></h6>
 					</div>
 					<div className="border-start w-50 py-3 px-4">
-						<h6 className="mb-0 text-muted">EVENTS:</h6>
+						<h6 className="mb-0 text-muted">events: <strong className='fw-bold'>{item.persenter.length}</strong> </h6>
 						
 					</div>
 				</div>

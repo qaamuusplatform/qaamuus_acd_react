@@ -216,7 +216,7 @@ const Checkout = () => {
                             courseId: `${checkoutCourse.theCourse.id}`,
                             months: `2`,
                             money: `${coursePrice - cupponCodeDiscount.price}`,
-                            referralCode: '',
+                            referralCode: referralCodeRef,
                             cupponCode: cupponCodeDiscount.code,
                             type: "waafi",
                           }}
@@ -245,7 +245,7 @@ const Checkout = () => {
                           courseId: `${checkoutCourse.theCourse.id}`,
                           months: `2`,
                           money: `${coursePrice - cupponCodeDiscount.price}`,
-                          referralCode: '',
+                          referralCode: referralCodeRef,
                           cupponCode: cupponCodeDiscount.code,
                           type: "cashOnDelivery",
                         }}
@@ -260,7 +260,7 @@ const Checkout = () => {
                           courseId: `${checkoutCourse.theCourse.id}`,
                           months: `2`,
                           money: `${coursePrice - cupponCodeDiscount.price}`,
-                          referralCode: '',
+                          referralCode: referralCodeRef,
                           cupponCode: cupponCodeDiscount.code,
                           type: "paybalCc",
                         }}

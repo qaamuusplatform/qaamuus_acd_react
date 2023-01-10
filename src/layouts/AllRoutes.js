@@ -30,7 +30,7 @@ import Checkout from "pages/checkout/checkout";
 import EventDetail from "pages/events/eventDetail";
 import EventWatchLive from "pages/events/eventWatch/EventWatchLive";
 import LiveLayout from "./LiveLayout";
-import ReferralData from "pages/student/account-settings/ReferralData";
+import ReferralMoney from "pages/student/account-settings/ReferralData";
 import EventCheckout from "./../pages/checkout/EventCheckout";
 import { CurrentUserContext } from "services/currentUserContext";
 import WatchCourse from "pages/courses/watchCourse";
@@ -161,9 +161,9 @@ function AllRoutes() {
       />
       <ProtectedRoute
         exact
-        path="/user/referral-data/"
+        path="/user/referral-money/"
         layout={DefaultLayout}
-        component={ReferralData}
+        component={ReferralMoney}
       />
       <ProtectedRoute
         exact

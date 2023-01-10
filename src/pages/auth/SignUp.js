@@ -386,8 +386,7 @@ export default function SignUp() {
                       {registringUserForm.errors.comfirmPassword}
                     </Form.Control.Feedback>
                   </Col>
-                  <Col lg={8} md={8} className="mb-3">
-                    {/* Checkbox */}
+                  <div className="d-flex justify-content-between">
                     <Form.Check type="checkbox" id="check-api-checkbox">
                       <Form.Check.Input
                         type="checkbox"
@@ -395,13 +394,11 @@ export default function SignUp() {
                       />
                       <Form.Check.Label>SHOW PASSWORD</Form.Check.Label>
                     </Form.Check>
-                  </Col>
-                  <Col lg={4} md={4} className="mb-3">
-                    {/* Checkbox */}
-                    <Form.Check type="checkbox" id="check-api-checkbox">
-                      <Form.Check.Label>SHOW PASSWORD</Form.Check.Label>
-                    </Form.Check>
-                  </Col>
+                    <Link to="/auth/login/" size='sm' className="p-2 rounded btn-outline-primary">
+                      Login Now
+                    </Link>
+                  </div>
+
                 </Row>
                 {formIsLoading ? (
                   <Button variant="primary" size="md" disabled>

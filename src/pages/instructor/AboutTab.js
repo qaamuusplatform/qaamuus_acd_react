@@ -44,7 +44,7 @@ const AboutTab = ({ instructorInfo }) => {
             </div>
             <div className="d-flex align-items-center justify-content-between border-bottom pb-3 mb-3">
               <div>
-                {/* <h4 className="mb-0 fw-bold">{instructorInfo.persenters.length}</h4> */}
+                <h4 className="mb-0 fw-bold">{instructorInfo.persenter.length}</h4>
                 <p className="fs-6 mb-0">Eventska</p>
               </div>
               <div>

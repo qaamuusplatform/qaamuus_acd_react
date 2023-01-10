@@ -130,10 +130,10 @@ const ProjectCard = ({ item }) => {
 			<Card.Footer className="bg-white p-0">
 				<div className="d-flex justify-content-between ">
 					<div className="w-50 py-3 px-4 ">
-						<h6 className="mb-0 text-muted">COURSES:</h6>
+						<h6 className="mb-0 text-muted">Koorsooyin: {item.enrolledCourses.length}</h6>
 					</div>
 					<div className="border-start w-50 py-3 px-4">
-						<h6 className="mb-0 text-muted">EVENTS:</h6>
+						<h6 className="mb-0 text-muted">events: {item.persenter.length}</h6>
 						
 					</div>
 				</div>

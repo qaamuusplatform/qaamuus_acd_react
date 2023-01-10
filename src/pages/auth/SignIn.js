@@ -56,7 +56,7 @@ export default function SignIn(props) {
         .then(async (userLoggedResp) => {
           if (userLoggedResp.data.status == 200) {
             localStorage.setItem("access", userLoggedResp.data.access);
-            toast.success("si guul leh ayaad u soo gashay");
+            // toast.success("si guul leh ayaad u soo gashay");
             const { data } = await getLoggedInUser();
             if (data) {
               setCurrentUser(data);

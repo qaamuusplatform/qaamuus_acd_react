@@ -20,6 +20,7 @@ import { toast } from 'react-toastify';
 import GKAccordionProgress from 'components/accordions/GKAccordionProgress';
 import { CourseIndex } from 'data/CourseIndexData';
 import Parse from 'html-react-parser'
+import { ShimmerCategoryItem, ShimmerPostDetails, ShimmerSectionHeader, ShimmerTitle } from 'react-shimmer-effects';
 // The forwardRef is important!!
 // Dropdown needs access to the DOM node in order to position the Menu
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
@@ -72,8 +73,7 @@ export const WatchCourse = ({ match }) => {
     const [currentVideo, setCurrentVideo] = useState({});
     const { currentUser, userIsLoading } = useContext(CurrentUserContext);
     const { slug } = useParams();
-    const { data: courseInfo, error } = useSWR(
-        `/api/checkThisUserInrolledCourse-slug/${currentUser?.id}/${slug}/`,
+    const { data: courseInfo, error } = useSWR(`/api/checkWatchThisCourse-slug/${currentUser?.id}/${slug}/`,
         httpFetcher
     );
 
@@ -102,7 +102,7 @@ export const WatchCourse = ({ match }) => {
 
                                             <div className="embed-responsive position-relative w-100 d-block overflow-hidden p-0" >
                                                 <div style={{ position: 'relative', paddingTop: '56.25%' }}>
-                                                    <iframe src={currentVideo.link} loading="lazy" style={{ border: 'none', position: 'absolute', top: 0, height: '100%', width: '100%' }} allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowFullScreen="true" />
+                                                    <iframe src={currentVideo.link ?? courseInfo?.enrollmentCourse?.currentLesson.lessonLink} loading="lazy" style={{ border: 'none', position: 'absolute', top: 0, height: '100%', width: '100%' }} allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowFullScreen="true" />
                                                 </div>
 
                                             </div>
@@ -110,7 +110,7 @@ export const WatchCourse = ({ match }) => {
                                             <div className="mt-4 mb-4">
                                                 <div>
                                                     <h2 className=" mb-0 fw-bold text-truncate-line-2 text-capitalize">
-                                                        {currentVideo.lesson ?? courseInfo?.theCourse?.title}    </h2>
+                                                        {currentVideo.lesson ?? courseInfo?.enrollmentCourse?.currentLesson.title}    </h2>
                                                     <h5 className="mb-0 fw-normal">
                                                         {courseInfo?.theCourse?.simDesc}
 
@@ -150,19 +150,39 @@ export const WatchCourse = ({ match }) => {
                             </Row>
 
                             :
-                            null
+                            <Row>
+                                <Col sm={12} md={12} lg={12}>
+                                    {/*  Tab content  */}
+                                    <div className="content ">
+
+                                        <ShimmerPostDetails card cta variant="EDITOR" />
+
+                                    </div>
+                                </Col>
+                            </Row>
+
                     }
                 </Container>
             </div>
             {/*  Card */}
             {
-                courseInfo?.isEnrolled ?
+                 courseInfo?.isEnrolled ? 
 
                     <Card className="course-sidebar h-100 rounded-0" id="courseAccordion">
                         <Card.Header className='fw-bold bg-dark text-white rounded-0'>CASHIRADA COURSKA</Card.Header>
 
                         <GKAccordionProgress lessons={courseInfo?.theCourse?.theComponents ?? []} onClickLesson={setCurrentVideo} currentLesson={currentVideo} />
-                    </Card> : null}
+                    </Card> : <Card className="course-sidebar bg-white m-1 h-100 rounded pt-3 p-2" id="courseAccordion">
+                    
+                    {[1, 2, 3,4,5,6,7,8,9,10].map((idx) => (
+                        <div>
+                        <ShimmerTitle line={1}  className="mt-1" variant="primary" />
+                        <ShimmerTitle line={1} className="mt-0" variant="secondary" />
+                        </div>
+                        ))}
+
+                    </Card>
+            }
         </Fragment>
     );
 };

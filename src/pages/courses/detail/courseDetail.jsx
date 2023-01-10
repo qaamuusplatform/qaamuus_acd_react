@@ -260,7 +260,7 @@ const CourseDetail = ({ match, location }) => {
                   <div
                     className="d-flex justify-content-center position-relative rounded py-10 border-white border rounded-3 bg-cover"
                     style={{
-                      background: `url(${courseEnrolmentDetail.theCourse.prevImage})`,
+                      background: `url(${courseEnrolmentDetail.theCourse.coverImage})`,
                       backgroundRepeat: "no-repeat",
                       backgroundSize: "cover",
                       backgroundPosition: "top center",

@@ -79,19 +79,18 @@ function NCourseCard({ item }) {
             />
             <h6 className="fs-5 mb-0 fw-normal ">{item.instructor.fullName}</h6>
           </div>
-          {item.showDiscountPrice ? (
           <div className="d-flex align-items-center gap-1">
+          {item.showDiscountPrice ? (
+            
             <h6 style={{ textDecoration: 'line-through' }} className="mb-0 pt-1 text-muted">${item.regularPrice}</h6>
-
-            <h5 className="mb-0 fw-bold">${item.discountPrice}</h5>
-              </div>
 					
 					) : (
-            <div className="d-flex align-items-center gap-1">
-            <h5 className="mb-0 fw-bold">${item.regularPrice}</h5>
+						<div>
 							
 						</div>
 					)}
+            <h5 className="mb-0 fw-bold">$100</h5>
+          </div>
         </div>
       </Card.Footer>
     </Card>

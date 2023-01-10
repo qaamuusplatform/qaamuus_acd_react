@@ -18,7 +18,7 @@ export default function HomeFeaturesList() {
       {
         id: 2,
         icon: mdiAccountGroup,
-        title: 'Wadashaqayn & xiriiro caalami ah',
+        title: 'Wadashaqayn, xiriiro caalami',
         description: `Iskuxidhka bulshada iyo aqoonyahankeeda U carbinta iy fahanka shaqada suuqa`
       },
       {
