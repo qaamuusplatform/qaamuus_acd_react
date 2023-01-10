@@ -386,13 +386,19 @@ export default function SignUp() {
                       {registringUserForm.errors.comfirmPassword}
                     </Form.Control.Feedback>
                   </Col>
-                  <Col lg={12} md={12} className="mb-3">
+                  <Col lg={8} md={8} className="mb-3">
                     {/* Checkbox */}
                     <Form.Check type="checkbox" id="check-api-checkbox">
                       <Form.Check.Input
                         type="checkbox"
                         onClick={togglePassword}
                       />
+                      <Form.Check.Label>SHOW PASSWORD</Form.Check.Label>
+                    </Form.Check>
+                  </Col>
+                  <Col lg={4} md={4} className="mb-3">
+                    {/* Checkbox */}
+                    <Form.Check type="checkbox" id="check-api-checkbox">
                       <Form.Check.Label>SHOW PASSWORD</Form.Check.Label>
                     </Form.Check>
                   </Col>
@@ -420,7 +426,7 @@ export default function SignUp() {
                 <div className="mt-4 text-center">
                   {/* Facebook */}
                   <Link
-                    to="#"
+                    to="https://www.facebook.com/qaamuusacademy1/"
                     className="btn-social btn-social-outline btn-facebook"
                   >
                     <i className="fab fa-facebook"></i>
@@ -434,18 +440,18 @@ export default function SignUp() {
                   </Link>{" "}
                   {/* LinkedIn */}
                   <Link
-                    to="#"
+                    to="https://www.youtube.com/@qaamuusacademy9062/channels"
                     className="btn-social btn-social-outline btn-linkedin"
                   >
-                    <i className="fab fa-linkedin"></i>
+                    <i className="fab fa-youtube"></i>
                   </Link>{" "}
                   {/* GitHub */}
-                  <Link
+                  {/* <Link
                     to="#"
                     className="btn-social btn-social-outline btn-github"
                   >
                     <i className="fab fa-github"></i>
-                  </Link>
+                  </Link> */}
                 </div>
               </Card.Body>
             </Card>
