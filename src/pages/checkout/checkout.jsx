@@ -60,8 +60,13 @@ const Checkout = () => {
   let coursePrice = 5;
   const cupponCodeRef = useRef(null);
   const referralCodeRef = useRef(null);
-
+  
+  const [referralCodeRefState, setReferralCodeRefState] = useState({ code: '', price: 0 });
   const [cupponCodeDiscount, setCupponCodeDiscount] = useState({ code: '', price: 0 });
+
+  const handleReferralCode = async (e) => {
+    setReferralCodeRefState(e.target.value)
+  }
 
   if (checkoutCourse) {
     if (checkoutCourse.theCourse.showDiscountPrice) {
@@ -216,7 +221,7 @@ const Checkout = () => {
                             courseId: `${checkoutCourse.theCourse.id}`,
                             months: `2`,
                             money: `${coursePrice - cupponCodeDiscount.price}`,
-                            referralCode: referralCodeRef,
+                            referralCode: referralCodeRef.current?.value,
                             cupponCode: cupponCodeDiscount.code,
                             type: "waafi",
                           }}
@@ -232,6 +237,7 @@ const Checkout = () => {
                             userId: `${currentUser.id}`,
                             courseId: `${checkoutCourse.theCourse.id}`,
                             months: `2`,
+                            referralCode: referralCodeRef.current?.value,
                             money: `${coursePrice - cupponCodeDiscount.price}`,
                             type: "eDahab",
                           }}
@@ -245,7 +251,7 @@ const Checkout = () => {
                           courseId: `${checkoutCourse.theCourse.id}`,
                           months: `2`,
                           money: `${coursePrice - cupponCodeDiscount.price}`,
-                          referralCode: referralCodeRef,
+                          referralCode: referralCodeRefState,
                           cupponCode: cupponCodeDiscount.code,
                           type: "cashOnDelivery",
                         }}
@@ -260,7 +266,7 @@ const Checkout = () => {
                           courseId: `${checkoutCourse.theCourse.id}`,
                           months: `2`,
                           money: `${coursePrice - cupponCodeDiscount.price}`,
-                          referralCode: referralCodeRef,
+                          referralCode: referralCodeRef.current?.value,
                           cupponCode: cupponCodeDiscount.code,
                           type: "paybalCc",
                         }}
@@ -339,6 +345,7 @@ const Checkout = () => {
                       type="text"
                       placeholder="Referral code"
                       value={queryParameters.get('refrralCode')}
+                      onChange={handleReferralCode}
                       ref={referralCodeRef}
                     />
                     {/* {cupponCodeDiscount && <Badge bg='success' className='mt-2'>{cupponCodeDiscount} <i className="fa fa-times text-white ml-3" onClick={() => removeCuppon()}></i></Badge>} */}

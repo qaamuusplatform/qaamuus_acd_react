@@ -264,7 +264,7 @@ const NavbarDefault = ({ headerstyle, isLoading, login }) => {
                     </div>
                   </div>
                 </NavDropdown.Item>
-                <NavDropdown.Item
+                {/* <NavDropdown.Item
                   as={Link}
                   to="#"
                   className="py-2 px-3"
@@ -279,7 +279,7 @@ const NavbarDefault = ({ headerstyle, isLoading, login }) => {
                       <p className="mb-0 fs-6">See what's new</p>
                     </div>
                   </div>
-                </NavDropdown.Item>
+                </NavDropdown.Item> */}
               </NavDropdown>
             </Nav>
             {/* Search Form */}

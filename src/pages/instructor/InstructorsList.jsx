@@ -45,7 +45,7 @@ export default function Members() {
           <Row>
             {!instructorsList && !error
               ? [1, 2, 3, 4].map((idx) => (
-                <Col lg={4} xl={4} md={6} sm={12} key={idx}>
+                <Col lg={3} xl={3} md={6} sm={12} key={idx}>
                   <ShimmerPostItem card title cta />
                 </Col>
               ))

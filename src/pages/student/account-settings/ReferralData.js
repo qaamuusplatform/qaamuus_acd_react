@@ -34,7 +34,7 @@ const ReferralMoney = (props) => {
           <Card>
             <Card.Header className="card-header d-flex justify-content-between">
               <h4 className="mb-0">Referral-Money Budget</h4>
-              {currentUser.refBalance >= 10 ? (
+              {currentUser.refBalance == 10 ? (
                 <Button variant="btn-outline-secondary" onClick={() => setMdShow(true)} className="btn btn-sm btn-outline-secondary">
                   Lacag Labixista
                 </Button>

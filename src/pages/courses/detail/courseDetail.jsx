@@ -436,16 +436,21 @@ const CourseDetail = ({ match, location }) => {
                       </Link>
                     </div>
                     <div className="ms-4">
+                    <Link
+                    to={`/instructor/${courseEnrolmentDetail.theCourse.instructor.id}/`}
+                    
+                  >
                       <h4 className="mb-0">
                         {courseEnrolmentDetail.theCourse.instructor.fullName}
                       </h4>
+                  </Link>
                       <p className="mb-1 fs-6">
                         {courseEnrolmentDetail.theCourse.instructor.userTitle}
                       </p>
                       <span className="fs-6">
-                        <span className="text-warning">4.5</span>
+                        {/* <span className="text-warning">4.5</span> */}
                         <span className="mdi mdi-star text-warning me-2"></span>
-                        Instructor Rating
+                        {courseEnrolmentDetail.theCourse.instructor.summerInfo}
                       </span>
                     </div>
                   </div>
@@ -469,13 +474,8 @@ const CourseDetail = ({ match, location }) => {
                       </div>
                     </Col>
                   </Row> */}
-                  <p>{courseEnrolmentDetail.theCourse.instructor.simAboutMe}</p>
-                  <Link
-                    to={`/instructor/${courseEnrolmentDetail.theCourse.instructor.id}/`}
-                    className="btn btn-outline-white btn-sm"
-                  >
-                    View Details
-                  </Link>
+                  {/* <p>{courseEnrolmentDetail.theCourse.instructor.simAboutMe}</p> */}
+                  
                 </Card.Body>
               </Card>
               <br></br>

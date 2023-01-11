@@ -115,7 +115,7 @@ const CourseIndex = () => {
 
 			<div className="pb-lg-8 pt-lg-3 py-6">
 				<Container>
-							<h3 className="mb-0 fw-w500 fs-3 text-underline">DHAWAAN FILO</h3>
+							{/* <h3 className="mb-0 fw-w500 fs-3 text-underline">DHAWAAN FILO</h3> */}
 					{!events && !eventError
 						? [1].map((idx) => (
 							<div>
@@ -137,6 +137,7 @@ const CourseIndex = () => {
 								<EventCardFullWidth event={event} />
 							</Col>
 						))}
+						
 					{/* <h2 className="mb-0 mx-2">Most Popular</h2> */}
 
 					{/* <CourseSlider popular={true} /> */}
@@ -148,10 +149,10 @@ const CourseIndex = () => {
 					</div>
 
 					<br></br> */}
-
+					<br></br>
 					<div className="position-relative">
-						<div className="mb-2 mt-4">
-							<h3 className="mb-0 fw-w600 fs-4">UGU DANMBEEYAY</h3>
+						<div className="mb-4 mt-4">
+							{/* <h3 className="mb-0 fw-w600 fs-4">UGU DANMBEEYAY</h3> */}
 						</div>
 						<Row>
 							{!popularCourses && !error
@@ -194,7 +195,7 @@ const CourseIndex = () => {
 
 
 
-						<h3 className="mb-2 fs-4 fw-regular">CLASSIC INSTRUCTORS</h3>
+						{/* <h3 className="mb-2 fs-4 fw-regular">CLASSIC INSTRUCTORS</h3> */}
 						<WorldClassInstructors />
 					</div>
 

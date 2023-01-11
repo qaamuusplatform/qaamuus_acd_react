@@ -289,8 +289,10 @@ const ReviewsTab = ({ reviews, theCourse }) => {
 
 						)}
 									</div>
-
-									<span className="ms-1 fs-6 text-muted">{item.userTitle} </span>
+									{item.userTitle?(
+									<span className="ms-1 fs-6 text-muted">{item.userTitle} </span>):(
+										<div></div>
+									)}
 								</h4>
 
 								<div className="fs-6 mb-2 text-warning">

@@ -63,13 +63,13 @@ export default function Courses() {
                     <Row>
                       {!coursesList && !error
                         ? [1, 2, 3, 4].map((idx) => (
-                          <Col lg={4} xl={3} md={6} sm={12} key={idx}>
+                          <Col lg={4} xl={4} md={6} className='mb-4' sm={12} key={idx}>
                             <ShimmerPostItem card title text cta />
                           </Col>
                         ))
                         : null}
                       {coursesList?.map((course, idx) => (
-                        <Col lg={4} xl={3} md={6} sm={12} key={idx}>
+                        <Col lg={4} xl={4} md={6} sm={12} key={idx}>
                           <CourseCard
                             item={course}
                             viewby="grid"

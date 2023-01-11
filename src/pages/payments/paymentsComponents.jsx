@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import * as yub from "yup";
 import React from "react";
-import {mutate} from "swr";
+import { mutate } from "swr";
 import { useState } from "react";
 import { Fragment } from "react";
 import AmericanExpress from "assets/images/creditcard/americanexpress.svg";
@@ -215,7 +215,9 @@ export function DahabPayment({ theEventDetail }) {
 
   return (
     <Fragment>
-      <Form onSubmit={paymentForm.handleSubmit} controlId="validationFormik01">
+
+      <Alert >Adeega Lacag bixinta somtel hdda available maahan</Alert>
+      {/* <Form onSubmit={paymentForm.handleSubmit} controlId="validationFormik01">
         <Row>
           <Form.Label>Name on card</Form.Label>
           <InputGroup className="mb-3">
@@ -274,7 +276,7 @@ export function DahabPayment({ theEventDetail }) {
             )}
           </div>
         </Row>
-      </Form>
+      </Form> */}
     </Fragment>
   );
 }
@@ -288,7 +290,6 @@ export function CashOnDelivery({ theEnrollmentData, itsCourse }) {
   const cashPymentSubmit = async () => {
     setFormIsLoading(true);
     let enrollmentResp = await qaamuusEnrollingCourseWithEventPayment(theEnrollmentData, itsCourse)
-    console.log(enrollmentResp)
     setFormIsLoading(false);
     // if(emailVerified){
 
@@ -351,25 +352,28 @@ const qaamuusEnrollingCourseWithEventPayment = async (theEnrollmentData, itsCour
           JSON.stringify(theEnrollmentData),
           { headers: { "Content-Type": "application/json" } }
         );
+      console.log(resp.data)
       if (resp.data.paided) {
-        swal({
-          title: `Scope-ID ${resp.data.scopeId} `,
-          text: resp.data.message,
-          icon: "success",
-          allowClickOutside:false,
-          button: "Whatsapp Chat",
-        }).then((value)=>{
-          window.open(
-            'https://wa.me/252618361444',
-            '_blank' // <- This is what makes it open in a new window.
-          );
-         
-        });
+        if (theEnrollmentData.type == 'cashOnDelivery') {
+          swal({
+            title: `Scope-ID ${resp.data.scopeId} `,
+            text: resp.data.message,
+            icon: "success",
+            allowClickOutside: false,
+            button: "Whatsapp Chat",
+          }).then((value) => {
+            window.open(
+              'https://wa.me/252618361444',
+              '_blank' // <- This is what makes it open in a new window.
+            );
+
+          });
+        }
+
         // swal(resp.data.message);
 
       } else {
         if (theEnrollmentData.type == 'cashOnDelivery') {
-
           toast.warning(resp.data.message);
         } else {
           toast.error(resp.data.message);
@@ -390,7 +394,7 @@ const qaamuusEnrollingCourseWithEventPayment = async (theEnrollmentData, itsCour
           { headers: { "Content-Type": "application/json" } }
         )
       toast.success(resp.data.message);
-      
+
       mutate(`api/checkThisUserInrolledEvent-slug/${currentUser.id}/${slug}/`, httpFetcher)
       return resp
     } catch (error) {
